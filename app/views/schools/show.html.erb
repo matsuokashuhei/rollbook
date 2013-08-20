@@ -1,29 +1,31 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @school.name %>
-</p>
+<div class="panel panel-default">
+  <div class="panel-heading">Show school</div>
+  <div class="panel-body">
+    <div class="form-group">
+      <%= label_tag :name %><br>
+      <%= text_field_tag :name, @school.name, class: "form-control", disabled: "disabled" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag :zip %><br>
+      <%= text_field_tag :zip, @school.zip, class: "form-control", disabled: "disabled" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag :address %><br>
+      <%= text_field_tag :address, @school.address, class: "form-control", disabled: "disabled" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag :phone %><br>
+      <%= text_field_tag :phone, @school.phone, class: "form-control", disabled: "disabled" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag :note %><br>
+      <%= text_area :note, @school.note, class: "form-control", disabled: "disabled" %>
+    </div>
 
-<p>
-  <strong>Zip:</strong>
-  <%= @school.zip %>
-</p>
+    <%= link_to 'Edit', edit_school_path(@school), class: "btn btn-default pull-right" %>
+    <%= link_to 'Back', schools_path, class: "btn btn-default pull-left" %>
+  </div>
+</div>
 
-<p>
-  <strong>Address:</strong>
-  <%= @school.address %>
-</p>
-
-<p>
-  <strong>Phone:</strong>
-  <%= @school.phone %>
-</p>
-
-<p>
-  <strong>Note:</strong>
-  <%= @school.note %>
-</p>
-
-<%= link_to 'Edit', edit_school_path(@school) %> |
-<%= link_to 'Back', schools_path %>
