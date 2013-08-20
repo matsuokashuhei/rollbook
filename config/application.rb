@@ -24,5 +24,14 @@ module Rollbook
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+
+    # app/assets/fontsを追加する。
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
+    config.assets.precompile += %w( .svg .eot .woff .ttf )
+
+    # StylesheetとJavaScriptをジェネレイトしない。
+    config.generators.stylesheets = false
+    config.generators.javascripts = false
+
   end
 end
