@@ -1,4 +1,6 @@
 Rollbook::Application.routes.draw do
+  resources :studios
+
   resources :schools
 
   # The priority is based upon order of creation: first created -> highest priority.
