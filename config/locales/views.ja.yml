@@ -8,6 +8,8 @@ ja:
       create: 保存する
       back: 戻　　る
     messages:
+      validates:
+        title: 保存に失敗しました。
       confirms:
         destroy: 削除してよいですか？
 

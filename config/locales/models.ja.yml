@@ -11,11 +11,11 @@ ja:
         address: 住所
         phone: 電話番号
         note: メモ
-        start_date: 開始日
-        end_date: 終了日
+        open_date: 開始日
+        close_date: 終了日
       studio:
         id: ID
         name: 名前
-        start_date: 開始日
-        end_date: 終了日
+        open_date: 開始日
+        close_date: 終了日
 

@@ -4,31 +4,31 @@
   <!--<div class="panel-heading">Show school</div>-->
   <div class="panel-body">
     <div class="form-group">
-      <%= label_tag :name %><br>
+      <%= label_tag School.human_attribute_name :name %><br>
       <%= text_field_tag :name, @school.name, class: "form-control", disabled: "disabled" %>
     </div>
     <div class="form-group">
-      <%= label_tag :zip %><br>
+      <%= label_tag School.human_attribute_name :zip %><br>
       <%= text_field_tag :zip, @school.zip, class: "form-control", disabled: "disabled" %>
     </div>
     <div class="form-group">
-      <%= label_tag :address %><br>
+      <%= label_tag School.human_attribute_name :address %><br>
       <%= text_field_tag :address, @school.address, class: "form-control", disabled: "disabled" %>
     </div>
     <div class="form-group">
-      <%= label_tag :phone %><br>
+      <%= label_tag School.human_attribute_name :phone %><br>
       <%= text_field_tag :phone, @school.phone, class: "form-control", disabled: "disabled" %>
     </div>
     <div class="form-group">
-      <%= label_tag :start_date %><br>
-      <%= text_field_tag :start_date,  @school.start_date, class: "form-control", disabled: "disabled" %>
+      <%= label_tag School.human_attribute_name :open_date %><br>
+      <%= text_field_tag :open_date,  @school.open_date, class: "form-control", disabled: "disabled" %>
     </div>
     <div class="form-group">
-      <%= label_tag :end_date %><br>
-      <%= text_field_tag :end_date, @school.end_date, class: "form-control", disabled: "disabled" %>
+      <%= label_tag School.human_attribute_name :close_date %><br>
+      <%= text_field_tag :close_date, @school.close_date, class: "form-control", disabled: "disabled" %>
     </div>
     <div class="form-group">
-      <%= label_tag :note %><br>
+      <%= label_tag School.human_attribute_name :note %><br>
       <%= text_area :note, @school.note, class: "form-control", disabled: "disabled" %>
     </div>
 

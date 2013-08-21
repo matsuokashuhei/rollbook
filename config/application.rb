@@ -34,5 +34,6 @@ module Rollbook
     config.generators.stylesheets = false
     config.generators.javascripts = false
 
+    ActionView::Base.field_error_proc = Proc.new { |html_tag, instance| html_tag }
   end
 end

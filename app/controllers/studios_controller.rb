@@ -69,6 +69,6 @@ class StudiosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def studio_params
-      params.require(:studio).permit(:name, :note, :school_id)
+      params.require(:studio).permit(:name, :note, :school_id, :open_date, :close_date)
     end
 end

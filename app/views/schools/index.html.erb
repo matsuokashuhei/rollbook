@@ -9,8 +9,8 @@
         <th><%= t("activerecord.attributes.school.address") %></th>
         <th><%= t("activerecord.attributes.school.phone") %></th>
         <% if false %>
-          <th><%= t("activerecord.attributes.school.start_date") %></th>
-          <th><%= t("activerecord.attributes.school.end_date") %></th>
+          <th><%= t("activerecord.attributes.school.open_date") %></th>
+          <th><%= t("activerecord.attributes.school.close_date") %></th>
           <th><%= t("activerecord.attributes.school.note") %></th>
         <% end %>
         <th></th>
@@ -27,13 +27,35 @@
           <td><%= school.address %></td>
           <td><%= school.phone %></td>
           <% if false %>
-            <td><%= school.start_date %></td>
-            <td><%= school.end_date %></td>
+            <td><%= school.open_date %></td>
+            <td><%= school.close_date %></td>
             <td><%= school.note %></td>
           <% end %>
           <td><%= link_to t("views.buttons.show"), school, class: "btn btn-default" %></td>
           <td><%= link_to t("views.buttons.edit"), edit_school_path(school), class: "btn btn-default" %></td>
+          <% if false %>
           <td><%= link_to t("views.buttons.destroy"), school, method: :delete, data: { confirm: t("views.messages.confirms.destroy") }, class: "btn btn-default" %></td>
+          <% end %>
+          <td>
+            <a data-toggle="modal" href="#school_<%= school.id %>" class="btn btn-default"><%= t("views.buttons.destroy") %></a>
+            <div class="modal fade" id="school_<%= school.id %>">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">確認</h4>
+                  </div>
+                  <div class="modal-body">
+                    削除してよいですか？
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">閉 じ る</button>
+                    <%= link_to t("views.buttons.destroy"), school, method: :delete, class: "btn btn-default" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
         </tr>
       <% end %>
     </tbody>
