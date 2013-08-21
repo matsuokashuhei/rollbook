@@ -1,0 +1,21 @@
+ja:
+  activerecord:
+    models:
+      school: スクール
+      studio: スタジオ
+    attributes:
+      school:
+        id: ID
+        name: 名前
+        zip: 郵便番号
+        address: 住所
+        phone: 電話番号
+        note: メモ
+        start_date: 開始日
+        end_date: 終了日
+      studio:
+        id: ID
+        name: 名前
+        start_date: 開始日
+        end_date: 終了日
+

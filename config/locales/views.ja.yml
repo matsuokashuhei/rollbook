@@ -1,0 +1,14 @@
+ja:
+  views:
+    buttons:
+      new: 登録する
+      show: 見　　る
+      edit: 変更する
+      destroy: 削除する
+      create: 保存する
+      back: 戻　　る
+    messages:
+      confirms:
+        destroy: 削除してよいですか？
+
+

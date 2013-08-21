@@ -13,4 +13,15 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require bootstrap.min
+//= require bootstrap-datepicker
 //= require_tree .
+
+$(document).on("focus", "[data-behaviour~='datepicker']", function(e) {
+  $(this).datepicker({
+    "format": "yyyy/mm/dd",
+    "autoclose": true,
+    "weekStart": 1,
+    "language": "ja"});
+  });
+

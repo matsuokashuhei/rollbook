@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <div class="panel panel-default">
-  <div class="panel-heading">Show school</div>
+  <!--<div class="panel-heading">Show school</div>-->
   <div class="panel-body">
     <div class="form-group">
       <%= label_tag :name %><br>
@@ -20,12 +20,20 @@
       <%= text_field_tag :phone, @school.phone, class: "form-control", disabled: "disabled" %>
     </div>
     <div class="form-group">
+      <%= label_tag :start_date %><br>
+      <%= text_field_tag :start_date,  @school.start_date, class: "form-control", disabled: "disabled" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag :end_date %><br>
+      <%= text_field_tag :end_date, @school.end_date, class: "form-control", disabled: "disabled" %>
+    </div>
+    <div class="form-group">
       <%= label_tag :note %><br>
       <%= text_area :note, @school.note, class: "form-control", disabled: "disabled" %>
     </div>
 
-    <%= link_to 'Edit', edit_school_path(@school), class: "btn btn-default pull-right" %>
-    <%= link_to 'Back', schools_path, class: "btn btn-default pull-left" %>
+    <%= link_to t("views.buttons.back"), schools_path, class: "btn btn-default pull-left" %>
+    <%= link_to t("views.buttons.edit"), edit_school_path(@school), class: "btn btn-default pull-right" %>
   </div>
 </div>
 
