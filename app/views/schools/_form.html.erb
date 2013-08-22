@@ -1,51 +1,30 @@
 <%= form_for(@school, { roll: "form" }) do |f| %>
-  <% if @school.errors.any? %>
-    <div class="alert alert-danger alert-dismissable">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <%= t("views.messages.validates.title") %>
-      <ul>
-      <% @school.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <% if false %>
-    <div class="form-group <%= 'has-error' if @school.errors[:name].present? %>">
-      <%= f.label :name, class: "control-label" %><br>
-      <%= f.text_field :name, class: "form-control" %>
-      <% @school.errors.full_messages_for(:name).each do |message| %>
-        <span class="help-block"><%= message %></span>
-      <% end %>
-    </div>
-    <div class="form-group <%= 'has-error' if @school.errors[:zip].present? %>">
-      <%= f.label :zip, class: "control-label"  %><br>
-      <%= f.text_field :zip, class: "form-control" %>
-    </div>
-    <div class="form-group">
-      <%= f.label :address, class: "control-label"  %><br>
-      <%= f.text_field :address, class: "form-control" %>
-    </div>
-    <div class="form-group">
-      <%= f.label :phone, class: "control-label"  %><br>
-      <%= f.text_field :phone, class: "form-control" %>
-    </div>
-  <% end %>
-  <% [:name, :zip, :address, :phone].each do |name| %>
-    <div class="form-group <%= 'has-error' if @school.errors[name].present? %>">
-      <%= f.label name, class: "control-label" %><br>
-      <%= f.text_field name, class: "form-control" %>
-    </div>
-  <% end %>
+  <%= render "shared/errors", object: @school %>
+  <div class="form-group <%= 'has_error' if @school.errors[:name].present? %>">
+    <%= f.label :name, class: "control-label" %><br>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  <div class="form-group <%= 'has_error' if @school.errors[:zip].present? %>">
+    <%= f.label :zip, class: "control-label"  %><br>
+    <%= f.text_field :zip, class: "form-control" %>
+  </div>
+  <div class="form-group <%= 'has_error' if @school.errors[:address].present? %>">
+    <%= f.label :address, class: "control-label" %><br>
+    <%= f.text_field :address, class: "form-control" %>
+  </div>
+  <div class="form-group <%= 'has_error' if @school.errors[:phone].present? %>">
+    <%= f.label :phone, class: "control-label"  %><br>
+    <%= f.phone_field :phone, class: "form-control" %>
+  </div>
   <div class="form-group <%= 'has_error' if @school.errors[:open_date].present? %>">
     <%= f.label :open_date, class: "control-label"  %><br>
     <%= f.text_field :open_date, class: "form-control", "data-behaviour" => "datepicker" %>
   </div>
-  <div class="form-group <%= 'has_error' if @school.errors[:open_date].present? %>">
+  <div class="form-group <%= 'has_error' if @school.errors[:close_date].present? %>">
     <%= f.label :close_date, class: "control-label"  %><br>
     <%= f.text_field :close_date, class: "form-control", "data-behaviour" => "datepicker" %>
   </div>
-  <div class="form-group <%= 'has_error' if @school.errors[:open_date].present? %>">
+  <div class="form-group <%= 'has_error' if @school.errors[:note].present? %>">
     <%= f.label :note, class: "control-label"  %><br>
     <%= f.text_area :note, class: "form-control" %>
   </div>

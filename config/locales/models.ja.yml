@@ -3,6 +3,7 @@ ja:
     models:
       school: スクール
       studio: スタジオ
+      instructor: インストラクター
     attributes:
       school:
         id: ID
@@ -16,6 +17,18 @@ ja:
       studio:
         id: ID
         name: 名前
+        note: メモ
         open_date: 開始日
         close_date: 終了日
+        school_id: スクール
+      instructor:
+        id: ID
+        name: 名前
+        kana: ふりかな
+        team: チーム
+        phone: 電話番号
+        email_pc: Eメール (PC)
+        email_mobile: Eメール (モバイル)
+
+
 

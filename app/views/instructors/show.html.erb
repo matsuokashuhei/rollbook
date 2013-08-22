@@ -1,0 +1,36 @@
+<%= render "shared/notice" %>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="form-group">
+      <%= label_tag Instructor.human_attribute_name :name %><br />
+      <%= text_field_tag :name, @instructor.name, class: "form-control", disabled: "disabled" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag Instructor.human_attribute_name :kana %><br />
+      <%= text_field_tag :kana, @instructor.kana, class: "form-control", disabled: "disabled" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag Instructor.human_attribute_name :team %><br />
+      <%= text_field_tag :team, @instructor.team, class: "form-control", disabled: "disabled" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag Instructor.human_attribute_name :phone %><br />
+      <%= text_field_tag :phone, @instructor.phone, class: "form-control", disabled: "disabled" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag Instructor.human_attribute_name :email_pc %><br />
+      <%= text_field_tag :email_pc, @instructor.email_pc, class: "form-control", disabled: "disabled" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag Instructor.human_attribute_name :email_mobile %><br />
+      <%= text_field_tag :email_mobile, @instructor.email_mobile, class: "form-control", disabled: "disabled" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag Instructor.human_attribute_name :note %><br />
+      <%= text_field_tag :note, @instructor.note, class: "form-control", disabled: "disabled" %>
+    </div>
+
+    <%= link_to t("views.buttons.back"), instructors_path, class: "btn btn-default pull-left" %>
+    <%= link_to t("views.buttons.edit"), edit_instructor_path(@instructor), class: "btn btn-default pull-right" %>
+  </div>
+</div>

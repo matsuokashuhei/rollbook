@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Studio:</strong>
+  <%= @timetable.studio_id %>
+</p>
+
+<p>
+  <strong>Cwday:</strong>
+  <%= @timetable.cwday %>
+</p>
+
+<p>
+  <strong>Time slot:</strong>
+  <%= @timetable.time_slot_id %>
+</p>
+
+<%= link_to 'Edit', edit_timetable_path(@timetable) %> |
+<%= link_to 'Back', timetables_path %>

@@ -1,5 +1,3 @@
-<!--<h1>Listing schools</h1>-->
-
 <div class="table-responsive">
   <table class="table">
     <thead>
@@ -33,34 +31,11 @@
           <% end %>
           <td><%= link_to t("views.buttons.show"), school, class: "btn btn-default" %></td>
           <td><%= link_to t("views.buttons.edit"), edit_school_path(school), class: "btn btn-default" %></td>
-          <% if false %>
-          <td><%= link_to t("views.buttons.destroy"), school, method: :delete, data: { confirm: t("views.messages.confirms.destroy") }, class: "btn btn-default" %></td>
-          <% end %>
-          <td>
-            <a data-toggle="modal" href="#school_<%= school.id %>" class="btn btn-default"><%= t("views.buttons.destroy") %></a>
-            <div class="modal fade" id="school_<%= school.id %>">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">確認</h4>
-                  </div>
-                  <div class="modal-body">
-                    削除してよいですか？
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">閉 じ る</button>
-                    <%= link_to t("views.buttons.destroy"), school, method: :delete, class: "btn btn-default" %>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </td>
+          <td><%= render "shared/delete_link", object: school %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
-<br>
-
+<br />
 <%= link_to t("views.buttons.new"), new_school_path, class: "btn btn-default" %>

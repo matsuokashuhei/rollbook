@@ -1,31 +1,26 @@
-<h1>Listing studios</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Note</th>
-      <th>School</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @studios.each do |studio| %>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= studio.name %></td>
-        <td><%= studio.note %></td>
-        <td><%= studio.school_id %></td>
-        <td><%= link_to 'Show', studio %></td>
-        <td><%= link_to 'Edit', edit_studio_path(studio) %></td>
-        <td><%= link_to 'Destroy', studio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th><%= t("activerecord.attributes.studio.school_id") %></th>
+        <th><%= t("activerecord.attributes.studio.name") %></th>
+        <th></th>
+        <th></th>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-
+    </thead>
+    <tbody>
+      <% @studios.each do |studio| %>
+        <tr>
+          <td><%= studio.school.name %></td>
+          <td><%= studio.name %></td>
+          <td><%= link_to t("views.buttons.show"), studio, class: "btn btn-default" %></td>
+          <td><%= link_to t("views.buttons.edit"), edit_studio_path(studio), class: "btn btn-default" %></td>
+          <td><%= render "shared/delete_link", object: studio %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 <br>
-
-<%= link_to 'New Studio', new_studio_path %>
+<%= link_to t("views.buttons.new"), new_studio_path, class: "btn btn-default" %>

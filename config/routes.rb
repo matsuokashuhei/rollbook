@@ -1,4 +1,18 @@
 Rollbook::Application.routes.draw do
+  resources :courses
+
+  resources :age_groups
+
+  resources :levels
+
+  resources :dance_styles
+
+  resources :instructors
+
+  resources :timetables
+
+  resources :time_slots
+
   resources :studios
 
   resources :schools

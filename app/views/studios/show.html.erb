@@ -1,19 +1,28 @@
-<p id="notice"><%= notice %></p>
+<%= render "shared/notice" %>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="form-group">
+      <%= label_tag Studio.human_attribute_name :school_id %><br>
+      <%= text_field_tag :school_id, @studio.school.name, class: "form-control", disabled: "disabled" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag School.human_attribute_name :name %><br>
+      <%= text_field_tag :name, @studio.name, class: "form-control", disabled: "disabled" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag School.human_attribute_name :open_date %><br>
+      <%= text_field_tag :open_date,  @studio.open_date, class: "form-control", disabled: "disabled" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag School.human_attribute_name :close_date %><br>
+      <%= text_field_tag :close_date, @studio.close_date, class: "form-control", disabled: "disabled" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag School.human_attribute_name :note %><br>
+      <%= text_area :note, @studio.note, class: "form-control", disabled: "disabled" %>
+    </div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @studio.name %>
-</p>
-
-<p>
-  <strong>Note:</strong>
-  <%= @studio.note %>
-</p>
-
-<p>
-  <strong>School:</strong>
-  <%= @studio.school_id %>
-</p>
-
-<%= link_to 'Edit', edit_studio_path(@studio) %> |
-<%= link_to 'Back', studios_path %>
+    <%= link_to t("views.buttons.back"), studios_path, class: "btn btn-default pull-left" %>
+    <%= link_to t("views.buttons.edit"), edit_studio_path(@studio), class: "btn btn-default pull-right" %>
+  </div>
+</div>

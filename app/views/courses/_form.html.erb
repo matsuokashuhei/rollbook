@@ -1,0 +1,53 @@
+<%= form_for(@course) do |f| %>
+  <% if @course.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
+
+      <ul>
+      <% @course.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :timetable_id %><br>
+    <%= f.number_field :timetable_id %>
+  </div>
+  <div class="field">
+    <%= f.label :instructor_id %><br>
+    <%= f.number_field :instructor_id %>
+  </div>
+  <div class="field">
+    <%= f.label :dance_style_id %><br>
+    <%= f.number_field :dance_style_id %>
+  </div>
+  <div class="field">
+    <%= f.label :level_id %><br>
+    <%= f.number_field :level_id %>
+  </div>
+  <div class="field">
+    <%= f.label :age_group_id %><br>
+    <%= f.number_field :age_group_id %>
+  </div>
+  <div class="field">
+    <%= f.label :open_date %><br>
+    <%= f.date_select :open_date %>
+  </div>
+  <div class="field">
+    <%= f.label :close_date %><br>
+    <%= f.date_select :close_date %>
+  </div>
+  <div class="field">
+    <%= f.label :note %><br>
+    <%= f.text_area :note %>
+  </div>
+  <div class="field">
+    <%= f.label :monthly_fee %><br>
+    <%= f.number_field :monthly_fee %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

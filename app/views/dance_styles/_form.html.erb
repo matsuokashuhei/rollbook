@@ -1,0 +1,21 @@
+<%= form_for(@dance_style) do |f| %>
+  <% if @dance_style.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@dance_style.errors.count, "error") %> prohibited this dance_style from being saved:</h2>
+
+      <ul>
+      <% @dance_style.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

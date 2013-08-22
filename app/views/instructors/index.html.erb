@@ -1,0 +1,33 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= t("activerecord.attributes.instructor.name") %></th>
+        <th><%= t("activerecord.attributes.instructor.team") %></th>
+        <th><%= t("activerecord.attributes.instructor.phone") %></th>
+        <th><%= t("activerecord.attributes.instructor.email_pc") %></th>
+        <th><%= t("activerecord.attributes.instructor.email_mobile") %></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @instructors.each do |instructor| %>
+        <tr>
+          <td><small><%= instructor.kana %></small><br/><%= instructor.name %></td>
+          <td><%= instructor.team %></td>
+          <td><%= instructor.phone %></td>
+          <td><%= instructor.email_pc %></td>
+          <td><%= instructor.email_mobile %></td>
+          <td><%= link_to t("views.buttons.show"), instructor, class: "btn btn-default" %></td>
+          <td><%= link_to t("views.buttons.edit"), edit_instructor_path(instructor), class: "btn btn-default" %></td>
+          <td><%= render "shared/delete_link", object: instructor %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<br />
+
+<%= link_to t("views.buttons.new"), new_instructor_path, class: "btn btn-default" %>

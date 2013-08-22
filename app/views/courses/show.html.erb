@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Timetable:</strong>
+  <%= @course.timetable_id %>
+</p>
+
+<p>
+  <strong>Instructor:</strong>
+  <%= @course.instructor_id %>
+</p>
+
+<p>
+  <strong>Dance style:</strong>
+  <%= @course.dance_style_id %>
+</p>
+
+<p>
+  <strong>Level:</strong>
+  <%= @course.level_id %>
+</p>
+
+<p>
+  <strong>Age group:</strong>
+  <%= @course.age_group_id %>
+</p>
+
+<p>
+  <strong>Open date:</strong>
+  <%= @course.open_date %>
+</p>
+
+<p>
+  <strong>Close date:</strong>
+  <%= @course.close_date %>
+</p>
+
+<p>
+  <strong>Note:</strong>
+  <%= @course.note %>
+</p>
+
+<p>
+  <strong>Monthly fee:</strong>
+  <%= @course.monthly_fee %>
+</p>
+
+<%= link_to 'Edit', edit_course_path(@course) %> |
+<%= link_to 'Back', courses_path %>

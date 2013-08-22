@@ -11,10 +11,57 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130821225418) do
+ActiveRecord::Schema.define(version: 20130821235631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "age_groups", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "order_no"
+  end
+
+  create_table "courses", force: true do |t|
+    t.integer  "timetable_id"
+    t.integer  "instructor_id"
+    t.integer  "dance_style_id"
+    t.integer  "level_id"
+    t.integer  "age_group_id"
+    t.date     "open_date"
+    t.date     "close_date"
+    t.text     "note"
+    t.integer  "monthly_fee"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "dance_styles", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "order_no"
+  end
+
+  create_table "instructors", force: true do |t|
+    t.string   "name"
+    t.string   "kana"
+    t.string   "team"
+    t.string   "phone"
+    t.string   "email_pc"
+    t.string   "email_mobile"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "levels", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "order_no"
+  end
 
   create_table "schools", force: true do |t|
     t.string   "name"
@@ -36,6 +83,21 @@ ActiveRecord::Schema.define(version: 20130821225418) do
     t.datetime "updated_at"
     t.date     "open_date"
     t.date     "close_date"
+  end
+
+  create_table "time_slots", force: true do |t|
+    t.time     "start_time"
+    t.time     "end_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "timetables", force: true do |t|
+    t.integer  "studio_id"
+    t.integer  "cwday"
+    t.integer  "time_slot_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
