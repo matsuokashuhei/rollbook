@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130821235631) do
+ActiveRecord::Schema.define(version: 20130823002859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(version: 20130821235631) do
 
   create_table "timetables", force: true do |t|
     t.integer  "studio_id"
-    t.integer  "cwday"
+    t.integer  "weekday"
     t.integer  "time_slot_id"
     t.datetime "created_at"
     t.datetime "updated_at"

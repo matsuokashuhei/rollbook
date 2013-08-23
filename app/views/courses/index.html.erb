@@ -1,43 +1,49 @@
-<h1>Listing courses</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Timetable</th>
-      <th>Instructor</th>
-      <th>Dance style</th>
-      <th>Level</th>
-      <th>Age group</th>
-      <th>Open date</th>
-      <th>Close date</th>
-      <th>Note</th>
-      <th>Monthly fee</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @courses.each do |course| %>
-      <tr>
-        <td><%= course.timetable_id %></td>
-        <td><%= course.instructor_id %></td>
-        <td><%= course.dance_style_id %></td>
-        <td><%= course.level_id %></td>
-        <td><%= course.age_group_id %></td>
-        <td><%= course.open_date %></td>
-        <td><%= course.close_date %></td>
-        <td><%= course.note %></td>
-        <td><%= course.monthly_fee %></td>
-        <td><%= link_to 'Show', course %></td>
-        <td><%= link_to 'Edit', edit_course_path(course) %></td>
-        <td><%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Course', new_course_path %>
+<ul class="nav nav-tabs">
+  <% @schools.each do |school| %>
+    <li class="<%= 'active' if school.id == @active_school_id %>">
+      <a href="#<%= school.id %>" data-toggle="tab"><%= school.name %></a>
+    </li>
+  <% end %>
+</ul>
+<div class="tab-content">
+  <% @schools.each do |school| %>
+    <div class="tab-pane <%= 'active' if school.id == @active_school_id %>" id="<%= school.id %>">
+      <% school.studios.each do |studio| %>
+        <h4><%= studio.name %></h4>
+        <div class"table-responsive">
+          <table class="table">
+            <thead>
+              <th width="9%"></th>
+              <% 1.step(7) do |cwday| %>
+                <th width="13%"><%= weekday_ja(cwday) %></th>
+              <% end %>
+            </thead>
+            <tbody>
+              <% studio.timetables.each do |timetable| %>
+                <% if timetable.weekday == 1 %>
+                  <tr>
+                    <th><%= timetable.time_slot.start_time.strftime("%H:%M") %></th>
+                <% end %>
+                <td>
+                  <% course = @courses.find {|course| course.timetable_id == timetable.id } %>
+                  <% if course.present? %>
+                    <%= link_to course do %>
+                      <%= course.dance_style.name %><br />
+                      <%= course.level.name %><br />
+                      <%= course.instructor.name %><br />
+                    <% end %>
+                  <% else %>
+                    なし
+                  <% end %>
+                </td>
+                <% if timetable.weekday == 7 %>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

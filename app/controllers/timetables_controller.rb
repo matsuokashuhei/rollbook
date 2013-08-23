@@ -69,6 +69,6 @@ class TimetablesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def timetable_params
-      params.require(:timetable).permit(:studio_id, :cwday, :time_slot_id)
+      params.require(:timetable).permit(:studio_id, :weekday, :time_slot_id)
     end
 end

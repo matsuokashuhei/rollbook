@@ -4,7 +4,11 @@ class CoursesController < ApplicationController
   # GET /courses
   # GET /courses.json
   def index
-    @courses = Course.all
+    #@schools = School.joins(studios: [timetables: :time_slot])
+    @schools = School.includes(studios: [timetables: [:courses, :time_slot]]).order("schools.open_date, studios.open_date, time_slots.start_time, timetables.weekday" )
+    @courses = Course.joins(:instructor, :dance_style, :level).date_of(Date.today)
+    @active_school_id = School.first.id
+    #@courses = Course.all
   end
 
   # GET /courses/1
