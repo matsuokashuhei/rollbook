@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs">
+<ul class="nav nav-pills">
   <% @schools.each do |school| %>
     <li class="<%= 'active' if school.id == @active_school_id %>">
       <a href="#<%= school.id %>" data-toggle="tab"><%= school.name %></a>
@@ -9,7 +9,7 @@
   <% @schools.each do |school| %>
     <div class="tab-pane <%= 'active' if school.id == @active_school_id %>" id="<%= school.id %>">
       <% school.studios.each do |studio| %>
-        <h4><%= studio.name %></h4>
+        <h3><%= studio.name %></h3>
         <div class="table-responsive">
           <table class="table">
             <thead>

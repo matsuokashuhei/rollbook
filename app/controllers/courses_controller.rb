@@ -4,16 +4,19 @@ class CoursesController < ApplicationController
   # GET /courses
   # GET /courses.json
   def index
-    #@schools = School.joins(studios: [timetables: :time_slot])
+    if params[:date].blank?
+      redirect_to courses_url(date: Date.today.strftime("%Y%m%d"))
+      return
+    end
     @schools = School.includes(studios: [timetables: [:courses, :time_slot]]).order("schools.open_date, studios.open_date, time_slots.start_time, timetables.weekday" )
-    @courses = Course.joins(:instructor, :dance_style, :level).date_of(Date.today)
+    @courses = Course.joins(:instructor, :dance_style, :level).date_is(params[:date].to_date)
     @active_school_id = School.first.id
-    #@courses = Course.all
   end
 
   # GET /courses/1
   # GET /courses/1.json
   def show
+    @course = Course.joins([timetable: [[studio: :school], :time_slot]], :instructor, :dance_style, :level).find(params[:id])
   end
 
   # GET /courses/new

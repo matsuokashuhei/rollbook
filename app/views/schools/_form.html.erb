@@ -1,30 +1,30 @@
 <%= form_for(@school, { roll: "form" }) do |f| %>
   <%= render "shared/errors", object: @school %>
-  <div class="form-group <%= 'has_error' if @school.errors[:name].present? %>">
+  <div class="form-group <%= 'has-error' if @school.errors[:name].present? %>">
     <%= f.label :name, class: "control-label" %><br>
     <%= f.text_field :name, class: "form-control" %>
   </div>
-  <div class="form-group <%= 'has_error' if @school.errors[:zip].present? %>">
+  <div class="form-group <%= 'has-error' if @school.errors[:zip].present? %>">
     <%= f.label :zip, class: "control-label"  %><br>
     <%= f.text_field :zip, class: "form-control" %>
   </div>
-  <div class="form-group <%= 'has_error' if @school.errors[:address].present? %>">
+  <div class="form-group <%= 'has-error' if @school.errors[:address].present? %>">
     <%= f.label :address, class: "control-label" %><br>
     <%= f.text_field :address, class: "form-control" %>
   </div>
-  <div class="form-group <%= 'has_error' if @school.errors[:phone].present? %>">
+  <div class="form-group <%= 'has-error' if @school.errors[:phone].present? %>">
     <%= f.label :phone, class: "control-label"  %><br>
     <%= f.phone_field :phone, class: "form-control" %>
   </div>
-  <div class="form-group <%= 'has_error' if @school.errors[:open_date].present? %>">
+  <div class="form-group <%= 'has-error' if @school.errors[:open_date].present? %>">
     <%= f.label :open_date, class: "control-label"  %><br>
     <%= f.text_field :open_date, class: "form-control", "data-behaviour" => "datepicker" %>
   </div>
-  <div class="form-group <%= 'has_error' if @school.errors[:close_date].present? %>">
+  <div class="form-group <%= 'has-error' if @school.errors[:close_date].present? %>">
     <%= f.label :close_date, class: "control-label"  %><br>
     <%= f.text_field :close_date, class: "form-control", "data-behaviour" => "datepicker" %>
   </div>
-  <div class="form-group <%= 'has_error' if @school.errors[:note].present? %>">
+  <div class="form-group <%= 'has-error' if @school.errors[:note].present? %>">
     <%= f.label :note, class: "control-label"  %><br>
     <%= f.text_area :note, class: "form-control" %>
   </div>

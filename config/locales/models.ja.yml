@@ -4,9 +4,10 @@ ja:
       school: スクール
       studio: スタジオ
       instructor: インストラクター
+      time_slot: 時間
+      course: クラス
     attributes:
       school:
-        id: ID
         name: 名前
         zip: 郵便番号
         address: 住所
@@ -15,14 +16,12 @@ ja:
         open_date: 開始日
         close_date: 終了日
       studio:
-        id: ID
         name: 名前
         note: メモ
         open_date: 開始日
         close_date: 終了日
         school_id: スクール
       instructor:
-        id: ID
         name: 名前
         kana: ふりかな
         team: チーム
@@ -30,6 +29,20 @@ ja:
         email_pc: Eメール (PC)
         email_mobile: Eメール (モバイル)
         note: メモ
-
+      timetable:
+        weekday: 曜日
+        studio_id: スタジオ
+        time_slot_id: 時間
+      time_slot:
+        start_time: 開始時間
+        end_time: 終了時間
+      course:
+        dance_style_id: ダンスの種類
+        level_id: 難易度
+        instructor_id: インストラクター
+        level: 難易度
+        open_date: 開始日
+        close_date: 終了日
+        monthly_fee: 料金
 
 

@@ -21,6 +21,17 @@ $(document).on("focus", "[data-behaviour~='datepicker']", function(e) {
   $(this).datepicker({
     "autoclose": true,
     "weekStart": 1,
-    "language": "ja"});
+    "language": "ja"
   });
+});
+
+$(document).on("focus", "[data-behaviour~='monthpicker']", function(e) {
+  $(this).datepicker({
+    format: "yyyy-mm",
+    startView: 1,
+    minViewMode: 1,
+    autoclose: true,
+    language: "ja"
+  });
+});
 

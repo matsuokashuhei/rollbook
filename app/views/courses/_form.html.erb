@@ -1,53 +1,62 @@
-<%= form_for(@course) do |f| %>
-  <% if @course.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
-
-      <ul>
-      <% @course.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<%= form_for(@course, html: { role: "form", class: "form-horizontal" }) do |f| %>
+  <%= render "shared/errors", object: @course %>
+  <div class="form-group">
+    <label class="col-md-2 control-label"><%= t("activerecord.models.school") %></label>
+    <div class="col-md-5">
+      <%= text_field_tag nil, @course.timetable.studio.school.name,  class: "form-control", disabled: "disabled" %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :timetable_id %><br>
-    <%= f.number_field :timetable_id %>
   </div>
-  <div class="field">
-    <%= f.label :instructor_id %><br>
-    <%= f.number_field :instructor_id %>
+  <div class="form-group">
+    <label class="col-md-2 control-label"><%= t("activerecord.models.studio") %></label>
+    <div class="col-md-5">
+      <%= text_field_tag nil, @course.timetable.studio.name,  class: "form-control", disabled: "disabled" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :dance_style_id %><br>
-    <%= f.number_field :dance_style_id %>
+  <div class="form-group">
+    <label class="col-md-2 control-label"><%= t("activerecord.attributes.timetable.weekday") %></label>
+    <div class="col-md-2">
+      <%= text_field_tag nil, weekday_ja(@course.timetable.weekday),  class: "form-control", disabled: "disabled" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :level_id %><br>
-    <%= f.number_field :level_id %>
+  <div class="form-group">
+    <label class="col-md-2 control-label"><%= t("activerecord.models.time_slot") %></label>
+    <div class="col-md-2">
+      <%= text_field_tag nil, @course.timetable.time_slot.start_time,  class: "form-control", disabled: "disabled" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :age_group_id %><br>
-    <%= f.number_field :age_group_id %>
+  <div class="form-group <%= 'has-error' if @course.errors[:dance_style_id].present? %>">
+    <label class="col-md-2 control-label"><%= t("activerecord.models.course") %></label>
+    <div class="col-md-3">
+      <%= f.collection_select :dance_style_id, DanceStyle.all, :id, :name, { prompt: "" }, { class: "form-control" } %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :open_date %><br>
-    <%= f.date_select :open_date %>
+  <div class="form-group <%= 'has-error' if @course.errors[:level_id].present? %>">
+    <div class="col-md-2 col-md-offset-2">
+      <%= f.collection_select :level_id, Level.all, :id, :name, { prompt: "" }, { class: "form-control" } %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :close_date %><br>
-    <%= f.date_select :close_date %>
+  <div class="form-group <%= 'has-error' if @course.errors[:instructor_id].present? %>">
+    <div class="col-md-5 col-md-offset-2">
+      <%= f.collection_select :instructor_id, Instructor.all, :id, :name, { prompt: "" }, { class: "form-control" } %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :note %><br>
-    <%= f.text_area :note %>
+  <div class="form-group <%= 'has-error' if @course.errors[:monthly_fee].present? %>">
+    <%= f.label :monthly_fee, class: "col-md-2 control-label" %>
+    <div class="col-md-2">
+      <%= f.number_field :monthly_fee,  class: "form-control" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :monthly_fee %><br>
-    <%= f.number_field :monthly_fee %>
+  <div class="form-group <%= 'has-error' if @course.errors[:open_date].present? %>">
+    <%= f.label :open_date, class: "col-md-2 control-label" %>
+    <div class="col-md-2">
+      <%= f.text_field :open_date,  class: "form-control", "data-behaviour" => "monthpicker" %>
+    </div>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-group <%= 'has-error' if @course.errors[:close_date].present? %>">
+    <%= f.label :close_date, class: "col-md-2 control-label" %>
+    <div class="col-md-2">
+      <%= f.text_field :close_date,  class: "form-control", "data-behaviour" => "monthpicker" %>
+    </div>
   </div>
+  <%= f.submit t("views.buttons.create"), class: "btn btn-default pull-right" %>
 <% end %>

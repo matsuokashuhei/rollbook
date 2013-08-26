@@ -1,6 +1,6 @@
-<h1>Editing course</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', @course %> |
-<%= link_to 'Back', courses_path %>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= render 'form' %>
+    <%= link_to t("views.buttons.back"), courses_path, class: "btn btn-default pull-left" %>
+  </div>
+</div>
