@@ -6,6 +6,7 @@ ja:
       instructor: インストラクター
       time_slot: 時間
       course: クラス
+      member: 会員
     attributes:
       school:
         name: 名前
@@ -23,7 +24,7 @@ ja:
         school_id: スクール
       instructor:
         name: 名前
-        kana: ふりかな
+        kana: ふりがな
         team: チーム
         phone: 電話番号
         email: Eメール
@@ -45,5 +46,27 @@ ja:
         open_date: 開始日
         close_date: 終了日
         monthly_fee: 料金
+      member:
+        first_name: 姓 (漢字)
+        last_name: 名 (漢字)
+        first_name_kana: 姓 (ふりがな)
+        last_name_kana: 名 (ふりがな)
+        gender: 性別
+        birth_date: 生年月日
+        zip: 郵便番号
+        address: 住所
+        phone: 電話番号
+        email_pc: Eメール (PC)
+        email_mobile: Eメール (モバイル)
+        enter_date: 入会日
+        leave_date: 退会日
+        bank_account_id: お支払い口座
+        nearby_station: 最寄り駅
+        note: メモ
+        status: 状態
+        name: 名前
+        kana: ふりがな
+        email: Eメール
+
 
 
