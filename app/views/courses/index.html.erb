@@ -9,13 +9,13 @@
   <% @schools.each do |school| %>
     <div class="tab-pane <%= 'active' if school.id == @active_school_id %>" id="<%= school.id %>">
       <% school.studios.each do |studio| %>
-        <h3><%= studio.name %></h3>
+        <h4><%= studio.name %></h4>
         <div class="table-responsive">
           <table class="table">
             <thead>
-              <th width="9%"></th>
+              <th style="width: 9%;"></th>
               <% 1.step(7) do |cwday| %>
-                <th width="13%"><%= weekday_ja(cwday) %></th>
+                <th style="width: 13%;"><%= weekday_ja(cwday) %></th>
               <% end %>
             </thead>
             <tbody>
@@ -33,7 +33,7 @@
                       <%= course.instructor.name %><br />
                     <% end %>
                   <% else %>
-                    なし
+                    <%= link_to t("views.buttons.new"), new_course_path(timetable_id: timetable.id), class: "btn btn-link" %>
                   <% end %>
                 </td>
                 <% if timetable.weekday == 7 %>

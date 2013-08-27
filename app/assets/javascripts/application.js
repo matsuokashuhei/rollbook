@@ -19,9 +19,9 @@
 
 $(document).on("focus", "[data-behaviour~='datepicker']", function(e) {
   $(this).datepicker({
-    "autoclose": true,
-    "weekStart": 1,
-    "language": "ja"
+    autoclose: true,
+    weekStart: 1,
+    language: "ja"
   });
 });
 

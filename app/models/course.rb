@@ -1,3 +1,21 @@
+# == Schema Information
+#
+# Table name: courses
+#
+#  id             :integer          not null, primary key
+#  timetable_id   :integer
+#  instructor_id  :integer
+#  dance_style_id :integer
+#  level_id       :integer
+#  age_group_id   :integer
+#  open_date      :date
+#  close_date     :date
+#  note           :text
+#  monthly_fee    :integer
+#  created_at     :datetime
+#  updated_at     :datetime
+#
+
 class Course < ActiveRecord::Base
 
   belongs_to :timetable

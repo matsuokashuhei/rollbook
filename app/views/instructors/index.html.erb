@@ -5,8 +5,10 @@
         <th><%= t("activerecord.attributes.instructor.name") %></th>
         <th><%= t("activerecord.attributes.instructor.team") %></th>
         <th><%= t("activerecord.attributes.instructor.phone") %></th>
+        <% if false %>
         <th><%= t("activerecord.attributes.instructor.email_pc") %></th>
         <th><%= t("activerecord.attributes.instructor.email_mobile") %></th>
+        <% end %>
         <th></th>
         <th></th>
         <th></th>
@@ -18,8 +20,10 @@
           <td><small><%= instructor.kana %></small><br/><%= instructor.name %></td>
           <td><%= instructor.team %></td>
           <td><%= instructor.phone %></td>
+          <% if false %>
           <td><%= instructor.email_pc %></td>
           <td><%= instructor.email_mobile %></td>
+          <% end %>
           <td><%= link_to t("views.buttons.show"), instructor, class: "btn btn-default" %></td>
           <td><%= link_to t("views.buttons.edit"), edit_instructor_path(instructor), class: "btn btn-default" %></td>
           <td><%= render "shared/delete_link", object: instructor %></td>
