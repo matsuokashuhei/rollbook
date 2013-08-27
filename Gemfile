@@ -28,8 +28,9 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
-gem 'will_paginate'
-gem 'will_paginate-bootstrap'
+#gem 'will_paginate'
+#gem 'will_paginate-bootstrap'
+gem 'kaminari'
 
 gem 'annotate', ">=2.5.0"
 

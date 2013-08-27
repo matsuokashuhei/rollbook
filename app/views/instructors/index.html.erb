@@ -2,8 +2,10 @@
   <table class="table">
     <thead>
       <tr>
-        <th><%= t("activerecord.attributes.instructor.name") %></th>
+        <th colspan="2"><%= t("activerecord.attributes.instructor.name") %></th>
+        <% if false %>
         <th><%= t("activerecord.attributes.instructor.team") %></th>
+        <% end %>
         <th><%= t("activerecord.attributes.instructor.phone") %></th>
         <% if false %>
         <th><%= t("activerecord.attributes.instructor.email_pc") %></th>
@@ -18,7 +20,7 @@
       <% @instructors.each do |instructor| %>
         <tr>
           <td><small><%= instructor.kana %></small><br/><%= instructor.name %></td>
-          <td><%= instructor.team %></td>
+          <td><%= "(#{instructor.team})" if instructor.team %></td>
           <td><%= instructor.phone %></td>
           <% if false %>
           <td><%= instructor.email_pc %></td>
@@ -31,7 +33,7 @@
       <% end %>
     </tbody>
   </table>
-  <%= will_paginate @instructors, renderer: BootstrapPagination::Rails, bootstrap: 3 %>
+  <%= paginate @instructors %>
 </div>
 <br />
 

@@ -12,5 +12,8 @@ ja:
         title: 保存に失敗しました。
       confirms:
         destroy: 削除してよいですか？
+    pagination:
+      previous: "← 前へ"
+      next: "次へ →"
 
 

@@ -5,7 +5,7 @@ class InstructorsController < ApplicationController
   # GET /instructors.json
   def index
     #@instructors = Instructor.all
-    @instructors = Instructor.paginate(page: params[:page], per_page: 10)
+    @instructors = Instructor.page(params[:page])
   end
 
   # GET /instructors/1
