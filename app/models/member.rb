@@ -25,4 +25,13 @@
 #
 
 class Member < ActiveRecord::Base
+
+  def full_name
+    "%s　%s" % [last_name, first_name]
+  end
+
+  def full_name_kana
+    "%s　%s" % [last_name_kana, first_name_kana]
+  end
+
 end

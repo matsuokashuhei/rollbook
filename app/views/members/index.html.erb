@@ -1,59 +1,28 @@
-<h1>Listing members</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>First name kana</th>
-      <th>Last name kana</th>
-      <th>Gender</th>
-      <th>Birth date</th>
-      <th>Zip</th>
-      <th>Address</th>
-      <th>Phone</th>
-      <th>Email pc</th>
-      <th>Email mobile</th>
-      <th>Note</th>
-      <th>Enter date</th>
-      <th>Leave date</th>
-      <th>Bank account</th>
-      <th>Status</th>
-      <th>Nearby station</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @members.each do |member| %>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= member.first_name %></td>
-        <td><%= member.last_name %></td>
-        <td><%= member.first_name_kana %></td>
-        <td><%= member.last_name_kana %></td>
-        <td><%= member.gender %></td>
-        <td><%= member.birth_date %></td>
-        <td><%= member.zip %></td>
-        <td><%= member.address %></td>
-        <td><%= member.phone %></td>
-        <td><%= member.email_pc %></td>
-        <td><%= member.email_mobile %></td>
-        <td><%= member.note %></td>
-        <td><%= member.enter_date %></td>
-        <td><%= member.leave_date %></td>
-        <td><%= member.bank_account_id %></td>
-        <td><%= member.status %></td>
-        <td><%= member.nearby_station %></td>
-        <td><%= link_to 'Show', member %></td>
-        <td><%= link_to 'Edit', edit_member_path(member) %></td>
-        <td><%= link_to 'Destroy', member, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th><%= t("activerecord.attributes.member.name") %></th>
+        <th><%= t("activerecord.attributes.member.gender") %></th>
+        <th></th>
+        <th></th>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @members.each do |member| %>
+        <tr>
+          <td><small><%= member.full_name_kana %></small><br/><%= member.full_name %></td>
+          <td><%= member.gender %></td>
+          <td><%= link_to t("views.buttons.show"), member, class: "btn btn-default" %></td>
+          <td><%= link_to t("views.buttons.edit"), edit_member_path(member), class: "btn btn-default" %></td>
+          <td><%= render "shared/delete_link", object: member %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @members %>
+</div>
+<br />
 
-<br>
-
-<%= link_to 'New Member', new_member_path %>
+<%= link_to t("views.buttons.new"), new_member_path, class: "btn btn-default" %>

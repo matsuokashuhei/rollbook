@@ -47,10 +47,10 @@ ja:
         close_date: 終了日
         monthly_fee: 料金
       member:
-        first_name: 姓 (漢字)
-        last_name: 名 (漢字)
-        first_name_kana: 姓 (ふりがな)
-        last_name_kana: 名 (ふりがな)
+        last_name: 姓 (漢字)
+        first_name: 名 (漢字)
+        last_name_kana: 姓 (ふりがな)
+        first_name_kana: 名 (ふりがな)
         gender: 性別
         birth_date: 生年月日
         zip: 郵便番号
