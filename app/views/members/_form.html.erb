@@ -1,5 +1,10 @@
 <%= form_for(@member, html: { role: "form", class: "form-horizontal" }) do |f| %>
   <%= render "shared/errors", object: @member %>
+
+  <% if params[:action] == "show" %>
+    <fieldset disabled>
+  <% end %>
+
   <div class="form-group <%= 'has-error' if @member.errors[:last_name_kana].present? %>">
     <%= f.label t("activerecord.attributes.member.name"), class: "col-md-2 control-label" %>
     <div class="col-md-5">
@@ -97,5 +102,11 @@
       <%= f.number_field :bank_account_id %>
     </div>
   <% end %>
-  <%= f.submit t("views.buttons.create"), class: "btn btn-default pull-right" %>
+
+  <% if params[:action] == "show" %>
+    </fieldset>
+  <% else %>
+    <%= f.submit t("views.buttons.create"), class: "btn btn-default pull-right" %>
+  <% end %>
+
 <% end %>

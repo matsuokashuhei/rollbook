@@ -2,13 +2,13 @@
   <%= render "shared/errors", object: @course %>
   <div class="form-group">
     <label class="col-md-2 control-label"><%= t("activerecord.models.school") %></label>
-    <div class="col-md-5">
+    <div class="col-md-3">
       <%= text_field_tag nil, @course.timetable.studio.school.name,  class: "form-control", disabled: "disabled" %>
     </div>
   </div>
   <div class="form-group">
     <label class="col-md-2 control-label"><%= t("activerecord.models.studio") %></label>
-    <div class="col-md-5">
+    <div class="col-md-3">
       <%= text_field_tag nil, @course.timetable.studio.name,  class: "form-control", disabled: "disabled" %>
     </div>
   </div>
@@ -32,12 +32,12 @@
     </div>
   </div>
   <div class="form-group <%= 'has-error' if @course.errors[:level_id].present? %>">
-    <div class="col-md-2 col-md-offset-2">
+    <div class="col-md-3 col-md-offset-2">
       <%= f.collection_select :level_id, Level.all, :id, :name, { prompt: "" }, { class: "form-control" } %>
     </div>
   </div>
   <div class="form-group <%= 'has-error' if @course.errors[:instructor_id].present? %>">
-    <div class="col-md-5 col-md-offset-2">
+    <div class="col-md-3 col-md-offset-2">
       <%= f.collection_select :instructor_id, Instructor.all, :id, :name, { prompt: "" }, { class: "form-control" } %>
     </div>
   </div>

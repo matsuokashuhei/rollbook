@@ -4,13 +4,13 @@
     <div class="form-horizontal" role="form">
       <div class="form-group">
         <label class="col-md-2 control-label"><%= t("activerecord.models.school") %></label>
-        <div class="col-md-5">
+        <div class="col-md-3">
           <%= text_field_tag :name, @course.timetable.studio.school.name,  class: "form-control", disabled: "disabled" %>
         </div>
       </div>
       <div class="form-group">
         <label class="col-md-2 control-label"><%= t("activerecord.models.studio") %></label>
-        <div class="col-md-5">
+        <div class="col-md-3">
           <%= text_field_tag :name, @course.timetable.studio.name,  class: "form-control", disabled: "disabled" %>
         </div>
       </div>
@@ -33,12 +33,12 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="col-md-2 col-md-offset-2">
+        <div class="col-md-3 col-md-offset-2">
           <%= text_field_tag :name, @course.level.name,  class: "form-control", disabled: "disabled" %>
         </div>
       </div>
       <div class="form-group">
-        <div class="col-md-5 col-md-offset-2">
+        <div class="col-md-3 col-md-offset-2">
           <%= text_field_tag :name, @course.instructor.name,  class: "form-control", disabled: "disabled" %>
         </div>
       </div>
