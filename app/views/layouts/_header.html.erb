@@ -6,7 +6,7 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="#">ROLLBOOK</a>
+    <%= link_to t("views.title"), root_path, class: "navbar-brand" %>
   </div>
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav">
@@ -20,7 +20,7 @@
         </ul>
       </li>
       <% end %>
-      <li><%= link_to "SCHOOLS", schools_path %></li>
+      <li><%= link_to t("activerecord.models.school"), schools_path %></li>
       <li><%= link_to "STUDIOS", studios_path %></li>
       <li><%= link_to "INSTRUCTORS", instructors_path %></li>
       <li><%= link_to "COURSES", courses_path %></li>
