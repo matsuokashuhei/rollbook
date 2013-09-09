@@ -25,6 +25,14 @@
 #
 
 class Member < ActiveRecord::Base
+  has_many :members_courses
+  has_many :courses, through: :members_courses, source: :course
+
+  validates :first_name,
+            :last_name,
+            :first_name_kana,
+            :last_name_kana,
+            presence: true
 
   def full_name
     "%s　%s" % [last_name, first_name]

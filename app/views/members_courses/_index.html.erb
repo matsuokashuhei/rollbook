@@ -1,0 +1,25 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>スクール</th>
+        <th>スタジオ</th>
+        <th>曜日</th>
+        <th>時間</th>
+        <th>クラス</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @member.courses.each do |course| %>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<br />
+<%= link_to t("views.buttons.new"), new_member_members_course_path(@member), class: "btn btn-default" %>

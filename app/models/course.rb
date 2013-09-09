@@ -28,4 +28,8 @@ class Course < ActiveRecord::Base
   }
 
   validates :timetable_id, :instructor_id, :dance_style_id, :level_id, :monthly_fee, :open_date, presence: true
+
+  def name
+    "#{self.dance_style.name}#{self.level.name}　#{self.instructor.name}"
+  end
 end

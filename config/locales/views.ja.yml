@@ -1,5 +1,6 @@
 ja:
   views:
+    title: ROLLBOOK
     buttons:
       new: 登録する
       show: 見　　る
@@ -7,6 +8,8 @@ ja:
       destroy: 削除する
       create: 保存する
       back: 戻　　る
+      close: 閉 じ る
+      select: 選　　ぶ
     messages:
       validates:
         title: 保存に失敗しました。

@@ -1,9 +1,10 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @dance_style.name %>
-</p>
-
-<%= link_to 'Edit', edit_dance_style_path(@dance_style) %> |
-<%= link_to 'Back', dance_styles_path %>
+<% if false %>
+<%= render "shared/notice" %>
+<% end %>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <%= render "form" %>
+    <%= link_to t("views.buttons.back"), dance_styles_path, class: "btn btn-default pull-left" %>
+    <%= link_to t("views.buttons.edit"), edit_dance_style_path(@dance_style), class: "btn btn-default pull-right" %>
+  </div>
+</div>

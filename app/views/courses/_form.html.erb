@@ -1,5 +1,11 @@
 <%= form_for(@course, html: { role: "form", class: "form-horizontal" }) do |f| %>
+
   <%= render "shared/errors", object: @course %>
+
+  <% if params[:action] == "show" %>
+    <fieldset disabled>
+  <% end %>
+
   <div class="form-group">
     <label class="col-md-2 control-label"><%= t("activerecord.models.school") %></label>
     <div class="col-md-3">
@@ -59,5 +65,11 @@
       <%= f.text_field :close_date,  class: "form-control", "data-behaviour" => "datepicker" %>
     </div>
   </div>
-  <%= f.submit t("views.buttons.create"), class: "btn btn-default pull-right" %>
+
+  <% if params[:action] == "show" %>
+    </fieldset>
+  <% else %>
+    <%= f.submit t("views.buttons.create"), class: "btn btn-default pull-right" %>
+  <% end %>
+
 <% end %>

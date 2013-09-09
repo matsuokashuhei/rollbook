@@ -1,28 +1,25 @@
 <%= form_for(@member, html: { role: "form", class: "form-horizontal" }) do |f| %>
+
   <%= render "shared/errors", object: @member %>
 
   <% if params[:action] == "show" %>
     <fieldset disabled>
   <% end %>
 
-  <div class="form-group <%= 'has-error' if @member.errors[:last_name_kana].present? %>">
+  <div class="form-group">
     <%= f.label t("activerecord.attributes.member.name"), class: "col-md-2 control-label" %>
-    <div class="col-md-5">
+    <div class="col-md-3 <%= 'has-error' if @member.errors[:last_name_kana].present? %>">
       <%= f.text_field :last_name_kana, class: "form-control", "placeholder" => t("activerecord.attributes.member.last_name_kana") %>
     </div>
-  </div>
-  <div class="form-group <%= 'has-error' if @member.errors[:first_name_kana].present? %>">
-    <div class="col-md-5 col-md-offset-2">
+    <div class="col-md-3 <%= 'has-error' if @member.errors[:first_name_kana].present? %>">
       <%= f.text_field :first_name_kana, class: "form-control", "placeholder" => t("activerecord.attributes.member.first_name_kana") %>
     </div>
   </div>
-  <div class="form-group <%= 'has-error' if @member.errors[:last_name].present? %>">
-    <div class="col-md-5 col-md-offset-2">
+  <div class="form-group">
+    <div class="col-md-3 col-md-offset-2 <%= 'has-error' if @member.errors[:last_name].present? %>">
       <%= f.text_field :last_name, class: "form-control", "placeholder" => t("activerecord.attributes.member.last_name") %>
     </div>
-  </div>
-  <div class="form-group <%= 'has-error' if @member.errors[:first_name].present? %>">
-    <div class="col-md-5 col-md-offset-2">
+    <div class="col-md-3 <%= 'has-error' if @member.errors[:first_name].present? %>">
       <%= f.text_field :first_name, class: "form-control", "placeholder" => t("activerecord.attributes.member.first_name") %>
     </div>
   </div>
@@ -40,12 +37,10 @@
   </div>
   <div class="form-group <%= 'has-error' if @member.errors[:zip].present? %>">
     <%= f.label t("activerecord.attributes.member.address"), class: "col-md-2 control-label" %>
-    <div class="col-md-2">
+    <div class="col-md-2 <%= 'has-error' if @member.errors[:zip].present? %>">
       <%= f.text_field :zip, class: "form-control", "placeholder" => t("activerecord.attributes.member.zip") %>
     </div>
-  </div>
-  <div class="form-group <%= 'has-error' if @member.errors[:address].present? %>">
-    <div class="col-md-7 col-md-offset-2">
+    <div class="col-md-8 <%= 'has-error' if @member.errors[:address].present? %>">
       <%= f.text_field :address, class: "form-control", "placeholder" => t("activerecord.attributes.member.address") %>
     </div>
   </div>
@@ -55,14 +50,12 @@
       <%= f.phone_field :phone, class: "form-control" %>
     </div>
   </div>
-  <div class="form-group <%= 'has-error' if @member.errors[:email_pc].present? %>">
+  <div class="form-group">
     <%= f.label t("activerecord.attributes.member.email"), class: "col-md-2 control-label" %>
-    <div class="col-md-5">
+    <div class="col-md-5 <%= 'has-error' if @member.errors[:email_pc].present? %>">
       <%= f.email_field :email_pc, class: "form-control", "placeholder" => t("activerecord.attributes.member.email_pc") %>
     </div>
-  </div>
-  <div class="form-group <%= 'has-error' if @member.errors[:email_mobile].present? %>">
-    <div class="col-md-5 col-md-offset-2">
+    <div class="col-md-5 <%= 'has-error' if @member.errors[:email_mobile].present? %>">
       <%= f.email_field :email_mobile, class: "form-control", "placeholder" => t("activerecord.attributes.member.email_mobile") %>
     </div>
   </div>

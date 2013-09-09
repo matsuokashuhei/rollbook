@@ -1,8 +1,10 @@
 Rollbook::Application.routes.draw do
 
-  get "home/index"
+  #get "home/index"
 
-  resources :members
+  resources :members do
+    resources :members_courses
+  end
 
   resources :courses
 

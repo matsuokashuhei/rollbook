@@ -1,21 +1,27 @@
-<%= form_for(@dance_style) do |f| %>
-  <% if @dance_style.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@dance_style.errors.count, "error") %> prohibited this dance_style from being saved:</h2>
+<%= form_for(@dance_style, html: { role: "form", class: "form-horizontal" }) do |f| %>
+  <%= render "shared/errors", object: @dance_style %>
 
-      <ul>
-      <% @dance_style.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+  <% if params[:action] == "show" %>
+    <fieldset disabled>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
+t <div class="form-group <%= 'has-error' if @dance_style.errors[:name].present? %>">
+    <%= f.label t("activerecord.attributes.dance_style.name"), class: "col-md-2 control-label" %>
+    <div class="col-md-5">
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-group <%= 'has-error' if @dance_style.errors[:order_no].present? %>">
+    <%= f.label t("activerecord.attributes.dance_style.order_no"), class: "col-md-2 control-label" %>
+    <div class="col-md-5">
+      <%= f.number_field :order_no, class: "form-control" %>
+    </div>
   </div>
+
+  <% if params[:action] == "show" %>
+    </fieldset>
+  <% else %>
+    <%= f.submit t("views.buttons.create"), class: "btn btn-default pull-right" %>
+  <% end %>
+
 <% end %>

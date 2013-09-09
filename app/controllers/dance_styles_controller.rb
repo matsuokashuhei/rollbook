@@ -4,7 +4,7 @@ class DanceStylesController < ApplicationController
   # GET /dance_styles
   # GET /dance_styles.json
   def index
-    @dance_styles = DanceStyle.all
+    @dance_styles = DanceStyle.page(params[:page])
   end
 
   # GET /dance_styles/1

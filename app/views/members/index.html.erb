@@ -7,16 +7,18 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       <% @members.each do |member| %>
         <tr>
           <td><small><%= member.full_name_kana %></small><br/><%= member.full_name %></td>
-          <td><%= member.gender %></td>
+          <td><%= display_gender(member.gender) %></td>
           <td><%= link_to t("views.buttons.show"), member, class: "btn btn-default" %></td>
           <td><%= link_to t("views.buttons.edit"), edit_member_path(member), class: "btn btn-default" %></td>
           <td><%= render "shared/delete_link", object: member %></td>
+          <td><%= link_to "ク ラ ス", member_members_courses_path(member), class: "btn btn-default" %></td>
         </tr>
       <% end %>
     </tbody>

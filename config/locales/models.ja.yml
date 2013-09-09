@@ -6,6 +6,7 @@ ja:
       instructor: インストラクター
       time_slot: 時間
       course: クラス
+      dance_style: ダンスの種類
       member: 会員
     attributes:
       school:
@@ -46,6 +47,9 @@ ja:
         open_date: 開始日
         close_date: 終了日
         monthly_fee: 料金
+      dance_style:
+        name: 名前
+        order_no: 並び順
       member:
         last_name: 姓 (漢字)
         first_name: 名 (漢字)
@@ -67,6 +71,12 @@ ja:
         name: 名前
         kana: ふりがな
         email: Eメール
-
+      members_course:
+        member_id: 会員
+        course_id: クラス
+        begin_date: 開始日
+        end_date: 終了日
+        note: メモ
+        introduction: インストラクター紹介
 
 
