@@ -1,37 +1,8 @@
 <%= render "shared/notice" %>
 <div class="panel panel-default">
   <div class="panel-body">
-    <div class="form-group">
-      <%= label_tag School.human_attribute_name :name %><br>
-      <%= text_field_tag :name, @school.name, class: "form-control", disabled: "disabled" %>
-    </div>
-    <div class="form-group">
-      <%= label_tag School.human_attribute_name :zip %><br>
-      <%= text_field_tag :zip, @school.zip, class: "form-control", disabled: "disabled" %>
-    </div>
-    <div class="form-group">
-      <%= label_tag School.human_attribute_name :address %><br>
-      <%= text_field_tag :address, @school.address, class: "form-control", disabled: "disabled" %>
-    </div>
-    <div class="form-group">
-      <%= label_tag School.human_attribute_name :phone %><br>
-      <%= text_field_tag :phone, @school.phone, class: "form-control", disabled: "disabled" %>
-    </div>
-    <div class="form-group">
-      <%= label_tag School.human_attribute_name :open_date %><br>
-      <%= text_field_tag :open_date,  @school.open_date, class: "form-control", disabled: "disabled" %>
-    </div>
-    <div class="form-group">
-      <%= label_tag School.human_attribute_name :close_date %><br>
-      <%= text_field_tag :close_date, @school.close_date, class: "form-control", disabled: "disabled" %>
-    </div>
-    <div class="form-group">
-      <%= label_tag School.human_attribute_name :note %><br>
-      <%= text_area :note, @school.note, class: "form-control", disabled: "disabled" %>
-    </div>
-
+    <%= render "form" %>
     <%= link_to t("views.buttons.back"), schools_path, class: "btn btn-default pull-left" %>
     <%= link_to t("views.buttons.edit"), edit_school_path(@school), class: "btn btn-default pull-right" %>
   </div>
 </div>
-

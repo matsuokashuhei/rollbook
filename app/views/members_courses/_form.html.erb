@@ -1,5 +1,10 @@
 <%= form_for([@member, @members_course], html: { role: "form", class: "form-horizontal" }) do |f| %>
+
   <%= render "shared/errors", object: @members_course %>
+
+  <% if params[:action] == "show" %>
+    <fieldset disabled>
+  <% end %>
 
   <% course = Course.find(@members_course.course_id) if @members_course.course_id.present? %>
   <% timetable = course.timetable if course.present? %>

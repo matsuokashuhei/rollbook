@@ -1,5 +1,11 @@
 <%= form_for(@studio, { roll: "form" }) do |f| %>
+
   <%= render "shared/errors", object: @studio %>
+
+  <% if params[:action] == "show" %>
+    <fieldset disabled>
+  <% end %>
+
   <div class="form-group <%= 'has-error' if @studio.errors[:school_id].present? %>">
     <%= f.label :school_id, class: "control-label" %><br />
     <%= f.collection_select :school_id, School.all, :id, :name, { prompt: "" }, { class: "form-control" } %>
@@ -20,5 +26,11 @@
     <%= f.label :note, class: "control-label"  %><br />
     <%= f.text_area :note, class: "form-control" %>
   </div>
-  <%= f.submit t("views.buttons.create"), class: "btn btn-default pull-right" %>
+
+  <% if params[:action] == "show" %>
+    </fieldset>
+  <% else %>
+    <%= f.submit t("views.buttons.create"), class: "btn btn-default pull-right" %>
+  <% end %>
+
 <% end %>

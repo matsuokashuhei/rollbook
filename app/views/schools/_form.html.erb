@@ -1,5 +1,11 @@
 <%= form_for(@school, { roll: "form" }) do |f| %>
+
   <%= render "shared/errors", object: @school %>
+
+  <% if params[:action] == "show" %>
+    <fieldset disabled>
+  <% end %>
+
   <div class="form-group <%= 'has-error' if @school.errors[:name].present? %>">
     <%= f.label :name, class: "control-label" %><br>
     <%= f.text_field :name, class: "form-control" %>
@@ -18,15 +24,22 @@
   </div>
   <div class="form-group <%= 'has-error' if @school.errors[:open_date].present? %>">
     <%= f.label :open_date, class: "control-label"  %><br>
-    <%= f.text_field :open_date, class: "form-control", "data-behaviour" => "datepicker" %>
+    <%= f.text_field :open_date, class: "form-control", data: { behaviour: "datepicker" } %>
   </div>
   <div class="form-group <%= 'has-error' if @school.errors[:close_date].present? %>">
     <%= f.label :close_date, class: "control-label"  %><br>
-    <%= f.text_field :close_date, class: "form-control", "data-behaviour" => "datepicker" %>
+    <%= f.text_field :close_date, class: "form-control", data: { behaviour: "datepicker" } %>
   </div>
   <div class="form-group <%= 'has-error' if @school.errors[:note].present? %>">
     <%= f.label :note, class: "control-label"  %><br>
     <%= f.text_area :note, class: "form-control" %>
   </div>
-  <%= f.submit t("views.buttons.create"), class: "btn btn-default pull-right" %>
+
+  <% if params[:action] == "show" %>
+    </fieldset>
+  <% else %>
+    <%= f.submit t("views.buttons.create"), class: "btn btn-default pull-right" %>
+  <% end %>
+
 <% end %>
+
