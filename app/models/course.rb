@@ -24,7 +24,7 @@ class Course < ActiveRecord::Base
   belongs_to :level
 
   scope :date_is, ->(date = Date.today) {
-    where("open_date <= ? and ? <= coalesce(close_date, '9999-12-31')", date, date)
+    where("courses.open_date <= ? and ? <= coalesce(courses.close_date, '9999-12-31')", date, date)
   }
 
   validates :timetable_id, :instructor_id, :dance_style_id, :level_id, :monthly_fee, :open_date, presence: true

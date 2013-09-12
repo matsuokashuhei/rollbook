@@ -1,0 +1,37 @@
+<div class="table-responsive">
+  <table class="table table-condensed">
+    <thead>
+      <tr>
+        <th><%= t("activerecord.models.school") %></th>
+        <th><%= t("activerecord.models.studio") %></th>
+        <th><%= t("activerecord.models.time_slot") %></th>
+        <th><%= t("activerecord.attributes.lesson.course_id") %></th>
+        <th><%= t("activerecord.attributes.lesson.date") %></th>
+        <th><%= t("activerecord.attributes.lesson.status") %></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @lessons.each do |lesson| %>
+        <% course = @courses.find {|course| course.id == lesson.course_id } %>
+        <tr>
+          <td><%= course.timetable.studio.school.name %></td>
+          <td><%= course.timetable.studio.name %></td>
+          <td><%= course.timetable.time_slot.start_time %></td>
+          <td><%= course.name %></td>
+          <td><%= lesson.date %></td>
+          <td><%= status_label(lesson.status) %></td>
+          <td>
+            <% if @date < Date.today + 7.day %>
+              <%= link_to t("views.buttons.show"), lesson, class: "btn btn-default" %>
+            <% else %>
+              <%= link_to t("views.buttons.show"), lesson, class: "btn btn-default", disabled: "disabled" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= link_to_if(@date.yesterday.day < 29, @date.yesterday, lessons_path(date: @date.yesterday.strftime("%Y%m%d")), class: "btn btn-link pull-left") {} %>
+  <%= link_to_if(@date.tomorrow.day < 29, @date.tomorrow, lessons_path(date: @date.tomorrow.strftime("%Y%m%d")), class: "btn btn-link pull-right") {} %>
+</div>

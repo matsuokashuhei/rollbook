@@ -8,6 +8,7 @@ ja:
       course: クラス
       dance_style: ダンスの種類
       member: 会員
+      lesson: レッスン
     attributes:
       school:
         name: 名前
@@ -78,5 +79,12 @@ ja:
         end_date: 終了日
         note: メモ
         introduction: インストラクター紹介
+      lesson:
+        course_id: クラス
+        date: 日
+        status: 状態
+        note: メモ
+
+
 
 

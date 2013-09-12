@@ -1,5 +1,7 @@
 Rollbook::Application.routes.draw do
 
+  resources :lessons
+
   #get "home/index"
 
   resources :members do
