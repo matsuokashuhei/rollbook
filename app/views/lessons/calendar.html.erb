@@ -10,7 +10,7 @@
         <% @weeks.each do |week| %>
           <tr>
             <% week.each do |date| %>
-              <td style="text-align: center;">
+              <td class="<%= "active" if date == Date.today %>" style="text-align: center;">
                 <% if date.present? %>
                   <% if date.day < 29 %>
                     <%= link_to date.day, lessons_path(date: date.strftime("%Y%m%d")), class: "btn btn-link" %>
