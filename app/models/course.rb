@@ -22,6 +22,7 @@ class Course < ActiveRecord::Base
   belongs_to :instructor
   belongs_to :dance_style
   belongs_to :level
+  has_many :lessons
 
   scope :date_is, ->(date = Date.today) {
     where("courses.open_date <= ? and ? <= coalesce(courses.close_date, '9999-12-31')", date, date)

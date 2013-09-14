@@ -1,8 +1,12 @@
 Rollbook::Application.routes.draw do
 
-  resources :lessons
+  #resources :rolls
 
-  #get "home/index"
+  resources :lessons do
+    resources :rolls, only: :index
+  end
+  match "lessons/:lesson_id/rolls/edit" => "rolls#edit", via: :get, as: "edit_lesson_rolls"
+  match "lessons/:lesson_id/rolls" => "rolls#update", via: :put
 
   resources :members do
     resources :members_courses

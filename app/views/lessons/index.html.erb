@@ -23,9 +23,9 @@
           <td><%= status_label(lesson.status) %></td>
           <td>
             <% if @date < Date.today + 7.day %>
-              <%= link_to t("views.buttons.show"), lesson, class: "btn btn-default" %>
+              <%= link_to t("views.buttons.show"), lesson_rolls_path(lesson), class: "btn btn-default" %>
             <% else %>
-              <%= link_to t("views.buttons.show"), lesson, class: "btn btn-default", disabled: "disabled" %>
+              <%= link_to t("views.buttons.show"), lesson_rolls_path(lesson), class: "btn btn-default", disabled: "disabled" %>
             <% end %>
           </td>
         </tr>

@@ -1,0 +1,24 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= t("activerecord.models.course") %></th>
+        <th><%= t("activerecord.attributes.roll.member_id") %></th>
+        <th><%= t("activerecord.attributes.roll.status") %></th>
+        <th><%= t("activerecord.attributes.roll.substitute_roll_id") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @rolls.each do |roll| %>
+        <tr>
+          <td><%= @lesson.course.name %></td>
+          <td><%= roll.member.full_name %></td>
+          <td><%= status_label(roll.status) %></td>
+          <td><%= roll.substitute_roll_id %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= link_to t("views.buttons.back"), lessons_path(date: @lesson.date.strftime("%Y%m%d")), class: "btn btn-default pull-left" %>
+  <%= link_to t("views.buttons.edit"), edit_lesson_rolls_path(@lesson), class: "btn btn-default pull-right" %>
+</div>

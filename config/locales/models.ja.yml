@@ -9,6 +9,7 @@ ja:
       dance_style: ダンスの種類
       member: 会員
       lesson: レッスン
+      roll: 出欠
     attributes:
       school:
         name: 名前
@@ -84,6 +85,13 @@ ja:
         date: 日
         status: 状態
         note: メモ
+      roll:
+        lesson_id: レッスン
+        member_id: 会員
+        status: 出欠
+        substitute_roll_id: 振替
+        note: メモ
+
 
 
 

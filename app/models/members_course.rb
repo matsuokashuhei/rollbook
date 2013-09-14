@@ -17,4 +17,9 @@ class MembersCourse < ActiveRecord::Base
   belongs_to :member, class_name: "Member"
   belongs_to :course, class_name: "Course"
   validates :member_id, :course_id, :begin_date, presence: true
+
+  scope :date_is, ->(date = Date.today) {
+    where("members_courses.begin_date <= ? and ? <= coalesce(members_courses.end_date, '9999-12-31')", date, date)
+  }
+
 end

@@ -1,0 +1,61 @@
+<div class="table-responsive">
+  <%= form_tag({ action: "update" }, { method: "put" }) do %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= t("activerecord.models.course") %></th>
+          <th><%= t("activerecord.attributes.roll.member_id") %></th>
+          <th><%= t("activerecord.attributes.roll.status") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @rolls.each do |roll| %>
+          <%= hidden_field_tag "rolls[][id]", roll.id %>
+          <%= hidden_field_tag "rolls[][lesson_id]", roll.lesson_id %>
+          <%= hidden_field_tag "rolls[][member_id]", roll.member_id %>
+          <tr>
+            <td><%= @lesson.course.name %></td>
+            <td><%= roll.member.full_name %></td>
+            <td>
+              <%= hidden_field_tag "rolls[][status]", roll.status %>
+              <div class="btn-group" data-toggle="buttons">
+                <% %w(0 1 2).each do |status| %>
+                  <label class="btn <%= roll.status == status ? status_button(status) : "btn-default" %> <%= "active" if roll.status == status %>">
+                    <input type="radio" value="<%= status %>"><%= status_ja(status) %>
+                  </label>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= link_to t("views.buttons.back"), lesson_rolls_path(@lesson), class: "btn btn-default pull-left" %>
+    <%= submit_tag t("views.buttons.create"), class: "btn btn-default pull-right" %>
+  <% end %>
+</div>
+<script>
+  $('div[data-toggle="buttons"] .btn').click(function() {
+    var div = $(this).parent("div");
+    var radio = $(this).children("input");
+    var td = div.parent("td");
+    var hidden = td.children("input");
+    hidden.val(radio.attr("value"));
+    $(this).parent("div").children("label").each(function() {
+      $(this).removeClass("btn-default");
+      $(this).removeClass("btn-success");
+      $(this).removeClass("btn-danger");
+      if (hidden.attr("value") == $(this).children("input").attr("value")) {
+        if (hidden.attr("value") == "0") {
+          $(this).addClass("btn-default");
+        } else if (hidden.attr("value") == "1") {
+          $(this).addClass("btn-success");
+        } else {
+          $(this).addClass("btn-danger");
+        }
+      } else {
+        $(this).addClass("btn-default");
+      }
+    });
+  });
+</script>

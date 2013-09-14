@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Lesson:</strong>
+  <%= @roll.lesson_id %>
+</p>
+
+<p>
+  <strong>Member:</strong>
+  <%= @roll.member_id %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @roll.status %>
+</p>
+
+<p>
+  <strong>Substitute roll:</strong>
+  <%= @roll.substitute_roll_id %>
+</p>
+
+<%= link_to 'Edit', edit_roll_path(@roll) %> |
+<%= link_to 'Back', rolls_path %>
