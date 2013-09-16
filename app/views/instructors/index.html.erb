@@ -14,6 +14,7 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -29,6 +30,7 @@
           <td><%= link_to t("views.buttons.show"), instructor, class: "btn btn-default" %></td>
           <td><%= link_to t("views.buttons.edit"), edit_instructor_path(instructor), class: "btn btn-default" %></td>
           <td><%= render "shared/delete_link", object: instructor %></td>
+          <td><%= link_to t("views.buttons.course"), instructors_courses_path(instructor), class: "btn btn-default" %></td>
         </tr>
       <% end %>
     </tbody>

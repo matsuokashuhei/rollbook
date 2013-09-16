@@ -18,6 +18,16 @@ class RollsController < ApplicationController
     end
   end
 
+  def index_of_members_course
+    @member = Member.find(params[:member_id])
+    @members_course = MembersCourse.find(params[:id])
+    @course = @members_course.course
+    @rolls = Roll.joins(:lesson)
+    @rolls.where!("lessons.course_id = ?", @members_course.course_id)
+    @rolls.where!("rolls.member_id = ?", @members_course.member_id)
+    @rolls.order!("lessons.date")
+  end
+
   # GET /rolls/1
   # GET /rolls/1.json
   def show

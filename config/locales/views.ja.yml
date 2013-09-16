@@ -13,6 +13,8 @@ ja:
       select: 選　　ぶ
       fix: 確定する
       substitute: 振　　替
+      roll: 出　　欠
+      course: ク ラ ス
     messages:
       validates:
         title: 保存に失敗しました。

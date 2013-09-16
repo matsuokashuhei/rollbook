@@ -12,13 +12,14 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
       <% @members_courses.each do |members_course| %>
         <% course = @courses.find(members_course.course_id) %>
         <tr>
-          <td><%= members_course.member.full_name %></td>
+          <td><%= members_full_name(members_course.member) %></td>
           <td><%= course.timetable.studio.school.name %></td>
           <td><%= course.timetable.studio.name %></td>
           <td><%= weekday_ja(course.timetable.weekday) %></td>
@@ -47,10 +48,14 @@
               </div>
             </div>
           </td>
+          <td>
+            <%= link_to t("views.buttons.roll"), members_course_rolls_path(@member, members_course), class: "btn btn-default" %>
+          </td>
         </tr>
       <% end %>
     </tbody>
   </table>
 </div>
 <br />
-<%= link_to t("views.buttons.new"), new_member_members_course_path(@member), class: "btn btn-default" %>
+<%= link_to t("views.buttons.back"), @member, class: "btn btn-default pull-left" %>
+<%= link_to t("views.buttons.new"), new_member_members_course_path(@member), class: "btn btn-default pull-right" %>

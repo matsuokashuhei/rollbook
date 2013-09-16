@@ -11,6 +11,7 @@ Rollbook::Application.routes.draw do
   match "lessons/:lesson_id/rolls/substitute" => "rolls#substitute", via: :post
   #match "rolls" => "rolls#index", via: :get
   #match "rolls/substitute" => "rolls#substitute", via: :post
+  match "members/:member_id/members_course/:id/rolls" => "rolls#index_of_members_course", via: :get, as: "members_course_rolls"
 
   resources :members do
     resources :members_courses
@@ -25,6 +26,7 @@ Rollbook::Application.routes.draw do
   resources :dance_styles
 
   resources :instructors
+  match "instructors/:id/courses" => "courses#instructors_courses", via: :get, as: "instructors_courses"
 
   resources :timetables
 

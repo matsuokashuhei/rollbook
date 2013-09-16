@@ -1,0 +1,21 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= t("activerecord.attributes.course.instructor_id") %></th>
+        <th><%= t("activerecord.attributes.members_course.course_id") %></th>
+        <th><%= t("activerecord.attributes.members_course.begin_date") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @courses.each do |course| %>
+        <tr>
+          <td><%= @instructor.name %></td>
+          <td><%= course.name %></td>
+          <td><%= course.open_date %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
