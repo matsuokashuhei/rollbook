@@ -1,5 +1,6 @@
+<div class="row">
 <div class="table-responsive">
-  <table class="table table-condensed">
+  <table class="table">
     <thead>
       <tr>
         <th><%= t("activerecord.models.school") %></th>
@@ -20,7 +21,7 @@
           <td><%= course.timetable.time_slot.start_time %></td>
           <td><%= course.name %></td>
           <td><%= lesson.date %></td>
-          <td><%= status_label(lesson.status) %></td>
+          <td><%= status_html(lesson.status) %></td>
           <td>
             <% if @date < Date.today + 7.day %>
               <%= link_to t("views.buttons.show"), lesson_rolls_path(lesson), class: "btn btn-default" %>
@@ -34,4 +35,8 @@
   </table>
   <%= link_to_if(@date.yesterday.day < 29, @date.yesterday, lessons_path(date: @date.yesterday.strftime("%Y%m%d")), class: "btn btn-link pull-left") {} %>
   <%= link_to_if(@date.tomorrow.day < 29, @date.tomorrow, lessons_path(date: @date.tomorrow.strftime("%Y%m%d")), class: "btn btn-link pull-right") {} %>
+</div>
+</div>
+<div class="row">
+  <%= link_to t("views.buttons.back"), lessons_path(month: @date.strftime("%Y%m")), class: "btn btn-default pull-left" %>
 </div>

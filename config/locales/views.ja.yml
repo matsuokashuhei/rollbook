@@ -11,6 +11,8 @@ ja:
       back: 戻　　る
       close: 閉 じ る
       select: 選　　ぶ
+      fix: 確定する
+      substitute: 振　　替
     messages:
       validates:
         title: 保存に失敗しました。

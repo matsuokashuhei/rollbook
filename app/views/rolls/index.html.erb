@@ -1,24 +1,57 @@
-<div class="table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th><%= t("activerecord.models.course") %></th>
-        <th><%= t("activerecord.attributes.roll.member_id") %></th>
-        <th><%= t("activerecord.attributes.roll.status") %></th>
-        <th><%= t("activerecord.attributes.roll.substitute_roll_id") %></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @rolls.each do |roll| %>
-        <tr>
-          <td><%= @lesson.course.name %></td>
-          <td><%= roll.member.full_name %></td>
-          <td><%= status_label(roll.status) %></td>
-          <td><%= roll.substitute_roll_id %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <%= link_to t("views.buttons.back"), lessons_path(date: @lesson.date.strftime("%Y%m%d")), class: "btn btn-default pull-left" %>
-  <%= link_to t("views.buttons.edit"), edit_lesson_rolls_path(@lesson), class: "btn btn-default pull-right" %>
+<%= form_tag({ action: "update" }, { method: "put" }) do %>
+  <fieldset disabled>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th><%= t("activerecord.attributes.lesson.date") %>
+            <th><%= t("activerecord.attributes.lesson.course_id") %></th>
+            <th><%= t("activerecord.attributes.roll.member_id") %></th>
+            <th><%= t("activerecord.attributes.roll.status") %></th>
+            <th><%= t("activerecord.attributes.roll.substitute_roll_id") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @rolls.each do |roll| %>
+            <%= hidden_field_tag "rolls[][id]", roll.id %>
+            <%= hidden_field_tag "rolls[][lesson_id]", roll.lesson_id %>
+            <%= hidden_field_tag "rolls[][member_id]", roll.member_id %>
+            <tr>
+              <td><%= @lesson.date %></td>
+              <td><%= @lesson.course.name %></td>
+              <td><%= members_full_name(roll.member) %></td>
+              <td>
+                <%= hidden_field_tag "rolls[][status]", roll.status %>
+                <div class="btn-group" data-toggle="buttons">
+                  <% %w(0 1 2).each do |status| %>
+                    <label class="btn <%= roll.status == status ? status_button(status) : "btn-default" %> <%= "active" if roll.status == status %>">
+                      <input type="radio" value="<%= status %>"><%= status_name(status) %>
+                    </label>
+                  <% end %>
+                </div>
+              </td>
+              <td>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </fieldset>
+  <div class="row">
+    <%= link_to t("views.buttons.back"), lessons_path(date: @lesson.date.strftime("%Y%m%d")), class: "btn btn-default pull-left" %>
+    <% if @lesson.date <= Date.today %>
+      <%= link_to t("views.buttons.edit"), edit_lesson_rolls_path(@lesson), class: "btn btn-default pull-right" %>
+    <% else %>
+      <%= link_to t("views.buttons.edit"), edit_lesson_rolls_path(@lesson), class: "btn btn-default pull-right", disabled: "disabled" %>
+    <% end %>
+  </div>
+  <br />
+<% end %>
+<div class="row">
+    <%= form_for @lesson do |f| %>
+      <% @lesson.status = "2" %>
+      <%= f.hidden_field :status %>
+      <%= f.submit t("views.buttons.fix"), class: "btn btn-default pull-right" %>
+    <% end %>
 </div>

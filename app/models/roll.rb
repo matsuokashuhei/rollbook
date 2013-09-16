@@ -14,4 +14,5 @@
 class Roll < ActiveRecord::Base
   belongs_to :lesson
   belongs_to :member
+
 end

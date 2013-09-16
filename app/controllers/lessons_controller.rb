@@ -37,11 +37,14 @@ class LessonsController < ApplicationController
       @lessons = []
       @courses.each do |course|
         attributes = { date: @date, course_id: course.id }
+        lesson = Lesson.find_by(attributes)
         if @date < Date.today + 7.day
-          @lessons << Lesson.where(attributes).find_or_create_by(attributes.merge!({ status: "0" }))
+          lesson = Lesson.find_or_create_by(attributes)
         else
-          @lessons << Lesson.where(attributes).first_or_create(attributes.merge!({ status: "0" }))
+          lesson = Lesson.find_or_initialize_by(attributes)
         end
+        lesson.status ||= "0"
+        @lessons << lesson
       end
     end
   end
@@ -81,7 +84,8 @@ class LessonsController < ApplicationController
   def update
     respond_to do |format|
       if @lesson.update(lesson_params)
-        format.html { redirect_to @lesson, notice: 'Lesson was successfully updated.' }
+        #format.html { redirect_to @lesson, notice: 'Lesson was successfully updated.' }
+        format.html { redirect_to lessons_path(date: @lesson.date.strftime("%Y%m%d")) }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

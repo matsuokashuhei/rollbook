@@ -1,36 +1,26 @@
 module RollsHelper
-  STATUS_JA = {
-    "0" => "未定",
-    "1" => "出席",
-    "2" => "欠席",
-    "3" => "欠席",
-    "4" => "振替",
-  }
-  STATUS_LABELS = {
-    "0" => "label-default",
-    "1" => "label-success",
-    "2" => "label-danger",
-    "3" => "label-warning",
-    "4" => "label-info"
-  }
-  STATUS_BUTTONS = {
-    "0" => "btn-default",
-    "1" => "btn-success",
-    "2" => "btn-danger",
-    "3" => "btn-warning",
-    "4" => "btn-info"
+  STATUS = {
+    "0" => { "name" => "未定", "label" => "label-default", "button" => "btn-default" },
+    "1" => { "name" => "出席", "label" => "label-success", "button" => "btn-success" },
+    "2" => { "name" => "欠席", "label" => "label-danger", "button" => "btn-danger" },
+    "3" => { "name" => "欠席", "label" => "label-warning", "button" => "btn-warning" },
+    "4" => { "name" => "振替", "label" => "label-info", "button" => "btn-info" },
   }
 
-  def status_ja(status)
-    STATUS_JA[status]
-  end
-
-  def status_button(status)
-    STATUS_BUTTONS[status]
+  def status_name(status)
+    STATUS[status]["name"]
   end
 
   def status_label(status)
-    "<h4><span class=\"label #{STATUS_LABELS[status]}\">#{STATUS_JA[status]}</span></h4>".html_safe
+    STATUS[status]["label"]
+  end
+
+  def status_button(status)
+    STATUS[status]["button"]
+  end
+
+  def status_html(status)
+    ("<h3 style=\"margin: 0px; line-height: 0;\"><span class=\"label %s\">%s</span></h3>" % [status_label(status), status_name(status)]).html_safe
   end
 
 end
