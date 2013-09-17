@@ -93,11 +93,8 @@ class RollsController < ApplicationController
   end
 
   def substitute
-    params[:rolls].each do |roll_params|
-      absence_roll = Roll.find(roll_params[:id])
-      absence_roll.update_attributes(status: "3")
-      substitute_roll = @lesson.rolls.build(member_id: absence_roll.member_id, status: "4", substitute_roll_id: absence_roll.id)
-      substitute_roll.save
+    params[:rolls].each do |roll|
+      Roll.find(roll[:id]).substitute!(@lesson)
     end
     respond_to do |format|
       format.html { redirect_to lesson_rolls_url(@lesson) }

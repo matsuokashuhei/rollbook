@@ -8,6 +8,7 @@ ja:
       course: クラス
       dance_style: ダンスの種類
       member: 会員
+      bank_account: 銀行口座
       lesson: レッスン
       roll: 出欠
     attributes:
@@ -27,7 +28,7 @@ ja:
         school_id: スクール
       instructor:
         name: 名前
-        kana: ふりがな
+        kana: フリガナ
         team: チーム
         phone: 電話番号
         email: Eメール
@@ -55,8 +56,8 @@ ja:
       member:
         last_name: 姓 (漢字)
         first_name: 名 (漢字)
-        last_name_kana: 姓 (ふりがな)
-        first_name_kana: 名 (ふりがな)
+        last_name_kana: 姓 (フリガナ)
+        first_name_kana: 名 (フリガナ)
         gender: 性別
         birth_date: 生年月日
         zip: 郵便番号
@@ -71,8 +72,22 @@ ja:
         note: メモ
         status: 状態
         name: 名前
-        kana: ふりがな
+        kana: フリガナ
         email: Eメール
+      bank_account:
+        holder_name: 口座名義人
+        holder_name_kana: 口座名義人 (フリガナ)
+        bank_id: 銀行コード
+        bank_name: 銀行名
+        bank: 銀行
+        branch: 支店
+        id: コード
+        name: 名前
+        branch_id: 支店コード
+        branch_name: 支店名
+        account_number: 口座番号
+        status: 状態
+        note: メモ
       members_course:
         member_id: 会員
         course_id: クラス

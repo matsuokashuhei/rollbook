@@ -1,0 +1,63 @@
+<%= form_for(@bank_account, html: { role: "form", class: "form-horizontal" }) do |f| %>
+
+  <%= render "shared/errors", object: @bank_account %>
+
+  <% if params[:action] == "show" %>
+    <fieldset disabled>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label t("activerecord.attributes.bank_account.holder_name"), class: "col-md-2 control-label" %>
+    <div class="col-md-3 <%= 'has-error' if @bank_account.errors[:holder_name_kana].present? %>">
+      <%= f.text_field :holder_name_kana, class: "form-control", "placeholder" => t("activerecord.attributes.bank_account.holder_name_kana") %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-offset-2 col-md-3 <%= 'has-error' if @bank_account.errors[:holder_name].present? %>">
+      <%= f.text_field :holder_name, class: "form-control", "placeholder" => t("activerecord.attributes.bank_account.holder_name") %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label t("activerecord.attributes.bank_account.bank"), class: "col-md-2 control-label" %>
+    <div class="col-md-1 <%= 'has-error' if @bank_account.errors[:bank_id].present? %>">
+      <%= f.text_field :bank_id, class: "form-control", "placeholder" => t("activerecord.attributes.bank_account.id") %>
+    </div>
+    <div class="col-md-3 <%= 'has-error' if @bank_account.errors[:bank_name].present? %>">
+      <%= f.text_field :bank_name, class: "form-control", "placeholder" => t("activerecord.attributes.bank_account.name") %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label t("activerecord.attributes.bank_account.branch"), class: "col-md-2 control-label" %>
+    <div class="col-md-1 <%= 'has-error' if @bank_account.errors[:branch_id].present? %>">
+      <%= f.text_field :branch_id, class: "form-control", "placeholder" => t("activerecord.attributes.bank_account.id") %>
+    </div>
+    <div class="col-md-3 <%= 'has-error' if @bank_account.errors[:branch_name].present? %>">
+      <%= f.text_field :branch_name, class: "form-control", "placeholder" => t("activerecord.attributes.bank_account.name") %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label t("activerecord.attributes.bank_account.account_number"), class: "col-md-2 control-label" %>
+    <div class="col-md-2 <%= 'has-error' if @bank_account.errors[:account_number].present? %>">
+      <%= f.text_field :account_number, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label t("activerecord.attributes.bank_account.status"), class: "col-md-2 control-label" %>
+    <div class="col-md-2 <%= 'has-error' if @bank_account.errors[:status].present? %>">
+      <%= f.text_field :status, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group <%= 'has-error' if @bank_account.errors[:note].present? %>">
+    <%= f.label :note, class: "col-md-2 control-label" %>
+    <div class="col-md-5">
+      <%= f.text_area :note, class: "form-control" %>
+    </div>
+  </div>
+
+  <% if params[:action] == "show" %>
+    </fieldset>
+  <% else %>
+    <%= f.submit t("views.buttons.create"), class: "btn btn-default pull-right" %>
+  <% end %>
+
+<% end %>

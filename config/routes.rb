@@ -1,5 +1,7 @@
 Rollbook::Application.routes.draw do
 
+  resources :bank_accounts
+
   #resources :rolls
 
   resources :lessons do
