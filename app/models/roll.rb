@@ -25,4 +25,8 @@ class Roll < ActiveRecord::Base
     self.update_attributes!(status: "3",
                             substitute_roll_id: substitute_roll.id)
   end
+
+  def substitute_roll
+    Roll.find(substitute_roll_id) if substitute_roll_id.present?
+  end
 end

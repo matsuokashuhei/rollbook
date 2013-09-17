@@ -1,4 +1,5 @@
 <%= form_for(@instructor, html: { role: "form", class: "form-horizontal" }) do |f| %>
+
   <%= render "shared/errors", object: @instructor %>
 
   <% if params[:action] == "show" %>

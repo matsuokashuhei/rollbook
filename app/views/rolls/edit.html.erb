@@ -21,15 +21,26 @@
             <td><%= members_full_name(roll.member) %></td>
             <td>
               <%= hidden_field_tag "rolls[][status]", roll.status %>
-              <div class="btn-group" data-toggle="buttons">
-                <% %w(0 1 2).each do |status| %>
-                  <label class="btn <%= roll.status == status ? status_button(status) : "btn-default" %> <%= "active" if roll.status == status %>">
-                    <input type="radio" value="<%= status %>"><%= status_name(status) %>
+              <% if roll.status == "0" || roll.status == "1" || roll.status == "2" %>
+                <div class="btn-group" data-toggle="buttons">
+                  <% %w(0 1 2).each do |status| %>
+                    <label class="btn <%= roll.status == status ? status_button(status) : "btn-default" %> <%= "active" if roll.status == status %>">
+                      <input type="radio" value="<%= status %>"><%= status_name(status) %>
+                    </label>
+                  <% end %>
+                </div>
+              <% else %>
+                <div class="btn-group" data-toggle="buttons">
+                  <label class="btn <%= status_button(roll.status) %> active" disabled>
+                    <input type="radio" value="<%= roll.status %>"><%= status_name(roll.status) %>
                   </label>
-                <% end %>
-              </div>
+                </div>
+              <% end %>
             </td>
             <td>
+              <% substitute_roll = roll.substitute_roll %>
+              <% lesson = substitute_roll.try(:lesson) %>
+              <%= link_to_if lesson, lesson.try(:date), lesson_rolls_path(lesson), class: "btn btn-link" %>
             </td>
           </tr>
         <% end %>

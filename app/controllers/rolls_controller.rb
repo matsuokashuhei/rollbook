@@ -84,6 +84,7 @@ class RollsController < ApplicationController
 
   def absence
     @rolls = Roll.joins(lesson: [course: [:instructor, :dance_style]])
+    @rolls.where!("lessons.status = ?", "2")
     @rolls.where!("rolls.status = ?", "2")
     @rolls.where!("courses.id <> ?", @lesson.course.id)
     @rolls.order!("lessons.date")
