@@ -8,6 +8,7 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -19,6 +20,7 @@
           <td><%= link_to t("views.buttons.edit"), edit_member_path(member), class: "btn btn-default" %></td>
           <td><%= render "shared/delete_link", object: member %></td>
           <td><%= link_to t("views.buttons.course"), member_members_courses_path(member), class: "btn btn-default" %></td>
+          <td><%= link_to t("views.buttons.bank_account"), member.bank_account, class: "btn btn-default" %></td>
         </tr>
       <% end %>
     </tbody>

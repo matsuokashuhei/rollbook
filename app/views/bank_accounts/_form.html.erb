@@ -19,7 +19,7 @@
   </div>
   <div class="form-group">
     <%= f.label t("activerecord.attributes.bank_account.bank"), class: "col-md-2 control-label" %>
-    <div class="col-md-1 <%= 'has-error' if @bank_account.errors[:bank_id].present? %>">
+    <div class="col-md-2 <%= 'has-error' if @bank_account.errors[:bank_id].present? %>">
       <%= f.text_field :bank_id, class: "form-control", "placeholder" => t("activerecord.attributes.bank_account.id") %>
     </div>
     <div class="col-md-3 <%= 'has-error' if @bank_account.errors[:bank_name].present? %>">
@@ -28,7 +28,7 @@
   </div>
   <div class="form-group">
     <%= f.label t("activerecord.attributes.bank_account.branch"), class: "col-md-2 control-label" %>
-    <div class="col-md-1 <%= 'has-error' if @bank_account.errors[:branch_id].present? %>">
+    <div class="col-md-2 <%= 'has-error' if @bank_account.errors[:branch_id].present? %>">
       <%= f.text_field :branch_id, class: "form-control", "placeholder" => t("activerecord.attributes.bank_account.id") %>
     </div>
     <div class="col-md-3 <%= 'has-error' if @bank_account.errors[:branch_name].present? %>">
@@ -44,7 +44,7 @@
   <div class="form-group">
     <%= f.label t("activerecord.attributes.bank_account.status"), class: "col-md-2 control-label" %>
     <div class="col-md-2 <%= 'has-error' if @bank_account.errors[:status].present? %>">
-      <%= f.text_field :status, class: "form-control" %>
+      <%= f.select :status, BankAccountsHelper::STATUS.map {|status| [ status[1], status[0]] }, {}, { class: "form-control" } %>
     </div>
   </div>
   <div class="form-group <%= 'has-error' if @bank_account.errors[:note].present? %>">
