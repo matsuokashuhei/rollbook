@@ -37,9 +37,18 @@ Rollbook::Application.routes.draw do
 
   resources :time_slots
 
-  resources :studios
+  #resources :studios
 
-  resources :schools
+  resources :schools do
+    resources :studios
+  end
+  #match "schools/:school_id/studios" => "studios#index", via: :get, as: "studios"
+  #match "schools/:school_id/studios/:id" => "studios#show", via: :get, as: "studio"
+  #match "schools/:school_id/studios/new" => "studios#new", via: :get, as: "new_studio"
+  #match "schools/:school_id/studios/:id/edit" => "studios#edit", via: :get, as: "edit_studio"
+  #match "schools/:school_id/studios/" => "studios#create", via: :post
+  #match "schools/:school_id/studios/:id" => "studios#update", via: :put
+  #match "schools/:school_id/studios/:id" => "studios#show", via: :get, as: "show_studio"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

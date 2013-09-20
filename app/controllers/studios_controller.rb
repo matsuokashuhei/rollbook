@@ -1,10 +1,12 @@
 class StudiosController < ApplicationController
+  before_action :set_school, only: [:index, :show, :new, :edit, :create, :update, :destroy]
   before_action :set_studio, only: [:show, :edit, :update, :destroy]
 
   # GET /studios
   # GET /studios.json
   def index
-    @studios = Studio.all
+    #@studios = Studio.all
+    @studios = @school.studios
   end
 
   # GET /studios/1
@@ -14,7 +16,8 @@ class StudiosController < ApplicationController
 
   # GET /studios/new
   def new
-    @studio = Studio.new
+    #@studio = Studio.new
+    @studio = @school.studios.build
   end
 
   # GET /studios/1/edit
@@ -28,7 +31,7 @@ class StudiosController < ApplicationController
 
     respond_to do |format|
       if @studio.save
-        format.html { redirect_to @studio, notice: 'Studio was successfully created.' }
+        format.html { redirect_to school_studio_path(@school, @studio), notice: 'Studio was successfully created.' }
         format.json { render action: 'show', status: :created, location: @studio }
       else
         format.html { render action: 'new' }
@@ -42,7 +45,7 @@ class StudiosController < ApplicationController
   def update
     respond_to do |format|
       if @studio.update(studio_params)
-        format.html { redirect_to @studio, notice: 'Studio was successfully updated.' }
+        format.html { redirect_to school_studio_path(@school, @studio), notice: 'Studio was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -56,13 +59,17 @@ class StudiosController < ApplicationController
   def destroy
     @studio.destroy
     respond_to do |format|
-      format.html { redirect_to studios_url }
+      format.html { redirect_to school_studios_url(@school) }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_school
+      @school = School.find(params[:school_id])
+    end
+
     def set_studio
       @studio = Studio.find(params[:id])
     end

@@ -1,30 +1,41 @@
-<%= form_for(@studio, { roll: "form" }) do |f| %>
+<%= form_for([@school, @studio], html: { roll: "form", class: "form-horizontal" }) do |f| %>
 
   <%= render "shared/errors", object: @studio %>
 
-  <% if params[:action] == "show" %>
-    <fieldset disabled>
-  <% end %>
+  <%= render "shared/notice" %>
 
-  <div class="form-group <%= 'has-error' if @studio.errors[:school_id].present? %>">
-    <%= f.label :school_id, class: "control-label" %><br />
-    <%= f.collection_select :school_id, School.all, :id, :name, { prompt: "" }, { class: "form-control" } %>
+  <%= "<fieldset disabled>".html_safe if params[:action] == "show" %>
+
+  <div class="form-group <%= "has-error" if @studio.errors[:school_id].present? %>">
+    <%= f.label :school_id, class: "col-md-2 control-label" %>
+    <div class="col-md-3">
+      <%= f.hidden_field :school_id %>
+      <%= f.collection_select :school_id, School.all, :id, :name, { prompt: "" }, { class: "form-control", disabled: "disabled" } %>
+    </div>
   </div>
   <div class="form-group <%= 'has-error' if @studio.errors[:name].present? %>">
-    <%= f.label :name, class: "control-label" %><br />
-    <%= f.text_field :name, class: "form-control" %>
+    <%= f.label :name, class: "col-md-2 control-label" %>
+    <div class="col-md-3">
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
   </div>
   <div class="form-group <%= 'has-error' if @studio.errors[:open_date].present? %>">
-    <%= f.label :open_date, class: "control-label"  %><br />
-    <%= f.text_field :open_date, class: "form-control", "data-behaviour" => "datepicker" %>
+    <%= f.label :open_date, class: "col-md-2 control-label" %>
+    <div class="col-md-3">
+      <%= f.date_field :open_date, class: "form-control" %>
+    </div>
   </div>
   <div class="form-group <%= 'has-error' if @studio.errors[:close_date].present? %>">
-    <%= f.label :close_date, class: "control-label"  %><br />
-    <%= f.text_field :close_date, class: "form-control", "data-behaviour" => "datepicker" %>
+    <%= f.label :close_date, class: "col-md-2 control-label" %>
+    <div class="col-md-3">
+      <%= f.date_field :close_date, class: "form-control" %>
+    </div>
   </div>
   <div class="form-group <%= 'has-error' if @studio.errors[:note].present? %>">
-    <%= f.label :note, class: "control-label"  %><br />
-    <%= f.text_area :note, class: "form-control" %>
+    <%= f.label :note, class: "col-md-2 control-label" %>
+    <div class="col-md-5">
+      <%= f.text_area :note, class: "form-control" %>
+    </div>
   </div>
 
   <% if params[:action] == "show" %>

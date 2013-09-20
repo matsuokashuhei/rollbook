@@ -11,6 +11,12 @@
     <%= render "layouts/header" %>
     <div class="container">
       <%= yield %>
+      <% if Rails.env.development? %>
+        <br/>
+        <br/>
+        <br/>
+        <%= debug(params) %>
+      <% end %>
     </div>
   </body>
 </html>
