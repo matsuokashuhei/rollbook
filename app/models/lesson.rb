@@ -14,4 +14,15 @@
 class Lesson < ActiveRecord::Base
   belongs_to :course
   has_many :rolls
+
+  def prev_lesson
+    one_week_before = date - 7.day
+    Lesson.find_by(course_id: course_id, date: one_week_before)
+  end
+
+  def next_lesson
+    one_week_after = date + 7.day
+    Lesson.find_by(course_id: course_id, date: one_week_after)
+  end
+
 end
