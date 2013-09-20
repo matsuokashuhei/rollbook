@@ -1,5 +1,5 @@
 class InstructorsController < ApplicationController
-  before_action :set_instructor, only: [:show, :edit, :update, :destroy]
+  before_action :set_instructor, only: [:show, :edit, :update, :destroy, :courses]
 
   # GET /instructors
   # GET /instructors.json
@@ -59,6 +59,13 @@ class InstructorsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to instructors_url }
       format.json { head :no_content }
+    end
+  end
+
+  def courses
+    @courses = Course.details.where("instructors.id = ?", @instructor.id)
+    respond_to do |format|
+      format.html { render action: "courses" }
     end
   end
 

@@ -24,6 +24,10 @@ class Course < ActiveRecord::Base
   belongs_to :level
   has_many :lessons
 
+  scope :details, -> {
+    joins([timetable: [[studio: :school], :time_slot]], :instructor, :dance_style, :level).order("schools.open_date, studios.open_date, timetables.weekday, time_slots.start_time, courses.open_date")
+  }
+
   scope :date_is, ->(date = Date.today) {
     where("courses.open_date <= ? and ? <= coalesce(courses.close_date, '9999-12-31')", date, date)
   }
@@ -33,4 +37,5 @@ class Course < ActiveRecord::Base
   def name
     "#{self.dance_style.name}#{self.level.name}　#{self.instructor.name}"
   end
+
 end

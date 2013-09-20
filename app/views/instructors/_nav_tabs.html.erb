@@ -1,0 +1,15 @@
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a href="#instructor" data-toggle="tab"><%= t("activerecord.models.instructor") %></a>
+  </li>
+  <li>
+    <% if current_page?(instructor_path(@instructor)) %>
+      <%= link_to t("activerecord.models.course"), instructor_courses_path(@instructor), class: "btn btn-link" %>
+    <% end %>
+  </li>
+  <% if current_page?(instructors_path) %>
+    <%= link_to t("views.buttons.new"), new_instructor_path, class: "btn btn-default pull-right" %>
+  <% end %>
+</ul>
+
+

@@ -31,7 +31,7 @@ Rollbook::Application.routes.draw do
   resources :dance_styles
 
   resources :instructors
-  match "instructors/:id/courses" => "courses#instructors_courses", via: :get, as: "instructors_courses"
+  match "instructors/:id/courses" => "instructors#courses", via: :get, as: "instructor_courses"
 
   resources :timetables
 

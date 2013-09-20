@@ -1,42 +1,47 @@
-<div class="table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th colspan="2"><%= t("activerecord.attributes.instructor.name") %></th>
-        <% if false %>
-        <th><%= t("activerecord.attributes.instructor.team") %></th>
-        <% end %>
-        <th><%= t("activerecord.attributes.instructor.phone") %></th>
-        <% if false %>
-        <th><%= t("activerecord.attributes.instructor.email_pc") %></th>
-        <th><%= t("activerecord.attributes.instructor.email_mobile") %></th>
-        <% end %>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @instructors.each do |instructor| %>
-        <tr>
-          <td><small><%= instructor.kana %></small><br/><%= instructor.name %></td>
-          <td><%= "(#{instructor.team})" if instructor.team %></td>
-          <td><%= instructor.phone %></td>
-          <% if false %>
-          <td><%= instructor.email_pc %></td>
-          <td><%= instructor.email_mobile %></td>
-          <% end %>
-          <td><%= link_to t("views.buttons.show"), instructor, class: "btn btn-default" %></td>
-          <td><%= link_to t("views.buttons.edit"), edit_instructor_path(instructor), class: "btn btn-default" %></td>
-          <td><%= render "shared/delete_link", object: instructor %></td>
-          <td><%= link_to t("views.buttons.course"), instructors_courses_path(instructor), class: "btn btn-default" %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <%= paginate @instructors %>
-</div>
-<br />
+<%= render "nav_tabs" %>
 
-<%= link_to t("views.buttons.new"), new_instructor_path, class: "btn btn-default" %>
+<div class="tab-content">
+  <br/>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th colspan="2"><%= t("activerecord.attributes.instructor.name") %></th>
+          <% if false %>
+          <th><%= t("activerecord.attributes.instructor.team") %></th>
+          <% end %>
+          <th><%= t("activerecord.attributes.instructor.phone") %></th>
+          <% if false %>
+          <th><%= t("activerecord.attributes.instructor.email_pc") %></th>
+          <th><%= t("activerecord.attributes.instructor.email_mobile") %></th>
+          <% end %>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @instructors.each do |instructor| %>
+          <tr>
+            <td><small><%= instructor.kana %></small><br/><%= instructor.name %></td>
+            <td><%= "(#{instructor.team})" if instructor.team %></td>
+            <td><%= instructor.phone %></td>
+            <% if false %>
+            <td><%= instructor.email_pc %></td>
+            <td><%= instructor.email_mobile %></td>
+            <% end %>
+            <td><%= link_to t("views.buttons.show"), instructor, class: "btn btn-default" %></td>
+            <td><%= link_to t("views.buttons.edit"), edit_instructor_path(instructor), class: "btn btn-default" %></td>
+            <td><%= render "shared/delete_link", object: instructor %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @instructors %>
+  </div>
+  <br />
+
+  <%= link_to t("views.buttons.new"), new_instructor_path, class: "btn btn-default" %>
+</div>
+

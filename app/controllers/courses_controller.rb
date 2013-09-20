@@ -68,11 +68,6 @@ class CoursesController < ApplicationController
     end
   end
 
-  def instructors_courses
-    @instructor = Instructor.find(params[:id])
-    @courses = @instructor.courses
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course

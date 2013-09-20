@@ -3,5 +3,6 @@
 <div class="tab-content">
   <br />
   <%= render "form" %>
+  <%= button_tag t("views.buttons.create"), class: "btn btn-default pull-right", form: "form" %>
   <%= link_to t("views.buttons.back"), school_studios_path(@school), class: "btn btn-default pull-left" %>
 </div>

@@ -1,0 +1,40 @@
+<ul class="nav nav-tabs">
+  <li>
+    <%= link_to t("activerecord.models.instructor"), instructor_path(@instructor), class: "btn btn-link" %>
+  </li>
+  <li class="active">
+    <a href="#course" data-toggle="tab"><%= t("activerecord.models.course") %></a>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <br />
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= t("activerecord.attributes.studio.name") %></th>
+          <th><%= t("activerecord.attributes.studio.name") %></th>
+          <th><%= t("activerecord.attributes.timetable.weekday") %></th>
+          <th><%= t("activerecord.attributes.time_slot.start_time") %></th>
+          <th><%= t("activerecord.models.course") %></th>
+          <th><%= t("activerecord.attributes.course.open_date") %></th>
+          <th><%= t("activerecord.attributes.course.close_date") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @courses.each do |course| %>
+          <tr>
+            <td><%= course.timetable.studio.school.name %></td>
+            <td><%= course.timetable.studio.name %></td>
+            <td><%= weekday_ja(course.timetable.weekday) %></td>
+            <td><%= course.timetable.time_slot.start_time %></td>
+            <td><%= "#{course.dance_style.name}#{course.level.name}" %></td>
+            <td><%= course.open_date %></td>
+            <td><%= course.close_date %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
