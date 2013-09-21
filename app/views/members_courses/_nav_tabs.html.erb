@@ -8,6 +8,9 @@
   <li>
     <%= link_to t("activerecord.models.lesson"), member_rolls_path(@member), class: "btn btn-link" %>
   </li>
+  <li>
+    <%= link_to t("activerecord.models.bank_account"), member_bank_account_path(@member), class: "btn btn-link" %>
+  </li>
   <% if current_page?(member_members_courses_path) %>
     <%= link_to t("views.buttons.new"), new_member_members_course_path, class: "btn btn-default pull-right" %>
   <% end %>

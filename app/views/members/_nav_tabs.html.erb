@@ -9,12 +9,18 @@
     <li>
       <%= link_to t("activerecord.models.lesson"), member_rolls_path(@member), class: "btn btn-link" %>
     </li>
+    <li>
+      <%= link_to t("activerecord.models.bank_account"), member_bank_account_path(@member), class: "btn btn-link" %>
+    </li>
   <% else %>
     <li>
       <%= link_to t("activerecord.models.course"), member_members_courses_path(@member), class: "btn btn-link", disabled: "disabled" %>
     </li>
     <li>
       <%= link_to t("activerecord.models.lesson"), member_rolls_path(@member), class: "btn btn-link", disabled: "disabled"  %>
+    </li>
+    <li>
+      <%= link_to t("activerecord.models.bank_account"), member_bank_account_path(@member), class: "btn btn-link", disabled: "disabled" %>
     </li>
   <% end %>
   <% if current_page?(members_path) %>

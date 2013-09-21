@@ -1,27 +1,33 @@
-<div class="table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th><%= t("activerecord.attributes.bank_account.holder_name") %></th>
-        <th><%= t("activerecord.attributes.bank_account.status") %></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @bank_accounts.each do |bank_account| %>
+<%= render "nav_tabs" %>
+
+<div class="tab-content">
+  <br />
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
         <tr>
-          <td><%= display_name(bank_account) %></td>
-          <td><%= status_name(bank_account.status) %></td>
-          <td><%= link_to t("views.buttons.show"), bank_account, class: "btn btn-default" %></td>
-          <td><%= link_to t("views.buttons.edit"), edit_bank_account_path(bank_account), class: "btn btn-default" %></td>
-          <td><%= render "shared/delete_link", object: bank_account %></td>
+          <th><%= t("activerecord.attributes.bank_account.holder_name") %></th>
+          <th><%= t("activerecord.attributes.bank_account.status") %></th>
+          <th></th>
+          <th></th>
+          <th></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <%= paginate @bank_accounts %>
+      </thead>
+      <tbody>
+        <% @bank_accounts.each do |bank_account| %>
+          <tr>
+            <td><%= display_name(bank_account) %></td>
+            <td><%= status_name(bank_account.status) %></td>
+            <td><%= link_to t("views.buttons.show"), bank_account, class: "btn btn-default" %></td>
+            <td><%= link_to t("views.buttons.edit"), edit_bank_account_path(bank_account), class: "btn btn-default" %></td>
+            <td><%= render "shared/delete_link", object: bank_account %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @bank_accounts %>
+  </div>
+  <br />
+  <%= link_to t("views.buttons.new"), new_bank_account_path, class: "btn btn-default" %>
 </div>
-<br />
-<%= link_to t("views.buttons.new"), new_bank_account_path, class: "btn btn-default" %>
+

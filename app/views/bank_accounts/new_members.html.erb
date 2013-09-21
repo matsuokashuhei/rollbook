@@ -1,0 +1,39 @@
+<ul class="nav nav-tabs">
+  <li>
+    <%= link_to t("activerecord.models.bank_account"), bank_account_path(@bank_account), class: "btn btn-link" %>
+  </li>
+  <li class="active">
+    <a href="#members" data-toggle="tab"><%= t("activerecord.models.member") %></a>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <br />
+  <div class="table-responsive">
+    <%= render "shared/notice" %>
+    <%= form_tag({ action: "create_member" }, { method: "post", id: "form" }) do %>
+      <%= hidden_field_tag "bank_account_id", @bank_account.id %>
+      <table class="table">
+        <thead>
+          <tr>
+            <th></th>
+            <th><%= t("activerecord.attributes.member.id") %></th>
+            <th><%= t("activerecord.attributes.member.name") %></th>
+            <th><%= t("activerecord.attributes.member.enter_date") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @members.each do |member| %>
+            <tr>
+              <td><%= radio_button_tag "member_id", member.id %></td>
+              <td><%= member.id %></td>
+              <td><%= display_member_name(member) %></td>
+              <td><%= member.enter_date %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= button_tag t("views.buttons.select"), class: "btn btn-default pull-right", form: "form" %>
+    <% end %>
+  </div>
+</div>

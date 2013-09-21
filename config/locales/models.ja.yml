@@ -77,8 +77,8 @@ ja:
         kana: フリガナ
         email: Eメール
       bank_account:
-        holder_name: 口座名義人
-        holder_name_kana: 口座名義人 (フリガナ)
+        holder_name: 名義人
+        holder_name_kana: 名義人 (フリガナ)
         bank_id: 銀行コード
         bank_name: 銀行名
         bank: 銀行

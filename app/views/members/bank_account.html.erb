@@ -1,0 +1,27 @@
+<ul class="nav nav-tabs">
+  <li>
+    <%= link_to t("activerecord.models.member"), member_path(@member), class: "btn btn-link" %>
+  </li>
+  <li>
+    <%= link_to t("activerecord.models.members_course"), member_members_courses_path(@member), class: "btn btn-link" %>
+  </li>
+  <li>
+    <%= link_to t("activerecord.models.lesson"), member_rolls_path(@member), class: "btn btn-link" %>
+  </li>
+  <li class="active">
+    <a href="#bank_account", data-toggle="tab"><%= t("activerecord.models.bank_account") %></a>
+  </li>
+  <% if @bank_account.nil? %>
+    <%= link_to t("views.buttons.new"), new_bank_account_path(member_id: @member.id), class: "btn btn-default pull-right" %>
+  <% end %>
+</ul>
+
+<div class="tab-content">
+  <br />
+  <% if @bank_account %>
+    <fieldset disabled>
+      <%= render "bank_accounts/form" %>
+    </fieldset>
+  <% end %>
+</div>
+

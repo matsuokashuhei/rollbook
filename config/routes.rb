@@ -1,8 +1,10 @@
 Rollbook::Application.routes.draw do
 
   resources :bank_accounts
-
-  #resources :rolls
+  match "bank_accounts/:id/members" => "bank_accounts#members", via: :get, as: "bank_account_members"
+  match "bank_accounts/:id/members/new" => "bank_accounts#new_member", via: :get, as: "new_bank_account_member"
+  match "bank_accounts/:id/members" => "bank_accounts#create_member", via: :post
+  match "bank_accounts/:id/members/:member_id" => "bank_accounts#destroy_member", via: :delete, as: "destroy_bank_account_member"
 
   resources :lessons do
     resources :rolls, only: :index
@@ -12,7 +14,6 @@ Rollbook::Application.routes.draw do
   match "lessons/:lesson_id/rolls/absence" => "rolls#absence", via: :get, as: "edit_absence_rolls"
   match "lessons/:lesson_id/rolls/substitute" => "rolls#substitute", via: :post
 
-  match "members/:member_id/bank_account" => "bank_account#members_bank_account", via: :get, as: "members_bank_account"
 
   #match "rolls" => "rolls#index", via: :get
   #match "rolls/substitute" => "rolls#substitute", via: :post
@@ -22,36 +23,25 @@ Rollbook::Application.routes.draw do
   end
   match "members/:id/rolls" => "members#rolls", via: :get, as: "member_rolls"
   match "members/:member_id/members_courses/:id/rolls" => "members_courses#rolls", via: :get, as: "member_members_course_rolls"
+  match "members/:id/bank_account" => "members#bank_account", via: :get, as: "member_bank_account"
 
   resources :courses
   match "courses/:id/members" => "courses#members", via: :get, as: "course_members"
   match "courses/:id/lessons" => "courses#lessons", via: :get, as: "course_lessons"
 
   resources :age_groups
-
   resources :levels
-
   resources :dance_styles
 
   resources :instructors
   match "instructors/:id/courses" => "instructors#courses", via: :get, as: "instructor_courses"
 
   resources :timetables
-
   resources :time_slots
-
-  #resources :studios
 
   resources :schools do
     resources :studios
   end
-  #match "schools/:school_id/studios" => "studios#index", via: :get, as: "studios"
-  #match "schools/:school_id/studios/:id" => "studios#show", via: :get, as: "studio"
-  #match "schools/:school_id/studios/new" => "studios#new", via: :get, as: "new_studio"
-  #match "schools/:school_id/studios/:id/edit" => "studios#edit", via: :get, as: "edit_studio"
-  #match "schools/:school_id/studios/" => "studios#create", via: :post
-  #match "schools/:school_id/studios/:id" => "studios#update", via: :put
-  #match "schools/:school_id/studios/:id" => "studios#show", via: :get, as: "show_studio"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

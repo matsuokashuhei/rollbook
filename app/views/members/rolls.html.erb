@@ -8,6 +8,9 @@
   <li class="active">
     <a href="#roll" data-toggle="tab"><%= t("activerecord.models.lesson") %></a>
   </li>
+  <li>
+    <%= link_to t("activerecord.models.bank_account"), member_bank_account_path(@member), class: "btn btn-link" %>
+  </li>
 </ul>
 
 <div class="tab-content">

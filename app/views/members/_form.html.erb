@@ -65,12 +65,14 @@
       <%= f.text_field :nearby_station, class: "form-control", "placeholder" => t("activerecord.attributes.member.nearby_station") %>
     </div>
   </div>
+  <% if false %>
   <div class="form-group">
     <%= f.label :bank_account_id, class: "col-md-1 control-label" %>
     <div class="col-md-3">
       <%= f.collection_select :bank_account_id, BankAccount.all, :id, :holder_name_kana, { prompt: "" }, { class: "form-control" } %>
     </div>
   </div>
+  <% end %>
   <div class="form-group <%= 'has-error' if @member.errors[:enter_date].present? %>">
     <%= f.label t("activerecord.attributes.member.enter_date"), class: "col-md-1 control-label" %>
     <div class="col-md-2">
