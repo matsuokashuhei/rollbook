@@ -23,6 +23,8 @@ class Course < ActiveRecord::Base
   belongs_to :dance_style
   belongs_to :level
   has_many :lessons
+  has_many :members_courses
+  has_many :members, through: :members_courses, source: :member
 
   scope :details, -> {
     joins([timetable: [[studio: :school], :time_slot]], :instructor, :dance_style, :level).order("schools.open_date, studios.open_date, timetables.weekday, time_slots.start_time, courses.open_date")

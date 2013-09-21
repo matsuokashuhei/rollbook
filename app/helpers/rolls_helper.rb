@@ -10,7 +10,6 @@ module RollsHelper
   def status_name(status)
     STATUS[status]["name"]
   end
-
   def status_label(status)
     STATUS[status]["label"]
   end
@@ -21,6 +20,10 @@ module RollsHelper
 
   def status_html(status)
     ("<h3 style=\"margin: 0px; line-height: 0;\"><span class=\"label %s\">%s</span></h3>" % [status_label(status), status_name(status)]).html_safe
+  end
+
+  def roll_status_html(status)
+    status_html(status)
   end
 
 end

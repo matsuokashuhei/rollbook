@@ -1,0 +1,38 @@
+<ul class="nav nav-tabs">
+  <li>
+    <%= link_to t("activerecord.models.course"), course_path(@course), class: "btn btn-link" %>
+  </li>
+  <li class="active">
+    <a href="#member" data-toggle="tab"><%= t("activerecord.models.member") %></a>
+  </li>
+  <li>
+    <%= link_to t("activerecord.models.lesson"), course_lessons_path(@course), class: "btn btn-link" %>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <br />
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= t("activerecord.attributes.member.id") %></th>
+          <th><%= t("activerecord.attributes.member.name") %></th>
+          <th><%= t("activerecord.attributes.members_course.begin_date") %></th>
+          <th><%= t("activerecord.attributes.members_course.end_date") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @members_courses.each do |members_course| %>
+          <tr>
+            <td><%= members_course.member_id %></td>
+            <td><%= display_member_name(members_course.member) %></td>
+            <td><%= members_course.begin_date %></td>
+            <td><%= members_course.end_date %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+

@@ -1,15 +1,18 @@
+<%= render "nav_tabs" %>
+
+<div class="tab-content">
+  <br />
 <div class="table-responsive">
   <table class="table">
     <thead>
       <tr>
-        <th><%= t("activerecord.attributes.members_course.member_id") %></th>
-        <th><%= t("activerecord.attributes.members_course.course_id") %></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
+        <th><%= t("activerecord.models.school") %></th>
+        <th><%= t("activerecord.models.studio") %></th>
+        <th><%= t("activerecord.attributes.timetable.weekday") %></th>
+        <th><%= t("activerecord.models.time_slot") %></th>
+        <th><%= t("activerecord.models.course") %></th>
         <th><%= t("activerecord.attributes.members_course.begin_date") %></th>
-        <th></th>
+        <th><%= t("activerecord.attributes.members_course.end_date") %></th>
         <th></th>
         <th></th>
         <th></th>
@@ -17,15 +20,19 @@
     </thead>
     <tbody>
       <% @members_courses.each do |members_course| %>
-        <% course = @courses.find(members_course.course_id) %>
+        <% course = members_course.course %>
+        <% timetable = course.timetable %>
+        <% time_slot = timetable.time_slot %>
+        <% studio = timetable.studio %>
+        <% school = studio.school %>
         <tr>
-          <td><%= members_full_name(members_course.member) %></td>
-          <td><%= course.timetable.studio.school.name %></td>
-          <td><%= course.timetable.studio.name %></td>
-          <td><%= weekday_ja(course.timetable.weekday) %></td>
-          <td><%= course.timetable.time_slot.start_time %></td>
+          <td><%= school.name %></td>
+          <td><%= studio.name %></td>
+          <td><%= timetable.weekday_ja %></td>
+          <td><%= time_slot.start_time %></td>
           <td><%= course.name %></td>
           <td><%= members_course.begin_date %></td>
+          <td><%= members_course.end_date %></td>
           <td><%= link_to t("views.buttons.show"), member_members_course_path(@member, members_course), class: "btn btn-default" %></td>
           <td><%= link_to t("views.buttons.edit"), edit_member_members_course_path(@member, members_course), class: "btn btn-default" %></td>
           <td>
@@ -48,9 +55,6 @@
               </div>
             </div>
           </td>
-          <td>
-            <%= link_to t("views.buttons.roll"), members_course_rolls_path(@member, members_course), class: "btn btn-default" %>
-          </td>
         </tr>
       <% end %>
     </tbody>
@@ -59,3 +63,4 @@
 <br />
 <%= link_to t("views.buttons.back"), @member, class: "btn btn-default pull-left" %>
 <%= link_to t("views.buttons.new"), new_member_members_course_path(@member), class: "btn btn-default pull-right" %>
+</div>

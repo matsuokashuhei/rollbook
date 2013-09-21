@@ -1,13 +1,14 @@
 class MembersCoursesController < ApplicationController
-  before_action :set_members_course, only: [:show, :edit, :update, :destroy]
-  before_action :set_courses, only: [:show, :new, :edit, :create, :update, :destroy]
+  helper RollsHelper
+
+  before_action :set_member
+  before_action :set_members_course, only: [:show, :edit, :update, :destroy, :rolls]
+  before_action :set_courses, only: [:new, :create]
 
   # GET /members_courses
   # GET /members_courses.json
   def index
-    @member = Member.find(params[:member_id])
-    @members_courses = @member.members_courses
-    @courses = Course.joins([timetable: [[studio: :school], :time_slot]], :instructor, :dance_style, :level)
+    @members_courses = MembersCourse.details.where("members_courses.member_id = ?", @member.id)
   end
 
   # GET /members_courses/1
@@ -66,10 +67,19 @@ class MembersCoursesController < ApplicationController
     end
   end
 
+  def rolls
+    @rolls = @members_course.rolls
+    respond_to do |format|
+      format.html { render aciton: "rolls" }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_members_course
+    def set_member
       @member = Member.find(params[:member_id])
+    end
+    def set_members_course
       @members_course = MembersCourse.find(params[:id])
     end
 

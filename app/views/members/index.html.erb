@@ -1,32 +1,38 @@
-<div class="table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th><%= t("activerecord.attributes.member.name") %></th>
-        <th><%= t("activerecord.attributes.member.gender") %></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @members.each do |member| %>
-        <tr>
-          <td><small><%= member.full_name_kana %></small><br/><%= member.full_name %></td>
-          <td><%= display_gender(member.gender) %></td>
-          <td><%= link_to t("views.buttons.show"), member, class: "btn btn-default" %></td>
-          <td><%= link_to t("views.buttons.edit"), edit_member_path(member), class: "btn btn-default" %></td>
-          <td><%= render "shared/delete_link", object: member %></td>
-          <td><%= link_to t("views.buttons.course"), member_members_courses_path(member), class: "btn btn-default" %></td>
-          <td><%= link_to t("views.buttons.bank_account"), member.bank_account, class: "btn btn-default" %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <%= paginate @members %>
-</div>
-<br />
+<%= render "nav_tabs" %>
 
-<%= link_to t("views.buttons.new"), new_member_path, class: "btn btn-default" %>
+<div class="tab-content">
+  <br />
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= t("activerecord.attributes.member.id") %></th>
+          <th><%= t("activerecord.attributes.member.name") %></th>
+          <th><%= t("activerecord.attributes.member.gender") %></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @members.each do |member| %>
+          <tr>
+            <td><%= member.id %></td>
+            <td><%= display_member_name(member) %></td>
+            <td><%= display_gender(member.gender) %></td>
+            <td><%= link_to t("views.buttons.show"), member, class: "btn btn-default" %></td>
+            <td><%= link_to t("views.buttons.edit"), edit_member_path(member), class: "btn btn-default" %></td>
+            <td><%= render "shared/delete_link", object: member %></td>
+            <td><%= link_to t("views.buttons.bank_account"), member.bank_account, class: "btn btn-default" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= paginate @members %>
+  </div>
+  <br />
+
+  <%= link_to t("views.buttons.new"), new_member_path, class: "btn btn-default" %>
+
+</div>

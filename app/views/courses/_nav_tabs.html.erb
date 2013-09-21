@@ -1,0 +1,22 @@
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a href="#course" data-toggle="tab"><%= t("activerecord.models.course") %></a>
+  </li>
+  <li>
+    <% if current_page?(course_path(@course)) %>
+      <%= link_to t("activerecord.models.member"), course_members_path(@course), class: "btn btn-link" %>
+    <% else %>
+      <%= link_to t("activerecord.models.member"), course_members_path(@course), class: "btn btn-link", disabled: "disabled" %>
+    <% end %>
+  </li>
+  <li>
+    <% if current_page?(course_path(@course)) %>
+      <%= link_to t("activerecord.models.lesson"), course_lessons_path(@course), class: "btn btn-link"  %>
+    <% else %>
+      <%= link_to t("activerecord.models.lesson"), course_lessons_path(@course), class: "btn btn-link", disabled: "disabled"  %>
+    <% end %>
+  </li>
+</ul>
+
+
+

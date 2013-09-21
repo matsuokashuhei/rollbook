@@ -5,6 +5,8 @@
   <li>
     <% if current_page?(school_path(@school)) %>
       <%= link_to t("activerecord.models.studio"), school_studios_path(@school), class: "btn btn-link" %>
+    <% else %>
+      <%= link_to t("activerecord.models.studio"), school_studios_path(@school), class: "btn btn-link", disabled: "disabled" %>
     <% end %>
   </li>
   <% if current_page?(schools_path) %>

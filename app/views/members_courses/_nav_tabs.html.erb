@@ -1,0 +1,16 @@
+<ul class="nav nav-tabs">
+  <li>
+    <%= link_to t("activerecord.models.member"), member_path(@member), class: "btn btn-link" %>
+  </li>
+  <li class="active">
+      <a href="#members_courses" data-toggle="tab"><%= t("activerecord.models.members_course") %></a>
+  </li>
+  <li>
+    <%= link_to t("activerecord.models.lesson"), member_rolls_path(@member), class: "btn btn-link" %>
+  </li>
+  <% if current_page?(member_members_courses_path) %>
+    <%= link_to t("views.buttons.new"), new_member_members_course_path, class: "btn btn-default pull-right" %>
+  <% end %>
+</ul>
+
+

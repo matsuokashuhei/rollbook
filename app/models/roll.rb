@@ -12,8 +12,24 @@
 #
 
 class Roll < ActiveRecord::Base
+  STATUS = {
+    "0" => "未定",
+    "1" => "出席",
+    "2" => "欠席",
+    "3" => "欠席",
+    "4" => "振替",
+  }
+
   belongs_to :lesson
   belongs_to :member
+
+  scope :details, -> {
+    joins(lesson: [course: [[timetable: [[studio: :school], :time_slot]], :dance_style, :level, :instructor]]).order("lessons.date, time_slots.start_time")
+  }
+
+  def status_name
+    STATUS[status]
+  end
 
   def substitute!(lesson)
     # 振替したレッスンの登録

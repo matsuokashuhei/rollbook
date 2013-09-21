@@ -1,8 +1,9 @@
-<%= render "shared/notice" %>
-<div class="panel panel-default">
-  <div class="panel-body">
-    <%= render "form" %>
-    <%= link_to t("views.buttons.back"), courses_path, class: "btn btn-default pull-left" %>
-    <%= link_to t("views.buttons.edit"), edit_course_path(@course), class: "btn btn-default pull-right" %>
-  </div>
+<%= render "nav_tabs" %>
+
+<div class="tab-content">
+  <br />
+  <%= render "shared/notice" %>
+  <%= render "form" %>
+  <%= link_to t("views.buttons.back"), courses_path, class: "btn btn-default pull-left" %>
+  <%= link_to t("views.buttons.edit"), edit_course_path(@course), class: "btn btn-default pull-right" %>
 </div>

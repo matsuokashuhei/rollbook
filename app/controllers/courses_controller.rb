@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :members, :lessons]
 
   # GET /courses
   # GET /courses.json
@@ -68,6 +68,21 @@ class CoursesController < ApplicationController
     end
   end
 
+  def members
+    @members_courses = MembersCourse.joins(:member).where("members_courses.course_id = ?", @course.id).order("members_courses.begin_date", "members.id")
+    #@members = Member.joins(:members_course).where("members_courses.course_id = ?", @course.id).order("members_courses.begin_date", "members.id")
+    respond_to do |format|
+      format.html { render action: "members" }
+    end
+  end
+
+  def lessons
+    @lessons = @course.lessons
+    respond_to do |format|
+      format.html { render action: "lessons" }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course
@@ -78,4 +93,5 @@ class CoursesController < ApplicationController
     def course_params
       params.require(:course).permit(:timetable_id, :instructor_id, :dance_style_id, :level_id, :age_group_id, :open_date, :close_date, :note, :monthly_fee)
     end
+
 end

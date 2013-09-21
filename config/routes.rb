@@ -12,7 +12,6 @@ Rollbook::Application.routes.draw do
   match "lessons/:lesson_id/rolls/absence" => "rolls#absence", via: :get, as: "edit_absence_rolls"
   match "lessons/:lesson_id/rolls/substitute" => "rolls#substitute", via: :post
 
-  match "members/:member_id/members_course/:id/rolls" => "rolls#index_of_members_course", via: :get, as: "members_course_rolls"
   match "members/:member_id/bank_account" => "bank_account#members_bank_account", via: :get, as: "members_bank_account"
 
   #match "rolls" => "rolls#index", via: :get
@@ -21,8 +20,12 @@ Rollbook::Application.routes.draw do
   resources :members do
     resources :members_courses
   end
+  match "members/:id/rolls" => "members#rolls", via: :get, as: "member_rolls"
+  match "members/:member_id/members_courses/:id/rolls" => "members_courses#rolls", via: :get, as: "member_members_course_rolls"
 
   resources :courses
+  match "courses/:id/members" => "courses#members", via: :get, as: "course_members"
+  match "courses/:id/lessons" => "courses#lessons", via: :get, as: "course_lessons"
 
   resources :age_groups
 

@@ -1,5 +1,6 @@
 class MembersController < ApplicationController
-  before_action :set_member, only: [:show, :edit, :update, :destroy]
+  helper RollsHelper
+  before_action :set_member, only: [:show, :edit, :update, :destroy, :rolls]
 
   # GET /members
   # GET /members.json
@@ -58,6 +59,13 @@ class MembersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to members_url }
       format.json { head :no_content }
+    end
+  end
+
+  def rolls
+    @rolls = Roll.details.where("rolls.member_id = ?", @member.id)
+    respond_to do |format|
+      format.html { render action: "rolls" }
     end
   end
 

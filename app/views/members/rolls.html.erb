@@ -1,0 +1,44 @@
+<ul class="nav nav-tabs">
+  <li>
+    <%= link_to t("activerecord.models.member"), member_path(@member), class: "btn btn-link" %>
+  </li>
+  <li>
+    <%= link_to t("activerecord.models.members_course"), member_members_courses_path(@member), class: "btn btn-link" %>
+  </li>
+  <li class="active">
+    <a href="#roll" data-toggle="tab"><%= t("activerecord.models.lesson") %></a>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <br />
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= t("activerecord.attributes.lesson.date") %></th>
+          <th><%= t("activerecord.models.school") %></th>
+          <th><%= t("activerecord.models.studio") %></th>
+          <th><%= t("activerecord.models.course") %></th>
+          <th><%= t("activerecord.attributes.roll.status") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @rolls.each do |roll| %>
+          <% lesson = roll.lesson %>
+          <% course = lesson.course %>
+          <% studio = course.timetable.studio %>
+          <% school = studio.school %>
+          <tr>
+            <td><%= lesson.date %></td>
+            <td><%= school.name %></td>
+            <td><%= studio.name %></td>
+            <td><%= course.name %></td>
+            <td><%= roll_status_html(roll.status) %></td>
+          </tr>
+        <% end %>
+    </table>
+  </div>
+</div>
+
+
