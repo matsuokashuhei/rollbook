@@ -16,4 +16,5 @@ module LessonsHelper
   def display_lesson_status(status)
     ("<h3 style=\"margin: 0px; line-height: 0;\"><span class=\"label %s\">%s</span></h3>" % [lesson_status_label(status), lesson_status_name(status)]).html_safe
   end
+
 end
