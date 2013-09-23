@@ -1,0 +1,17 @@
+<ol class="breadcrumb">
+  <% if current_page?(member_path(@member)) %>
+    <li class="active"><%= @member.full_name %></li>
+  <% else %>
+    <li><%= link_to @member.full_name, member_path(@member) %></li>
+    <% if current_page?(edit_member_path(@member)) %>
+      <li class="active"><%= t("views.buttons.edit") %></li>
+    <% end %>
+  <% end %>
+  <% if current_page?(member_rolls_path(@member)) %>
+    <li class="active"><%= t("activerecord.models.lesson") %></li>
+  <% end %>
+  <% if current_page?(member_bank_account_path(@member)) %>
+    <li class="active"><%= t("activerecord.models.bank_account") %></li>
+  <% end %>
+</ol>
+

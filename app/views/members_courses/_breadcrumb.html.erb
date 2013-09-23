@@ -1,0 +1,19 @@
+<ol class="breadcrumb">
+  <li><%= link_to @member.full_name, member_path(@member) %></li>
+  <% if current_page?(member_members_courses_path(@member)) %>
+    <li class="active"><%= t("activerecord.models.members_course") %></li>
+  <% else %>
+    <li><%= link_to t("activerecord.models.members_course"), member_members_courses_path(@member) %></li>
+  <% end %>
+  <% if current_page?(member_members_course_path(@member, @members_course)) %>
+    <li class="active"><%= @members_course.course.name %></li>
+  <% end %>
+  <% if current_page?(edit_member_members_course_path(@member, @members_course)) %>
+    <li><%= link_to @members_course.course.name, member_members_course_path(@member, @members_course) %></li>
+    <li class="active"><%= t("views.buttons.edit") %></li>
+  <% end %>
+  <% if current_page?(new_member_members_course_path(@member)) %>
+    <li class="active"><%= t("views.buttons.new") %></li>
+  <% end %>
+</ol>
+
