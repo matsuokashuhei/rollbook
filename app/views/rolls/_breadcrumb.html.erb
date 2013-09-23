@@ -1,0 +1,15 @@
+<ol class="breadcrumb">
+  <li><%= link_to @lesson.date.strftime("%Y年%m月"), lessons_path(month: @lesson.date.strftime("%Y%m")) %></li>
+  <li><%= link_to @lesson.date.strftime("%d日"), lessons_path(date: @lesson.date.strftime("%Y%m%d")) %></li>
+  <% if current_page?(lesson_rolls_path(@lesson)) %>
+    <li class="active"><%= @lesson.course.name %></li>
+  <% else %>
+    <li><%= link_to @lesson.course.name, lesson_rolls_path(@lesson) %></li>
+  <% end %>
+  <% if current_page?(edit_lesson_rolls_path(@lesson)) %>
+    <li class="active"><%= t("views.buttons.edit") %></li>
+  <% end %>
+  <% if current_page?(new_lesson_rolls_path(@lesson)) %>
+    <li class="active"><%= t("views.buttons.substitute") %></li>
+  <% end %>
+ </ol>

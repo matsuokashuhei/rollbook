@@ -2,12 +2,10 @@
 
 <div class="tab-content">
   <br />
+  <%= render "breadcrumb" %>
   <%= form_tag({ action: "new" }, { method: "post", id: "form" }) do %>
     <div class="table-responsive">
       <table class="table">
-        <caption style="text-align: left;">
-          <h4><%= @lesson.date.strftime("%Y年%m月%d日") %>　<%= @lesson.course.name %></h4>
-        </caption>
         <thead>
           <tr>
             <th></th>

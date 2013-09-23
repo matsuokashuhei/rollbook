@@ -1,9 +1,6 @@
 <%= form_tag({ action: "create_or_update" }, { method: "post", id: "form" }) do %>
   <div class="table-responsive">
     <table class="table">
-      <caption style="text-align: left;">
-        <h4><%= @lesson.date.strftime("%Y年%m月%d日") %>　<%= @lesson.course.name %></h4>
-      </caption>
       <thead>
         <tr>
           <th><%= t("activerecord.attributes.member.id") %></th>

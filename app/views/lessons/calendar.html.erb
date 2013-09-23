@@ -2,9 +2,9 @@
 
 <div class="tab-content">
   <br />
+  <%= render "breadcrumb" %>
   <div class="table-responsive">
     <table class="table table-bordered">
-      <caption style="text-align: left;"><h4><%= @begin_date.strftime("%Y年%m月") %></h4></caption>
       <thead>
         <tr>
           <% 1.step(7) do |cwday| %>
