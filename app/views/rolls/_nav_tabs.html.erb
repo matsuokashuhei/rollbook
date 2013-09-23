@@ -1,0 +1,9 @@
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a href="#roll" data-toggle="tab"><%= t("activerecord.models.lesson") %></a>
+  </li>
+  <% if current_page?(edit_lesson_rolls_path(@lesson)) %>
+    <%= link_to t("views.buttons.substitute"), new_lesson_rolls_path(@lesson), class: "btn btn-default pull-right" %>
+  <% end %>
+</ul>
+

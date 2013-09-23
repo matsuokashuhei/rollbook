@@ -1,0 +1,33 @@
+<% if @lesson.status == "2" %>
+  <%= link_to t("views.buttons.fix"), nil, class: "btn btn-default pull-right disabled" %>
+<% elsif @rolls.size == 0 %>
+  <%= link_to t("views.buttons.fix"), nil, class: "btn btn-default pull-right disabled" %>
+<% elsif @rolls.select { |roll| roll.status == "0" }.size > 0 %>
+  <%= link_to t("views.buttons.fix"), nil, class: "btn btn-default pull-right disabled" %>
+<% else %>
+  <a data-toggle="modal" href="#lesson" class="btn btn-default pull-right">
+    <%= t("views.buttons.fix") %>
+  </a>
+  <div class="modal fade" id="lesson">
+    <%= form_for @lesson do |f| %>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">確認</h4>
+          </div>
+          <div class="modal-body">
+            確定してよいですか？
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              <%= t("views.buttons.close") %>
+            </button>
+            <%= hidden_field_tag "lesson[status]", "2" %>
+            <%= f.submit t("views.buttons.fix"), class: "btn btn-default" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

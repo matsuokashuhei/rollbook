@@ -6,6 +6,7 @@
     <table class="table">
       <thead>
         <tr>
+          <th><%= t("activerecord.attributes.bank_account.id") %></th>
           <th><%= t("activerecord.attributes.bank_account.holder_name") %></th>
           <th><%= t("activerecord.attributes.bank_account.status") %></th>
           <th></th>
@@ -16,6 +17,7 @@
       <tbody>
         <% @bank_accounts.each do |bank_account| %>
           <tr>
+            <td><%= bank_account.id %></td>
             <td><%= display_name(bank_account) %></td>
             <td><%= status_name(bank_account.status) %></td>
             <td><%= link_to t("views.buttons.show"), bank_account, class: "btn btn-default" %></td>

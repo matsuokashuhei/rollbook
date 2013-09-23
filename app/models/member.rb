@@ -35,6 +35,8 @@ class Member < ActiveRecord::Base
             :last_name_kana,
             presence: true
 
+  default_scope -> { order("last_name_kana, first_name_kana") }
+
   def full_name
     "%s　%s" % [last_name, first_name]
   end

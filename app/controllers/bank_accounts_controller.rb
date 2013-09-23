@@ -80,7 +80,6 @@ class BankAccountsController < ApplicationController
   end
 
   def new_member
-    #@members = Member.joins(:members_courses).date(Date.today).order("members.last_name_kana")
     @members = Member.where(bank_account_id: nil, leave_date: nil)
     respond_to do |format|
       format.html { render action: "new_members" }
@@ -92,7 +91,10 @@ class BankAccountsController < ApplicationController
     member.bank_account_id = params[:bank_account_id]
     respond_to do |format|
       if member.save
-        format.html { redirect_to bank_account_members_path(@bank_account), notice: I18n.t("messages.controllers.bank_account.create_member", { holders_name: @bank_account.holder_name, member: member.full_name }) }
+        format.html {
+          redirect_to bank_account_members_path(@bank_account),
+          notice: I18n.t("messages.controllers.bank_account.create_member", { holders_name: @bank_account.holder_name, member: member.full_name })
+        }
         format.json { render action: 'show', status: :created, location: @bank_account }
       else
         format.html { render action: 'new_member' }
@@ -105,8 +107,10 @@ class BankAccountsController < ApplicationController
     member = Member.find(params[:member_id])
     respond_to do |format|
       if member.update_attributes(bank_account_id: nil)
-        format.html { redirect_to bank_account_members_path(@bank_account),
-                                  notice: I18n.t("messages.controllers.bank_account.destroy_member", { holders_name: @bank_account.holder_name, member: member.full_name }) }
+        format.html {
+          redirect_to bank_account_members_path(@bank_account),
+                      notice: I18n.t("messages.controllers.bank_account.destroy_member", { holders_name: @bank_account.holder_name, member: member.full_name })
+        }
       else
         format.html { render action: 'new_member' }
       end

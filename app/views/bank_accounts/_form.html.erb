@@ -20,19 +20,19 @@
   <div class="form-group">
     <%= f.label t("activerecord.attributes.bank_account.bank"), class: "col-md-1 control-label" %>
     <div class="col-md-2 <%= 'has-error' if @bank_account.errors[:bank_id].present? %>">
-      <%= f.text_field :bank_id, class: "form-control", "placeholder" => t("activerecord.attributes.bank_account.id") %>
+      <%= f.text_field :bank_id, class: "form-control", "placeholder" => t("activerecord.attributes.bank_account.bank_id") %>
     </div>
     <div class="col-md-3 <%= 'has-error' if @bank_account.errors[:bank_name].present? %>">
-      <%= f.text_field :bank_name, class: "form-control", "placeholder" => t("activerecord.attributes.bank_account.name") %>
+      <%= f.text_field :bank_name, class: "form-control", "placeholder" => t("activerecord.attributes.bank_account.bank_name") %>
     </div>
   </div>
   <div class="form-group">
     <%= f.label t("activerecord.attributes.bank_account.branch"), class: "col-md-1 control-label" %>
     <div class="col-md-2 <%= 'has-error' if @bank_account.errors[:branch_id].present? %>">
-      <%= f.text_field :branch_id, class: "form-control", "placeholder" => t("activerecord.attributes.bank_account.id") %>
+      <%= f.text_field :branch_id, class: "form-control", "placeholder" => t("activerecord.attributes.bank_account.branch_id") %>
     </div>
     <div class="col-md-3 <%= 'has-error' if @bank_account.errors[:branch_name].present? %>">
-      <%= f.text_field :branch_name, class: "form-control", "placeholder" => t("activerecord.attributes.bank_account.name") %>
+      <%= f.text_field :branch_name, class: "form-control", "placeholder" => t("activerecord.attributes.bank_account.branch_name") %>
     </div>
   </div>
   <div class="form-group">

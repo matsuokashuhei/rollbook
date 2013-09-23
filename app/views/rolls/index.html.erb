@@ -1,97 +1,26 @@
-<%= form_tag({ action: "update" }, { method: "put" }) do %>
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th><%= t("activerecord.attributes.lesson.date") %>
-            <th><%= t("activerecord.attributes.lesson.course_id") %></th>
-            <th><%= t("activerecord.attributes.roll.member_id") %></th>
-            <th><%= t("activerecord.attributes.roll.status") %></th>
-            <th><%= t("activerecord.attributes.roll.substitute_roll_id") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @rolls.each do |roll| %>
-            <%= hidden_field_tag "rolls[][id]", roll.id %>
-            <%= hidden_field_tag "rolls[][lesson_id]", roll.lesson_id %>
-            <%= hidden_field_tag "rolls[][member_id]", roll.member_id %>
-            <tr>
-              <td><%= @lesson.date %></td>
-              <td><%= @lesson.course.name %></td>
-              <td><%= members_full_name(roll.member) %></td>
-              <td>
-                <%= hidden_field_tag "rolls[][status]", roll.status %>
-                <% if roll.status == "0" || roll.status == "1" || roll.status == "2" %>
-                  <div class="btn-group" data-toggle="buttons">
-                    <% %w(0 1 2).each do |status| %>
-                      <label class="btn <%= roll.status == status ? status_button(status) : "btn-default" %> <%= "active" if roll.status == status %>" disabled>
-                        <input type="radio" value="<%= status %>"><%= status_name(status) %>
-                      </label>
-                    <% end %>
-                  </div>
-                <% else %>
-                  <div class="btn-group" data-toggle="buttons">
-                    <label class="btn <%= status_button(roll.status) %> active" disabled>
-                      <input type="radio" value="<%= roll.status %>"><%= status_name(roll.status) %>
-                    </label>
-                  </div>
-                <% end %>
-              </td>
-              <td>
-                <% substitute_roll = roll.substitute_roll %>
-                <% lesson = substitute_roll.try(:lesson) %>
-                <%= link_to_if lesson, lesson.try(:date), lesson_rolls_path(lesson), class: "btn btn-link" %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+<%= render "nav_tabs" %>
+
+<div class="tab-content">
+  <br />
+  <%= render "form" %>
+
+  <%= render "lessons/fix_button" %>
+
+  <% if @lesson.status == "2" || @lesson.date > Date.today %>
+    <%= link_to t("views.buttons.edit"), edit_lesson_rolls_path(@lesson), class: "btn btn-default pull-right disabled" %>
+  <% else %>
+    <%= link_to t("views.buttons.edit"), edit_lesson_rolls_path(@lesson), class: "btn btn-default pull-right" %>
+  <% end %>
+
+  <%= link_to t("views.buttons.back"), lessons_path(date: @lesson.date.strftime("%Y%m%d")), class: "btn btn-default pull-left" %>
+
+</div>
+
+<% if false %>
     <div class="row">
       <% prev_lesson = @lesson.prev_lesson %>
       <%= link_to prev_lesson.date.strftime("%Y/%m/%d"), lesson_rolls_path(prev_lesson.id), class: "btn btn-link pull-left" if prev_lesson %>
       <% next_lesson = @lesson.next_lesson %>
       <%= link_to next_lesson.date.strftime("%Y/%m/%d"), lesson_rolls_path(next_lesson.id), class: "btn btn-link pull-right" if next_lesson %>
     </div>
-    <div class="row">
-      <%= link_to t("views.buttons.back"), lessons_path(date: @lesson.date.strftime("%Y%m%d")), class: "btn btn-default pull-left" %>
-      <% if @lesson.date <= Date.today %>
-        <%= link_to t("views.buttons.edit"), edit_lesson_rolls_path(@lesson), class: "btn btn-default pull-right" %>
-      <% else %>
-        <%= link_to t("views.buttons.edit"), edit_lesson_rolls_path(@lesson), class: "btn btn-default pull-right", disabled: "disabled" %>
-      <% end %>
-    </div>
-    <br />
-  <% end %>
-  <div class="row">
-    <a data-toggle="modal" href="#object_<%= @lesson.id %>" class="btn btn-default"><%= t("views.buttons.fix") %></a>
-    <% if false %>
-      <%= form_for @lesson do |f| %>
-        <% @lesson.status = "2" %>
-        <%= f.hidden_field :status %>
-        <%= f.submit t("views.buttons.fix"), class: "btn btn-default pull-right" %>
-      <% end %>
-    <% end %>
-  </div>
-
-  <div class="modal fade" id="object_<%= @lesson.id %>">
-          <%= form_for @lesson do |f| %>
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">確認</h4>
-        </div>
-        <div class="modal-body">
-          確定してよいですか？
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">閉 じ る</button>
-            <% @lesson.status = "2" %>
-            <%= f.hidden_field :status %>
-            <%= f.submit t("views.buttons.fix"), class: "btn btn-default" %>
-        </div>
-      </div>
-    </div>
-  <% end %>
-</div>
+<% end %>

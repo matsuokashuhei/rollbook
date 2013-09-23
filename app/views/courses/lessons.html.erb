@@ -24,7 +24,7 @@
         <% @lessons.each do |lesson| %>
           <tr>
             <td><%= lesson.date %></td>
-            <td><%= lesson.status %></td>
+            <td><%= display_lesson_status(lesson.status) %></td>
           </tr>
         <% end %>
       </tbody>

@@ -39,6 +39,6 @@ module Rollbook
     ActionView::Base.field_error_proc = Proc.new { |html_tag, instance| html_tag }
 
     # すべてのヘルパーを読み込まない。
-    config.action_controller.include_all_helpers = false
+    #config.action_controller.include_all_helpers = false
   end
 end

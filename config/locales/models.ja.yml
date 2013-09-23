@@ -77,14 +77,13 @@ ja:
         kana: フリガナ
         email: Eメール
       bank_account:
+        id: ID
         holder_name: 名義人
         holder_name_kana: 名義人 (フリガナ)
         bank_id: 銀行コード
         bank_name: 銀行名
         bank: 銀行
         branch: 支店
-        id: コード
-        name: 名前
         branch_id: 支店コード
         branch_name: 支店名
         account_number: 口座番号
@@ -108,8 +107,4 @@ ja:
         status: 出欠
         substitute_roll_id: 振替
         note: メモ
-
-
-
-
 

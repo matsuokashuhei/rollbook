@@ -1,33 +1,81 @@
-<%= form_for(@roll) do |f| %>
-  <% if @roll.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@roll.errors.count, "error") %> prohibited this roll from being saved:</h2>
-
-      <ul>
-      <% @roll.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :lesson_id %><br>
-    <%= f.number_field :lesson_id %>
-  </div>
-  <div class="field">
-    <%= f.label :member_id %><br>
-    <%= f.number_field :member_id %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.text_field :status %>
-  </div>
-  <div class="field">
-    <%= f.label :substitute_roll_id %><br>
-    <%= f.number_field :substitute_roll_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+<%= form_tag({ action: "create_or_update" }, { method: "post", id: "form" }) do %>
+  <div class="table-responsive">
+    <table class="table">
+      <caption style="text-align: left;">
+        <h4><%= @lesson.date.strftime("%Y年%m月%d日") %>　<%= @lesson.course.name %></h4>
+      </caption>
+      <thead>
+        <tr>
+          <th><%= t("activerecord.attributes.member.id") %></th>
+          <th><%= t("activerecord.attributes.roll.member_id") %></th>
+          <th><%= t("activerecord.attributes.roll.status") %></th>
+          <th><%= t("activerecord.attributes.roll.substitute_roll_id") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @rolls.each do |roll| %>
+          <%= hidden_field_tag "rolls[][id]", roll.lesson_id if roll.persisted? %>
+          <%= hidden_field_tag "rolls[][lesson_id]", roll.lesson.id %>
+          <%= hidden_field_tag "rolls[][member_id]", roll.member_id %>
+          <tr>
+            <td><%= roll.member_id %></td>
+            <td><%= display_member_name(roll.member) %></td>
+            <td>
+              <%= "<fieldset disabled>".html_safe unless params[:action] == "edit" %>
+              <%= hidden_field_tag "rolls[][status]", roll.status %>
+              <% unsubstituted_statuses = ["0", "1", "2"] %>
+              <% if unsubstituted_statuses.include?(roll.status) %>
+                <div class="btn-group" data-toggle="buttons">
+                  <% unsubstituted_statuses.each do |status| %>
+                    <label class="btn <%= roll.status == status ? roll_status_button(status) : "btn-default" %> <%= "active" if roll.status == status %>">
+                      <input type="radio" value="<%= status %>"><%= roll_status_name(status) %>
+                    </label>
+                  <% end %>
+                </div>
+              <% else %>
+                <div class="btn-group" data-toggle="buttons">
+                  <label class="btn <%= roll_status_button(roll.status) %> active" disabled>
+                    <input type="radio" value="<%= roll.status %>"><%= roll_status_name(roll.status) %>
+                  </label>
+                </div>
+              <% end %>
+              <%= "</fieldset>".html_safe if params[:action] == "edit" %>
+            </td>
+            <td>
+              <% substitute_roll = roll.substitute_roll %>
+              <% if substitute_roll %>
+                <% lesson = substitute_roll.lesson if substitute_roll %>
+                <%= link_to lesson.date, lesson_rolls_path(lesson), class: "btn btn-link" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 <% end %>
+<script>
+  $('div[data-toggle="buttons"] .btn').click(function() {
+    var div = $(this).parent("div");
+    var radio = $(this).children("input");
+    var td = div.parent("td");
+    var hidden = td.children("input");
+    hidden.val(radio.attr("value"));
+    $(this).parent("div").children("label").each(function() {
+      $(this).removeClass("btn-default");
+      $(this).removeClass("btn-success");
+      $(this).removeClass("btn-danger");
+      if (hidden.attr("value") == $(this).children("input").attr("value")) {
+        if (hidden.attr("value") == "0") {
+          $(this).addClass("btn-default");
+        } else if (hidden.attr("value") == "1") {
+          $(this).addClass("btn-success");
+        } else {
+          $(this).addClass("btn-danger");
+        }
+      } else {
+        $(this).addClass("btn-default");
+      }
+    });
+  });
+</script>

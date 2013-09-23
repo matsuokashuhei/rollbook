@@ -1,42 +1,48 @@
-<div class="row">
-<div class="table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th><%= t("activerecord.models.school") %></th>
-        <th><%= t("activerecord.models.studio") %></th>
-        <th><%= t("activerecord.models.time_slot") %></th>
-        <th><%= t("activerecord.attributes.lesson.course_id") %></th>
-        <th><%= t("activerecord.attributes.lesson.date") %></th>
-        <th><%= t("activerecord.attributes.lesson.status") %></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @lessons.each do |lesson| %>
-        <% course = @courses.find {|course| course.id == lesson.course_id } %>
+<%= render "nav_tabs" %>
+
+<div class="tab-content">
+  <br />
+  <div class="table-responsive">
+    <table class="table">
+      <caption style="text-align: left;"><h4><%= @date.strftime("%Y年%m月%d日") %></h4></caption>
+      <thead>
         <tr>
-          <td><%= course.timetable.studio.school.name %></td>
-          <td><%= course.timetable.studio.name %></td>
-          <td><%= course.timetable.time_slot.start_time %></td>
-          <td><%= course.name %></td>
-          <td><%= lesson.date %></td>
-          <td><%= status_html(lesson.status) %></td>
-          <td>
-            <% if @date < Date.today + 7.day %>
-              <%= link_to t("views.buttons.show"), lesson_rolls_path(lesson), class: "btn btn-default" %>
-            <% else %>
-              <%= link_to t("views.buttons.show"), lesson_rolls_path(lesson), class: "btn btn-default", disabled: "disabled" %>
-            <% end %>
-          </td>
+          <th><%= t("activerecord.models.school") %></th>
+          <th><%= t("activerecord.models.studio") %></th>
+          <th><%= t("activerecord.models.time_slot") %></th>
+          <th><%= t("activerecord.attributes.lesson.course_id") %></th>
+          <th><%= t("activerecord.attributes.lesson.status") %></th>
+          <th></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <%= link_to_if(@date.yesterday.day < 29, @date.yesterday, lessons_path(date: @date.yesterday.strftime("%Y%m%d")), class: "btn btn-link pull-left") {} %>
-  <%= link_to_if(@date.tomorrow.day < 29, @date.tomorrow, lessons_path(date: @date.tomorrow.strftime("%Y%m%d")), class: "btn btn-link pull-right") {} %>
+      </thead>
+      <tbody>
+        <% @lessons.each do |lesson| %>
+          <% course = @courses.find {|course| course.id == lesson.course_id } %>
+          <tr>
+            <td><%= course.timetable.studio.school.name %></td>
+            <td><%= course.timetable.studio.name %></td>
+            <td><%= course.timetable.time_slot.start_time %></td>
+            <td><%= course.name %></td>
+            <td><%= display_lesson_status(lesson.status) %></td>
+            <td>
+              <% if lesson.new_record? %>
+                <%= form_for(lesson) do |f| %>
+                  <%= f.hidden_field :course_id %>
+                  <%= f.hidden_field :date %>
+                  <%= f.hidden_field :status %>
+                  <%= f.submit t("views.buttons.show"), class: "btn btn-default" %>
+                <% end %>
+              <% else %>
+                <%= link_to t("views.buttons.show"), lesson_rolls_path(lesson), class: "btn btn-default" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= link_to_if(@date.yesterday.day < 29, @date.yesterday, lessons_path(date: @date.yesterday.strftime("%Y%m%d")), class: "btn btn-link pull-left") {} %>
+    <%= link_to_if(@date.tomorrow.day < 29, @date.tomorrow, lessons_path(date: @date.tomorrow.strftime("%Y%m%d")), class: "btn btn-link pull-right") {} %>
+    <%= link_to t("views.buttons.back"), lessons_path(month: @date.strftime("%Y%m")), class: "btn btn-default pull-left" %>
+  </div>
 </div>
-</div>
-<div class="row">
-  <%= link_to t("views.buttons.back"), lessons_path(month: @date.strftime("%Y%m")), class: "btn btn-default pull-left" %>
-</div>
+

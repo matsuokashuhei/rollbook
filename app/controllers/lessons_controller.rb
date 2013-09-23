@@ -33,16 +33,10 @@ class LessonsController < ApplicationController
     end
     if params[:date].present?
       @date = params[:date].to_date
-      @courses = Course.joins([timetable: [[studio: :school], :time_slot]], :instructor, :dance_style, :level).date_is(@date).where("timetables.weekday = ?", @date.cwday).order("schools.open_date, studios.open_date, time_slots.start_time")
+      @courses = Course.term_dates(@date).joins(:timetable).where("timetables.weekday = ?", @date.cwday)
       @lessons = []
       @courses.each do |course|
-        attributes = { date: @date, course_id: course.id }
-        lesson = Lesson.find_by(attributes)
-        if @date < Date.today + 7.day
-          lesson = Lesson.find_or_create_by(attributes)
-        else
-          lesson = Lesson.find_or_initialize_by(attributes)
-        end
+        lesson = Lesson.find_or_initialize_by(date: @date, course_id: course.id)
         lesson.status ||= "0"
         @lessons << lesson
       end
@@ -70,8 +64,9 @@ class LessonsController < ApplicationController
 
     respond_to do |format|
       if @lesson.save
-        format.html { redirect_to @lesson, notice: 'Lesson was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @lesson }
+        format.html { redirect_to lesson_rolls_path(@lesson) }
+#        format.html { redirect_to @lesson, notice: 'Lesson was successfully created.' }
+#        format.json { render action: 'show', status: :created, location: @lesson }
       else
         format.html { render action: 'new' }
         format.json { render json: @lesson.errors, status: :unprocessable_entity }

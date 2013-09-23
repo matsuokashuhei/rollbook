@@ -10,13 +10,9 @@ Rollbook::Application.routes.draw do
     resources :rolls, only: :index
   end
   match "lessons/:lesson_id/rolls/edit" => "rolls#edit", via: :get, as: "edit_lesson_rolls"
-  match "lessons/:lesson_id/rolls" => "rolls#update", via: :put
-  match "lessons/:lesson_id/rolls/absence" => "rolls#absence", via: :get, as: "edit_absence_rolls"
-  match "lessons/:lesson_id/rolls/substitute" => "rolls#substitute", via: :post
-
-
-  #match "rolls" => "rolls#index", via: :get
-  #match "rolls/substitute" => "rolls#substitute", via: :post
+  match "lessons/:lesson_id/rolls" => "rolls#create_or_update", via: :post
+  match "lessons/:lesson_id/rolls/new" => "rolls#new", via: :get, as: "new_lesson_rolls"
+  match "lessons/:lesson_id/rolls/new" => "rolls#create", via: :post
 
   resources :members do
     resources :members_courses

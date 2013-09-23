@@ -25,7 +25,7 @@
         <tbody>
           <% @members.each do |member| %>
             <tr>
-              <td><%= radio_button_tag "member_id", member.id %></td>
+              <td><div class="radio"><%= radio_button_tag "member_id", member.id %></div></td>
               <td><%= member.id %></td>
               <td><%= display_member_name(member) %></td>
               <td><%= member.enter_date %></td>

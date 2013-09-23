@@ -1,5 +1,4 @@
 class MembersController < ApplicationController
-  helper RollsHelper
   before_action :set_member, only: [:show, :edit, :update, :destroy, :rolls, :bank_account]
 
   # GET /members

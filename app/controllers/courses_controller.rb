@@ -9,7 +9,7 @@ class CoursesController < ApplicationController
       return
     end
     @schools = School.includes(studios: [timetables: [:courses, :time_slot]]).order("schools.open_date, studios.open_date, time_slots.start_time, timetables.weekday" )
-    @courses = Course.joins(:instructor, :dance_style, :level).date_is(params[:date].to_date)
+    @courses = Course.joins(:instructor, :dance_style, :level).term_dates(params[:date].to_date)
     @active_school_id = School.first.id
   end
 
@@ -70,7 +70,6 @@ class CoursesController < ApplicationController
 
   def members
     @members_courses = MembersCourse.joins(:member).where("members_courses.course_id = ?", @course.id).order("members_courses.begin_date", "members.id")
-    #@members = Member.joins(:members_course).where("members_courses.course_id = ?", @course.id).order("members_courses.begin_date", "members.id")
     respond_to do |format|
       format.html { render action: "members" }
     end

@@ -1,5 +1,42 @@
-<h1>New roll</h1>
+<%= render "nav_tabs" %>
 
-<%= render 'form' %>
+<div class="tab-content">
+  <br />
+  <%= form_tag({ action: "new" }, { method: "post", id: "form" }) do %>
+    <div class="table-responsive">
+      <table class="table">
+        <caption style="text-align: left;">
+          <h4><%= @lesson.date.strftime("%Y年%m月%d日") %>　<%= @lesson.course.name %></h4>
+        </caption>
+        <thead>
+          <tr>
+            <th></th>
+            <th><%= t("activerecord.attributes.member.id") %></th>
+            <th><%= t("activerecord.attributes.member.name") %></th>
+            <th><%= t("activerecord.attributes.lesson.date") %></th>
+            <th><%= t("activerecord.models.school") %></th>
+            <th><%= t("activerecord.models.studio") %></th>
+            <th><%= t("activerecord.attributes.timetable.weekday") %></th>
+            <th><%= t("activerecord.models.course") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @rolls.each do |roll| %>
+            <tr>
+              <td><div class="checkbox"><%= check_box_tag "rolls[][id]", roll.id %></div></td>
+              <td><%= roll.member_id %></td>
+              <td><%= display_member_name(roll.member) %></td>
+              <td><%= roll.lesson.date %></td>
+              <td><%= roll.lesson.course.timetable.studio.school.name %></td>
+              <td><%= roll.lesson.course.timetable.studio.name %></td>
+              <td><%= roll.lesson.course.timetable.weekday_ja %></td>
+              <td><%= roll.lesson.course.name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <%= button_tag t("views.buttons.select"), class: "btn btn-default pull-right", form: "form" %>
+  <% end %>
+</div>
 
-<%= link_to 'Back', rolls_path %>
