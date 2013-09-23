@@ -3,15 +3,22 @@
     <%= link_to t("activerecord.models.member"), member_path(@member), class: "btn btn-link" %>
   </li>
   <li>
-    <%= link_to t("activerecord.models.members_course"), member_members_course_path(@member, @members_course), class: "btn btn-link" %>
+    <%= link_to t("activerecord.models.members_course"), member_course_path(@member, @members_course), class: "btn btn-link" %>
   </li>
   <li class="active">
     <a href="#roll" data-toggle="tab"><%= t("activerecord.models.roll") %></a>
+  </li>
+  <li>
+    <%= link_to t("activerecord.models.recess"), member_course_recesses_path(@member, @members_course), class: "btn btn-link" %>
+  </li>
+  <li>
+    <%= link_to t("activerecord.models.bank_account"), member_bank_account_path(@member), class: "btn btn-link" %>
   </li>
 </ul>
 
 <div class="tab-content">
   <br />
+  <%= render "breadcrumb" %>
   <div class="table-responsive">
     <table class="table">
       <thead>
@@ -24,7 +31,7 @@
         <% @rolls.each do |roll| %>
           <tr>
             <td><%= roll.lesson.date %></td>
-            <td><%= roll_status_html(roll.status) %></td>
+            <td><%= display_roll_status(roll.status) %></td>
           </tr>
         <% end %>
     </table>

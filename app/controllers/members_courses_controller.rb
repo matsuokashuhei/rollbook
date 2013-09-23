@@ -1,5 +1,4 @@
 class MembersCoursesController < ApplicationController
-  helper RollsHelper
 
   before_action :set_member
   before_action :set_members_course, only: [:show, :edit, :update, :destroy, :rolls]
@@ -34,7 +33,7 @@ class MembersCoursesController < ApplicationController
 
     respond_to do |format|
       if @members_course.save
-        format.html { redirect_to member_members_course_url(@member, @members_course), notice: 'Members course was successfully created.' }
+        format.html { redirect_to member_course_url(@member, @members_course), notice: 'Members course was successfully created.' }
         format.json { render action: 'show', status: :created, location: @members_course }
       else
         format.html { render action: 'new' }
@@ -48,7 +47,7 @@ class MembersCoursesController < ApplicationController
   def update
     respond_to do |format|
       if @members_course.update(members_course_params)
-        format.html { redirect_to member_members_course_url(@member, @members_course), notice: 'Members course was successfully updated.' }
+        format.html { redirect_to member_course_url(@member, @members_course), notice: 'Members course was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -62,7 +61,7 @@ class MembersCoursesController < ApplicationController
   def destroy
     @members_course.destroy
     respond_to do |format|
-      format.html { redirect_to member_members_courses_url(@member) }
+      format.html { redirect_to member_courses_url(@member) }
       format.json { head :no_content }
     end
   end

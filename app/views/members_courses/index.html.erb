@@ -34,8 +34,8 @@
             <td><%= course.name %></td>
             <td><%= members_course.begin_date %></td>
             <td><%= members_course.end_date %></td>
-            <td><%= link_to t("views.buttons.show"), member_members_course_path(@member, members_course), class: "btn btn-default" %></td>
-            <td><%= link_to t("views.buttons.edit"), edit_member_members_course_path(@member, members_course), class: "btn btn-default" %></td>
+            <td><%= link_to t("views.buttons.show"), member_course_path(@member, members_course), class: "btn btn-default" %></td>
+            <td><%= link_to t("views.buttons.edit"), edit_member_course_path(@member, members_course), class: "btn btn-default" %></td>
             <td>
               <a data-toggle="modal" href="#object_<%= members_course.id %>" class="btn btn-default"><%= t("views.buttons.destroy") %></a>
               <div class="modal fade" id="object_<%= members_course.id %>">
@@ -50,7 +50,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">閉 じ る</button>
-                      <%= link_to t("views.buttons.destroy"), [@member, members_course], method: :delete, class: "btn btn-default" %>
+                      <%= link_to t("views.buttons.destroy"), member_course_path(@member, members_course), method: :delete, class: "btn btn-default" %>
                     </div>
                   </div>
                 </div>
@@ -63,5 +63,5 @@
   </div>
   <br />
   <%= link_to t("views.buttons.back"), @member, class: "btn btn-default pull-left" %>
-  <%= link_to t("views.buttons.new"), new_member_members_course_path(@member), class: "btn btn-default pull-right" %>
+  <%= link_to t("views.buttons.new"), new_member_course_path(@member), class: "btn btn-default pull-right" %>
 </div>

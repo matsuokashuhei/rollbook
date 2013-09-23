@@ -15,10 +15,12 @@ Rollbook::Application.routes.draw do
   match "lessons/:lesson_id/rolls/new" => "rolls#create", via: :post
 
   resources :members do
-    resources :members_courses
+    resources :members_courses, as: :courses, path: :courses do
+      resources :recesses
+    end
   end
   match "members/:id/rolls" => "members#rolls", via: :get, as: "member_rolls"
-  match "members/:member_id/members_courses/:id/rolls" => "members_courses#rolls", via: :get, as: "member_members_course_rolls"
+  match "members/:member_id/courses/:id/rolls" => "members_courses#rolls", via: :get, as: "member_course_rolls"
   match "members/:id/bank_account" => "members#bank_account", via: :get, as: "member_bank_account"
 
   resources :courses

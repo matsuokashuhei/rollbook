@@ -35,7 +35,7 @@
                         <td>
                           <% course = @courses.find {|course| course.timetable_id == timetable.id } %>
                           <% if course.present? %>
-                            <%= link_to new_member_members_course_path(@member, course_id: course.id) do %>
+                            <%= link_to new_member_course_path(@member, course_id: course.id) do %>
                               <%= course.dance_style.name %><br />
                               <%= course.level.name %><br />
                               <%= course.instructor.name %><br />

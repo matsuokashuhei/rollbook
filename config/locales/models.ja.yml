@@ -11,7 +11,8 @@ ja:
       members_course: クラス
       bank_account: 引落口座
       lesson: レッスン
-      roll: 出欠
+      roll: レッスン
+      recess: 休会
     attributes:
       school:
         name: 名前
@@ -107,4 +108,10 @@ ja:
         status: 出欠
         substitute_roll_id: 振替
         note: メモ
+      recess:
+        members_course_id: クラス
+        month: 月
+        status: 状態
+        note: メモ
+
 

@@ -1,0 +1,34 @@
+<%= form_for([@member, @members_course, @recess], url: member_course_recess_path(@member, @members_course, @recess), html: { roll: "form", class: "form-horizontal", id: "form" }) do |f| %>
+
+  <%= render "shared/errors", object: @recess %>
+
+  <% if params[:action] == "show" %>
+    <fieldset disabled>
+  <% end %>
+
+  <div class="form-group <%= 'has-error' if @recess.errors[:month].present? %>">
+    <%= f.hidden_field :members_course_id %>
+    <%= f.label :month, class: "col-md-1 control-label" %>
+    <div class="col-md-2">
+      <%# f.month_field :month, class: "form-control", min: Date.today, max: Date.today + 6.month %>
+      <%= f.text_field :month, class: "form-control", data: { behaviour: "monthpicker" } %>
+    </div>
+  </div>
+  <div class="form-group <%= 'has-error' if @recess.errors[:status].present? %>">
+    <%= f.label :status, class: "col-md-1 control-label" %>
+    <div class="col-md-2">
+      <%= f.select :status, RecessesHelper::RECESS_STATUS.map {|status| [status[1], status[0]] }, {}, { class: "form-control" } %>
+    </div>
+  </div>
+  <div class="form-group <%= 'has-error' if @recess.errors[:note].present? %>">
+    <%= f.label :note, class: "col-md-1 control-label" %>
+    <div class="col-md-5">
+      <%= f.text_area :note, class: "form-control" %>
+    </div>
+  </div>
+
+  <% if params[:action] == "show" %>
+    </fieldset>
+  <% end %>
+
+<% end %>

@@ -1,0 +1,21 @@
+<ul class="nav nav-tabs">
+  <li>
+    <%= link_to t("activerecord.models.member"), member_path(@member), class: "btn btn-link" %>
+  </li>
+  <li>
+    <%= link_to t("activerecord.models.members_course"), member_course_path(@member, @members_cours), class: "btn btn-link" %>
+  </li>
+  <li>
+    <%= link_to t("activerecord.models.roll"), member_course_rolls_path(@member, @members_course), class: "btn btn-link" %>
+  </li>
+  <li class="active">
+    <a href="#recess" data-toggle="tab"><%= t("activerecord.models.recess") %></a>
+  </li>
+  <% if current_page?(member_course_recesses_path(@member, @members_course)) %>
+    <%= link_to t("views.buttons.new"), new_member_course_recess_path(@member, @members_course), class: "btn btn-default pull-right" %>
+  <% end %>
+  <li>
+    <%= link_to t("activerecord.models.bank_account"), member_bank_account_path(@member), class: "btn btn-link" %>
+  </li>
+</ul>
+

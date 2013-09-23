@@ -16,6 +16,7 @@
 class MembersCourse < ActiveRecord::Base
   belongs_to :member, class_name: "Member"
   belongs_to :course, class_name: "Course"
+  has_many :recesses
   validates :member_id, :course_id, :begin_date, presence: true
 
   scope :details, -> {

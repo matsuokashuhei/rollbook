@@ -28,7 +28,7 @@ $(document).on("focus", "[data-behaviour~='datepicker']", function(e) {
 $(document).on("focus", "[data-behaviour~='monthpicker']", function(e) {
   $(this).datepicker({
     //format: "yyyy-mm",
-    //format: "yyyy/mm",
+    format: "yyyy/mm",
     startView: 1,
     minViewMode: 1,
     autoclose: true,

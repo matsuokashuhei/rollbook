@@ -3,10 +3,13 @@
     <%= link_to t("activerecord.models.member"), member_path(@member), class: "btn btn-link" %>
   </li>
   <li>
-    <%= link_to t("activerecord.models.members_course"), member_members_courses_path(@member), class: "btn btn-link" %>
+    <%= link_to t("activerecord.models.members_course"), member_courses_path(@member), class: "btn btn-link" %>
   </li>
   <li>
     <%= link_to t("activerecord.models.lesson"), member_rolls_path(@member), class: "btn btn-link" %>
+  </li>
+  <li>
+    <%= link_to t("activerecord.models.recess"), member_course_recesses_path(@member, @members_course), class: "btn btn-link", disabled: "disabled" %>
   </li>
   <li class="active">
     <a href="#bank_account", data-toggle="tab"><%= t("activerecord.models.bank_account") %></a>
