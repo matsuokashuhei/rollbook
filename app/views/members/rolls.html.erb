@@ -28,6 +28,7 @@
           <th><%= t("activerecord.models.studio") %></th>
           <th><%= t("activerecord.models.course") %></th>
           <th><%= t("activerecord.attributes.roll.status") %></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -42,6 +43,7 @@
             <td><%= studio.name %></td>
             <td><%= course.name %></td>
             <td><%= display_roll_status(roll.status) %></td>
+            <td><%= link_to t("views.buttons.show"), lesson_rolls_path(lesson), class: "btn btn-default" %></td>
           </tr>
         <% end %>
     </table>

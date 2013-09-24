@@ -5,7 +5,7 @@ class LessonsController < ApplicationController
   # GET /lessons.json
   def index
     if params[:month].blank? and params[:date].blank?
-      redirect_to lessons_url(month: Date.today.strftime("%Y%m"))
+      redirect_to lessons_path(month: Date.today.strftime("%Y%m"))
       return
     end
     if params[:month].present?
@@ -60,7 +60,9 @@ class LessonsController < ApplicationController
   # POST /lessons
   # POST /lessons.json
   def create
-    @lesson = Lesson.new(lesson_params)
+    #@lesson = Lesson.new(lesson_params)
+    @lesson = Lesson.find_or_initialize_by(course_id: params[:lesson][:course_id], date: params[:lesson][:date])
+    @lesson.status ||= params[:lesson][:status]
 
     respond_to do |format|
       if @lesson.save

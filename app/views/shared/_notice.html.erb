@@ -1,4 +1,9 @@
-<% if notice.present? %>
+<% if flash[:notice].present? %>
+  <div class="alert alert-info alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" alia-hidden="true">&times;</button>
+    <%= flash[:notice] %>
+  </div>
+<% elsif notice.present? %>
   <div class="alert alert-info alert-dismissable">
     <button type="button" class="close" data-dismiss="alert" alia-hidden="true">&times;</button>
     <%= notice %>

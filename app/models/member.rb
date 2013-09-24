@@ -25,6 +25,13 @@
 #
 
 class Member < ActiveRecord::Base
+
+  STATUS = {
+    "0" => "未入会",
+    "1" => "入会",
+    "2" => "退会",
+  }
+
   has_many :members_courses
   has_many :courses, through: :members_courses, source: :course
   belongs_to :bank_account
@@ -33,9 +40,10 @@ class Member < ActiveRecord::Base
             :last_name,
             :first_name_kana,
             :last_name_kana,
+            :status,
             presence: true
 
-  default_scope -> { order("last_name_kana, first_name_kana") }
+  default_scope -> { order(:last_name_kana, :first_name_kana) }
 
   def full_name
     "%s　%s" % [last_name, first_name]

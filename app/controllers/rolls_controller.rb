@@ -11,6 +11,7 @@ class RollsController < ApplicationController
       MembersCourse.where(course_id: @lesson.course_id).term_dates(@lesson.date).each do |members_course|
         roll = Roll.find_or_initialize_by(lesson_id: @lesson.id, member_id: members_course.member_id)
         roll.status ||= "0"
+        roll.status = "5" if Recess.exists?(members_course_id: members_course.id, month: @lesson.date.strftime("%Y/%m"))
         @rolls << roll
       end
       Roll.where(lesson_id: @lesson.id, status: "4").each do |roll|
@@ -32,7 +33,7 @@ class RollsController < ApplicationController
     #@roll = Roll.new
     @rolls = []
     # レッスンを欠席したメンバーを検索する。
-    absence_rolls = Roll.joins(:lesson).where("lessons.status = ?", "2").where("rolls.status = ?", "2").select("rolls.member_id").uniq
+    absence_rolls = Roll.joins(:lesson).where("lessons.status = ?", "2").absent.select("rolls.member_id").unscoped.uniq
     # レッスンを欠席したメンバーの最古の欠席したレッスンを検索する。
     absence_rolls.each do |absence_roll|
       roll = Roll.details.where("rolls.member_id = ?", absence_roll[:member_id]).where("rolls.status = ?", "2").first
@@ -51,6 +52,7 @@ class RollsController < ApplicationController
   # POST /rolls
   # POST /rolls.json
   def create
+    @lesson.update_attributes!(status: "1")
     params[:rolls].each do |roll|
       Roll.find(roll[:id]).substitute!(@lesson)
     end

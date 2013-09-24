@@ -15,7 +15,12 @@
 #
 
 class School < ActiveRecord::Base
+
   has_many :studios
-  default_scope -> { order("schools.open_date") }
+
   validates :name, :zip, :address, :phone, :open_date, presence: true
+  validates :name, uniqueness: true
+
+  default_scope ->{ order("schools.open_date") }
+
 end

@@ -10,5 +10,9 @@
 #
 
 class TimeSlot < ActiveRecord::Base
+
   has_many :timetables
+
+  validates :start_time, :end_time, presence: true
+
 end

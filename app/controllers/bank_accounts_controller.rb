@@ -33,10 +33,13 @@ class BankAccountsController < ApplicationController
 
     respond_to do |format|
       if @bank_account.save
-        if params[:member_id]
+        if params[:member_id].present?
           member = Member.find(params[:member_id])
-          member.update_attributes(bank_account_id: @bank_account.id)
-          format.html { redirect_to member_bank_account_path(member) }
+          if member.update_attributes(bank_account_id: @bank_account.id)
+            format.html { redirect_to member_bank_account_path(member) }
+          else
+            format.html { render action: "new", member_id: params[:member_id] }
+          end
         else
           format.html { redirect_to @bank_account, notice: 'Bank account was successfully created.' }
           format.json { render action: 'show', status: :created, location: @bank_account }

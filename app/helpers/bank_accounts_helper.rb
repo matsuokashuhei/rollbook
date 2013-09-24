@@ -1,13 +1,14 @@
 module BankAccountsHelper
 
-  STATUS = {
-    "0" => "未登録",
-    "1" => "手続き中",
-    "2" => "登録済み",
-    "3" => "手続き失敗",
-    "4" => "マスター削除中",
-    "5" => "マスター削除済"
-  }
+  #STATUS = {
+  #  "0" => "未登録",
+  #  "1" => "手続き中",
+  #  "2" => "登録済み",
+  #  "3" => "手続き失敗",
+  #  "4" => "マスター削除中",
+  #  "5" => "マスター削除済"
+  #}
+  STATUS = BankAccount::STATUS
 
   def display_name(bank_account)
     <<-"EOS".strip_heredoc.html_safe

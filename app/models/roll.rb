@@ -12,16 +12,27 @@
 #
 
 class Roll < ActiveRecord::Base
+
   STATUS = {
     "0" => "未定",
     "1" => "出席",
     "2" => "欠席",
     "3" => "欠席",
     "4" => "振替",
+    "5" => "休会",
   }
 
   belongs_to :lesson
   belongs_to :member
+
+  validates :lesson_id, :member_id, :status, presence: true
+  validates :member_id, uniqueness: { scope: :lesson_id }
+
+  default_scope -> { order(:lesson_id, :member_id) }
+
+  scope :absent, -> {
+    where(status: "2")
+  }
 
   scope :details, -> {
     order_columns = ["lessons.date", "schools.open_date", "studios.open_date", "time_slots.start_time"]
@@ -46,4 +57,5 @@ class Roll < ActiveRecord::Base
   def substitute_roll
     Roll.find(substitute_roll_id) if substitute_roll_id.present?
   end
+
 end

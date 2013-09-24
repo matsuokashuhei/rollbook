@@ -12,10 +12,18 @@
 #
 
 class Lesson < ActiveRecord::Base
+
   belongs_to :course
   has_many :rolls
 
-  default_scope -> { order("lessons.date") }
+  validates :course_id, :date, :status, presence: true
+  validates :date, uniqueness: { scope: :course_id }
+
+  default_scope -> { order(:date, :course_id) }
+
+  scope :fixed, -> {
+    where(status: "2")
+  }
 
   def prev_lesson
     one_week_before = date - 7.day

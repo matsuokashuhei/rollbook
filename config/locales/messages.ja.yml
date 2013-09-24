@@ -1,6 +1,10 @@
 ja:
   messages:
     controllers:
+      defaults:
+        create: "%{model}を登録しました。"
+        update: "%{model}を変更しました。"
+      member:
       bank_account:
         new_member: '%{member}を%{holders_name}の口座に追加しました。'
         destroy_member: '%{member}を%{holders_name}の口座からを削除しました。'

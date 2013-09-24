@@ -5,6 +5,7 @@ module RollsHelper
     "2" => { "name" => "欠席", "label" => "label-danger", "button" => "btn-danger" },
     "3" => { "name" => "欠席", "label" => "label-warning", "button" => "btn-warning" },
     "4" => { "name" => "振替", "label" => "label-info", "button" => "btn-info" },
+    "5" => { "name" => "休会", "label" => "label-primary", "button" => "btn-info" },
   }
 
   def roll_status_name(status)

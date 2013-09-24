@@ -11,7 +11,11 @@
     <%= f.label :month, class: "col-md-1 control-label" %>
     <div class="col-md-2">
       <%# f.month_field :month, class: "form-control", min: Date.today, max: Date.today + 6.month %>
-      <%= f.text_field :month, class: "form-control", data: { behaviour: "monthpicker" } %>
+      <% if params[:action] == "edit" %>
+        <%= f.text_field :month, class: "form-control", data: { behaviour: "monthpicker" }, disabled: "disabled" %>
+      <% else %>
+        <%= f.text_field :month, class: "form-control", data: { behaviour: "monthpicker" } %>
+      <% end %>
     </div>
   </div>
   <div class="form-group <%= 'has-error' if @recess.errors[:status].present? %>">

@@ -26,15 +26,17 @@ class Course < ActiveRecord::Base
   has_many :members_courses
   has_many :members, through: :members_courses, source: :member
 
-  scope :details, -> {
+  validates :timetable_id, :instructor_id, :dance_style_id, :level_id, :monthly_fee, :open_date, presence: true
+
+  default_scope -> { order(:open_date) }
+
+  scope :details, ->{
     joins([timetable: [[studio: :school], :time_slot]], :instructor, :dance_style, :level).order("schools.open_date, studios.open_date, timetables.weekday, time_slots.start_time, courses.open_date").order("schools.open_date, studios.open_date, timetables.weekday, time_slots.start_time")
   }
 
   scope :term_dates, ->(date = Date.today) {
     where("courses.open_date <= ? and ? <= coalesce(courses.close_date, '9999-12-31')", date, date)
   }
-
-  validates :timetable_id, :instructor_id, :dance_style_id, :level_id, :monthly_fee, :open_date, presence: true
 
   def name
     "#{self.dance_style.name}#{self.level.name}　#{self.instructor.name}"
