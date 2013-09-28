@@ -55,7 +55,7 @@ class InstructorsController < ApplicationController
   # DELETE /instructors/1
   # DELETE /instructors/1.json
   def destroy
-    @instructor.destroy
+    @instructor.destroy if @instructor.delete?
     respond_to do |format|
       format.html { redirect_to instructors_url }
       format.json { head :no_content }

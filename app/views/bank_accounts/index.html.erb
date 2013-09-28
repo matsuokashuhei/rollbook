@@ -22,7 +22,7 @@
             <td><%= status_name(bank_account.status) %></td>
             <td><%= link_to t("views.buttons.show"), bank_account, class: "btn btn-default" %></td>
             <td><%= link_to t("views.buttons.edit"), edit_bank_account_path(bank_account), class: "btn btn-default" %></td>
-            <td><%= render "shared/delete_link", object: bank_account %></td>
+            <td><%= render "shared/delete_button", object: bank_account %></td>
           </tr>
         <% end %>
       </tbody>

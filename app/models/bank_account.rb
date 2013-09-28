@@ -36,4 +36,7 @@ class BankAccount < ActiveRecord::Base
 
   default_scope -> { order(:holder_name_kana) }
 
+  def delete?
+    members.count == 0
+  end
 end

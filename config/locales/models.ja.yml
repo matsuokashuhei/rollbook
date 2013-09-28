@@ -13,6 +13,7 @@ ja:
       lesson: レッスン
       roll: レッスン
       recess: 休会
+      payment: 入金
     attributes:
       school:
         name: 名前
@@ -72,7 +73,7 @@ ja:
         leave_date: 退会日
         bank_account_id: 引落口座
         nearby_station: 最寄り駅
-        note: メモ
+
         status: 状態
         name: 名前
         kana: フリガナ
@@ -112,6 +113,14 @@ ja:
         members_course_id: クラス
         month: 月
         status: 返金
+        note: メモ
+      payment:
+        bank_account_id: 口座
+        month: 月
+        amount: 金額
+        date: 日
+        method: 方法
+        status: 状態
         note: メモ
 
 

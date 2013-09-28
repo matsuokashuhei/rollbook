@@ -35,7 +35,15 @@ class MembersCourse < ActiveRecord::Base
   }
 
   def rolls
-    @rolls = Roll.joins(:lesson).where("lessons.course_id = ?", course_id).where("rolls.member_id = ?", member_id).order("lessons.date")
+    @rolls = Roll.member(member_id).course(course_id).details
   end
 
+  def delete?
+    if recesses.count == 0
+      if Roll.member(member_id).where("rolls.status > ?", "0").course(course_id).count == 0
+        return true
+      end
+    end
+    return false
+  end
 end

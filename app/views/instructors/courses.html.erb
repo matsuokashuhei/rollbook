@@ -9,6 +9,7 @@
 
 <div class="tab-content">
   <br />
+  <%= render "breadcrumb" %>
   <div class="table-responsive">
     <table class="table">
       <thead>
@@ -20,6 +21,7 @@
           <th><%= t("activerecord.models.course") %></th>
           <th><%= t("activerecord.attributes.course.open_date") %></th>
           <th><%= t("activerecord.attributes.course.close_date") %></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -32,6 +34,7 @@
             <td><%= "#{course.dance_style.name}#{course.level.name}" %></td>
             <td><%= course.open_date %></td>
             <td><%= course.close_date %></td>
+            <td><%= link_to t("views.buttons.show"), course_path(course), class: "btn btn-default" %></td>
           </tr>
         <% end %>
       </tbody>

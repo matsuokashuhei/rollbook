@@ -1,0 +1,13 @@
+<ol class="breadcrumb">
+  <% if current_page?(instructor_path(@instructor)) %>
+    <li class="active"><%= @instructor.name %></li>
+  <% else %>
+    <li><%= link_to @instructor.name, instructor_path(@instructor) %></li>
+    <% if current_page?(edit_instructor_path(@instructor)) %>
+      <li class="active"><%= t("views.buttons.edit") %></li>
+    <% end %>
+  <% end %>
+  <% if current_page?(instructor_courses_path(@instructor)) %>
+    <li class="active"><%= t("activerecord.models.course") %></li>
+  <% end %>
+</ol>

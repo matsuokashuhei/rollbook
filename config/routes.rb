@@ -27,19 +27,18 @@ Rollbook::Application.routes.draw do
   match "courses/:id/members" => "courses#members", via: :get, as: "course_members"
   match "courses/:id/lessons" => "courses#lessons", via: :get, as: "course_lessons"
 
-  resources :age_groups
-  resources :levels
-  resources :dance_styles
-
   resources :instructors
   match "instructors/:id/courses" => "instructors#courses", via: :get, as: "instructor_courses"
 
-  resources :timetables
-  resources :time_slots
+  #resources :schools do
+  #  resources :studios
+  #end
+  #resources :timetables
+  #resources :time_slots
+  #resources :age_groups
+  #resources :levels
+  #resources :dance_styles
 
-  resources :schools do
-    resources :studios
-  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

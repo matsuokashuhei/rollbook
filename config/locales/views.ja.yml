@@ -5,7 +5,7 @@ ja:
       new: 登録する
       show: 見　　る
       edit: 変更する
-      destroy: 削除する
+      delete: 削除する
       create: 保存する
       update: 保存する
       back: 戻　　る

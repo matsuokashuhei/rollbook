@@ -34,6 +34,14 @@ class Roll < ActiveRecord::Base
     where(status: "2")
   }
 
+  scope :member, ->(member_id) {
+    where(member_id: member_id)
+  }
+
+  scope :course, ->(course_id) {
+    joins(:lesson).where("lessons.course_id = ?", course_id)
+  }
+
   scope :details, -> {
     order_columns = ["lessons.date", "schools.open_date", "studios.open_date", "time_slots.start_time"]
     joins(lesson: [course: [[timetable: [[studio: :school], :time_slot]], :dance_style, :level, :instructor]]).order("lessons.date, time_slots.start_time").order(order_columns)

@@ -45,6 +45,15 @@ class Member < ActiveRecord::Base
 
   default_scope -> { order(:last_name_kana, :first_name_kana) }
 
+  def delete?
+    if members_courses.count == 0
+      if bank_account.nil?
+        return true
+      end
+    end
+    return false
+  end
+
   def full_name
     "%s　%s" % [last_name, first_name]
   end

@@ -23,4 +23,7 @@ class Instructor < ActiveRecord::Base
 
   default_scope -> { order(:kana) }
 
+  def delete?
+    courses.count == 0
+  end
 end

@@ -25,7 +25,7 @@
         <% @instructors.each do |instructor| %>
           <tr>
             <td><small><%= instructor.kana %></small><br/><%= instructor.name %></td>
-            <td><%= "(#{instructor.team})" if instructor.team %></td>
+            <td><%= "(#{instructor.team})" if instructor.team.present? %></td>
             <td><%= instructor.phone %></td>
             <% if false %>
             <td><%= instructor.email_pc %></td>
@@ -33,7 +33,7 @@
             <% end %>
             <td><%= link_to t("views.buttons.show"), instructor, class: "btn btn-default" %></td>
             <td><%= link_to t("views.buttons.edit"), edit_instructor_path(instructor), class: "btn btn-default" %></td>
-            <td><%= render "shared/delete_link", object: instructor %></td>
+            <td><%= render "shared/delete_button", object: instructor %></td>
           </tr>
         <% end %>
       </tbody>
