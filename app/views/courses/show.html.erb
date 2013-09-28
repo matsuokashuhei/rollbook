@@ -5,5 +5,6 @@
   <%= render "shared/notice" %>
   <%= render "form" %>
   <%= link_to t("views.buttons.back"), courses_path, class: "btn btn-default pull-left" %>
+  <%= render "shared/delete_button", object: @course, locals: { btn_class: "pull-right" } %>
   <%= link_to t("views.buttons.edit"), edit_course_path(@course), class: "btn btn-default pull-right" %>
 </div>

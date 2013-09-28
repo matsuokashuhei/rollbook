@@ -78,6 +78,7 @@ ja:
         name: 名前
         kana: フリガナ
         email: Eメール
+        note: メモ
       bank_account:
         id: ID
         holder_name: 名義人

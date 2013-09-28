@@ -32,7 +32,8 @@
   <div class="form-group <%= 'has-error' if @member.errors[:birth_date].present? %>">
     <%= f.label t("activerecord.attributes.member.birth_date"), class: "col-md-1 control-label" %>
     <div class="col-md-2">
-      <%= f.text_field :birth_date, class: "form-control", "data-behaviour" => "datepicker" %>
+      <%# f.text_field :birth_date, class: "form-control", "data-behaviour" => "datepicker" %>
+      <%= f.date_field :birth_date, class: "form-control" %>
     </div>
   </div>
   <div class="form-group <%= 'has-error' if @member.errors[:zip].present? %>">
@@ -82,7 +83,7 @@
   <div class="form-group <%= 'has-error' if @member.errors[:leave_date].present? %>">
     <%= f.label t("activerecord.attributes.member.leave_date"), class: "col-md-1 control-label" %>
     <div class="col-md-2">
-      <%= f.date_field :leave_date, class: "form-control" %>
+      <%= f.date_field :leave_date, class: "form-control", min: @member.enter_date %>
     </div>
   </div>
   <div class="form-group <%= 'has-error' if @member.errors[:status].present? %>">
