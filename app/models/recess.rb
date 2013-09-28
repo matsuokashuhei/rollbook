@@ -21,6 +21,10 @@ class Recess < ActiveRecord::Base
 
   default_scope -> { order(:month) }
 
+  def delete?
+    members_course.rolls.joins(:lesson).where("lessons.date like '?%' and rolls.status = ?", month, "5")
+  end
+
   def six_months
     months = (1..6).map {|i| (month.to_date - i.month).strftime("%Y/%m") }
     recesses = Recess.where("members_course_id = ? and month in (?)", members_course_id, months)
