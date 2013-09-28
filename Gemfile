@@ -49,6 +49,9 @@ end
 group :development, :test do
   gem 'rspec-rails', '2.13.1'
   gem 'debugger'
+  gem 'pry-debugger'
+  gem 'hirb'
+  gem 'hirb-unicode'
 end
 
 gem 'rails_12factor', '0.0.2', group: :production

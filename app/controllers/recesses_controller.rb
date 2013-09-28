@@ -58,11 +58,11 @@ class RecessesController < ApplicationController
   # DELETE /recesses/1.json
   def destroy
     ActiveRecord::Base.transaction do
-      @recess.destroy! if @recess.delete?
+      @recess.destroy if @recess.delete?
       Roll.member(@members_course.member_id).each do |roll|
         lesson = roll.lesson
         if lesson.course_id == @members_course.course_id && @recess.month == lesson.date.strftime("%Y/%m")
-          roll.destroy!
+          roll.destroy
         end
       end
     end

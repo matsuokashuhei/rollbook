@@ -31,14 +31,15 @@ class RollsController < ApplicationController
   # GET /rolls/new
   def new
     #@roll = Roll.new
-    @rolls = []
     # レッスンを欠席したメンバーを検索する。
-    absence_rolls = Roll.joins(:lesson).where("lessons.status = ?", "2").absent.select("rolls.member_id").unscoped.uniq
+    absence_rolls = Roll.absent.joins(:lesson).where("lessons.status = ?", "2").order("lessons.date", "rolls.id")
     # レッスンを欠席したメンバーの最古の欠席したレッスンを検索する。
+    @rolls = []
     absence_rolls.each do |absence_roll|
-      roll = Roll.details.where("rolls.member_id = ?", absence_roll[:member_id]).where("rolls.status = ?", "2").first
-      next if roll.lesson.course_id == @lesson.course_id
-      @rolls << roll
+      next if @lesson.course_id == absence_roll.lesson.course_id
+      if @rolls.select { |roll| roll.member_id == absence_roll.member_id }.count == 0
+        @rolls << absence_roll
+      end
     end
     # ページネーションがない。
   end
@@ -52,9 +53,11 @@ class RollsController < ApplicationController
   # POST /rolls
   # POST /rolls.json
   def create
-    @lesson.update_attributes!(status: "1")
-    params[:rolls].each do |roll|
-      Roll.find(roll[:id]).substitute!(@lesson)
+    ActiveRecord::Base.transaction do
+      @lesson.update_attributes!(status: "1")
+      params[:rolls].each do |roll|
+        Roll.find(roll[:id]).substitute(@lesson)
+      end
     end
     respond_to do |format|
       format.html { redirect_to lesson_rolls_path(@lesson) }
@@ -76,10 +79,12 @@ class RollsController < ApplicationController
   # PATCH/PUT /rolls/1
   # PATCH/PUT /rolls/1.json
   def update
-    @lesson.update_attributes(status: "1")
-    params[:rolls].each do |roll_params|
-      roll = Roll.find(roll_params[:id])
-      roll.update_attributes(status: roll_params[:status])
+    ActiveRecord::Base.transaction do
+      @lesson.update_attributes(status: "1")
+      params[:rolls].each do |roll_params|
+        roll = Roll.find(roll_params[:id])
+        roll.update_attributes(status: roll_params[:status])
+      end
     end
     respond_to do |format|
       format.html { redirect_to lesson_rolls_url(@lesson) }
@@ -98,25 +103,33 @@ class RollsController < ApplicationController
 
   # POST /lesson/:lesson_id/rolls
   def create_or_update
-    @lesson.update_attributes(status: "1")
-    params[:rolls].each do |roll_params|
-      roll = Roll.find_or_initialize_by(lesson_id: @lesson.id, member_id: roll_params[:member_id])
-      roll.status = roll_params[:status]
-      roll.save
+    ActiveRecord::Base.transaction do
+      @lesson.update_attributes(status: "1")
+      params[:rolls].each do |roll_params|
+        roll = Roll.find_or_initialize_by(lesson_id: @lesson.id, member_id: roll_params[:member_id])
+        roll.status = roll_params[:status]
+        if roll.status != "9"
+          roll.save
+        elsif roll.substitute_roll_id.blank?
+          roll.update_attributes(status: "0")
+        else
+          roll.cancel_substitute
+        end
+      end
     end
     respond_to do |format|
       format.html { redirect_to lesson_rolls_url(@lesson) }
     end
   end
 
-  def substitute
-    params[:rolls].each do |roll|
-      Roll.find(roll[:id]).substitute!(@lesson)
-    end
-    respond_to do |format|
-      format.html { redirect_to lesson_rolls_url(@lesson) }
-    end
-  end
+  #def substitute
+  #  params[:rolls].each do |roll|
+  #    Roll.find(roll[:id]).substitute!(@lesson)
+  #  end
+  #  respond_to do |format|
+  #    format.html { redirect_to lesson_rolls_url(@lesson) }
+  #  end
+  #end
 
   private
     # Use callbacks to share common setup or constraints between actions.

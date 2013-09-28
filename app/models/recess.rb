@@ -18,11 +18,31 @@ class Recess < ActiveRecord::Base
   validates :members_course_id, :month, :status, presence: true
   validates :month, uniqueness: { scope: :members_course_id }
   validate :month, :six_months
+  validate :month, :present_rolls
 
   default_scope -> { order(:month) }
 
+  def create?
+    rolls = members_course.rolls.joins(:lesson)
+    rolls = rolls.where!("to_char(lessons.date, 'yyyy/mm') = ?", month)
+    rolls = rolls.where!("lessons.status = ?", "2")
+    rolls = rolls.where!("rolls.status in (?)", ["1", "3"])
+    rolls.count > 0
+  end
+
   def delete?
-    members_course.rolls.joins(:lesson).where("lessons.date like '?%' and rolls.status = ?", month, "5")
+    rolls = members_course.rolls.joins(:lesson)
+    rolls = rolls.where!("to_char(lessons.date, 'yyyy/mm') = ?", month)
+    rolls = rolls.where!("lessons.status = ?", "2")
+    rolls = rolls.where!("rolls.status = ?", "5")
+    rolls.count == 0
+  end
+
+  def present_rolls
+    # 期待通り動かない。
+    if create?
+      errors.add(:base, "%sはすでにレッスンを受けているので休会することはできません。" % (month.sub("/", "年") + "月"))
+    end
   end
 
   def six_months

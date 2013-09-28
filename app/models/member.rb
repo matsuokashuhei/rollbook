@@ -42,6 +42,12 @@ class Member < ActiveRecord::Base
             :last_name_kana,
             :status,
             presence: true
+  validates :last_name_kana, :first_name_kana, format: { with: /\A[\p{katakana}ー－]+\Z/, message: "はカタカナで入力してください。" }
+  validates :enter_date, presence: true, if: Proc.new { self.status == "1" }
+  validates :enter_date, absence: true, if: Proc.new { self.status == "0" }
+
+  validates :leave_date, absence: true, if: Proc.new { self.status == "0" || self.status == "1" }
+  validates :leave_date, presence: true, if: Proc.new { self.status == "2" }
 
   default_scope -> { order(:last_name_kana, :first_name_kana) }
 
