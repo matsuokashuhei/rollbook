@@ -9,7 +9,10 @@
   <% if current_page?(edit_lesson_rolls_path(@lesson)) %>
     <li class="active"><%= t("views.buttons.edit") %></li>
   <% end %>
-  <% if current_page?(new_lesson_rolls_path(@lesson)) %>
+  <% if current_page?(absences_path(@lesson)) %>
     <li class="active"><%= t("views.buttons.substitute") %></li>
+  <% end %>
+  <% if current_page?(nonmembers_path(@lesson)) %>
+    <li class="active"><%= t("views.buttons.trial") %></li>
   <% end %>
  </ol>

@@ -1,7 +1,7 @@
 class RollsController < ApplicationController
   #before_action :set_roll, only: [:show, :edit, :update, :destroy]
   #before_action :set_lesson, only: [:edit, :update, :absence, :substitute]
-  before_action :set_lesson, only: [:index, :new, :create, :edit, :create_or_update]
+  before_action :set_lesson, only: [:index, :new, :create, :edit, :create_or_update, :absences, :substitute, :nonmembers, :trial]
 
   # GET /lessons/:lesson_id/rolls
   # GET /lessons/:lesson_id/rolls.json
@@ -33,32 +33,7 @@ class RollsController < ApplicationController
 
   # GET /rolls/new
   def new
-    #@roll = Roll.new
-    unless params[:status].present?
-      redirect_to edit_lesson_rolls_path(@lesson)
-      return
-    end
-    @rolls = []
-    if params[:status] == "2"
-      # レッスンを欠席したメンバーを検索する。
-      absence_rolls = Roll.absent.joins(:lesson).where("lessons.status = ?", "2").order("lessons.date", "rolls.id")
-      # レッスンを欠席したメンバーの最古の欠席したレッスンを検索する。
-      absence_rolls.each do |absence_roll|
-        next if @lesson.course_id == absence_roll.lesson.course_id
-        if @rolls.select { |roll| roll.member_id == absence_roll.member_id }.count == 0
-          @rolls << absence_roll
-        end
-      end
-      # ページネーションがない。
-    end
-    if params[:status] == "6"
-      Member.where(status: "0").each do |member|
-        @rolls << @lesson.rolls.build(member_id: member.id, status: "6") if member.rolls.count == 0
-      end
-      respond do |format|
-        format.html { render action: "trial" }
-      end
-    end
+    @roll = Roll.new
   end
 
   # GET /lessons/:lesson_id/rolls/edit
@@ -70,31 +45,16 @@ class RollsController < ApplicationController
   # POST /rolls
   # POST /rolls.json
   def create
-    ActiveRecord::Base.transaction do
-      @lesson.update_attributes!(status: "1")
-      params[:rolls].each do |roll_params|
-        if roll_params[:status] == "2"
-          Roll.find(roll_params[:id]).substitute(@lesson)
-        else
-          Roll.create(roll_params)
-        end
+    @roll = Roll.new(roll_params)
+    respond_to do |format|
+      if @roll.save
+        format.html { redirect_to @roll, notice: 'Roll was successfully created.' }
+        format.json { render action: 'show', status: :created, location: @roll }
+      else
+        format.html { render action: 'new' }
+        format.json { render json: @roll.errors, status: :unprocessable_entity }
       end
     end
-    respond_to do |format|
-      format.html { redirect_to lesson_rolls_path(@lesson) }
-    end
-
-#    @roll = Roll.new(roll_params)
-#
-#    respond_to do |format|
-#      if @roll.save
-#        format.html { redirect_to @roll, notice: 'Roll was successfully created.' }
-#        format.json { render action: 'show', status: :created, location: @roll }
-#      else
-#        format.html { render action: 'new' }
-#        format.json { render json: @roll.errors, status: :unprocessable_entity }
-#      end
-#    end
   end
 
   # PATCH/PUT /rolls/1
@@ -132,7 +92,7 @@ class RollsController < ApplicationController
         if roll.status != "9"
           roll.save
         elsif roll.substitute_roll_id.blank?
-          roll.update_attributes(status: "0")
+          roll.destroy
         else
           roll.cancel_substitute
         end
@@ -143,14 +103,60 @@ class RollsController < ApplicationController
     end
   end
 
-  #def substitute
-  #  params[:rolls].each do |roll|
-  #    Roll.find(roll[:id]).substitute!(@lesson)
-  #  end
-  #  respond_to do |format|
-  #    format.html { redirect_to lesson_rolls_url(@lesson) }
-  #  end
-  #end
+  def absences
+    @rolls = []
+    # レッスンを欠席したメンバーを検索する。
+    absences = Roll.absence.joins(:lesson).where("lessons.status = ?", "2").order("lessons.date", "rolls.id")
+    # レッスンを欠席したメンバーの最古の欠席したレッスンを検索する。
+    absences.each do |absence|
+      next if @lesson.course_id == absence.lesson.course_id
+      if @rolls.select { |roll| roll.member_id == absence.member_id }.count == 0
+        @rolls << absence
+      end
+    end
+    # ページネーションがない。
+  end
+
+  def substitute
+    if params[:rolls].nil?
+      redirect_to lesson_rolls_path(@lesson)
+      return
+    end
+    ActiveRecord::Base.transaction do
+      @lesson.update_attributes(status: "1")
+      params[:rolls].each do |roll_params|
+        Roll.find(roll_params[:id]).substitute(@lesson)
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to lesson_rolls_path(@lesson) }
+    end
+  end
+
+  def nonmembers
+    @rolls = []
+    nonmembers = Member.where(status: "0").includes(:rolls).where(rolls: { id: nil })
+    nonmembers.each do |nonmember|
+      @rolls << nonmember.rolls.build(lesson_id: @lesson.id, status: "6")
+    end
+  end
+
+  def trial
+    if params[:rolls].nil?
+      redirect_to lesson_rolls_path(@lesson)
+      return
+    end
+    ActiveRecord::Base.transaction do
+      @lesson.update_attributes(status: "1")
+      params[:rolls].each do |roll_params|
+        roll = Roll.new(lesson_id: @lesson.id, member_id: roll_params[:member_id], status: "6")
+        roll.save
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to lesson_rolls_path(@lesson) }
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

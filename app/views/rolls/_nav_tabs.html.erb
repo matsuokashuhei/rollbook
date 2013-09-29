@@ -3,8 +3,8 @@
     <a href="#roll" data-toggle="tab"><%= t("activerecord.models.lesson") %></a>
   </li>
   <% if current_page?(edit_lesson_rolls_path(@lesson)) %>
-    <%= link_to t("views.buttons.substitute"), new_lesson_rolls_path(@lesson, status: "2"), class: "btn btn-default pull-right" %>
-    <%= link_to t("views.buttons.trial"), new_lesson_rolls_path(@lesson, status: "6"), class: "btn btn-default pull-right" %>
+    <%= link_to t("views.buttons.substitute"), absences_path(@lesson), class: "btn btn-default pull-right" %>
+    <%= link_to t("views.buttons.trial"), nonmembers_path(@lesson), class: "btn btn-default pull-right" %>
   <% end %>
 </ul>
 

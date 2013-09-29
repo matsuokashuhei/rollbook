@@ -39,7 +39,6 @@ class Recess < ActiveRecord::Base
   end
 
   def present_rolls
-    # 期待通り動かない。
     if create?
       errors.add(:base, "%sはすでにレッスンを受けているので休会することはできません。" % (month.sub("/", "年") + "月"))
     end
