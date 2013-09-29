@@ -41,6 +41,11 @@ end
 
 group :development do
   gem 'pry-rails'
+  gem 'pry-debugger'
+  gem 'hirb'
+  gem 'hirb-unicode'
+  gem 'awesome_print'
+  gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
@@ -49,9 +54,6 @@ end
 group :development, :test do
   gem 'rspec-rails', '2.13.1'
   gem 'debugger'
-  gem 'pry-debugger'
-  gem 'hirb'
-  gem 'hirb-unicode'
 end
 
 gem 'rails_12factor', '0.0.2', group: :production

@@ -17,6 +17,9 @@ class RollsController < ApplicationController
       Roll.where(lesson_id: @lesson.id, status: "4").each do |roll|
         @rolls << roll
       end
+      Roll.where(lesson_id: @lesson.id, status: "6").each do |roll|
+        @rolls << roll
+      end
     end
     if @lesson.status == "2"
       @rolls = @lesson.rolls
@@ -31,17 +34,31 @@ class RollsController < ApplicationController
   # GET /rolls/new
   def new
     #@roll = Roll.new
-    # レッスンを欠席したメンバーを検索する。
-    absence_rolls = Roll.absent.joins(:lesson).where("lessons.status = ?", "2").order("lessons.date", "rolls.id")
-    # レッスンを欠席したメンバーの最古の欠席したレッスンを検索する。
+    unless params[:status].present?
+      redirect_to edit_lesson_rolls_path(@lesson)
+      return
+    end
     @rolls = []
-    absence_rolls.each do |absence_roll|
-      next if @lesson.course_id == absence_roll.lesson.course_id
-      if @rolls.select { |roll| roll.member_id == absence_roll.member_id }.count == 0
-        @rolls << absence_roll
+    if params[:status] == "2"
+      # レッスンを欠席したメンバーを検索する。
+      absence_rolls = Roll.absent.joins(:lesson).where("lessons.status = ?", "2").order("lessons.date", "rolls.id")
+      # レッスンを欠席したメンバーの最古の欠席したレッスンを検索する。
+      absence_rolls.each do |absence_roll|
+        next if @lesson.course_id == absence_roll.lesson.course_id
+        if @rolls.select { |roll| roll.member_id == absence_roll.member_id }.count == 0
+          @rolls << absence_roll
+        end
+      end
+      # ページネーションがない。
+    end
+    if params[:status] == "6"
+      Member.where(status: "0").each do |member|
+        @rolls << @lesson.rolls.build(member_id: member.id, status: "6") if member.rolls.count == 0
+      end
+      respond do |format|
+        format.html { render action: "trial" }
       end
     end
-    # ページネーションがない。
   end
 
   # GET /lessons/:lesson_id/rolls/edit
@@ -55,8 +72,12 @@ class RollsController < ApplicationController
   def create
     ActiveRecord::Base.transaction do
       @lesson.update_attributes!(status: "1")
-      params[:rolls].each do |roll|
-        Roll.find(roll[:id]).substitute(@lesson)
+      params[:rolls].each do |roll_params|
+        if roll_params[:status] == "2"
+          Roll.find(roll_params[:id]).substitute(@lesson)
+        else
+          Roll.create(roll_params)
+        end
       end
     end
     respond_to do |format|

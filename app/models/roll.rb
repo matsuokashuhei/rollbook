@@ -20,6 +20,7 @@ class Roll < ActiveRecord::Base
     "3" => "欠席",
     "4" => "振替",
     "5" => "休会",
+    "6" => "体験",
   }
   STATUS_ = {
     NONE: "0",
@@ -28,6 +29,7 @@ class Roll < ActiveRecord::Base
     ABSENT_SUB: "3",
     SUBSTITUTE: "4",
     RECESS: "5",
+    TRIAL: "6",
   }
 
 

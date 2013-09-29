@@ -16,9 +16,9 @@ class BankAccountsController < ApplicationController
   def new
     @bank_account = BankAccount.new
     if params[:member_id]
-      member = Member.find(params[:member_id])
-      @bank_account.holder_name = "#{member.last_name}#{member.first_name}"
-      @bank_account.holder_name_kana = "#{member.last_name_kana}#{member.first_name_kana}"
+      @member = Member.find(params[:member_id])
+      @bank_account.holder_name = "#{@member.last_name}#{@member.first_name}"
+      @bank_account.holder_name_kana = "#{@member.last_name_kana}#{@member.first_name_kana}"
     end
   end
 
@@ -30,23 +30,22 @@ class BankAccountsController < ApplicationController
   # POST /bank_accounts.json
   def create
     @bank_account = BankAccount.new(bank_account_params)
-
-    respond_to do |format|
-      if @bank_account.save
-        if params[:member_id].present?
-          member = Member.find(params[:member_id])
-          if member.update_attributes(bank_account_id: @bank_account.id)
-            format.html { redirect_to member_bank_account_path(member) }
+    ActiveRecord::Base.transaction do
+      respond_to do |format|
+        message = "%sを登録しました。" % t("activerecord.models.bank_account")
+        if @bank_account.save
+          if params[:member_id].present?
+            member = Member.find(params[:member_id])
+            member.update_attributes(bank_account_id: @bank_account.id)
+            format.html { redirect_to member_path(member), notice: message }
           else
-            format.html { render action: "new", member_id: params[:member_id] }
+            format.html { redirect_to @bank_account, notice: 'Bank account was successfully created.' }
+            format.json { render action: 'show', status: :created, location: @bank_account }
           end
         else
-          format.html { redirect_to @bank_account, notice: 'Bank account was successfully created.' }
-          format.json { render action: 'show', status: :created, location: @bank_account }
+          format.html { render action: 'new' }
+          format.json { render json: @bank_account.errors, status: :unprocessable_entity }
         end
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @bank_account.errors, status: :unprocessable_entity }
       end
     end
   end

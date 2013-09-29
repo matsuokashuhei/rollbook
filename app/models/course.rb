@@ -26,13 +26,7 @@ class Course < ActiveRecord::Base
   has_many :members_courses
   has_many :members, through: :members_courses, source: :member
 
-  validates :timetable_id, :instructor_id, :dance_style_id, :level_id, :monthly_fee, :open_date, presence: true
-  validates :monthly_fee, numericality: { only_integer: true }
-  validate :open_date, :beginning_of_month
-  validate :close_date, :end_of_month, allow_blank: true
-  validate :close_date, :term_dates, allow_blank: true
-  validate :term_courses
-
+  # Scope
   default_scope -> { order(:open_date) }
 
   scope :details, ->{
@@ -43,6 +37,15 @@ class Course < ActiveRecord::Base
     where("courses.open_date <= ? and ? <= coalesce(courses.close_date, '9999-12-31')", date, date)
   }
 
+  # Validation
+  validates :timetable_id, :instructor_id, :dance_style_id, :level_id, :monthly_fee, :open_date, presence: true
+  validates :monthly_fee, numericality: { only_integer: true }
+  validate :open_date, :beginning_of_month
+  validate :term_courses
+  validate :close_date, :end_of_month, if: Proc.new { self.close_date.present? }
+  validate :close_date, :term_dates, if: Proc.new { self.close_date.present? }
+  validate :close_date, :non_active_members, if: Proc.new { self.close_date.present? }
+
   def beginning_of_month
     unless open_date == open_date.beginning_of_month
       errors.add(:open_date, "は月のはじめの日にしてください。")
@@ -50,13 +53,12 @@ class Course < ActiveRecord::Base
   end
 
   def end_of_month
-    unless close_date == close_date.try(:end_of_month)
+    unless close_date == close_date.end_of_month
       errors.add(:close_date, "は月の終わりの日にしてください。")
     end
   end
 
   def term_dates
-    return if close_date.blank?
     unless open_date < close_date
       errors.add(:close_date, "は開始日より未来の日にしてください。")
     end
@@ -73,6 +75,16 @@ class Course < ActiveRecord::Base
     end
   end
 
+  def non_active_members
+    members_courses.each do |members_course|
+      if members_course.end_date.blank? || close_date < members_course.end_date
+        errors.add(:base, "クラスを終了する場合、会員をクラスから退会してください。")
+      end
+
+    end
+  end
+
+  # その他
   def delete?
     members_courses.count == 0
   end

@@ -2,9 +2,7 @@
 
   <%= render "shared/errors", object: @member %>
 
-  <% if params[:action] == "show" %>
-    <fieldset disabled>
-  <% end %>
+  <%= "<fieldset disabled>".html_safe if current_page?(member_path(@member)) %>
 
   <div class="form-group">
     <%= f.label t("activerecord.attributes.member.name"), class: "col-md-1 control-label" %>
@@ -66,14 +64,6 @@
       <%= f.text_field :nearby_station, class: "form-control", "placeholder" => t("activerecord.attributes.member.nearby_station") %>
     </div>
   </div>
-  <% if false %>
-  <div class="form-group">
-    <%= f.label :bank_account_id, class: "col-md-1 control-label" %>
-    <div class="col-md-3">
-      <%= f.collection_select :bank_account_id, BankAccount.all, :id, :holder_name_kana, { prompt: "" }, { class: "form-control" } %>
-    </div>
-  </div>
-  <% end %>
   <div class="form-group <%= 'has-error' if @member.errors[:enter_date].present? %>">
     <%= f.label t("activerecord.attributes.member.enter_date"), class: "col-md-1 control-label" %>
     <div class="col-md-2">
@@ -92,6 +82,27 @@
       <%= f.select :status, MembersHelper::MEMBER_STATUS.map {|status| [status[1], status[0]] }, {}, { class: "form-control" } %>
     </div>
   </div>
+
+  <%= "</fieldset>".html_safe if current_page?(member_path(@member)) %>
+
+  <div class="form-group">
+    <%= f.label :bank_account_id, class: "col-md-1 control-label" %>
+    <div class="col-md-3">
+      <%= f.collection_select :bank_account_id, BankAccount.all, :id, :holder_name_kana, { prompt: "" }, { class: "form-control", disabled: "disabled" } %>
+    </div>
+    <% if current_page?(member_path(@member)) %>
+      <div class="col-md-1">
+        <% if @member.bank_account.nil? %>
+          <%= link_to t("views.buttons.new"), new_bank_account_path(member_id: @member.id), class: "btn btn-default" %>
+        <% else %>
+          <%= link_to t("views.buttons.show"), bank_account_path(@member.bank_account_id), class: "btn btn-default" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= "<fieldset disabled>".html_safe if current_page?(member_path(@member)) %>
+
   <div class="form-group <%= 'has-error' if @member.errors[:note].present? %>">
     <%= f.label :note, class: "col-md-1 control-label" %>
     <div class="col-md-5">
@@ -99,8 +110,6 @@
     </div>
   </div>
 
-  <% if params[:action] == "show" %>
-    </fieldset>
-  <% end %>
+  <%= "</fieldset>".html_safe if current_page?(member_path(@member)) %>
 
 <% end %>

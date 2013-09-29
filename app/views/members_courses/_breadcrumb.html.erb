@@ -1,4 +1,5 @@
 <ol class="breadcrumb">
+  <li><%= link_to t("activerecord.models.member"), members_path %></li>
   <li><%= link_to @member.full_name, member_path(@member) %></li>
   <% if current_page?(member_courses_path(@member)) %>
     <li class="active"><%= t("activerecord.models.members_course") %></li>

@@ -54,7 +54,9 @@
     </div>
   </div>
 
-  <%= hidden_field_tag "member_id", params[:member_id] if params[:member_id].present? %>
+  <%# hidden_field_tag "member_id", @member.id if @member.present? %>
+  <%= hidden_field_tag "member_id", params[:member_id] %>
+
   <% if params[:action] == "show" %>
     </fieldset>
   <% end %>

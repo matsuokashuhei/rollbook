@@ -20,6 +20,7 @@
           <th><%= t("activerecord.attributes.member.name") %></th>
           <th><%= t("activerecord.attributes.members_course.begin_date") %></th>
           <th><%= t("activerecord.attributes.members_course.end_date") %></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -29,6 +30,7 @@
             <td><%= display_member_name(members_course.member) %></td>
             <td><%= members_course.begin_date %></td>
             <td><%= members_course.end_date %></td>
+            <td><%= link_to t("views.buttons.show"), member_course_path(members_course.member, members_course), class: "btn btn-default" %></td>
           </tr>
         <% end %>
       </tbody>

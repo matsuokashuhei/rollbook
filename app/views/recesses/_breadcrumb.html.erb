@@ -1,4 +1,5 @@
 <ol class="breadcrumb">
+  <li><%= link_to t("activerecord.models.member"), members_path %></li>
   <li><%= link_to @member.full_name, member_path(@member) %></li>
   <li><%= link_to t("activerecord.models.members_course"), member_courses_path(@member) %></li>
   <li><%= link_to @members_course.course.name, member_course_path(@member, @members_course) %></li>

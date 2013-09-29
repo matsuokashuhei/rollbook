@@ -19,9 +19,6 @@
       <%= link_to t("activerecord.models.recess"), member_course_recesses_path(@member, @members_course), class: "btn btn-link", disabled: "disabled" %>
     <% end %>
   </li>
-  <li>
-    <%= link_to t("activerecord.models.bank_account"), member_bank_account_path(@member), class: "btn btn-link" %>
-  </li>
   <% if current_page?(member_courses_path) %>
     <%= link_to t("views.buttons.new"), new_member_course_path, class: "btn btn-default pull-right" %>
   <% end %>

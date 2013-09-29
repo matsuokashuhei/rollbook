@@ -34,6 +34,7 @@ class Member < ActiveRecord::Base
 
   has_many :members_courses
   has_many :courses, through: :members_courses, source: :course
+  has_many :rolls
   belongs_to :bank_account
 
   validates :first_name,
