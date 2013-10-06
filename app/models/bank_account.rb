@@ -18,6 +18,15 @@
 
 class BankAccount < ActiveRecord::Base
 
+  STATUSES = {
+    IN_PROCESS_1: "1",
+    IN_PROCESS_2: "2",
+    IN_PROCESS_3: "3",
+    IN_PROCESS_4: "4",
+    IN_PROCESS_5: "5",
+    ACTIVE: "6",
+  }
+
   STATUS = {
     "0" => "書類提出待ち",
     "1" => "書類提出済み",
@@ -30,13 +39,25 @@ class BankAccount < ActiveRecord::Base
   }
 
   has_many :members
+  has_many :debits, -> { order(:month) }
 
   validates :holder_name_kana, :status, presence: true
   validates :holder_name_kana, uniqueness: { scope: [:bank_id, :branch_id] }
 
   default_scope -> { order(:holder_name_kana) }
 
+  scope :active, -> {
+    where(status: "6")
+  }
+  scope :with_members, -> {
+    joins(:members).where(members: { status: "1" })
+  }
+
   def delete?
     members.count == 0
+  end
+
+  def self.not_active_statuses
+    [STATUSES[:IN_PROCESS_1], STATUSES[:IN_PROCESS_2], STATUSES[:IN_PROCESS_3], STATUSES[:IN_PROCESS_4], STATUSES[:IN_PROCESS_5],]
   end
 end

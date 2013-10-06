@@ -1,0 +1,30 @@
+<%= render "nav_tabs" %>
+
+<div class="tab-content">
+  <br />
+  <%# render "breadcrumb" %>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= t("activerecord.attributes.debit.bank_account_id") %></th>
+          <th><%= t("activerecord.attributes.debit.month") %></th>
+          <th><%= t("activerecord.attributes.debit.amount") %></th>
+          <th><%= t("activerecord.attributes.debit.status") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @debits.each do |debit| %>
+          <tr>
+            <td><%= debit.bank_account.holder_name_kana %></td>
+            <td><%= debit.month %></td>
+            <td><%= debit.amount %></td>
+            <td><%= debit.status_label %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= paginate @debits %>
+  <br />
+</div>

@@ -1,0 +1,8 @@
+<%= render "nav_tabs" %>
+
+<div class="tab-content">
+  <br />
+  <%= render "bulk_form" %>
+  <%= button_tag t("views.buttons.create"), class: "btn btn-default pull-right", form: "form" %>
+  <%= link_to t("views.buttons.back"), debit_tasks_path, class: "btn btn-default pull-left" %>
+</div>

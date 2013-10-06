@@ -1,11 +1,23 @@
 Rollbook::Application.routes.draw do
 
+  # 会員
+  resources :members do
+    resources :members_courses, as: :courses, path: :courses do
+      resources :recesses
+    end
+  end
+  match "members/:id/rolls" => "members#rolls", via: :get, as: "member_rolls"
+  match "members/:member_id/courses/:id/rolls" => "members_courses#rolls", via: :get, as: "member_course_rolls"
+  match "members/:id/bank_account" => "members#bank_account", via: :get, as: "member_bank_account"
+
+  # 口座
   resources :bank_accounts
   match "bank_accounts/:id/members" => "bank_accounts#members", via: :get, as: "bank_account_members"
   match "bank_accounts/:id/members/new" => "bank_accounts#new_member", via: :get, as: "new_bank_account_member"
   match "bank_accounts/:id/members" => "bank_accounts#create_member", via: :post
   match "bank_accounts/:id/members/:member_id" => "bank_accounts#destroy_member", via: :delete, as: "destroy_bank_account_member"
 
+  # レッスン
   resources :lessons do
     resources :rolls, only: :index
   end
@@ -16,21 +28,30 @@ Rollbook::Application.routes.draw do
   match "lessons/:lesson_id/nonmembers" => "rolls#nonmembers", via: :get, as: "nonmembers"
   match "lessons/:lesson_id/trials" => "rolls#trial", via: :post
 
-  resources :members do
-    resources :members_courses, as: :courses, path: :courses do
-      resources :recesses
-    end
-  end
-  match "members/:id/rolls" => "members#rolls", via: :get, as: "member_rolls"
-  match "members/:member_id/courses/:id/rolls" => "members_courses#rolls", via: :get, as: "member_course_rolls"
-  match "members/:id/bank_account" => "members#bank_account", via: :get, as: "member_bank_account"
-
+  # クラス
   resources :courses
   match "courses/:id/members" => "courses#members", via: :get, as: "course_members"
   match "courses/:id/lessons" => "courses#lessons", via: :get, as: "course_lessons"
 
+  # インストラクター
   resources :instructors
   match "instructors/:id/courses" => "instructors#courses", via: :get, as: "instructor_courses"
+
+  # 入金
+  #resources :tasks
+  resources :receipts
+  #resources :debits
+  match "debits/tasks" => "debits#tasks_index", via: :get, as: "debit_tasks"
+  match "debits/tasks/new" => "debits#new_task", via: :get, as: "new_debit_task"
+  match "debits/tasks" => "debits#create_task", via: :post, as: "create_debit_task"
+  match "debits/tasks/:task_id" => "debits#show_task", via: :get, as: "debit_task"
+  match "debits/tasks/:task_id/edit" => "debits#edit_task", via: :get, as: "edit_debit_task"
+  match "debits/tasks/:task_id" => "debits#update_task", via: :patch, as: "update_debit_task"
+  match "debits/tasks/:task_id" => "debits#destroy_task", via: :delete
+
+  match "debits/:month" => "debits#bulk_show", via: :get, as: "debits"
+  match "debits/:month/edit" => "debits#bulk_edit", via: :get, as: "edit_debits"
+  match "debits/:month" => "debits#bulk_update", via: :post
 
   #resources :schools do
   #  resources :studios

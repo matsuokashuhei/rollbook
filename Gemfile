@@ -31,8 +31,8 @@ gem 'jbuilder', '~> 1.2'
 #gem 'will_paginate'
 #gem 'will_paginate-bootstrap'
 gem 'kaminari'
-
 gem 'annotate', ">=2.5.0"
+gem 'draper', '~> 1.0'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

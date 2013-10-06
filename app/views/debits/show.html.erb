@@ -1,0 +1,10 @@
+<%= render "nav_tabs" %>
+
+<div class="tab-content">
+  <br />
+  <%# render "breadcrumb" %>
+  <%= render "shared/notice" %>
+  <%= render "form" %>
+  <%= link_to t("views.buttons.back"), debits_path, class: "btn btn-default pull-left" %>
+  <%= link_to t("views.buttons.edit"), edit_debit_path(@debit), class: "btn btn-default pull-right" %>
+</div>

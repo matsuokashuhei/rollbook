@@ -1,0 +1,10 @@
+<%= render "nav_tabs" %>
+
+<div class="tab-content">
+  <br />
+  <%= render "shared/notice" %>
+  <%= render "bulk_form" %>
+  <%= link_to t("views.buttons.edit"), edit_debits_path(month: params[:month]), class: "btn btn-default pull-right" %>
+  <%= link_to t("views.buttons.back"), debit_tasks_path, class: "btn btn-default pull-left" %>
+</div>
+

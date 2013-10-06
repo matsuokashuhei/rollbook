@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130928204323) do
+ActiveRecord::Schema.define(version: 20130929080036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,16 @@ ActiveRecord::Schema.define(version: 20130928204323) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "order_no"
+  end
+
+  create_table "debits", force: true do |t|
+    t.integer  "bank_account_id"
+    t.string   "month"
+    t.integer  "amount"
+    t.string   "status"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "instructors", force: true do |t|
@@ -119,6 +129,19 @@ ActiveRecord::Schema.define(version: 20130928204323) do
     t.datetime "updated_at"
   end
 
+  create_table "receipts", force: true do |t|
+    t.integer  "member_id"
+    t.string   "month"
+    t.integer  "amount"
+    t.string   "method"
+    t.date     "date"
+    t.string   "status"
+    t.integer  "debit_id"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "recesses", force: true do |t|
     t.integer  "members_course_id"
     t.string   "month"
@@ -157,6 +180,16 @@ ActiveRecord::Schema.define(version: 20130928204323) do
     t.datetime "updated_at"
     t.date     "open_date"
     t.date     "close_date"
+  end
+
+  create_table "tasks", force: true do |t|
+    t.string   "name"
+    t.string   "frequency"
+    t.date     "due_date"
+    t.string   "status"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "time_slots", force: true do |t|

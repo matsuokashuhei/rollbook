@@ -54,6 +54,10 @@ GEM
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.3)
     diff-lcs (1.2.4)
+    draper (1.2.1)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      request_store (~> 1.0.3)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -125,6 +129,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
+    request_store (1.0.5)
     rspec-core (2.13.1)
     rspec-expectations (2.13.0)
       diff-lcs (>= 1.1.3, < 2.0)
@@ -182,6 +187,7 @@ DEPENDENCIES
   binding_of_caller
   coffee-rails (~> 4.0.0)
   debugger
+  draper (~> 1.0)
   hirb
   hirb-unicode
   jbuilder (~> 1.2)

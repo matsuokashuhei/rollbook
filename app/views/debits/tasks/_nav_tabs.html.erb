@@ -1,0 +1,23 @@
+<ul class="nav nav-tabs">
+
+  <li class="active">
+    <a href="#debit" data-toggle="tab">入金</a>
+  </li>
+
+  <% if current_page?(debit_task_path(@task)) %>
+    <li>
+      <%= link_to t("activerecord.models.debit"), debits_path(@task.due_date.strftime("%Y%m")) %>
+    </li>
+  <% else %>
+    <li class="disabled">
+      <%= link_to t("activerecord.models.debit"), nil %>
+    </li>
+  <% end %>
+
+  <% if current_page?(debit_tasks_path) %>
+    <%= link_to t("views.buttons.new"), new_debit_task_path, class: "btn btn-default pull-right" %>
+  <% end %>
+
+</ul>
+
+

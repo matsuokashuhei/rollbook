@@ -1,0 +1,8 @@
+<%= render "debits/tasks/nav_tabs" %>
+
+<div class="tab-content">
+  <br />
+  <%= render "debits/tasks/form" %>
+  <%= link_to t("views.buttons.edit"), edit_debit_task_path(@task.id), class: "btn btn-default pull-right" %>
+  <%= link_to t("views.buttons.back"), debit_tasks_path, class: "btn btn-default pull-left" %>
+</div>

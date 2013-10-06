@@ -1,0 +1,36 @@
+<%= form_for(@task, url: debit_task_path(@task), html: { roll: "form", class: "form-horizontal", id: "form"}) do |f| %>
+
+  <%= render "shared/errors", object: @task %>
+
+  <%= "<fieldset disabled>".html_safe if current_page?(debit_task_path(@task)) %>
+
+  <%= f.hidden_field :frequency %>
+  <%= f.hidden_field :name %>
+
+  <div class="form-group <%= 'has-error' if @task.errors[:date].present? %>">
+    <%= f.label t("activerecord.attributes.task.due_date"), class: "col-md-1 control-label" %>
+    <div class="col-md-2">
+      <%# f.text_field :due_date, class: "form-control", data: { behaviour: "monthpicker" } %>
+      <%= text_field_tag "task[due_date]", @task.due_date.try(:strftime, "%Y/%m"), class: "form-control", data: { behaviour: "monthpicker" } %>
+    </div>
+  </div>
+
+  <div class="form-group <%= 'has-error' if @task.errors[:status].present? %>">
+    <%= f.label t("activerecord.attributes.task.status"), class: "col-md-1 control-label" %>
+    <div class="col-md-2">
+      <%# f.select :status, [["未登録", "0"], ["登録中", "1"], ["確定済", "2"]], {}, { class: "form-control" } %>
+      <%= f.select :status, [["仕掛中", "1"], ["完了", "2"]], {}, { class: "form-control" } %>
+    </div>
+  </div>
+
+  <div class="form-group <%= 'has-error' if @task.errors[:note].present? %>">
+    <%= f.label :note, class: "col-md-1 control-label" %>
+    <div class="col-md-5">
+      <%= f.text_area :note, class: "form-control" %>
+    </div>
+  </div>
+
+  <%= "</fieldset>".html_safe if current_page?(debit_task_path(@task)) %>
+
+<% end %>
+

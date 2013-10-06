@@ -35,6 +35,7 @@ class Member < ActiveRecord::Base
   has_many :members_courses
   has_many :courses, through: :members_courses, source: :course
   has_many :rolls
+  has_many :receipts
   belongs_to :bank_account
 
   validates :first_name,
@@ -52,6 +53,10 @@ class Member < ActiveRecord::Base
 
   default_scope -> { order(:last_name_kana, :first_name_kana) }
 
+  scope :active, -> {
+    where(status: "1")
+  }
+
   def delete?
     if members_courses.count == 0
       if bank_account.nil?
@@ -59,6 +64,10 @@ class Member < ActiveRecord::Base
       end
     end
     return false
+  end
+
+  def total_monthly_fee(date)
+    members_courses.active(date).joins(:course).sum("courses.monthly_fee")
   end
 
   def full_name
