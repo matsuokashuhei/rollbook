@@ -1,70 +1,6 @@
 class DebitsController < ApplicationController
   before_action :set_debit, only: [:show, :edit, :update, :destroy]
-
-  def tasks_index
-    @tasks = Task.where(name: "debit").order("due_date DESC").decorate
-    respond_to do |format|
-      format.html { render action: "tasks/index" }
-    end
-  end
-
-  def show_task
-    @task = Task.find(params[:task_id])
-    respond_to do |format|
-      format.html { render action: "tasks/show" }
-    end
-  end
-
-  def new_task
-    @task = Task.new(name: "debit", frequency: "M", status: "1")
-    respond_to do |format|
-      format.html { render action: "tasks/new" }
-    end
-  end
-
-  def edit_task
-    @task = Task.find(params[:task_id])
-    respond_to do |format|
-      format.html { render action: "tasks/edit" }
-    end
-  end
-
-  def create_task
-    ActiveRecord::Base.transaction do
-      @task = Task.new(task_params)
-      @task.due_date = task_params[:due_date].to_date
-      if @task.save
-        BankAccount.active.with_members.each do |bank_account|
-          amount = 0
-          bank_account.members.each do |member|
-            member.members_courses.active.joins(:course).each do |members_course|
-              amount += members_course.course.monthly_fee
-            end
-          end
-          debit = Debit.new(bank_account_id: bank_account.id,
-                            month: @task.due_date.strftime("%Y/%m"),
-                            amount: amount,
-                            status: "1")
-          until debit.save
-            respond_to do |format|
-              format.html { render action: 'new_task' }
-              format.json { render json: @task.errors, status: :unprocessable_entity }
-            end
-          end
-        end
-      else
-        respond_to do |format|
-          format.html { render action: 'new_task' }
-          format.json { render json: @task.errors, status: :unprocessable_entity }
-        end
-        return
-      end
-    end
-    respond_to do |format|
-      format.html { redirect_to debit_task_path(@task.id), notice: 'Task was successfully created.' }
-      format.json { render action: 'show', status: :created, location: @task }
-    end
-  end
+  before_action :set_month, only: [:index, :bulk_edit, :bulk_update]
 
   def update_task
     task_params[:due_date] << "/01"
@@ -97,14 +33,8 @@ class DebitsController < ApplicationController
     end
   end
 
-  def bulk_show
-    month = params[:month][0..3] + "/" + params[:month][4..5]
-    @task = Task.find_by(name: "debit", due_date: month + "/01")
-    @debits = Debit.where(month: month).decorate
-  end
-
   def bulk_edit
-    bulk_show
+    @debits = Debit.where(month: @month).page(params[:page])
   end
 
   def bulk_update
@@ -117,14 +47,14 @@ class DebitsController < ApplicationController
       end
     end
     flash[:notice] = "更新しました。"
-    redirect_to debits_path(month: params[:month])
+    redirect_to debits_path(@month)
   end
 
 
   # GET /debits
   # GET /debits.json
   def index
-    @debits = Debit.page(params[:page]).decorate
+    @debits = Debit.where(month: @month).page(params[:page]).decorate
   end
 
   # GET /debits/1
@@ -186,13 +116,13 @@ class DebitsController < ApplicationController
     def set_debit
       @debit = Debit.find(params[:id])
     end
+    def set_month
+      @month = params[:month]
+    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def debit_params
       params.require(:debit).permit(:bank_account_id, :month, :amount, :status, :note)
-    end
-    def task_params
-      params.require(:task).permit(:name, :frequency, :due_date, :status, :note)
     end
 
     def create_receipts(task)

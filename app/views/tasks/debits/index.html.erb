@@ -1,7 +1,8 @@
-<%= render "debits/tasks/nav_tabs" %>
+<%= render "tasks/debits/nav_tabs" %>
 
 <div class="tab-content">
   <br />
+  <%= render "tasks/debits/breadcrumb" %>
   <div class="table-responsive">
     <table class="table">
       <thead>
@@ -16,12 +17,13 @@
           <tr>
             <td><%= task.due_date %></td>
             <td><%= task.status_label %></td>
-            <td><%= link_to t("views.buttons.show"), debit_task_path(task.id), class: "btn btn-default" %></td>
-            <td><%= link_to t("views.buttons.edit"), edit_debit_task_path(task.id), class: "btn btn-default" %></td>
-            <td><%= render "debits/tasks/delete_button", object: task.model %></td>
+            <td><%= link_to t("views.buttons.show"), debits_path(task.model.due_date.strftime("%Y%m")), class: "btn btn-default" %></td>
+            <td><%# link_to t("views.buttons.edit"), edit_debit_task_path(task.id), class: "btn btn-default" %></td>
+            <td><%# render "debits/tasks/delete_button", object: task.model %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
   </div>
 </div>
+

@@ -1,10 +1,9 @@
-<%= form_tag({ action: "bulk_update", }, { method: "post", id: "form", }) do %>
+<%= form_tag({ action: "bulk_update", }, { method: "patch", id: "form", }) do %>
   <div class="table-responsive">
     <table class="table">
       <thead>
         <tr>
           <th><%= t("activerecord.attributes.debit.bank_account_id") %></th>
-          <th><%= t("activerecord.attributes.debit.month") %></th>
           <th><%= t("activerecord.attributes.debit.amount") %></th>
           <th><%= t("activerecord.attributes.debit.status") %></th>
         </tr>
@@ -14,7 +13,6 @@
           <%= hidden_field_tag "debits[][id]", debit.id %>
           <tr>
             <td><%= debit.bank_account.holder_name_kana %></td>
-            <td><%= debit.month %></td>
             <td><%= debit.amount %></td>
             <td><%= render "status", object: debit %></td>
           </tr>

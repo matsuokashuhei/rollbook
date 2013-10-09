@@ -2,13 +2,12 @@
 
 <div class="tab-content">
   <br />
-  <%# render "breadcrumb" %>
+  <%= render "breadcrumb" %>
   <div class="table-responsive">
     <table class="table">
       <thead>
         <tr>
           <th><%= t("activerecord.attributes.debit.bank_account_id") %></th>
-          <th><%= t("activerecord.attributes.debit.month") %></th>
           <th><%= t("activerecord.attributes.debit.amount") %></th>
           <th><%= t("activerecord.attributes.debit.status") %></th>
         </tr>
@@ -17,7 +16,6 @@
         <% @debits.each do |debit| %>
           <tr>
             <td><%= debit.bank_account.holder_name_kana %></td>
-            <td><%= debit.month %></td>
             <td><%= debit.amount %></td>
             <td><%= debit.status_label %></td>
           </tr>
@@ -26,5 +24,7 @@
     </table>
   </div>
   <%= paginate @debits %>
-  <br />
+  <%= link_to t("views.buttons.back"), task_debits_path, class: "btn btn-default pull-left" %>
+  <%= link_to t("views.buttons.fix"), edit_debits_path, class: "btn btn-default pull-right" %>
+  <%= link_to t("views.buttons.edit"), edit_debits_path, class: "btn btn-default pull-right" %>
 </div>

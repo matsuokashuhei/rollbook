@@ -1,10 +1,11 @@
 class ReceiptsController < ApplicationController
   before_action :set_receipt, only: [:show, :edit, :update, :destroy]
 
-  # GET /receipts
-  # GET /receipts.json
   def index
-    @receipts = Receipt.all
+    month = params[:month] ||= Date.today.strftime("%Y%m")
+    @receipts = Receipt.where(month: month).page(params[:page])
+    #sql = Receipt.where(month: month).page(params[:page]).to_sql
+    #@receipts = Receipt.where(month: month).page(params[:page])
   end
 
   # GET /receipts/1

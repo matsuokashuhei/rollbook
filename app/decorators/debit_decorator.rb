@@ -7,7 +7,8 @@ class DebitDecorator < ApplicationDecorator
   end
 
   def status_label
-    label = "<h3 style=\"margin: 0px; line-height: 0;\">"
+    #label = "<h3 style=\"margin: 0px; line-height: 0;\">"
+    label = "<h3 style=\"margin: 8px; line-height: 0;\">"
     case model.status
     when Debit::STATUSES[:SUCCESS]
       label << "<span class=\"label label-success\">完了</span>"

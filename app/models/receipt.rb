@@ -13,4 +13,8 @@ class Receipt < ActiveRecord::Base
   belongs_to :member
   belongs_to :debit
 
+  default_scope -> {
+    order(:month)
+  }
+
 end

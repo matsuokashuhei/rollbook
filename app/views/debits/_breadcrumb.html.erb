@@ -1,0 +1,9 @@
+<ol class="breadcrumb">
+  <li><%= link_to t("activerecord.models.debit"), task_debits_path %></li>
+  <% if current_page?(debits_path(@month)) %>
+    <li class="active"><%= @month[0..3] + "年" + @month[4..5] + "日" %></li>
+  <% else %>
+    <li><%= link_to @month[0..3] + "年" + @month[4..5] + "日", debits_path(@month) %></li>
+    <li class="active"><%= t("views.buttons.edit") %></li>
+  <% end %>
+</ol>

@@ -49,6 +49,7 @@ class BankAccount < ActiveRecord::Base
   scope :active, -> {
     where(status: "6")
   }
+
   scope :with_members, -> {
     joins(:members).where(members: { status: "1" })
   }

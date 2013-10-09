@@ -1,17 +1,20 @@
 class Task < ActiveRecord::Base
+
   NAMES = {
     DEBIT: "debit",
   }
+
   FREQUENCIES = {
     ONE_DAY: "O",
     DAILY: "D",
     WEEKLY: "W",
     MONTHLY: "M",
   }
+
   STATUSES = {
-    NONE: "0",
+    DETERMINED: "0",
     IN_PROCESS: "1",
-    FIXED: "2",
+    FINISHED: "2",
   }
 
   default_scope -> { order(:frequency, :name, :due_date) }

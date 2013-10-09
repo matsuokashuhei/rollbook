@@ -5,10 +5,10 @@
 <% if current_page?(edit_debits_path(month: params[:month])) %>
   <%= hidden_field_tag "debits[][status]", object.status %>
   <div class="btn-group" data-toggle="buttons">
-    <label class="btn <%= "btn-success active" if object.status == "1" %>">
+    <label class="btn btn-default <%= "btn-success active" if object.status == "1" %>">
       <input type="radio" value="1" />完了
     </label>
-    <label class="btn <%= "btn-danger active" if object.status == "2" %>">
+    <label class="btn btn-default <%= "btn-danger active" if object.status == "2" %>">
       <input type="radio" value="2" />不能
     </label>
   </div>

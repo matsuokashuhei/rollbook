@@ -1,15 +1,5 @@
 <ul class="nav nav-tabs">
-  <li>
-    <%= link_to t("activerecord.other.task.debit"), debit_task_path(@task) %>
+  <li class="active">
+    <a href="#debit" data-toggle="tab"><%= t("activerecord.models.debit") %></a>
   </li>
-  <% if current_page?(debits_path(month: params[:month])) %>
-    <li class="active">
-      <a href="#debit" data-toggle="tab"><%= t("activerecord.models.debit") %></a>
-    </li>
-  <% else %>
-    <li>
-      <%= link_to t("activerecord.models.debit"), debits_path(month: params[:month]) %>
-    </li>
-  <% end %>
-
 </ul>

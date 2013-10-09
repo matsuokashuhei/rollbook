@@ -1,6 +1,60 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
+  def debits
+    @tasks = Task.debit.decorate
+    respond_to do |format|
+      format.html { render action: "debits/index" }
+    end
+  end
+
+  def new_debit
+    @task = Task.new(name: "debit", frequency: "M", status: "1")
+    respond_to do |format|
+      format.html { render action: "debits/new" }
+    end
+  end
+
+  def create_debit
+    ActiveRecord::Base.transaction do
+      @task = Task.new(task_params)
+      @task.due_date = task_params[:due_date].to_date
+      if @task.save
+        BankAccount.active.with_members.each do |bank_account|
+          amount = 0
+          bank_account.members.each do |member|
+            member.members_courses.active.joins(:course).each do |members_course|
+              amount += members_course.course.monthly_fee
+            end
+          end
+          debit = Debit.new(bank_account_id: bank_account.id,
+                            month: @task.due_date.strftime("%Y%m"),
+                            amount: amount,
+                            status: "1")
+          until debit.save
+            respond_to do |format|
+              format.html { render action: "debits/new" }
+              format.json { render json: @task.errors, status: :unprocessable_entity }
+            end
+          end
+        end
+      else
+        respond_to do |format|
+          format.html { render action: "debits/new" }
+          format.json { render json: @task.errors, status: :unprocessable_entity }
+        end
+        return
+      end
+    end
+    respond_to do |format|
+      format.html { redirect_to task_debits_path, notice: 'Task was successfully created.' }
+      format.json { render action: 'show', status: :created, location: @task }
+    end
+  end
+
+  def update_debit
+  end
+
   # GET /tasks
   # GET /tasks.json
   def index

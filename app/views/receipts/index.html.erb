@@ -1,41 +1,42 @@
-<h1>Listing receipts</h1>
+<%= render "nav_tabs" %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Member</th>
-      <th>Month</th>
-      <th>Amount</th>
-      <th>Method</th>
-      <th>Date</th>
-      <th>Status</th>
-      <th>Debit</th>
-      <th>Note</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @receipts.each do |receipt| %>
-      <tr>
-        <td><%= receipt.member_id %></td>
-        <td><%= receipt.month %></td>
-        <td><%= receipt.amount %></td>
-        <td><%= receipt.method %></td>
-        <td><%= receipt.date %></td>
-        <td><%= receipt.status %></td>
-        <td><%= receipt.debit_id %></td>
-        <td><%= receipt.note %></td>
-        <td><%= link_to 'Show', receipt %></td>
-        <td><%= link_to 'Edit', edit_receipt_path(receipt) %></td>
-        <td><%= link_to 'Destroy', receipt, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Receipt', new_receipt_path %>
+<div class="tab-content">
+  <br />
+  <%= render "breadcrumb" %>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= t("activerecord.attributes.receipt.member_id") %></th>
+          <th><%= t("activerecord.attributes.receipt.month") %></th>
+          <th><%= t("activerecord.attributes.receipt.amount") %></th>
+          <th><%= t("activerecord.attributes.receipt.method") %></th>
+          <th><%= t("activerecord.attributes.receipt.date") %></th>
+          <th><%= t("activerecord.attributes.receipt.status") %></th>
+          <th><%= t("activerecord.attributes.receipt.debit_id") %></th>
+          <th><%= t("activerecord.attributes.receipt.note") %></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @receipts.each do |receipt| %>
+          <tr>
+            <td><%= receipt.member_id %></td>
+            <td><%= receipt.month %></td>
+            <td><%= receipt.amount %></td>
+            <td><%= receipt.method %></td>
+            <td><%= receipt.date %></td>
+            <td><%= receipt.status %></td>
+            <td><%= receipt.debit_id %></td>
+            <td><%= receipt.note %></td>
+            <td><%= link_to t("views.buttons.show"), receipt_path(receipt), class: "btn btn-default" %></td>
+            <td><%= link_to t("views.buttons.edit"), edit_receipt_path(receipt), class: "btn btn-default" %></td>
+            <td><%# link_to 'Destroy', receipt, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= paginate @receipts %>
+</div>
