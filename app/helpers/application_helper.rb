@@ -37,6 +37,11 @@ module ApplicationHelper
     icon("glyphicon-remove-circle")
   end
 
+  def exclamation_icon
+    "<span class=\"glyphicon glyphicon-exclamation-sign\", style=\"color: red;\"></span>".html_safe
+    #icon("glyphicon-exclamation-sign")
+  end
+
   def icon(icon_name)
     "<span class=\"glyphicon #{icon_name}\"></span>".html_safe
   end

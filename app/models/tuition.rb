@@ -4,7 +4,8 @@
 #
 #  id         :integer          not null, primary key
 #  month      :string(255)
-#  status     :string(255)
+#  debit_status     :string(255)
+#  receipt_status     :string(255)
 #  note       :text
 #  created_at :datetime
 #  updated_at :datetime
@@ -14,16 +15,21 @@ class Tuition < ActiveRecord::Base
   has_many :debits
   has_many :receipts
 
-  STATUSES = {
-    DEBIT_IN_PROCESS: "1",
-    DEBIT_FINISHED: "2",
-    ALL_FINISHED: "3",
+  DEBIT_STATUSES = {
+    IN_PROCESS: "1",
+    FINISHED: "2"
+  }
+  RECEIPT_STATUSES = {
+    NONE: "0",
+    IN_PROCESS: "1",
+    FINISHED: "2"
   }
 
   default_scope -> { order(:month) }
 
-  validates :month, :status, presence: true
-  validates :status, inclusion: { in: STATUSES.map {|k, v| v } }
+  validates :month, :debit_status, :receipt_status, presence: true
+  validates :debit_status, inclusion: { in: DEBIT_STATUSES.map {|k, v| v } }
+  validates :receipt_status, inclusion: { in: RECEIPT_STATUSES.map {|k, v| v } }
   validates :month, uniqueness: true
 
   after_find do
@@ -32,6 +38,9 @@ class Tuition < ActiveRecord::Base
 
   before_save do
     self.month = self.month.sub("/", "")
+    if self.debit_status == DEBIT_STATUSES[:FINISHED]
+      self.receipt_status = RECEIPT_STATUSES[:IN_PROCESS]
+    end
   end
 
   after_save do
@@ -55,7 +64,8 @@ class Tuition < ActiveRecord::Base
 
   after_update do
     date = (self.month + "01").to_date
-    return unless self.status == STATUSES[:DEBIT_FINISHED]
+    return unless self.receipts.count == 0
+    return unless self.debit_status == DEBIT_STATUSES[:FINISHED]
     # 口座引き落とし中
     members = Member.active.joins(bank_account: [debits: :tuition]).where(tuitions: { month: self.month })
     members.each do |member|
@@ -93,7 +103,7 @@ class Tuition < ActiveRecord::Base
   end
 
   def delete?
-    status == STATUSES[:IN_PROCESS]
+    receipt_status == RECEIPT_STATUSES[:NONE]
   end
 
 end

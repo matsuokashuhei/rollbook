@@ -1,0 +1,18 @@
+<ol class="breadcrumb">
+  <% if current_page?(tuitions_path) %>
+    <li class="active"><%= t("activerecord.models.tuition") %></li>
+  <% else %>
+    <li><%= link_to t("activerecord.models.tuition"), tuitions_path %></li>
+  <% end %>
+  <% if current_page?(new_tuition_path(@tuition)) %>
+    <li class="active"><%= t("views.buttons.new") %></li>
+  <% end %>
+  <% if current_page?(tuition_path(@tuition)) %>
+    <li class="active"><%= @tuition.month %></li>
+  <% end %>
+  <% if current_page?(edit_tuition_path(@tuition)) %>
+    <li><%= link_to @tuition.month, tuition_path(@tuition) %></li>
+    <li class="active"><%= t("views.buttons.edit") %></li>
+  <% end %>
+</ol>
+

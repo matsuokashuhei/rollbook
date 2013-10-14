@@ -2,13 +2,15 @@
 
 <div class="tab-content">
   <br />
+  <%= render "breadcrumb" %>
   <div class="table-responsive">
     <table class="table">
       <thead>
         <tr>
           <% scope = "activerecord.attributes.tuition" %>
           <th><%= t("month", scope: scope) %></th>
-          <th><%= t("status", scope: scope) %></th>
+          <th><%= t("debit_status", scope: scope) %></th>
+          <th><%= t("receipt_status", scope: scope) %></th>
           <th></th>
           <th></th>
           <th></th>
@@ -18,17 +20,20 @@
         <% @tuitions.each do |tuition| %>
           <tr>
             <td><%= tuition.month %></td>
-            <td><%= tuition.status %></td>
+            <td>
+              <%= link_to tuition_debits_path(tuition) do %>
+                <%= tuition.debit_status %>
+              <% end %>
+            </td>
+            <td>
+              <%= link_to tuition_receipts_path(tuition) do %>
+                <%= tuition.receipt_status %>
+              <% end %>
+            </td>
             <td>
               <%= show_icon_link_to(tuition_path(tuition)) %>
               <%= edit_icon_link_to(edit_tuition_path(tuition)) %>
               <%= render "shared/delete_link", object: tuition %>
-            </td>
-            <td>
-              <%= link_to t("activerecord.models.debit"), tuition_debits_path(tuition), class: "btn btn-link" %>
-            </td>
-            <td>
-              <%= link_to t("activerecord.models.receipt"), tuition_receipts_path(tuition), class: "btn btn-link" %>
             </td>
           </tr>
         <% end %>

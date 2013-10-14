@@ -17,11 +17,3 @@
 
 </div>
 
-<% if false %>
-    <div class="row">
-      <% prev_lesson = @lesson.prev_lesson %>
-      <%= link_to prev_lesson.date.strftime("%Y/%m/%d"), lesson_rolls_path(prev_lesson.id), class: "btn btn-link pull-left" if prev_lesson %>
-      <% next_lesson = @lesson.next_lesson %>
-      <%= link_to next_lesson.date.strftime("%Y/%m/%d"), lesson_rolls_path(next_lesson.id), class: "btn btn-link pull-right" if next_lesson %>
-    </div>
-<% end %>

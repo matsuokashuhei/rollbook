@@ -25,6 +25,9 @@
   </div>
   <%= paginate @debits %>
   <%= link_to t("views.buttons.back"), tuition_path(@tuition), class: "btn btn-default pull-left" %>
-  <%# button_to t("views.buttons.fix"), fix_debits_path, class: "btn btn-default pull-right" %>
-  <%= link_to t("views.buttons.edit"), edit_tuition_debits_path, class: "btn btn-default pull-right" %>
+  <% if @tuition.debit_status == Tuition::DEBIT_STATUSES[:IN_PROCESS] %>
+    <%= link_to t("views.buttons.edit"), edit_tuition_debits_path, class: "btn btn-default pull-right" %>
+  <% else %>
+    <%= link_to t("views.buttons.edit"), edit_tuition_debits_path, class: "btn btn-default pull-right disabled" %>
+  <% end %>
 </div>

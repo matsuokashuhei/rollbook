@@ -1,0 +1,43 @@
+<ul class="nav nav-tabs">
+  <li>
+    <%= link_to t("activerecord.models.member"), member_path(@member), class: "btn btn-link" %>
+  </li>
+  <li>
+    <%= link_to t("activerecord.models.members_course"), member_courses_path(@member), class: "btn btn-link" %>
+  </li>
+  <li>
+    <%= link_to t("activerecord.models.lesson"), member_rolls_path(@member), class: "btn btn-link" %>
+  </li>
+  <li>
+    <%= link_to t("activerecord.models.recess"), member_course_recesses_path(@member, @members_course), class: "btn btn-link", disabled: "disabled" %>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <br />
+  <%# render "breadcrumb" %>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= t("activerecord.attributes.tuition.month") %></th>
+          <th><%= t("activerecord.attributes.receipt.amount") %></th>
+          <th><%= t("activerecord.attributes.receipt.status") %></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @receipts.each do |receipt| %>
+          <tr>
+            <td><%= receipt.tuition.month %></td>
+            <td><%= receipt.amount %></td>
+            <td><%= receipt.status %></td>
+            <td><%= link_to t("views.buttons.show"), tuition_receipt_path(receipt.tuition, receipt), class: "btn btn-default" %></td>
+          </tr>
+        <% end %>
+    </table>
+  </div>
+</div>
+
+
+

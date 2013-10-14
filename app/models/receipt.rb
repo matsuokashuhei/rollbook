@@ -34,6 +34,10 @@ class Receipt < ActiveRecord::Base
     order(:tuition_id)
   }
 
+  scope :unpaid, -> {
+    where(status: STATUSES[:UNPAID])
+  }
+
   validates :member_id, uniqueness: { scope: :tuition_id }
 
 end

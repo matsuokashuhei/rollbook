@@ -9,6 +9,7 @@ Rollbook::Application.routes.draw do
   match "members/:id/rolls" => "members#rolls", via: :get, as: "member_rolls"
   match "members/:member_id/courses/:id/rolls" => "members_courses#rolls", via: :get, as: "member_course_rolls"
   match "members/:id/bank_account" => "members#bank_account", via: :get, as: "member_bank_account"
+  match "members/:id/receipts" => "members#receipts", via: :get, as: "member_receipts"
 
   # 口座
   resources :bank_accounts

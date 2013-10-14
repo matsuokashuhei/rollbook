@@ -12,6 +12,9 @@
     <li>
       <%= link_to t("activerecord.models.recess"), member_course_recesses_path(@member, @members_course), class: "btn btn-link", disabled: "disabled" %>
     </li>
+    <li>
+      <%= link_to t("activerecord.models.receipt"), member_receipts_path(@member), class: "btn btn-link" %>
+    </li>
   <% else %>
     <li>
       <%= link_to t("activerecord.models.course"), member_courses_path(@member), class: "btn btn-link", disabled: "disabled" %>

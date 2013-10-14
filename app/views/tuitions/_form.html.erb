@@ -7,14 +7,35 @@
   <div class="form-group <%= 'has-error' if @tuition.errors[:month].present? %>">
     <%= f.label t("activerecord.attributes.tuition.month"), class: "col-md-1 control-label" %>
     <div class="col-md-2">
-      <%= f.text_field :month, class: "form-control", data: { behaviour: "monthpicker" } %>
+      <% if current_page?(new_tuition_path) %>
+        <%= f.text_field :month, class: "form-control", data: { behaviour: "monthpicker" } %>
+      <% else %>
+        <%= f.text_field :month, class: "form-control", disabled: "disabled", data: { behaviour: "monthpicker" } %>
+      <% end %>
     </div>
   </div>
 
-  <div class="form-group <%= 'has-error' if @tuition.errors[:status].present? %>">
-    <%= f.label t("activerecord.attributes.tuition.status"), class: "col-md-1 control-label" %>
+  <div class="form-group <%= 'has-error' if @tuition.errors[:debit_status].present? %>">
+    <%= f.label t("activerecord.attributes.tuition.debit_status"), class: "col-md-1 control-label" %>
     <div class="col-md-2">
-      <%= f.select :status, [["仕掛中", "1"], ["完了", "2"]], {}, { class: "form-control" } %>
+      <% if current_page?(new_tuition_path) || @tuition.receipt_status != Tuition::RECEIPT_STATUSES[:NONE] %>
+        <%= f.hidden_field :debit_status %>
+        <%= f.select :debit_status, [["仕掛中", "1"], ["完了", "2"]], {}, { class: "form-control", disabled: "disabled" } %>
+      <% else %>
+        <%= f.select :debit_status, [["仕掛中", "1"], ["完了", "2"]], {}, { class: "form-control" } %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-group <%= 'has-error' if @tuition.errors[:receipt_status].present? %>">
+    <%= f.label t("activerecord.attributes.tuition.receipt_status"), class: "col-md-1 control-label" %>
+    <div class="col-md-2">
+      <% if @tuition.debit_status == Tuition::DEBIT_STATUSES[:FINISHED] %>
+        <%= f.select :receipt_status, [["未定", "0"], ["仕掛中", "1"], ["完了", "2"]], {}, { class: "form-control" } %>
+      <% else %>
+        <%= f.hidden_field :receipt_status %>
+        <%= f.select :receipt_status, [["未定", "0"], ["仕掛中", "1"], ["完了", "2"]], {}, { class: "form-control", disabled: "disabled" } %>
+      <% end %>
     </div>
   </div>
 

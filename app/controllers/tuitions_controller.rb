@@ -15,7 +15,8 @@ class TuitionsController < ApplicationController
 
   # GET /tuitions/new
   def new
-    @tuition = Tuition.new
+    @tuition = Tuition.new(debit_status: Tuition::DEBIT_STATUSES[:IN_PROCESS],
+                           receipt_status: Tuition::RECEIPT_STATUSES[:NONE])
   end
 
   # GET /tuitions/1/edit
@@ -70,6 +71,6 @@ class TuitionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tuition_params
-      params.require(:tuition).permit(:month, :status, :note)
+      params.require(:tuition).permit(:month, :debit_status, :receipt_status, :note)
     end
 end

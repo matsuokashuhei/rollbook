@@ -1,15 +1,27 @@
 class TuitionDecorator < ApplicationDecorator
   delegate_all
 
-  def status
+  def debit_status
     label = "<h3 style=\"margin: 0px; line-height: 0;\">"
-    case model.status
-    when Tuition::STATUSES[:DEBIT_IN_PROCESS]
-      label << "<span class=\"label label-success\">口座振替　確認中</span>"
-    when Tuition::STATUSES[:DEBIT_FINISHED]
-      label << "<span class=\"label label-danger\">口座振替　完了</span>"
-    when Tuition::STATUSES[:ALL_FINISHED]
-      label << "<span class=\"label label-danger\">完了</span>"
+    case model.debit_status
+    when Tuition::DEBIT_STATUSES[:IN_PROCESS]
+      label << "<span class=\"label label-info\">仕掛中</span>"
+    when Tuition::DEBIT_STATUSES[:FINISHED]
+      label << "<span class=\"label label-success\">完了</span>"
+    end
+    label << "</h3>"
+    label.html_safe
+  end
+
+  def receipt_status
+    label = "<h3 style=\"margin: 0px; line-height: 0;\">"
+    case model.receipt_status
+    when Tuition::RECEIPT_STATUSES[:NONE]
+      label << "<span class=\"label label-default\">未定</span>"
+    when Tuition::RECEIPT_STATUSES[:IN_PROCESS]
+      label << "<span class=\"label label-info\">仕掛中</span>"
+    when Tuition::RECEIPT_STATUSES[:FINISHED]
+      label << "<span class=\"label label-success\">完了</span>"
     end
     label << "</h3>"
     label.html_safe

@@ -16,7 +16,14 @@
           <%= hidden_field_tag "rolls[][member_id]", roll.member_id %>
           <tr>
             <td><%= roll.member_id %></td>
-            <td><%= display_member_name(roll.member) %></td>
+            <td>
+              <%= display_member_name(roll.member) %>
+              <% if roll.member.receipts.unpaid.count > 0 %>
+                <%= link_to member_receipts_path(roll.member) do %>
+                  <%= exclamation_icon %>
+                <% end %>
+              <% end %>
+            </td>
             <td>
               <%= render "status", object: roll  %>
             </td>

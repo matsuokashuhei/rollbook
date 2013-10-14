@@ -141,5 +141,6 @@ ja:
         note: メモ
       tuition:
         month: 月
-        status: 状態
+        debit_status: 口座引落
+        receipt_status: 現金払い
         note: メモ
