@@ -21,9 +21,20 @@
             <td><%= member.id %></td>
             <td><%= display_member_name(member) %></td>
             <td><%= display_gender(member.gender) %></td>
-            <td><%= link_to t("views.buttons.show"), member, class: "btn btn-default" %></td>
-            <td><%= link_to t("views.buttons.edit"), edit_member_path(member), class: "btn btn-default" %></td>
-            <td><%= render "shared/delete_button", object: member %></td>
+            <% if false %>
+              <td><%= link_to t("views.buttons.show"), member, class: "btn btn-default" %><span class="glyphicon glyphicon-star"></span></td>
+              <td><%= link_to t("views.buttons.edit"), edit_member_path(member), class: "btn btn-default" %></td>
+              <td><%= render "shared/delete_button", object: member %></td>
+            <% end %>
+            <td>
+              <%= link_to member_path(member), class: "btn", data: { toggle: "tooltip", "original-title" => "見る" } do %>
+                <%= show_icon %>
+              <% end %>
+              <%= link_to edit_member_path(member), class: "btn",  data: { toggle: "tooltip", "original-title" => "変更する" } do %>
+                <%= edit_icon %>
+              <% end %>
+              <%= render "shared/delete_link", object: member %>
+            </td>
           </tr>
         <% end %>
       </tbody>
@@ -33,5 +44,9 @@
   <br />
 
   <%= link_to t("views.buttons.new"), new_member_path, class: "btn btn-default" %>
+  <script>
+    $("[data-toggle~='tooltip']").tooltip();
+    $("[data-toggle~='modal']").tooltip();
+  </script>
 
 </div>

@@ -1,49 +1,58 @@
-<%= form_for(@receipt) do |f| %>
-  <% if @receipt.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@receipt.errors.count, "error") %> prohibited this receipt from being saved:</h2>
+<%= form_for([@tuition, @receipt], html: { role: "form", class: "form-horizontal", id: "form" }) do |f| %>
 
-      <ul>
-      <% @receipt.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+  <%= render "shared/errors", object: @receipt %>
+
+  <%= "<fieldset disabled>".html_safe if current_page?(tuition_receipt_path(@tuition, @receipt)) %>
+
+  <div class="form-group <%= 'has-error' if @receipt.errors[:member_id].present? %>">
+    <%= f.label t("activerecord.attributes.receipt.member_id"), class: "col-md-1 control-label" %>
+    <div class="col-md-3">
+      <%= f.hidden_field :member_id %>
+      <%= text_field_tag nil, @receipt.member.full_name, class: "form-control", disabled: "disabled" %>
     </div>
-  <% end %>
+  </div>
 
-  <div class="field">
-    <%= f.label :member_id %><br>
-    <%= f.number_field :member_id %>
+  <div class="form-group <%= 'has-error' if @receipt.errors[:amount].present? %>">
+    <%= f.label t("activerecord.attributes.receipt.amount"), class: "col-md-1 control-label" %>
+    <div class="col-md-2">
+      <%= f.number_field :amount, class: "form-control" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :month %><br>
-    <%= f.text_field :month %>
+
+  <div class="form-group <%= 'has-error' if @receipt.errors[:method].present? %>">
+    <%= f.label t("activerecord.attributes.receipt.method"), class: "col-md-1 control-label" %>
+    <div class="col-md-2">
+      <%= f.select :method, [["振替", Receipt::METHODS[:DEBIT]], ["現金", Receipt::METHODS[:CASH]]], {}, { class: "form-control", disabled: "disabled" } %>
+    </div>
+    <%= f.hidden_field :debit_id %>
+    <% if @receipt.method == Receipt::METHODS[:DEBIT] %>
+      <div class="col-md-1">
+        <%# link_to t("views.buttons.show"), debit_path(@debit), class: "btn btn-default" %>
+      </div>
+    <% end %>
   </div>
-  <div class="field">
-    <%= f.label :amount %><br>
-    <%= f.number_field :amount %>
+
+  <div class="form-group <%= 'has-error' if @receipt.errors[:date].present? %>">
+    <%= f.label t("activerecord.attributes.receipt.date"), class: "col-md-1 control-label" %>
+    <div class="col-md-2">
+      <%= f.date_field :date, class: "form-control" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :method %><br>
-    <%= f.text_field :method %>
+
+  <div class="form-group <%= 'has-error' if @receipt.errors[:status].present? %>">
+    <%= f.label t("activerecord.attributes.receipt.status"), class: "col-md-1 control-label" %>
+    <div class="col-md-2">
+      <%= f.select :status, [["未", Receipt::STATUSES[:UNPAID]], ["済", Receipt::STATUSES[:PAID]]], {}, { class: "form-control" } %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :date %><br>
-    <%= f.date_select :date %>
+
+  <div class="form-group <%= 'has-error' if @receipt.errors[:note].present? %>">
+    <%= f.label :note, class: "col-md-1 control-label" %>
+    <div class="col-md-5">
+      <%= f.text_area :note, class: "form-control" %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.text_field :status %>
-  </div>
-  <div class="field">
-    <%= f.label :debit_id %><br>
-    <%= f.number_field :debit_id %>
-  </div>
-  <div class="field">
-    <%= f.label :note %><br>
-    <%= f.text_area :note %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+
+  <%= "</fieldset>".html_safe if current_page?(tuition_receipt_path(@tuition, @receipt)) %>
+
 <% end %>

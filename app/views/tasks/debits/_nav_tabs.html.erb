@@ -1,8 +1,0 @@
-<ul class="nav nav-tabs">
-  <li class="active">
-    <a href="#debit" data-toggle="tab"><%= t("activerecord.models.debit") %></a>
-  </li>
-  <% if current_page?(tasks_debits_path) %>
-    <%= link_to t("views.buttons.new"), new_task_debit_path, class: "btn btn-default pull-right" %>
-  <% end %>
-</ul>

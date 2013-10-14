@@ -1,8 +1,8 @@
-<% if params[:action] == "bulk_show" %>
+<% if current_page?(tuition_debits_path(@tuition)) %>
   <%= object.status_label %>
 <% end %>
 
-<% if current_page?(edit_debits_path(month: params[:month])) %>
+<% if current_page?(edit_tuition_debits_path(@tuition)) %>
   <%= hidden_field_tag "debits[][status]", object.status %>
   <div class="btn-group" data-toggle="buttons">
     <label class="btn btn-default <%= "btn-success active" if object.status == "1" %>">

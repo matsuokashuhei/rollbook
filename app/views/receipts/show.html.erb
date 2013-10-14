@@ -1,44 +1,10 @@
-<p id="notice"><%= notice %></p>
+<%= render "nav_tabs" %>
 
-<p>
-  <strong>Member:</strong>
-  <%= @receipt.member_id %>
-</p>
-
-<p>
-  <strong>Month:</strong>
-  <%= @receipt.month %>
-</p>
-
-<p>
-  <strong>Amount:</strong>
-  <%= @receipt.amount %>
-</p>
-
-<p>
-  <strong>Method:</strong>
-  <%= @receipt.method %>
-</p>
-
-<p>
-  <strong>Date:</strong>
-  <%= @receipt.date %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @receipt.status %>
-</p>
-
-<p>
-  <strong>Debit:</strong>
-  <%= @receipt.debit_id %>
-</p>
-
-<p>
-  <strong>Note:</strong>
-  <%= @receipt.note %>
-</p>
-
-<%= link_to 'Edit', edit_receipt_path(@receipt) %> |
-<%= link_to 'Back', receipts_path %>
+<div class="tab-content">
+  <br />
+  <%= render "breadcrumb" %>
+  <%= render "shared/notice" %>
+  <%= render "form" %>
+  <%= link_to t("views.buttons.back"), tuition_receipts_path(@tuition), class: "btn btn-default pull-left" %>
+  <%= link_to t("views.buttons.edit"), edit_tuition_receipt_path(@tuition, @receipt), class: "btn btn-default pull-right" %>
+</div>

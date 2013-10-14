@@ -18,7 +18,7 @@
 #  enter_date      :date
 #  leave_date      :date
 #  bank_account_id :integer
-#  status          :integer
+#  status          :string(255)
 #  nearby_station  :string(255)
 #  created_at      :datetime
 #  updated_at      :datetime

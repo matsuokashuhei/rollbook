@@ -16,7 +16,7 @@ class TaskDecorator < ApplicationDecorator
       label << "<span class=\"label label-default\">未定</span>"
     when Task::STATUSES[:IN_PROCESS]
       label << "<span class=\"label label-info\">仕掛中</span>"
-    when Task::STATUSES[:FIXED]
+    when Task::STATUSES[:FINISHED]
       label << "<span class=\"label label-success\">完了済</span>"
     end
     label << "</h3>"

@@ -50,10 +50,6 @@ class BankAccount < ActiveRecord::Base
     where(status: "6")
   }
 
-  scope :with_members, -> {
-    joins(:members).where(members: { status: "1" })
-  }
-
   def delete?
     members.count == 0
   end

@@ -13,9 +13,10 @@ ja:
       lesson: レッスン
       roll: レッスン
       recess: 休会
-      debit: 引き落とし
-      receipt: 入金
-      task: 定例業務
+      debit: 口座振替
+      receipt: 支払い
+      task: タスク
+      tuition: 月謝
     attributes:
       school:
         name: 名前
@@ -124,11 +125,12 @@ ja:
         status: 引き落とし
         note: メモ
       receipt:
-        bank_account_id: 口座
+        member_id: 会員
         month: 月
         amount: 金額
         date: 日
         method: 方法
+        debit_id: 振込
         status: 状態
         note: メモ
       task:
@@ -137,6 +139,7 @@ ja:
         frequency: 頻度
         status: 状態
         note: メモ
-    other:
-      task:
-        debit: 入金業務
+      tuition:
+        month: 月
+        status: 状態
+        note: メモ

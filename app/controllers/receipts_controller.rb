@@ -1,11 +1,9 @@
 class ReceiptsController < ApplicationController
+  before_action :set_tuition, only: [:index, :show, :edit, :create, :update]
   before_action :set_receipt, only: [:show, :edit, :update, :destroy]
 
   def index
-    month = params[:month] ||= Date.today.strftime("%Y%m")
-    @receipts = Receipt.where(month: month).page(params[:page])
-    #sql = Receipt.where(month: month).page(params[:page]).to_sql
-    #@receipts = Receipt.where(month: month).page(params[:page])
+    @receipts = @tuition.receipts.joins(:member).page(params[:page]).decorate
   end
 
   # GET /receipts/1
@@ -43,7 +41,7 @@ class ReceiptsController < ApplicationController
   def update
     respond_to do |format|
       if @receipt.update(receipt_params)
-        format.html { redirect_to @receipt, notice: 'Receipt was successfully updated.' }
+        format.html { redirect_to tuition_receipt_path(@tuition, @receipt), notice: 'Receipt was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -64,12 +62,15 @@ class ReceiptsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_tuition
+      @tuition = Tuition.find(params[:tuition_id])
+    end
     def set_receipt
       @receipt = Receipt.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipt_params
-      params.require(:receipt).permit(:member_id, :month, :amount, :method, :date, :status, :debit_id, :note)
+      params.require(:receipt).permit(:member_id, :amount, :method, :date, :status, :debit_id, :note)
     end
 end

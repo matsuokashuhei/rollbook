@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: tasks
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  frequency  :string(255)
+#  due_date   :date
+#  status     :string(255)
+#  note       :text
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class Task < ActiveRecord::Base
 
   NAMES = {

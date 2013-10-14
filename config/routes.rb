@@ -38,6 +38,13 @@ Rollbook::Application.routes.draw do
   match "instructors/:id/courses" => "instructors#courses", via: :get, as: "instructor_courses"
 
   # 入金
+  resources :tuitions do
+    resources :debits, only: [:index]
+    resources :receipts
+  end
+  match "tuitions/:tuition_id/debits/edit" => "debits#bulk_edit", via: :get, as: "edit_tuition_debits"
+  match "tuitions/:tuition_id/debits" => "debits#bulk_update", via: :patch
+
   match "tasks/debits" => "tasks#debits", via: :get, as: "task_debits"
   match "tasks/debits/new" => "tasks#new_debit", via: :get, as: "new_task_debit"
   match "tasks/debits/:id" => "tasks#debit", via: :get, as: "task_debit"
@@ -46,6 +53,7 @@ Rollbook::Application.routes.draw do
   match "debits/:month" => "debits#index", via: :get, as: "debits"
   match "debits/:month/edit" => "debits#bulk_edit", via: :get, as: "edit_debits"
   match "debits/:month" => "debits#bulk_update", via: :patch
+  match "debits/:month/fix" => "debits#fix", via: :post, as: "fix_debits"
 
   #resources :tasks
   #resources :receipts

@@ -1,0 +1,42 @@
+<%= render "nav_tabs" %>
+
+<div class="tab-content">
+  <br />
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <% scope = "activerecord.attributes.tuition" %>
+          <th><%= t("month", scope: scope) %></th>
+          <th><%= t("status", scope: scope) %></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tuitions.each do |tuition| %>
+          <tr>
+            <td><%= tuition.month %></td>
+            <td><%= tuition.status %></td>
+            <td>
+              <%= show_icon_link_to(tuition_path(tuition)) %>
+              <%= edit_icon_link_to(edit_tuition_path(tuition)) %>
+              <%= render "shared/delete_link", object: tuition %>
+            </td>
+            <td>
+              <%= link_to t("activerecord.models.debit"), tuition_debits_path(tuition), class: "btn btn-link" %>
+            </td>
+            <td>
+              <%= link_to t("activerecord.models.receipt"), tuition_receipts_path(tuition), class: "btn btn-link" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+  $("[data-toggle~='tooltip']").tooltip();
+  $("[data-toggle~='modal']").tooltip();
+</script>

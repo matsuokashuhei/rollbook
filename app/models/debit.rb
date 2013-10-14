@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: debits
+#
+#  id              :integer          not null, primary key
+#  bank_account_id :integer
+#  amount          :integer
+#  status          :string(255)
+#  note            :text
+#  created_at      :datetime
+#  updated_at      :datetime
+#
+
 class Debit < ActiveRecord::Base
 
   STATUSES = {
@@ -6,13 +19,15 @@ class Debit < ActiveRecord::Base
   }
 
   belongs_to :bank_account
+  belongs_to :tuition
   has_many :receipts
 
-  validates :bank_account_id, :month, :amount, :status, presence: true
-  validates :month, format: { with: /\A201[0-9](01|02|03|04|05|06|07|09|10|11|12)\Z/ }
-  validates :month, uniqueness: { scope: :bank_account_id }
-  validates :amount, numericality: true
+  default_scope -> {
+    order(:tuition_id)
+  }
 
-  default_scope -> { order(:month) }
+  validates :bank_account_id, :amount, :status, presence: true
+  validates :amount, numericality: true
+  validates :bank_account_id, uniqueness: { scope: :tuition_id }
 
 end

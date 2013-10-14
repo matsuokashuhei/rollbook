@@ -1,5 +1,9 @@
-<h1>New receipt</h1>
+<%= render "nav_tabs" %>
 
-<%= render 'form' %>
-
-<%= link_to 'Back', receipts_path %>
+<div class="tab-content">
+  <br />
+  <%= render "breadcrumb" %>
+  <%= render 'form' %>
+  <%= button_tag t("views.buttons.create"), class: "btn btn-default pull-right", form: "form" %>
+  <%= link_to t("views.buttons.back"), receipts_path, class: "btn btn-default pull-left" %>
+</div>
