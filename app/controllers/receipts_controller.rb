@@ -1,8 +1,10 @@
 class ReceiptsController < ApplicationController
+
   before_action :set_tuition, only: [:index, :show, :edit, :create, :update]
   before_action :set_receipt, only: [:show, :edit, :update, :destroy]
 
   def index
+    @tuition = @tuition.decorate
     @receipts = @tuition.receipts.joins(:member).page(params[:page]).decorate
   end
 
@@ -63,7 +65,7 @@ class ReceiptsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tuition
-      @tuition = Tuition.find(params[:tuition_id])
+      @tuition = Tuition.find(params[:tuition_id]).decorate
     end
     def set_receipt
       @receipt = Receipt.find(params[:id])

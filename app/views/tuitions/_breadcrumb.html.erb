@@ -8,10 +8,10 @@
     <li class="active"><%= t("views.buttons.new") %></li>
   <% end %>
   <% if current_page?(tuition_path(@tuition)) %>
-    <li class="active"><%= @tuition.month %></li>
+    <li class="active"><%= @tuition.month[0..3] + "年" + @tuition.month[5..6] + "月" %></li>
   <% end %>
   <% if current_page?(edit_tuition_path(@tuition)) %>
-    <li><%= link_to @tuition.month, tuition_path(@tuition) %></li>
+    <li><%= link_to @tuition.month[0..3] + "年" + @tuition.month[5..6] + "月", tuition_path(@tuition) %></li>
     <li class="active"><%= t("views.buttons.edit") %></li>
   <% end %>
 </ol>

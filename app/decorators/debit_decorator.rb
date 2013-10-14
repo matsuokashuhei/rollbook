@@ -1,12 +1,7 @@
 class DebitDecorator < ApplicationDecorator
   delegate_all
 
-  def status_name
-    { "1" => "完了",
-      "2" => "残高不足", }[model.status]
-  end
-
-  def status_label
+  def status
     #label = "<h3 style=\"margin: 0px; line-height: 0;\">"
     label = "<h3 style=\"margin: 8px; line-height: 0;\">"
     case model.status

@@ -30,14 +30,12 @@
         <% @receipts.each do |receipt| %>
           <tr>
             <td><%= receipt.tuition.month %></td>
-            <td><%= receipt.amount %></td>
+            <td><div class="pull-right"><%= number_to_currency(receipt.amount) %></div></td>
             <td><%= receipt.status %></td>
-            <td><%= link_to t("views.buttons.show"), tuition_receipt_path(receipt.tuition, receipt), class: "btn btn-default" %></td>
+            <td><%= show_icon_link_to(tuition_receipt_path(receipt.tuition, receipt)) %></td>
           </tr>
         <% end %>
     </table>
   </div>
 </div>
-
-
 

@@ -13,13 +13,19 @@ module ApplicationHelper
   end
 
   def show_icon_link_to(path)
-    link_to path, class: "btn", data: { toggle: "tooltip", "original-title" => "見る" } do
+    link_to path, class: "btn", data: { toggle: "tooltip", "original-title" => t("views.buttons.show") } do
       show_icon
     end
   end
 
+  def new_icon_link_to(path)
+    link_to path, class: "btn", data: { toggle: "tooltip", "original-title" => t("views.buttons.new") } do
+      new_icon
+    end
+  end
+
   def edit_icon_link_to(path)
-    link_to path, class: "btn", data: { toggle: "tooltip", "original-title" => "変更する" } do
+    link_to path, class: "btn", data: { toggle: "tooltip", "original-title" => t("views.buttons.edit") } do
       edit_icon
     end
   end
@@ -27,6 +33,10 @@ module ApplicationHelper
   def show_icon
     #icon("glyphicon-info-sign")
     icon("glyphicon-play-circle")
+  end
+
+  def new_icon
+    icon("glyphicon-plus")
   end
 
   def edit_icon

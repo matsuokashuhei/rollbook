@@ -93,4 +93,8 @@ class Course < ActiveRecord::Base
     "#{self.dance_style.name}#{self.level.name}　#{self.instructor.name}"
   end
 
+  def monthly_fee_with_tax
+    (self.monthly_fee * 1.05).to_i
+  end
+
 end

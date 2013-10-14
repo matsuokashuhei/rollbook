@@ -2,7 +2,7 @@
 
 <div class="tab-content">
   <br />
-  <%# render "breadcrumb" %>
+  <%= render "breadcrumb" %>
   <div class="table-responsive">
     <table class="table">
       <thead>
@@ -16,8 +16,8 @@
         <% @debits.each do |debit| %>
           <tr>
             <td><%= debit.bank_account.holder_name_kana %></td>
-            <td><%= debit.amount %></td>
-            <td><%= debit.status_label %></td>
+            <td><div class="pull-right"><%= number_to_currency(debit.amount) %></div></td>
+            <td><%= debit.status %></td>
           </tr>
         <% end %>
       </tbody>
@@ -25,7 +25,7 @@
   </div>
   <%= paginate @debits %>
   <%= link_to t("views.buttons.back"), tuition_path(@tuition), class: "btn btn-default pull-left" %>
-  <% if @tuition.debit_status == Tuition::DEBIT_STATUSES[:IN_PROCESS] %>
+  <% if @tuition.model.debit_status == Tuition::DEBIT_STATUSES[:IN_PROCESS] %>
     <%= link_to t("views.buttons.edit"), edit_tuition_debits_path, class: "btn btn-default pull-right" %>
   <% else %>
     <%= link_to t("views.buttons.edit"), edit_tuition_debits_path, class: "btn btn-default pull-right disabled" %>

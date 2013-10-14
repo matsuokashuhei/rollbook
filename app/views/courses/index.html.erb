@@ -40,6 +40,7 @@
                     <% end %>
                   <% else %>
                     <%= link_to t("views.buttons.new"), new_course_path(timetable_id: timetable.id), class: "btn btn-link" %>
+                    <%# new_icon_link_to new_course_path(timetable_id: timetable.id) %>
                   <% end %>
                 </td>
                 <% if timetable.weekday == 7 %>

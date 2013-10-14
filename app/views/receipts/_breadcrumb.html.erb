@@ -1,2 +1,16 @@
 <ol class="breadcrumb">
+  <li><%= link_to t("activerecord.models.tuition"), tuitions_path %></li>
+  <li><%= link_to @tuition.month_ja, tuition_path(@tuition) %></li>
+  <% if current_page?(tuition_receipts_path(@tuition)) %>
+    <li class="active"><%= t("activerecord.models.receipt") %></li>
+  <% else %>
+    <li><%= link_to t("activerecord.models.receipt"), tuition_receipts_path(@tuition) %></li>
+  <% end %>
+  <% if current_page?(tuition_receipt_path(@tuition, @receipt)) %>
+    <li class="active"><%= @receipt.member.full_name %></li>
+  <% end %>
+  <% if current_page?(edit_tuition_receipt_path(@tuition, @receipt)) %>
+    <li><%= link_to @receipt.member.full_name, tuition_receipt_path(@tuition, @receipt) %></li>
+    <li class="active"><%= t("views.buttons.edit") %></li>
+  <% end %>
 </ol>

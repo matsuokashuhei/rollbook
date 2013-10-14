@@ -112,7 +112,7 @@ class DebitsController < ApplicationController
       @debit = Debit.find(params[:id])
     end
     def set_tuition
-      @tuition = Tuition.find(params[:tuition_id])
+      @tuition = Tuition.find(params[:tuition_id]).decorate
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -2,7 +2,7 @@
 
 <div class="tab-content">
   <br />
-  <%# render "breadcrumb" %>
+  <%= render "breadcrumb" %>
   <div class="table-responsive">
     <table class="table">
       <thead>
@@ -19,12 +19,13 @@
         <% @receipts.each do |receipt| %>
           <tr>
             <td><%= receipt.member.name %></td>
-            <td><%= receipt.amount %></td>
+            <td><div class="pull-right"><%= number_to_currency(receipt.amount) %></div></td>
             <td><%= receipt.method %></td>
             <td><%= receipt.status %></td>
-            <td><%= link_to t("views.buttons.show"), tuition_receipt_path(@tuition, receipt), class: "btn btn-default" %></td>
-            <td><%= link_to t("views.buttons.edit"), edit_tuition_receipt_path(@tuition, receipt), class: "btn btn-default" %></td>
-            <td><%# link_to 'Destroy', receipt, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td>
+              <%= show_icon_link_to(tuition_receipt_path(@tuition, receipt)) %>
+              <%= edit_icon_link_to(edit_tuition_receipt_path(@tuition, receipt)) %>
+            </td>
           </tr>
         <% end %>
       </tbody>
@@ -32,3 +33,7 @@
   </div>
   <%= paginate @receipts %>
 </div>
+<script>
+  $("[data-toggle~='tooltip']").tooltip();
+  $("[data-toggle~='modal']").tooltip();
+</script>

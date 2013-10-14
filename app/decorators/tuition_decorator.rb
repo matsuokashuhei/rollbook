@@ -1,6 +1,10 @@
 class TuitionDecorator < ApplicationDecorator
   delegate_all
 
+  def month_ja
+    model.month[0..3] + "年" + model.month[5..6] + "月"
+  end
+
   def debit_status
     label = "<h3 style=\"margin: 0px; line-height: 0;\">"
     case model.debit_status

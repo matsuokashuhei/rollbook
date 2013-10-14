@@ -86,4 +86,5 @@ class MembersCourse < ActiveRecord::Base
     end
     return false
   end
+
 end

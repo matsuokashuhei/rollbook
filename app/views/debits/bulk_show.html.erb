@@ -2,6 +2,7 @@
 
 <div class="tab-content">
   <br />
+  <%= render "breadcrumb" %>
   <%= render "shared/notice" %>
   <%= render "bulk_form" %>
   <%= link_to t("views.buttons.edit"), edit_debits_path(month: params[:month]), class: "btn btn-default pull-right" %>

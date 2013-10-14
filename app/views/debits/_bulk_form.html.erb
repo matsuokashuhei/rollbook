@@ -13,7 +13,7 @@
           <%= hidden_field_tag "debits[][id]", debit.id %>
           <tr>
             <td><%= debit.bank_account.holder_name_kana %></td>
-            <td><%= debit.amount %></td>
+            <td><div class="pull-right"><%= number_to_currency(debit.amount) %></div></td>
             <td><%= render "status", object: debit %></td>
           </tr>
         <% end %>

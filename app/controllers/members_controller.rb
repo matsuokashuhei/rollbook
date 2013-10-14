@@ -79,7 +79,7 @@ class MembersController < ApplicationController
   end
 
   def receipts
-    @receipts = @member.receipts.joins(:tuition)
+    @receipts = @member.receipts.joins(:tuition).decorate
     respond_to do |format|
       format.html { render action: "receipts" }
     end
