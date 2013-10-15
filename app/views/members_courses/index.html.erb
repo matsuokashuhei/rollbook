@@ -1,8 +1,8 @@
+<%= render "breadcrumb" %>
 <%= render "nav_tabs" %>
-
 <div class="tab-content">
   <br />
-  <%= render "breadcrumb" %>
+  <%# new_link_to new_member_course_path(@member), pull: "right" %>
   <div class="table-responsive">
     <table class="table">
       <thead>
@@ -66,6 +66,5 @@
     </table>
   </div>
   <br />
-  <%= link_to t("views.buttons.back"), @member, class: "btn btn-default pull-left" %>
-  <%= link_to t("views.buttons.new"), new_member_course_path(@member), class: "btn btn-default pull-right" %>
+  <%= back_link_to member_path(@member), pull: "left" %>
 </div>

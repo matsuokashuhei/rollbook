@@ -9,7 +9,4 @@
       <%= link_to t("activerecord.models.course"), instructor_courses_path(@instructor), class: "btn btn-link", disabled: "disabled" %>
     <% end %>
   </li>
-  <% if current_page?(instructors_path) %>
-    <%= link_to t("views.buttons.new"), new_instructor_path, class: "btn btn-default pull-right" %>
-  <% end %>
 </ul>

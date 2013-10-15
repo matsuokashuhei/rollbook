@@ -44,12 +44,15 @@ class Member < ActiveRecord::Base
   has_many :receipts
   belongs_to :bank_account
 
-  validates :first_name,
+  validates :number,
+            :first_name,
             :last_name,
             :first_name_kana,
             :last_name_kana,
             :status,
             presence: true
+  validates :number, uniqueness: true
+  validates :number, format: { with: /[0-9]{6}/, message: "は6桁の数字にしてください。" }
   validates :last_name_kana, :first_name_kana, format: { with: /\A[\p{katakana}ー－]+\Z/, message: "はカタカナで入力してください。" }
   validates :enter_date, presence: true, if: Proc.new { self.status == "1" }
   validates :enter_date, absence: true, if: Proc.new { self.status == "0" }

@@ -60,7 +60,7 @@ ja:
         name: 名前
         order_no: 並び順
       member:
-        id: ID
+        number: 会員番号
         last_name: 姓 (漢字)
         first_name: 名 (漢字)
         last_name_kana: 姓 (フリガナ)
@@ -69,18 +69,19 @@ ja:
         birth_date: 生年月日
         zip: 郵便番号
         address: 住所
-        phone: 電話番号
+        phone_land: 電話番号 (自宅)
+        phone_mobile: 電話番号 (モバイル)
         email_pc: Eメール (PC)
         email_mobile: Eメール (モバイル)
         enter_date: 入会日
         leave_date: 退会日
         bank_account_id: 引落口座
         nearby_station: 最寄り駅
-
         status: 状態
         name: 名前
         kana: フリガナ
         email: Eメール
+        phone: 電話番号
         note: メモ
       bank_account:
         id: ID

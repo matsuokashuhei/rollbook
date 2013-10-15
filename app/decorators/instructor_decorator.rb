@@ -1,16 +1,12 @@
-class MemberDecorator < ApplicationDecorator
+class InstructorDecorator < ApplicationDecorator
   delegate_all
 
   def name
-    h.content_tag(:small, "#{model.last_name_kana}　#{model.first_name_kana}") + h.tag(:br) + "#{model.last_name}　#{model.first_name}"
+    h.content_tag(:small, model.kana) + h.tag(:br) + model.name
   end
 
-  def gender
-    if model.gender == "M"
-      "男"
-    else
-      "女"
-    end
+  def team
+    "(#{model.team})" if model.team.present?
   end
 
   # Define presentation-specific methods here. Helpers are accessed through

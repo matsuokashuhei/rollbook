@@ -33,6 +33,10 @@ class Course < ActiveRecord::Base
     joins([timetable: [[studio: :school], :time_slot]], :instructor, :dance_style, :level).order("schools.open_date, studios.open_date, timetables.weekday, time_slots.start_time, courses.open_date").order("schools.open_date, studios.open_date, timetables.weekday, time_slots.start_time")
   }
 
+  scope :active, -> (date = Date.today) {
+    where("courses.open_date <= ? and ? <= coalesce(courses.close_date, '9999-12-31')", date, date)
+  }
+
   scope :term_dates, ->(date = Date.today) {
     where("courses.open_date <= ? and ? <= coalesce(courses.close_date, '9999-12-31')", date, date)
   }

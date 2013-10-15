@@ -1,10 +1,9 @@
+<%= render "breadcrumb" %>
 <%= render "nav_tabs" %>
-
 <div class="tab-content">
   <br />
-  <%= render "breadcrumb" %>
   <%= render "shared/notice" %>
   <%= render "form" %>
-  <%= link_to t("views.buttons.back"), instructors_path, class: "btn btn-default pull-left" %>
-  <%= link_to t("views.buttons.edit"), edit_instructor_path(@instructor), class: "btn btn-default pull-right" %>
+  <%= back_to_index_link_to instructors_path, pull: "left" %>
+  <%= edit_link_to edit_instructor_path(@instructor), pull: "right" %>
 </div>

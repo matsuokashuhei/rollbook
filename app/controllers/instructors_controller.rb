@@ -5,7 +5,7 @@ class InstructorsController < ApplicationController
   # GET /instructors.json
   def index
     #@instructors = Instructor.all
-    @instructors = Instructor.page(params[:page])
+    @instructors = Instructor.page(params[:page]).decorate
   end
 
   # GET /instructors/1
@@ -29,7 +29,7 @@ class InstructorsController < ApplicationController
 
     respond_to do |format|
       if @instructor.save
-        format.html { redirect_to @instructor, notice: 'Instructor was successfully created.' }
+        format.html { redirect_to @instructor, notice: 'インストラクターを登録しました。' }
         format.json { render action: 'show', status: :created, location: @instructor }
       else
         format.html { render action: 'new' }
@@ -43,7 +43,7 @@ class InstructorsController < ApplicationController
   def update
     respond_to do |format|
       if @instructor.update(instructor_params)
-        format.html { redirect_to @instructor, notice: 'Instructor was successfully updated.' }
+        format.html { redirect_to @instructor, notice: 'インストラクターを変更しました。' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

@@ -1,52 +1,38 @@
-<%= render "nav_tabs" %>
+<%= render "breadcrumb" %>
+
+<%= new_link_to new_member_path, pull: "right" %>
 
 <div class="tab-content">
   <br />
-  <%= render "breadcrumb" %>
   <div class="table-responsive">
     <table class="table">
       <thead>
         <tr>
-          <th><%= t("activerecord.attributes.member.id") %></th>
+          <th><%= t("activerecord.attributes.member.number") %></th>
           <th><%= t("activerecord.attributes.member.name") %></th>
           <th><%= t("activerecord.attributes.member.gender") %></th>
+          <th>受講クラス数</th>
+          <th>未消化レッスン数</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
         <% @members.each do |member| %>
           <tr>
-            <td><%= member.id %></td>
-            <td><%= display_member_name(member) %></td>
-            <td><%= display_gender(member.gender) %></td>
+            <td><%= member.number %></td>
+            <td><%= member.name %></td>
+            <td><%= member.gender %></td>
+            <td><div class="pull-right"><%= member.courses.active.count %></div></td>
+            <td><div class="pull-right"><%= member.rolls.absence.count %></div></td>
             <td>
-              <%= link_to t("views.buttons.show"), member, class: "btn btn-default" %>
-              <%= link_to t("views.buttons.edit"), edit_member_path(member), class: "btn btn-default" %>
+              <%= show_link_to member %>
+              <%= edit_link_to member %>
               <%= render "shared/delete_button", object: member %>
             </td>
-            <% if false %>
-            <td>
-              <%= link_to member_path(member), class: "btn", data: { toggle: "tooltip", "original-title" => "見る" } do %>
-                <%= show_icon %>
-              <% end %>
-              <%= link_to edit_member_path(member), class: "btn",  data: { toggle: "tooltip", "original-title" => "変更する" } do %>
-                <%= edit_icon %>
-              <% end %>
-              <%= render "shared/delete_link", object: member %>
-            </td>
-            <% end %>
           </tr>
         <% end %>
       </tbody>
     </table>
     <%= paginate @members %>
   </div>
-  <br />
-
-  <%= link_to t("views.buttons.new"), new_member_path, class: "btn btn-default" %>
-  <script>
-    $("[data-toggle~='tooltip']").tooltip();
-    $("[data-toggle~='modal']").tooltip();
-  </script>
-
 </div>

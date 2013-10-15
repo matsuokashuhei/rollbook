@@ -5,6 +5,14 @@
   <%= "<fieldset disabled>".html_safe if current_page?(member_path(@member)) %>
 
   <div class="form-group">
+    <%= f.label t("activerecord.attributes.member.number"), class: "col-md-1 control-label" %>
+    <%# f.label "会員番号", class: "col-md-1 control-label" %>
+    <div class="col-md-3 <%= 'has-error' if @member.errors[:number].present? %>">
+      <%= f.text_field :number, class: "form-control", maxlength: 6  %>
+    </div>
+  </div>
+
+  <div class="form-group">
     <%= f.label t("activerecord.attributes.member.name"), class: "col-md-1 control-label" %>
     <div class="col-md-3 <%= 'has-error' if @member.errors[:last_name_kana].present? %>">
       <%= f.text_field :last_name_kana, class: "form-control", "placeholder" => t("activerecord.attributes.member.last_name_kana") %>
@@ -43,19 +51,22 @@
       <%= f.text_field :address, class: "form-control", "placeholder" => t("activerecord.attributes.member.address") %>
     </div>
   </div>
-  <div class="form-group <%= 'has-error' if @member.errors[:phone].present? %>">
+  <div class="form-group">
     <%= f.label t("activerecord.attributes.member.phone"), class: "col-md-1 control-label" %>
-    <div class="col-md-2">
-      <%= f.phone_field :phone, class: "form-control" %>
+    <div class="col-md-3 <%= 'has-error' if @member.errors[:phone_mobile].present? %>">
+      <%= f.phone_field :phone_mobile, class: "form-control", "placeholder" => t("activerecord.attributes.member.phone_mobile") %>
+    </div>
+    <div class="col-md-3 <%= 'has-error' if @member.errors[:phone_land].present? %>">
+      <%= f.phone_field :phone_land, class: "form-control", "placeholder" => t("activerecord.attributes.member.phone_land") %>
     </div>
   </div>
   <div class="form-group">
     <%= f.label t("activerecord.attributes.member.email"), class: "col-md-1 control-label" %>
-    <div class="col-md-5 <%= 'has-error' if @member.errors[:email_pc].present? %>">
-      <%= f.email_field :email_pc, class: "form-control", "placeholder" => t("activerecord.attributes.member.email_pc") %>
-    </div>
     <div class="col-md-5 <%= 'has-error' if @member.errors[:email_mobile].present? %>">
       <%= f.email_field :email_mobile, class: "form-control", "placeholder" => t("activerecord.attributes.member.email_mobile") %>
+    </div>
+    <div class="col-md-5 <%= 'has-error' if @member.errors[:email_pc].present? %>">
+      <%= f.email_field :email_pc, class: "form-control", "placeholder" => t("activerecord.attributes.member.email_pc") %>
     </div>
   </div>
   <div class="form-group <%= 'has-error' if @member.errors[:nearby_station].present? %>">
@@ -79,7 +90,7 @@
   <div class="form-group <%= 'has-error' if @member.errors[:status].present? %>">
     <%= f.label t("activerecord.attributes.member.status"), class: "col-md-1 control-label" %>
     <div class="col-md-2">
-      <%= f.select :status, MembersHelper::MEMBER_STATUS.map {|status| [status[1], status[0]] }, {}, { class: "form-control" } %>
+      <%= f.select :status, [["未入会", "0"], ["入会", "1"], ["2", "退会"]], {}, { class: "form-control" } %>
     </div>
   </div>
 

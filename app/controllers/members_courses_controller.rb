@@ -33,7 +33,7 @@ class MembersCoursesController < ApplicationController
 
     respond_to do |format|
       if @members_course.save
-        format.html { redirect_to member_course_url(@member, @members_course), notice: 'Members course was successfully created.' }
+        format.html { redirect_to member_course_url(@member, @members_course), notice: 'クラスを登録しました。' }
         format.json { render action: 'show', status: :created, location: @members_course }
       else
         format.html { render action: 'new' }
@@ -47,7 +47,7 @@ class MembersCoursesController < ApplicationController
   def update
     respond_to do |format|
       if @members_course.update(members_course_params)
-        format.html { redirect_to member_course_url(@member, @members_course), notice: 'Members course was successfully updated.' }
+        format.html { redirect_to member_course_url(@member, @members_course), notice: 'クラスを変更しました。' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

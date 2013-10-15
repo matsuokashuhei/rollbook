@@ -4,7 +4,7 @@ class MembersController < ApplicationController
   # GET /members
   # GET /members.json
   def index
-    @members = Member.page(params[:page])
+    @members = Member.page(params[:page]).decorate
   end
 
   # GET /members/1
@@ -28,8 +28,7 @@ class MembersController < ApplicationController
 
     respond_to do |format|
       if @member.save
-        #format.html { redirect_to @member, notice: 'Member was successfully created.' }
-        format.html { redirect_to @member, notice: t("messages.controllers.defaults.create", { model: t("activerecord.models.member") }) }
+        format.html { redirect_to @member, notice: '会員を登録しました。' }
         format.json { render action: 'show', status: :created, location: @member }
       else
         format.html { render action: 'new' }
@@ -43,7 +42,7 @@ class MembersController < ApplicationController
   def update
     respond_to do |format|
       if @member.update(member_params)
-        format.html { redirect_to @member, notice: t("messages.controllers.defaults.update", { model: t("activerecord.models.member") }) }
+        format.html { redirect_to @member, notice: '会員を変更しました。' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -93,6 +92,24 @@ class MembersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def member_params
-      params.require(:member).permit(:first_name, :last_name, :first_name_kana, :last_name_kana, :gender, :birth_date, :zip, :address, :phone, :email_pc, :email_mobile, :note, :enter_date, :leave_date, :bank_account_id, :status, :nearby_station)
+      params.require(:member).permit(:number,
+                                     :first_name,
+                                     :last_name,
+                                     :first_name_kana,
+                                     :last_name_kana,
+                                     :gender,
+                                     :birth_date,
+                                     :zip,
+                                     :address,
+                                     :phone_land,
+                                     :phone_mobile,
+                                     :email_pc,
+                                     :email_mobile,
+                                     :note,
+                                     :enter_date,
+                                     :leave_date,
+                                     :bank_account_id,
+                                     :status,
+                                     :nearby_station)
     end
 end

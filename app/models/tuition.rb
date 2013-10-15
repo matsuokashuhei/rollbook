@@ -88,7 +88,7 @@ class Tuition < ActiveRecord::Base
     # 口座手続き中
     members = Member.active.joins(:bank_account).where("bank_accounts.status in (?)", BankAccount::not_active_statuses)
     members.each do |member|
-      receipt = self.receipts.build(member_id: member.id, amont: 150)
+      receipt = self.receipts.build(member_id: member.id, amount: 150)
       member.members_courses.active(date).joins(:course).each do |members_course|
         receipt.amount += members_course.course.monthly_fee_with_tax
       end

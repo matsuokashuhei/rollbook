@@ -1,3 +1,5 @@
+<%= render "breadcrumb" %>
+
 <ul class="nav nav-tabs">
   <li>
     <%= link_to t("activerecord.models.instructor"), instructor_path(@instructor), class: "btn btn-link" %>
@@ -6,10 +8,8 @@
     <a href="#course" data-toggle="tab"><%= t("activerecord.models.course") %></a>
   </li>
 </ul>
-
 <div class="tab-content">
   <br />
-  <%= render "breadcrumb" %>
   <div class="table-responsive">
     <table class="table">
       <thead>

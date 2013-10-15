@@ -1,50 +1,28 @@
-<%= render "nav_tabs" %>
-
-<div class="tab-content">
-  <br/>
-  <%= render "breadcrumb" %>
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
+<%= render "breadcrumb" %>
+<%= new_link_to new_instructor_path, pull: "right" %>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th colspan="2"><%= t("activerecord.attributes.instructor.name") %></th>
+        <th>クラス数</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @instructors.each do |instructor| %>
         <tr>
-          <th colspan="2"><%= t("activerecord.attributes.instructor.name") %></th>
-          <% if false %>
-          <th><%= t("activerecord.attributes.instructor.team") %></th>
-          <% end %>
-          <th><%= t("activerecord.attributes.instructor.phone") %></th>
-          <% if false %>
-          <th><%= t("activerecord.attributes.instructor.email_pc") %></th>
-          <th><%= t("activerecord.attributes.instructor.email_mobile") %></th>
-          <% end %>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
+          <td><%= instructor.name %></td>
+          <td><%= instructor.team %></td>
+          <td><div class="pull-right"><%= instructor.courses.active.count %></div></td>
+          <td>
+            <%= show_link_to instructor_path(instructor) %>
+            <%= edit_link_to edit_instructor_path(instructor) %>
+            <%= render "shared/delete_button", object: instructor %>
+          </td>
         </tr>
-      </thead>
-      <tbody>
-        <% @instructors.each do |instructor| %>
-          <tr>
-            <td><small><%= instructor.kana %></small><br/><%= instructor.name %></td>
-            <td><%= "(#{instructor.team})" if instructor.team.present? %></td>
-            <td><%= instructor.phone %></td>
-            <% if false %>
-            <td><%= instructor.email_pc %></td>
-            <td><%= instructor.email_mobile %></td>
-            <% end %>
-            <td>
-              <%= link_to t("views.buttons.show"), instructor, class: "btn btn-default" %>
-              <%= link_to t("views.buttons.edit"), edit_instructor_path(instructor), class: "btn btn-default" %>
-              <%= render "shared/delete_button", object: instructor %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <%= paginate @instructors %>
-  </div>
-  <br />
-
-  <%= link_to t("views.buttons.new"), new_instructor_path, class: "btn btn-default" %>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @instructors %>
 </div>
-
