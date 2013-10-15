@@ -32,7 +32,7 @@ namespace :db do
                             address: "東京都立川市錦町２−２−５　アオイビル２Ｆ",
                             phone: "042-523-4940",
                             open_date: "2005-01-01")
-    studio = school.studios.create!(name: "", open_date: "2005-01-01")
+    studio = school.studios.create!(name: "(なし)", open_date: "2005-01-01")
     for cwday in 1..7
       ["14:30","15:45","17:00","18:15","19:30","20:45","22:00",].each do |time|
         studio.timetables.create(weekday: cwday, time_slot_id: TimeSlot.find_by(start_time: time).id)
