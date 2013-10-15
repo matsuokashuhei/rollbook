@@ -32,9 +32,11 @@
             <td><%= instructor.email_pc %></td>
             <td><%= instructor.email_mobile %></td>
             <% end %>
-            <td><%= link_to t("views.buttons.show"), instructor, class: "btn btn-default" %></td>
-            <td><%= link_to t("views.buttons.edit"), edit_instructor_path(instructor), class: "btn btn-default" %></td>
-            <td><%= render "shared/delete_button", object: instructor %></td>
+            <td>
+              <%= link_to t("views.buttons.show"), instructor, class: "btn btn-default" %>
+              <%= link_to t("views.buttons.edit"), edit_instructor_path(instructor), class: "btn btn-default" %>
+              <%= render "shared/delete_button", object: instructor %>
+            </td>
           </tr>
         <% end %>
       </tbody>

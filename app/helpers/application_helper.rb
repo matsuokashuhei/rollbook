@@ -13,21 +13,24 @@ module ApplicationHelper
   end
 
   def show_icon_link_to(path)
-    link_to path, class: "btn", data: { toggle: "tooltip", "original-title" => t("views.buttons.show") } do
-      show_icon
-    end
+    #link_to path, class: "btn", data: { toggle: "tooltip", "original-title" => t("views.buttons.show") } do
+    #  show_icon
+    #end
+    link_to t("views.buttons.show"), path, class: "btn btn-default"
   end
 
   def new_icon_link_to(path)
-    link_to path, class: "btn", data: { toggle: "tooltip", "original-title" => t("views.buttons.new") } do
-      new_icon
-    end
+    #link_to path, class: "btn", data: { toggle: "tooltip", "original-title" => t("views.buttons.new") } do
+    #  new_icon
+    #end
+    link_to t("views.buttons.new"), path, class: "btn btn-default"
   end
 
   def edit_icon_link_to(path)
-    link_to path, class: "btn", data: { toggle: "tooltip", "original-title" => t("views.buttons.edit") } do
-      edit_icon
-    end
+    #link_to path, class: "btn", data: { toggle: "tooltip", "original-title" => t("views.buttons.edit") } do
+    #  edit_icon
+    #end
+    link_to t("views.buttons.edit"), path, class: "btn btn-default"
   end
 
   def show_icon

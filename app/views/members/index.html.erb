@@ -11,8 +11,6 @@
           <th><%= t("activerecord.attributes.member.name") %></th>
           <th><%= t("activerecord.attributes.member.gender") %></th>
           <th></th>
-          <th></th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -21,11 +19,12 @@
             <td><%= member.id %></td>
             <td><%= display_member_name(member) %></td>
             <td><%= display_gender(member.gender) %></td>
+            <td>
+              <%= link_to t("views.buttons.show"), member, class: "btn btn-default" %>
+              <%= link_to t("views.buttons.edit"), edit_member_path(member), class: "btn btn-default" %>
+              <%= render "shared/delete_button", object: member %>
+            </td>
             <% if false %>
-              <td><%= link_to t("views.buttons.show"), member, class: "btn btn-default" %><span class="glyphicon glyphicon-star"></span></td>
-              <td><%= link_to t("views.buttons.edit"), edit_member_path(member), class: "btn btn-default" %></td>
-              <td><%= render "shared/delete_button", object: member %></td>
-            <% end %>
             <td>
               <%= link_to member_path(member), class: "btn", data: { toggle: "tooltip", "original-title" => "見る" } do %>
                 <%= show_icon %>
@@ -35,6 +34,7 @@
               <% end %>
               <%= render "shared/delete_link", object: member %>
             </td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>
