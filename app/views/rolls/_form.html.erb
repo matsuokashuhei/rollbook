@@ -5,6 +5,7 @@
         <tr>
           <th><%= t("activerecord.attributes.member.id") %></th>
           <th><%= t("activerecord.attributes.roll.member_id") %></th>
+          <th></th>
           <th><%= t("activerecord.attributes.roll.status") %></th>
           <th><%= t("activerecord.attributes.roll.substitute_roll_id") %></th>
         </tr>
@@ -18,9 +19,13 @@
             <td><%= roll.member_id %></td>
             <td>
               <%= display_member_name(roll.member) %>
+            </td>
+            <td>
               <% if roll.member.receipts.unpaid.count > 0 %>
                 <%= link_to member_receipts_path(roll.member) do %>
-                  <%= exclamation_icon %>
+                  <h3 style="margin: 8px; line-height: 0;">
+                    <span class="label label-danger">月謝未納!!!</span>
+                  </h3>
                 <% end %>
               <% end %>
             </td>

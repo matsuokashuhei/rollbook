@@ -24,7 +24,12 @@
             <td><%= receipt.status %></td>
             <td>
               <%= show_icon_link_to(tuition_receipt_path(@tuition, receipt)) %>
-              <%= edit_icon_link_to(edit_tuition_receipt_path(@tuition, receipt)) %>
+              <% if receipt.edit? %>
+                <%= link_to t("views.buttons.edit"), edit_tuition_receipt_path(@tuition, receipt), class: "btn btn-default" %>
+              <% else %>
+                <%= link_to t("views.buttons.edit"), edit_tuition_receipt_path(@tuition, receipt), class: "btn btn-default disabled" %>
+              <% end %>
+              <%# edit_icon_link_to(edit_tuition_receipt_path(@tuition, receipt)) %>
             </td>
           </tr>
         <% end %>

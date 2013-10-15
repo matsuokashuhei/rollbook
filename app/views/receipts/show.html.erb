@@ -6,5 +6,9 @@
   <%= render "shared/notice" %>
   <%= render "form" %>
   <%= link_to t("views.buttons.back"), tuition_receipts_path(@tuition), class: "btn btn-default pull-left" %>
-  <%= link_to t("views.buttons.edit"), edit_tuition_receipt_path(@tuition, @receipt), class: "btn btn-default pull-right" %>
+  <% if @receipt.edit? %>
+    <%= link_to t("views.buttons.edit"), edit_tuition_receipt_path(@tuition, @receipt), class: "btn btn-default pull-right" %>
+  <% else %>
+    <%= link_to t("views.buttons.edit"), edit_tuition_receipt_path(@tuition, @receipt), class: "btn btn-default pull-right disabled" %>
+  <% end %>
 </div>

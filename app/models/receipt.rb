@@ -40,4 +40,8 @@ class Receipt < ActiveRecord::Base
 
   validates :member_id, uniqueness: { scope: :tuition_id }
 
+  def edit?
+    self.method == METHODS[:CASH]
+  end
+
 end

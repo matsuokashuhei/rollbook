@@ -12,10 +12,17 @@
     </div>
   </div>
 
-  <div class="form-group <%= 'has-error' if @receipt.errors[:amount].present? %>">
-    <%= f.label t("activerecord.attributes.receipt.amount"), class: "col-md-1 control-label" %>
+  <div class="form-group <%= 'has-error' if @receipt.errors[:status].present? %>">
+    <%= f.label t("activerecord.attributes.receipt.status"), class: "col-md-1 control-label" %>
     <div class="col-md-2">
-      <%= f.number_field :amount, class: "form-control" %>
+      <%= f.select :status, [["未", Receipt::STATUSES[:UNPAID]], ["済", Receipt::STATUSES[:PAID]]], {}, { class: "form-control" } %>
+    </div>
+  </div>
+
+  <div class="form-group <%= 'has-error' if @receipt.errors[:date].present? %>">
+    <%= f.label t("activerecord.attributes.receipt.date"), class: "col-md-1 control-label" %>
+    <div class="col-md-2">
+      <%= f.date_field :date, class: "form-control" %>
     </div>
   </div>
 
@@ -32,17 +39,10 @@
     <% end %>
   </div>
 
-  <div class="form-group <%= 'has-error' if @receipt.errors[:date].present? %>">
-    <%= f.label t("activerecord.attributes.receipt.date"), class: "col-md-1 control-label" %>
+  <div class="form-group <%= 'has-error' if @receipt.errors[:amount].present? %>">
+    <%= f.label t("activerecord.attributes.receipt.amount"), class: "col-md-1 control-label" %>
     <div class="col-md-2">
-      <%= f.date_field :date, class: "form-control" %>
-    </div>
-  </div>
-
-  <div class="form-group <%= 'has-error' if @receipt.errors[:status].present? %>">
-    <%= f.label t("activerecord.attributes.receipt.status"), class: "col-md-1 control-label" %>
-    <div class="col-md-2">
-      <%= f.select :status, [["未", Receipt::STATUSES[:UNPAID]], ["済", Receipt::STATUSES[:PAID]]], {}, { class: "form-control" } %>
+      <%= f.number_field :amount, class: "form-control" %>
     </div>
   </div>
 
