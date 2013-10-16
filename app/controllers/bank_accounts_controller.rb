@@ -74,7 +74,7 @@ class BankAccountsController < ApplicationController
   end
 
   def members
-    @members = @bank_account.members
+    @members = @bank_account.members.decorate
     respond_to do |format|
       format.html { render action: "members" }
     end

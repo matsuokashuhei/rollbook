@@ -1,13 +1,13 @@
+<%= render "breadcrumb" %>
 <%= render "nav_tabs" %>
-
 <div class="tab-content">
   <br />
   <%= render "shared/notice" %>
   <%= render "form" %>
-  <%= link_to t("views.buttons.back"), bank_accounts_path, class: "btn btn-default pull-left" %>
+  <%= back_link_to bank_accounts_path, pull: "left" %>
   <% if @member.present? %>
-    <%= link_to t("views.buttons.edit"), edit_bank_account_path(@bank_account, member_id: @member.id), class: "btn btn-default pull-right" %>
+    <%= edit_link_to edit_bank_account_path(@bank_account, member_id: @member.id), pull: "right" %>
   <% else %>
-    <%= link_to t("views.buttons.edit"), edit_bank_account_path(@bank_account), class: "btn btn-default pull-right" %>
+    <%= edit_link_to edit_bank_account_path(@bank_account), pull: "right" %>
   <% end %>
 </div>

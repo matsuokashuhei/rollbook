@@ -9,18 +9,34 @@
   </div>
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav">
-      <li><%= link_to t("activerecord.models.course"), courses_path %></li>
-      <li><%= link_to t("activerecord.models.instructor"), instructors_path %></li>
-      <li><%= link_to t("activerecord.models.member"), members_path %></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <%= t("activerecord.models.school") %> <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><%= link_to t("activerecord.models.course"), courses_path %></li>
+          <li><%= link_to t("activerecord.models.instructor"), instructors_path %></li>
+        </ul>
+      </li>
       <li><%= link_to t("activerecord.models.lesson"), lessons_path %></li>
-      <li><%= link_to t("activerecord.models.bank_account"), bank_accounts_path %></li>
-      <li><%= link_to t("activerecord.models.tuition"), tuitions_path %></li>
-      <% if false %>
-      <li><%= link_to t("activerecord.models.task.monthly_fee"), tasks_debits_path %></li>
-      <li><%= link_to t("activerecord.models.debit"), tasks_debits_path %></li>
-      <li><%= link_to t("activerecord.models.receipt"), receipts_path %></li>
-        <li><%= link_to t("activerecord.models.school"), schools_path %></li>
-      <% end %>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <%= t("activerecord.models.member") %> <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><%= link_to t("activerecord.models.member"), members_path %></li>
+          <li><%= link_to t("activerecord.models.bank_account"), bank_accounts_path %></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <%= t("activerecord.models.tuition") %> <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+          <li><%= link_to t("activerecord.models.debit"), tuitions_path %></li>
+          <li><%= link_to t("activerecord.models.receipt"), receipts_path %></li>
+        </ul>
+      </li>
     </ul>
   </div>
 </nav>

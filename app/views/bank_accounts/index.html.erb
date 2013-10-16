@@ -1,4 +1,7 @@
-<%= render "nav_tabs" %>
+<%# render "nav_tabs" %>
+<%= render "breadcrumb" %>
+
+<%= new_link_to new_bank_account_path, pull: "right" %>
 
 <div class="tab-content">
   <br />
@@ -19,8 +22,10 @@
             <td><%= display_name(bank_account) %></td>
             <td><%= status_name(bank_account.status) %></td>
             <td>
-              <%= link_to t("views.buttons.show"), bank_account, class: "btn btn-default" %>
-              <%= link_to t("views.buttons.edit"), edit_bank_account_path(bank_account), class: "btn btn-default" %>
+              <%= show_link_to bank_account_path(bank_account) %>
+              <%= edit_link_to edit_bank_account_path(bank_account) %>
+              <%# link_to t("views.buttons.show"), bank_account, class: "btn btn-default" %>
+              <%# link_to t("views.buttons.edit"), edit_bank_account_path(bank_account), class: "btn btn-default" %>
               <%= render "shared/delete_button", object: bank_account %>
             </td>
           </tr>
@@ -29,7 +34,5 @@
     </table>
     <%= paginate @bank_accounts %>
   </div>
-  <br />
-  <%= link_to t("views.buttons.new"), new_bank_account_path, class: "btn btn-default" %>
 </div>
 
