@@ -32,14 +32,13 @@ class BankAccountsController < ApplicationController
     @bank_account = BankAccount.new(bank_account_params)
     ActiveRecord::Base.transaction do
       respond_to do |format|
-        message = "%sを登録しました。" % t("activerecord.models.bank_account")
         if @bank_account.save
           if params[:member_id].present?
             member = Member.find(params[:member_id])
             member.update_attributes(bank_account_id: @bank_account.id)
-            format.html { redirect_to member_path(member), notice: message }
+            format.html { redirect_to member_path(member), notice: "口座を登録しました。" }
           else
-            format.html { redirect_to @bank_account, notice: 'Bank account was successfully created.' }
+            format.html { redirect_to @bank_account, notice: '口座を登録しました。' }
             format.json { render action: 'show', status: :created, location: @bank_account }
           end
         else
@@ -55,7 +54,7 @@ class BankAccountsController < ApplicationController
   def update
     respond_to do |format|
       if @bank_account.update(bank_account_params)
-        format.html { redirect_to @bank_account, notice: 'Bank account was successfully updated.' }
+        format.html { redirect_to @bank_account, notice: '口座を変更しました。' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -127,6 +126,19 @@ class BankAccountsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bank_account_params
-      params.require(:bank_account).permit(:holder_name, :holder_name_kana, :bank_id, :bank_name, :branch_id, :branch_name, :account_number, :status, :note)
+      params.require(:bank_account).permit(:holder_name,
+                                           :holder_name_kana,
+                                           :bank_id,
+                                           :bank_name,
+                                           :branch_id,
+                                           :branch_name,
+                                           :account_number,
+                                           :receipt_date,
+                                           :ship_date,
+                                           :begin_date,
+                                           :self_proceed,
+                                           :change_bank,
+                                           :status,
+                                           :note)
     end
 end

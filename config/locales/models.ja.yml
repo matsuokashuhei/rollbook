@@ -94,6 +94,11 @@ ja:
         branch_id: 支店コード
         branch_name: 支店名
         account_number: 口座番号
+        receipt_date: 受取日
+        ship_date: 発送日
+        begin_date: 引落日
+        self_proceed: 銀直
+        change_bank: 口座変更
         status: 状態
         note: メモ
       members_course:

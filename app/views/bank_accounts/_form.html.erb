@@ -41,12 +41,46 @@
       <%= f.text_field :account_number, class: "form-control" %>
     </div>
   </div>
+  <div class="form-group <%= 'has-error' if @bank_account.errors[:receipt_date].present? %>">
+    <%= f.label :receipt_date, class: "col-md-1 control-label" %>
+    <div class="col-md-2">
+      <%= f.date_field :receipt_date, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group <%= 'has-error' if @bank_account.errors[:ship_date].present? %>">
+    <%= f.label :ship_date, class: "col-md-1 control-label" %>
+    <div class="col-md-2">
+      <%= f.date_field :ship_date, class: "form-control" %>
+    </div>
+    <div class="col-md-1">
+      <div class="checkbox">
+        <label>
+          <%= f.check_box :self_proceed %><%= t("activerecord.attributes.bank_account.self_proceed") %>
+        </label>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="checkbox">
+        <label>
+          <%= f.check_box :change_bank %><%= t("activerecord.attributes.bank_account.change_bank") %>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group <%= 'has-error' if @bank_account.errors[:begin_date].present? %>">
+    <%= f.label :begin_date, class: "col-md-1 control-label" %>
+    <div class="col-md-2">
+      <%= f.date_field :begin_date, class: "form-control" %>
+    </div>
+  </div>
+  <% if false %>
   <div class="form-group">
     <%= f.label t("activerecord.attributes.bank_account.status"), class: "col-md-1 control-label" %>
     <div class="col-md-2 <%= 'has-error' if @bank_account.errors[:status].present? %>">
       <%= f.select :status, BankAccountsHelper::STATUS.map {|status| [ status[1], status[0]] }, {}, { class: "form-control" } %>
     </div>
   </div>
+  <% end %>
   <div class="form-group <%= 'has-error' if @bank_account.errors[:note].present? %>">
     <%= f.label :note, class: "col-md-1 control-label" %>
     <div class="col-md-5">
@@ -54,7 +88,6 @@
     </div>
   </div>
 
-  <%# hidden_field_tag "member_id", @member.id if @member.present? %>
   <%= hidden_field_tag "member_id", params[:member_id] %>
 
   <% if params[:action] == "show" %>
