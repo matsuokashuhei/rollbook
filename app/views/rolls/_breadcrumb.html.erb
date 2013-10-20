@@ -1,4 +1,5 @@
 <ol class="breadcrumb">
+  <li><%= lessons_link %></li>
   <li><%= link_to @lesson.date.strftime("%Y年%m月"), lessons_path(month: @lesson.date.strftime("%Y%m")) %></li>
   <li><%= link_to @lesson.date.strftime("%d日"), lessons_path(date: @lesson.date.strftime("%Y%m%d")) %></li>
   <% if current_page?(lesson_rolls_path(@lesson)) %>

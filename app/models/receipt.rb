@@ -34,11 +34,26 @@ class Receipt < ActiveRecord::Base
     order(:tuition_id)
   }
 
+  scope :debit, -> {
+    where(method: METHODS[:DEBIT])
+  }
+
+  scope :cash, -> {
+    where(method: METHODS[:CASH])
+  }
+
+  scope :paid, -> {
+    where(status: STATUSES[:PAID])
+  }
   scope :unpaid, -> {
     where(status: STATUSES[:UNPAID])
   }
 
   validates :member_id, uniqueness: { scope: :tuition_id }
+  validates :member_id, :amount, :method, :status, presence: true
+  validates :amount, numericality: true
+  validates :date, presence: true, if: Proc.new { self.status == STATUSES[:PAID] }
+  validates :date, absence: true, if: Proc.new { self.status == STATUSES[:UNPAID] }
 
   def edit?
     self.method == METHODS[:CASH]

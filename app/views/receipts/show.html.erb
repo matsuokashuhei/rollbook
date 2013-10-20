@@ -1,14 +1,9 @@
-<%= render "nav_tabs" %>
+<%= render "breadcrumb" %>
 
 <div class="tab-content">
   <br />
-  <%= render "breadcrumb" %>
   <%= render "shared/notice" %>
   <%= render "form" %>
-  <%= link_to t("views.buttons.back"), tuition_receipts_path(@tuition), class: "btn btn-default pull-left" %>
-  <% if @receipt.edit? %>
-    <%= link_to t("views.buttons.edit"), edit_tuition_receipt_path(@tuition, @receipt), class: "btn btn-default pull-right" %>
-  <% else %>
-    <%= link_to t("views.buttons.edit"), edit_tuition_receipt_path(@tuition, @receipt), class: "btn btn-default pull-right disabled" %>
-  <% end %>
+  <%= back_link_to tuition_receipts_path(@tuition), pull: "left" %>
+  <%= edit_link_to edit_tuition_receipt_path(@tuition, @receipt), pull: "right", disabled: @receipt.edit? == false %>
 </div>

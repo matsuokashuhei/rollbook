@@ -3,16 +3,16 @@
     <table class="table">
       <thead>
         <tr>
-          <th><%= t("activerecord.attributes.debit.bank_account_id") %></th>
-          <th><%= t("activerecord.attributes.debit.amount") %></th>
-          <th><%= t("activerecord.attributes.debit.status") %></th>
+          <th class="col-md-2"><%= t("activerecord.attributes.debit.bank_account_id") %></th>
+          <th class="col-md-2"><%= t("activerecord.attributes.debit.amount") %></th>
+          <th class="col-md-2"><%= t("activerecord.attributes.debit.status") %></th>
         </tr>
       </thead>
       <tbody>
         <% @debits.each do |debit| %>
           <%= hidden_field_tag "debits[][id]", debit.id %>
           <tr>
-            <td><%= debit.bank_account.holder_name_kana %></td>
+            <td><%= debit.bank_account.decorate.holder_name %></td>
             <td><div class="pull-right"><%= number_to_currency(debit.amount) %></div></td>
             <td><%= render "status", object: debit %></td>
           </tr>

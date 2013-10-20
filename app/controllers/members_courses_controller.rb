@@ -7,7 +7,7 @@ class MembersCoursesController < ApplicationController
   # GET /members_courses
   # GET /members_courses.json
   def index
-    @members_courses = MembersCourse.details.where("members_courses.member_id = ?", @member.id)
+    @members_courses = @member.members_courses.details
   end
 
   # GET /members_courses/1
@@ -17,8 +17,8 @@ class MembersCoursesController < ApplicationController
 
   # GET /members_courses/new
   def new
-    @member = Member.find(params[:member_id])
-    @members_course = @member.members_courses.build(course_id: params[:course_id])
+    @members_course = @member.members_courses.build(course_id: params[:course_id],
+                                                    begin_date: @member.enter_date )
   end
 
   # GET /members_courses/1/edit

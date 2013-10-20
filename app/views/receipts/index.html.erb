@@ -1,15 +1,13 @@
-<%= render "nav_tabs" %>
+<%= render "breadcrumb" %>
 
 <div class="tab-content">
   <br />
-  <%= render "breadcrumb" %>
   <div class="table-responsive">
     <table class="table">
       <thead>
         <tr>
           <th><%= t("activerecord.attributes.receipt.member_id") %></th>
           <th><%= t("activerecord.attributes.receipt.amount") %></th>
-          <th><%= t("activerecord.attributes.receipt.method") %></th>
           <th><%= t("activerecord.attributes.receipt.status") %></th>
           <th></th>
           <th></th>
@@ -20,16 +18,10 @@
           <tr>
             <td><%= receipt.member.name %></td>
             <td><div class="pull-right"><%= number_to_currency(receipt.amount) %></div></td>
-            <td><%= receipt.method %></td>
             <td><%= receipt.status %></td>
             <td>
-              <%= show_icon_link_to(tuition_receipt_path(@tuition, receipt)) %>
-              <% if receipt.edit? %>
-                <%= link_to t("views.buttons.edit"), edit_tuition_receipt_path(@tuition, receipt), class: "btn btn-default" %>
-              <% else %>
-                <%= link_to t("views.buttons.edit"), edit_tuition_receipt_path(@tuition, receipt), class: "btn btn-default disabled" %>
-              <% end %>
-              <%# edit_icon_link_to(edit_tuition_receipt_path(@tuition, receipt)) %>
+              <%= show_link_to tuition_receipt_path(@tuition, receipt) %>
+              <%= edit_link_to edit_tuition_receipt_path(@tuition, receipt), disabled: receipt.edit? == false %>
             </td>
           </tr>
         <% end %>

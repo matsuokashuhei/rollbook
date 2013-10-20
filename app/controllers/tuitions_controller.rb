@@ -51,7 +51,8 @@ class TuitionsController < ApplicationController
   def update
     respond_to do |format|
       if @tuition.update(tuition_params)
-        format.html { redirect_to @tuition, notice: 'Tuition was successfully updated.' }
+        #format.html { redirect_to @tuition, notice: 'Tuition was successfully updated.' }
+        format.html { redirect_to tuitions_url, notice: "月謝の引落を終了しました。" }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -68,6 +69,11 @@ class TuitionsController < ApplicationController
       format.html { redirect_to tuitions_url }
       format.json { head :no_content }
     end
+  end
+
+  def receipts
+    statuses = [Tuition::RECEIPT_STATUSES[:IN_PROCESS], Tuition::RECEIPT_STATUSES[:FINISHED]]
+    @tuitions = Tuition.where(receipt_status: statuses).decorate
   end
 
   private

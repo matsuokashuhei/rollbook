@@ -75,6 +75,10 @@ class Member < ActiveRecord::Base
     return false
   end
 
+  def active?
+    self.status == STATUSES[:ADMISSION]
+  end
+
   def total_monthly_fee(date)
     members_courses.active(date).joins(:course).sum("courses.monthly_fee")
   end

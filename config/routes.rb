@@ -45,33 +45,14 @@ Rollbook::Application.routes.draw do
   end
   match "tuitions/:tuition_id/debits/edit" => "debits#bulk_edit", via: :get, as: "edit_tuition_debits"
   match "tuitions/:tuition_id/debits" => "debits#bulk_update", via: :patch
+  match "receipts" => "tuitions#receipts", via: :get, as: "receipts"
 
-  match "tasks/debits" => "tasks#debits", via: :get, as: "task_debits"
-  match "tasks/debits/new" => "tasks#new_debit", via: :get, as: "new_task_debit"
-  match "tasks/debits/:id" => "tasks#debit", via: :get, as: "task_debit"
-  match "tasks/debits" => "tasks#create_debit", via: :post
-  match "tasks/debits/:id" => "tasks#update_debit", via: :patch
-  match "debits/:month" => "debits#index", via: :get, as: "debits"
-  match "debits/:month/edit" => "debits#bulk_edit", via: :get, as: "edit_debits"
-  match "debits/:month" => "debits#bulk_update", via: :patch
-  match "debits/:month/fix" => "debits#fix", via: :post, as: "fix_debits"
-
-  #resources :tasks
-  #resources :receipts
-  #resources :debits
-  #match "debits/tasks" => "debits#tasks_index", via: :get, as: "debit_tasks"
-  #match "debits/tasks/new" => "debits#new_task", via: :get, as: "new_debit_task"
-  #match "debits/tasks" => "debits#create_task", via: :post, as: "create_debit_task"
-  #match "debits/tasks/:task_id" => "debits#show_task", via: :get, as: "debit_task"
-  #match "debits/tasks/:task_id/edit" => "debits#edit_task", via: :get, as: "edit_debit_task"
-  #match "debits/tasks/:task_id" => "debits#update_task", via: :patch, as: "update_debit_task"
-  #match "debits/tasks/:task_id" => "debits#destroy_task", via: :delete
-
-  resources :receipts
-
-  #match "debits/:month" => "debits#bulk_show", via: :get, as: "debits"
+  #match "debits/:month" => "debits#index", via: :get, as: "debits"
   #match "debits/:month/edit" => "debits#bulk_edit", via: :get, as: "edit_debits"
-  #match "debits/:month" => "debits#bulk_update", via: :post
+  #match "debits/:month" => "debits#bulk_update", via: :patch
+  #match "debits/:month/fix" => "debits#fix", via: :post, as: "fix_debits"
+  #resources :receipts
+
 
 
   #resources :schools do

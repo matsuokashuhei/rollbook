@@ -19,7 +19,7 @@
 class BankAccount < ActiveRecord::Base
 
   has_many :members
-  has_many :debits, -> { order(:month) }
+  has_many :debits, -> { order(:tuition_id) }
 
   #validates :holder_name_kana, :status, presence: true
   validates :holder_name_kana, presence: true
@@ -29,6 +29,10 @@ class BankAccount < ActiveRecord::Base
 
   scope :active, -> (date = Date.today) {
     where("begin_date is not null and begin_date <= ?", date)
+  }
+
+  scope :nonactive, -> (date = Date.today) {
+    where("begin_date is null or begin_date > ?", date)
   }
 
   def delete?

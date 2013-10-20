@@ -20,6 +20,7 @@ class ReceiptsController < ApplicationController
 
   # GET /receipts/1/edit
   def edit
+    @receipt.date ||= Date.today
   end
 
   # POST /receipts
@@ -43,7 +44,7 @@ class ReceiptsController < ApplicationController
   def update
     respond_to do |format|
       if @receipt.update(receipt_params)
-        format.html { redirect_to tuition_receipt_path(@tuition, @receipt), notice: 'Receipt was successfully updated.' }
+        format.html { redirect_to tuition_receipt_path(@tuition, @receipt), notice: '支払いを変更しました。' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

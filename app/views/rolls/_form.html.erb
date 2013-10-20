@@ -3,7 +3,7 @@
     <table class="table">
       <thead>
         <tr>
-          <th><%= t("activerecord.attributes.member.id") %></th>
+          <th><%= t("activerecord.attributes.member.number") %></th>
           <th><%= t("activerecord.attributes.roll.member_id") %></th>
           <th></th>
           <th><%= t("activerecord.attributes.roll.status") %></th>
@@ -16,7 +16,7 @@
           <%= hidden_field_tag "rolls[][lesson_id]", roll.lesson.id %>
           <%= hidden_field_tag "rolls[][member_id]", roll.member_id %>
           <tr>
-            <td><%= roll.member_id %></td>
+            <td><%= roll.member.number %></td>
             <td>
               <%= display_member_name(roll.member) %>
             </td>

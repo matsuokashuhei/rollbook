@@ -128,7 +128,7 @@ ja:
         bank_account_id: 口座
         month: 月
         amount: 金額
-        status: 引き落とし
+        status: 状態
         note: メモ
       receipt:
         member_id: 会員
@@ -147,6 +147,6 @@ ja:
         note: メモ
       tuition:
         month: 月
-        debit_status: 口座引落
+        debit_status: 残高不足
         receipt_status: 現金払い
         note: メモ

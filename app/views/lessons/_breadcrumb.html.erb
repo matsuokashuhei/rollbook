@@ -1,4 +1,5 @@
 <ol class="breadcrumb">
+  <li><%= lessons_link %></li>
   <% if params[:month].present? %>
     <li class="active"><%= @begin_date.strftime("%Y年%m月") %></li>
   <% else %>

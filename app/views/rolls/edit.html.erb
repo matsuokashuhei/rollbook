@@ -1,8 +1,6 @@
-<%= render "nav_tabs" %>
-
+<%= render "breadcrumb" %>
 <div class="tab-content">
   <br />
-  <%= render "breadcrumb" %>
   <%= render "form" %>
   <%= button_tag t("views.buttons.create"), class: "btn btn-default pull-right", form: "form" %>
   <%= link_to t("views.buttons.back"), lessons_path(date: @lesson.date.strftime("%Y%m%d")), class: "btn btn-default pull-left" %>

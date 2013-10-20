@@ -1,0 +1,41 @@
+<ol class="breadcrumb">
+  <li class="active"><%= t("activerecord.models.tuition") %></li>
+</ol>
+
+<div class="tab-content">
+  <br />
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <% scope = "activerecord.attributes.tuition" %>
+          <th><%= t("month", scope: scope) %></th>
+          <% if false %>
+          <th><%= t("receipt_status", scope: scope) %></th>
+          <% end %>
+          <th><%= "対象者数" %></th>
+          <th><%= "受取済" %></th>
+          <th><%= "未受取" %></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tuitions.each do |tuition| %>
+          <tr>
+            <td><%= tuition.month %></td>
+            <% if false %>
+            <td><%= tuition.receipt_status %></td>
+            <% end %>
+            <td><div class="pull-right"><%= tuition.receipts.cash.count %></div></td>
+            <td><div class="pull-right"><%= tuition.receipts.cash.paid.count %></div></td>
+            <td><div class="pull-right"><%= tuition.receipts.cash.unpaid.count %></div></td>
+            <td>
+              <%= show_link_to tuition_receipts_path(tuition) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+

@@ -6,10 +6,13 @@
   <%= hidden_field_tag "debits[][status]", object.status %>
   <div class="btn-group" data-toggle="buttons">
     <label class="btn btn-default <%= "btn-success active" if object.status == "1" %>">
-      <input type="radio" value="1" />完了
+      <input type="radio" value="1" />引　落
     </label>
     <label class="btn btn-default <%= "btn-danger active" if object.status == "2" %>">
-      <input type="radio" value="2" />不能
+      <input type="radio" value="2" />残　不
+    </label>
+    <label class="btn btn-default <%= "btn-default active" if object.status == "3" %>">
+      <input type="radio" value="3" />その他
     </label>
   </div>
   <script>
@@ -22,11 +25,14 @@
       $(this).parent("div").children("label").each(function() {
         $(this).removeClass("btn-success");
         $(this).removeClass("btn-danger");
+        //$(this).removeClass("btn-warning");
         if (hidden.attr("value") == $(this).children("input").attr("value")) {
           if (hidden.attr("value") == "1") {
             $(this).addClass("btn-success");
           } else if (hidden.attr("value") == "2") {
             $(this).addClass("btn-danger");
+          } else if (hidden.attr("value") == "3") {
+            //$(this).addClass("btn-warning");
           }
         }
       });

@@ -1,21 +1,20 @@
-<%= render "nav_tabs" %>
+<%= render "breadcrumb" %>
 
 <div class="tab-content">
   <br />
-  <%= render "breadcrumb" %>
   <div class="table-responsive">
     <table class="table">
       <thead>
         <tr>
-          <th><%= t("activerecord.attributes.debit.bank_account_id") %></th>
-          <th><%= t("activerecord.attributes.debit.amount") %></th>
-          <th><%= t("activerecord.attributes.debit.status") %></th>
+          <th class="col-md-2"><%= t("activerecord.attributes.debit.bank_account_id") %></th>
+          <th class="col-md-2"><%= t("activerecord.attributes.debit.amount") %></th>
+          <th class="col-md-2"><%= t("activerecord.attributes.debit.status") %></th>
         </tr>
       </thead>
       <tbody>
         <% @debits.each do |debit| %>
           <tr>
-            <td><%= debit.bank_account.holder_name_kana %></td>
+            <td><%= debit.bank_account.holder_name %></td>
             <td><div class="pull-right"><%= number_to_currency(debit.amount) %></div></td>
             <td><%= debit.status %></td>
           </tr>
@@ -24,7 +23,8 @@
     </table>
   </div>
   <%= paginate @debits %>
-  <%= link_to t("views.buttons.back"), tuition_path(@tuition), class: "btn btn-default pull-left" %>
+  <%= back_link_to tuitions_path, pull: "left" %>
+  <%= render "fix_button" %>
   <% if @tuition.model.debit_status == Tuition::DEBIT_STATUSES[:IN_PROCESS] %>
     <%= link_to t("views.buttons.edit"), edit_tuition_debits_path, class: "btn btn-default pull-right" %>
   <% else %>

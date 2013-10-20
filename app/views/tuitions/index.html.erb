@@ -17,6 +17,7 @@
           <button type="button" class="btn btn-default" data-dismiss="modal"><%= t("views.buttons.close") %></button>
           <%= hidden_field_tag "tuition[month]", Date.today.strftime("%Y%m") %>
           <%= hidden_field_tag "tuition[debit_status]", Tuition::DEBIT_STATUSES[:IN_PROCESS] %>
+          <%= hidden_field_tag "tuition[receipt_status]", Tuition::RECEIPT_STATUSES[:NONE] %>
           <%= f.submit t("views.buttons.begin"), class: "btn btn-default" %>
         </div>
       </div>
@@ -41,18 +42,10 @@
           <tr>
             <td><%= tuition.month %></td>
             <td>
-              <%= link_to tuition_debits_path(tuition) do %>
-                <%= tuition.debit_status %>
-              <% end %>
+              <%= tuition.debit_status %>
             </td>
             <td>
-              <%= link_to tuition_receipts_path(tuition) do %>
-                <%= tuition.receipt_status %>
-              <% end %>
-            </td>
-            <td>
-              <%= show_icon_link_to(tuition_path(tuition)) %>
-              <%= edit_icon_link_to(edit_tuition_path(tuition)) %>
+              <%= show_link_to tuition_debits_path(tuition) %>
               <%= render "shared/delete_button", object: tuition %>
             </td>
           </tr>
@@ -61,7 +54,3 @@
     </table>
   </div>
 </div>
-<script>
-  $("[data-toggle~='tooltip']").tooltip();
-  $("[data-toggle~='modal']").tooltip();
-</script>

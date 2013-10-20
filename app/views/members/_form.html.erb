@@ -90,7 +90,7 @@
   <div class="form-group <%= 'has-error' if @member.errors[:status].present? %>">
     <%= f.label t("activerecord.attributes.member.status"), class: "col-md-1 control-label" %>
     <div class="col-md-2">
-      <%= f.select :status, [["未入会", "0"], ["入会", "1"], ["2", "退会"]], {}, { class: "form-control" } %>
+      <%= f.select :status, [["未入会", "0"], ["入会", "1"], ["退会", "2"]], {}, { class: "form-control" } %>
     </div>
   </div>
 

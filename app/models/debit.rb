@@ -16,6 +16,7 @@ class Debit < ActiveRecord::Base
   STATUSES = {
     SUCCESS: "1",
     FAILURE: "2",
+    OTHERS: "3",
   }
 
   belongs_to :bank_account

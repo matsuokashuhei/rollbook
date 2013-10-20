@@ -6,29 +6,25 @@ class TuitionDecorator < ApplicationDecorator
   end
 
   def debit_status
-    label = "<h3 style=\"margin: 0px; line-height: 0;\">"
-    case model.debit_status
-    when Tuition::DEBIT_STATUSES[:IN_PROCESS]
-      label << "<span class=\"label label-info\">仕掛中</span>"
-    when Tuition::DEBIT_STATUSES[:FINISHED]
-      label << "<span class=\"label label-success\">完了</span>"
+    h.content_tag(:h3, style: "margin: 0px; line-height: 0;") do
+      case model.debit_status
+      when Tuition::DEBIT_STATUSES[:IN_PROCESS]
+        h.content_tag(:span, "リストアップ中", class: "label label-warning")
+      when Tuition::DEBIT_STATUSES[:FINISHED]
+        h.content_tag(:span, "リストアップ終了", class: "label label-success")
+      end
     end
-    label << "</h3>"
-    label.html_safe
   end
 
   def receipt_status
-    label = "<h3 style=\"margin: 0px; line-height: 0;\">"
-    case model.receipt_status
-    when Tuition::RECEIPT_STATUSES[:NONE]
-      label << "<span class=\"label label-default\">未定</span>"
-    when Tuition::RECEIPT_STATUSES[:IN_PROCESS]
-      label << "<span class=\"label label-info\">仕掛中</span>"
-    when Tuition::RECEIPT_STATUSES[:FINISHED]
-      label << "<span class=\"label label-success\">完了</span>"
+    h.content_tag(:h3, style: "margin: 0px; line-height: 0;") do
+      case model.receipt_status
+      when Tuition::RECEIPT_STATUSES[:IN_PROCESS]
+        h.content_tag(:span, "受取中", class: "label label-warning")
+      when Tuition::RECEIPT_STATUSES[:FINISHED]
+        h.content_tag(:span, "受取終了", class: "label label-success")
+      end
     end
-    label << "</h3>"
-    label.html_safe
   end
 
   # Define presentation-specific methods here. Helpers are accessed through
