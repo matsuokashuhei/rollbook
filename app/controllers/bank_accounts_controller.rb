@@ -4,7 +4,7 @@ class BankAccountsController < ApplicationController
   # GET /bank_accounts
   # GET /bank_accounts.json
   def index
-    @bank_accounts = BankAccount.page(params[:page])
+    @bank_accounts = BankAccount.page(params[:page]).decorate
   end
 
   # GET /bank_accounts/1

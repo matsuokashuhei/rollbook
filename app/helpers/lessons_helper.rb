@@ -1,4 +1,9 @@
 module LessonsHelper
+
+  def lessons_link
+    link_to t("activerecord.models.lesson"), lessons_path
+  end
+
   LESSON_STATUS = {
     "0" => { "name" => "未登録", "label" => "label-default", },
     "1" => { "name" => "登録中", "label" => "label-info", },

@@ -27,7 +27,7 @@
 class Member < ActiveRecord::Base
 
   STATUSES = {
-    GUEST: "0",
+    TRIAL: "0",
     ADMISSION: "1",
     SECESSION: "2",
   }

@@ -14,18 +14,18 @@
           <%= t("activerecord.models.school") %> <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-          <li><%= link_to t("activerecord.models.course"), courses_path %></li>
-          <li><%= link_to t("activerecord.models.instructor"), instructors_path %></li>
+          <li><%= courses_link %></li>
+          <li><%= instructors_link %></li>
         </ul>
       </li>
-      <li><%= link_to t("activerecord.models.lesson"), lessons_path %></li>
+      <li><%= lessons_link %></li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <%= t("activerecord.models.member") %> <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-          <li><%= link_to t("activerecord.models.member"), members_path %></li>
-          <li><%= link_to t("activerecord.models.bank_account"), bank_accounts_path %></li>
+          <li><%= members_link %></li>
+          <li><%= bank_accounts_link %></li>
         </ul>
       </li>
       <li class="dropdown">

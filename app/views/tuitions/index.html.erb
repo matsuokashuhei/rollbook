@@ -1,8 +1,31 @@
-<%= render "nav_tabs" %>
+<%= render "breadcrumb" %>
+<a data-toggle="modal" href="#tuition" class="btn btn-default pull-right">
+  <%= t("views.buttons.new") %>
+</a>
+<div class="modal fade" id="tuition">
+  <%= form_for new_tuition_path do |f| %>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">月謝の引落</h4>
+        </div>
+        <div class="modal-body">
+          <%= Date.today.strftime("%Y年%m月") %>の残高不足のリストアップを始めます。よいですか？
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal"><%= t("views.buttons.close") %></button>
+          <%= hidden_field_tag "tuition[month]", Date.today.strftime("%Y%m") %>
+          <%= hidden_field_tag "tuition[debit_status]", Tuition::DEBIT_STATUSES[:IN_PROCESS] %>
+          <%= f.submit t("views.buttons.begin"), class: "btn btn-default" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
 
 <div class="tab-content">
   <br />
-  <%= render "breadcrumb" %>
   <div class="table-responsive">
     <table class="table">
       <thead>
@@ -10,9 +33,6 @@
           <% scope = "activerecord.attributes.tuition" %>
           <th><%= t("month", scope: scope) %></th>
           <th><%= t("debit_status", scope: scope) %></th>
-          <th><%= t("receipt_status", scope: scope) %></th>
-          <th></th>
-          <th></th>
           <th></th>
         </tr>
       </thead>

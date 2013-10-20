@@ -27,9 +27,10 @@ class Tuition < ActiveRecord::Base
 
   default_scope -> { order(:month) }
 
-  validates :month, :debit_status, :receipt_status, presence: true
+  #validates :month, :debit_status, :receipt_status, presence: true
+  validates :month, :debit_status, presence: true
   validates :debit_status, inclusion: { in: DEBIT_STATUSES.map {|k, v| v } }
-  validates :receipt_status, inclusion: { in: RECEIPT_STATUSES.map {|k, v| v } }
+  #validates :receipt_status, inclusion: { in: RECEIPT_STATUSES.map {|k, v| v } }
   validates :month, uniqueness: true
 
   after_find do
@@ -49,17 +50,16 @@ class Tuition < ActiveRecord::Base
 
   after_create do
     date = Date.new(self.month[0..3].to_i, self.month[4..5].to_i, 1)
-    BankAccount.active.joins(:members).where(members: { status: Member::STATUSES[:ADMISSION] }).each do |bank_account|
-      amount = 0
+    BankAccount.active(date).joins(:members).where(members: { status: Member::STATUSES[:ADMISSION] }).each do |bank_account|
+      debit = self.debits.build(bank_account_id: bank_account.id,
+                                amount: 0,
+                                status: Debit::STATUSES[:SUCCESS])
       bank_account.members.each do |member|
         member.members_courses.active(date).joins(:course).each do |members_course|
-          amount += members_course.course.monthly_fee_with_tax
+          receipt.amount += members_course.course.monthly_fee_with_tax
         end
       end
-      debit = self.debits.build(bank_account_id: bank_account.id,
-                                amount: amount,
-                                status: Debit::STATUSES[:SUCCESS])
-      debit.save
+      debit.save if debit.amount > 0
     end
   end
 
@@ -90,7 +90,7 @@ class Tuition < ActiveRecord::Base
     members.each do |member|
       receipt = self.receipts.build(member_id: member.id, amount: 150)
       member.members_courses.active(date).joins(:course).each do |members_course|
-        receipt.amount += members_course.course.monthly_fee_with_tax
+        receipt.amount += tax_with(members_course.course.monthly_fee)
       end
       receipt.method = Receipt::METHODS[:CASH]
       receipt.status = Receipt::STATUSES[:UNPAID]
@@ -101,7 +101,7 @@ class Tuition < ActiveRecord::Base
     members.each do |member|
       receipt = self.receipts.build(member_id: member.id, amount: 150)
       member.members_courses.active(date).joins(:course).each do |members_course|
-        receipt.amount += members_course.course.monthly_fee_with_tax
+        receipt.amount += tax_with(members_course.course.monthly_fee)
       end
       receipt.method = Receipt::METHODS[:CASH]
       receipt.status = Receipt::STATUSES[:UNPAID]
@@ -119,4 +119,9 @@ class Tuition < ActiveRecord::Base
     receipt_status == RECEIPT_STATUSES[:NONE]
   end
 
+  private
+
+  def tax_with(amount)
+    (amount * 1.05).to_i
+  end
 end

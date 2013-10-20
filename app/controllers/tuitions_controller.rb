@@ -30,13 +30,20 @@ class TuitionsController < ApplicationController
 
     respond_to do |format|
       if @tuition.save
-        format.html { redirect_to @tuition, notice: 'Tuition was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @tuition }
+        format.html { redirect_to tuitions_url, notice: "月謝の引落を登録しました。" }
       else
-        format.html { render action: 'new' }
-        format.json { render json: @tuition.errors, status: :unprocessable_entity }
+        format.html { render action: 'index' }
       end
     end
+    #respond_to do |format|
+    #  if @tuition.save
+    #    format.html { redirect_to @tuition, notice: 'Tuition was successfully created.' }
+    #    format.json { render action: 'show', status: :created, location: @tuition }
+    #  else
+    #    format.html { render action: 'new' }
+    #    format.json { render json: @tuition.errors, status: :unprocessable_entity }
+    #  end
+    #end
   end
 
   # PATCH/PUT /tuitions/1
