@@ -39,7 +39,7 @@ class MembersCourse < ActiveRecord::Base
     joins(course: [[timetable: [[studio: :school], :time_slot]], :dance_style, :level, :instructor]).order("members_courses.begin_date")
   }
 
-  scope :term_dates, ->(date = Date.today) {
+  scope :active, ->(date = Date.today) {
     where("members_courses.begin_date <= ? and ? <= coalesce(members_courses.end_date, '9999-12-31')", date, date)
   }
 

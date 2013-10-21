@@ -1,10 +1,11 @@
-<%= render "nav_tabs" %>
+<%= render "breadcrumb" %>
 
 <div class="tab-content">
+  <%= render "nav_tabs" %>
   <br />
   <%= render "shared/notice" %>
   <%= render "form" %>
-  <%= link_to t("views.buttons.back"), courses_path, class: "btn btn-default pull-left" %>
+  <%= back_link_to courses_path(date: Date.today.strftime("%Y%m%d"), studio_id: @studio.id), pull: "left" %>
   <%= render "shared/delete_button", object: @course, locals: { btn_class: "pull-right" } %>
-  <%= link_to t("views.buttons.edit"), edit_course_path(@course), class: "btn btn-default pull-right" %>
+  <%= edit_link_to edit_course_path(@course), pull: "right" %>
 </div>

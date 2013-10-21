@@ -37,10 +37,6 @@ class Course < ActiveRecord::Base
     where("courses.open_date <= ? and ? <= coalesce(courses.close_date, '9999-12-31')", date, date)
   }
 
-  scope :term_dates, ->(date = Date.today) {
-    where("courses.open_date <= ? and ? <= coalesce(courses.close_date, '9999-12-31')", date, date)
-  }
-
   # Validation
   validates :timetable_id, :instructor_id, :dance_style_id, :level_id, :monthly_fee, :open_date, presence: true
   validates :monthly_fee, numericality: { only_integer: true }
@@ -88,13 +84,13 @@ class Course < ActiveRecord::Base
     end
   end
 
+  def name
+    "#{self.dance_style.name}#{self.level.name}　#{self.instructor.name}"
+  end
+
   # その他
   def delete?
     members_courses.count == 0
-  end
-
-  def name
-    "#{self.dance_style.name}#{self.level.name}　#{self.instructor.name}"
   end
 
 end

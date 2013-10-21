@@ -31,6 +31,7 @@ Rollbook::Application.routes.draw do
 
   # クラス
   resources :courses
+  match "schools" => "courses#schools", via: :get, as: "schools"
   match "courses/:id/members" => "courses#members", via: :get, as: "course_members"
   match "courses/:id/lessons" => "courses#lessons", via: :get, as: "course_lessons"
 

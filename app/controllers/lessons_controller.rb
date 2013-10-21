@@ -33,7 +33,7 @@ class LessonsController < ApplicationController
     end
     if params[:date].present?
       @date = params[:date].to_date
-      @courses = Course.term_dates(@date).joins(:timetable).where("timetables.weekday = ?", @date.cwday)
+      @courses = Course.active(@date).joins(:timetable).where("timetables.weekday = ?", @date.cwday)
       @lessons = []
       @courses.each do |course|
         lesson = Lesson.find_or_initialize_by(date: @date, course_id: course.id)

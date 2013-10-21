@@ -1,3 +1,45 @@
+<%= render "breadcrumb" %>
+
+<div class="tab-content">
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <th style="width: 9%;"></th>
+        <% 1.step(7) do |cwday| %>
+          <th style="width: 13%;">
+            <%= weekday_ja(cwday) %>
+          </th>
+        <% end %>
+      </thead>
+      <tbody>
+        <% @timetables.each do |timetable| %>
+          <% if timetable.weekday == 1 %>
+            <tr>
+              <th><%= timetable.time_slot.start_time.strftime("%H:%M") %></th>
+          <% end %>
+          <td>
+            <% course = @courses.find {|course| course.timetable_id == timetable.id } %>
+            <% if course.present? %>
+              <%= link_to course do %>
+                <%= course.dance_style.name %><br />
+                <%= course.level.name %><br />
+                <%= course.instructor.name %><br />
+              <% end %>
+            <% else %>
+              <%= link_to t("views.buttons.new"), new_course_path(timetable_id: timetable.id), class: "btn btn-link" %>
+            <% end %>
+          </td>
+          <% if timetable.weekday == 7 %>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= back_link_to schools_path, pull: "left" %>
+</div>
+
+<% if false %>
 <%= render "nav_tabs" %>
 
 <div class="tab-content">
@@ -55,3 +97,4 @@
   <% end %>
 </div>
 </div>
+<% end %>

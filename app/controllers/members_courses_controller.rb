@@ -89,7 +89,7 @@ class MembersCoursesController < ApplicationController
 
     def set_courses
       @schools = School.includes(studios: [timetables: [:courses, :time_slot]]).order("schools.open_date, studios.open_date, time_slots.start_time, timetables.weekday")
-      @courses = Course.joins(:instructor, :dance_style, :level).term_dates(Date.today)
+      @courses = Course.joins(:instructor, :dance_style, :level).active(Date.today)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

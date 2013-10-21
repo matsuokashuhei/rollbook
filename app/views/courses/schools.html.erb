@@ -1,0 +1,29 @@
+<%= render "breadcrumb" %>
+<div class="tab-content">
+  <br/>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= t("activerecord.models.school") %></th>
+          <th><%= t("activerecord.models.studio") %></th>
+          <th><%= t("activerecord.models.course") %></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @schools.each do |school| %>
+          <% school.studios.each do |studio| %>
+            <tr>
+              <td><%= school.name %></td>
+              <td><%= studio.name %></td>
+              <td><div class="pull-right"><%= Course.joins(timetable: :studio).where(studios: { id: studio.id }).active.count %></div></td>
+              <td><%= show_link_to courses_path(date: Date.today.strftime("%Y%m%d"), studio_id: studio.id) %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+

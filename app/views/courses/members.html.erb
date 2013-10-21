@@ -1,3 +1,13 @@
+<ol class="breadcrumb">
+  <li><%= schools_link %></li>
+  <li><%= link_to "#{@studio.school.name}　#{@studio.name}", courses_path(date: Date.today.strftime("%Y%m%d"), studio_id: @studio.id) %></li>
+  <li class="active"><%= @course.decorate.name %></li>
+  <% if false %>
+  <li><%= link_to @course.decorate.name, course_path(@course) %></li>
+  <li class="active"><%= t("activerecord.models.member") %></li>
+  <% end %>
+</ol>
+
 <ul class="nav nav-tabs">
   <li>
     <%= link_to t("activerecord.models.course"), course_path(@course), class: "btn btn-link" %>
