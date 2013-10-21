@@ -4,6 +4,9 @@ class DanceStyleDecorator < ApplicationDecorator
   BLUE = "#3069ff"
   PINK = "#f01e8a"
   GREEN = "#78be09"
+  ORAGE = "ffcc00"
+  RED = "#fd3131"
+  YELLOW = "ffcc00"
   def name
     color = ""
     case model.name
@@ -11,16 +14,40 @@ class DanceStyleDecorator < ApplicationDecorator
       color = BLUE
     when "BasicHIPHOP"
       color = BLUE
+    when "StyleHIPHOP"
+      color = BLUE
     when "GirlsHIPHOP"
       color = PINK
     when "KidsHIPHOP"
       color = GREEN
+    when "Jr.HIPHOP"
+      color = GREEN
+    when "Jr.ADVANCE"
+      color = GREEN
     when "LOCKIN'"
-      color = "#fd3131"
+      color = RED
+    when "BREAKIN'"
+      color = RED
+    when "HOUSE"
+      color = RED
+    when "POP"
+      color = RED
+    when "PUNKING"
+      color = RED
+    when "ANIMATION"
+      color = RED
     when "REGGAE"
-      color = "ffcc00"
+      color = YELLOW
+    when "ReggaeHIPHOP"
+      color = YELLOW
+    when "EXERCISE"
+      color = YELLOW
     when "JAZZ"
-      color = "ffcc00"
+      color = ORANGE
+    when "JazzHIPHOP"
+      color = ORANGE
+    when "R&B"
+      color = ORANGE
     else
       color = "gray"
     end
