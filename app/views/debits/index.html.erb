@@ -24,10 +24,10 @@
   </div>
   <%= paginate @debits %>
   <%= back_link_to tuitions_path, pull: "left" %>
-  <%= render "fix_button" %>
-  <% if @tuition.model.debit_status == Tuition::DEBIT_STATUSES[:IN_PROCESS] %>
-    <%= link_to t("views.buttons.edit"), edit_tuition_debits_path, class: "btn btn-default pull-right" %>
+  <% if @tuition.fix? %>
+    <%= render "fix_button" %>
   <% else %>
-    <%= link_to t("views.buttons.edit"), edit_tuition_debits_path, class: "btn btn-default pull-right disabled" %>
+    <%= link_to t("views.buttons.fix"), nil, class: "btn btn-default pull-right disabled" %>
   <% end %>
+  <%= edit_link_to edit_tuition_debits_path, pull: "right", disabled: @tuition.edit? == false %>
 </div>

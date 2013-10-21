@@ -30,8 +30,4 @@ module RollsHelper
     ROLL_STATUS[status]["button"]
   end
 
-  def display_roll_status(status)
-    ("<h3 style=\"margin: 0px; line-height: 0;\"><span class=\"label %s\">%s</span></h3>" % [roll_status_label(status), roll_status_name(status)]).html_safe
-  end
-
 end

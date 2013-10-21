@@ -21,7 +21,7 @@
             <td><%= course.timetable.studio.name %></td>
             <td><%= course.timetable.time_slot.start_time %></td>
             <td><%= course.name %></td>
-            <td><%= display_lesson_status(lesson.status) %></td>
+            <td><%= lesson.status %></td>
             <td>
               <% if lesson.new_record? %>
                 <%= form_for(lesson) do |f| %>
@@ -31,7 +31,7 @@
                   <%= f.submit t("views.buttons.show"), class: "btn btn-default" %>
                 <% end %>
               <% else %>
-                <%= link_to t("views.buttons.show"), lesson_rolls_path(lesson), class: "btn btn-default" %>
+                <%= show_link_to lesson_rolls_path(lesson) %>
               <% end %>
             </td>
           </tr>
@@ -40,7 +40,7 @@
     </table>
     <%# link_to_if(@date.yesterday.day < 29, @date.yesterday, lessons_path(date: @date.yesterday.strftime("%Y%m%d")), class: "btn btn-link pull-left") {} %>
     <%# link_to_if(@date.tomorrow.day < 29, @date.tomorrow, lessons_path(date: @date.tomorrow.strftime("%Y%m%d")), class: "btn btn-link pull-right") {} %>
-    <%= link_to t("views.buttons.back"), lessons_path(month: @date.strftime("%Y%m")), class: "btn btn-default pull-left" %>
+    <%= back_link_to lessons_path(month: @date.strftime("%Y%m")), pull: "left" %>
   </div>
 </div>
 

@@ -13,6 +13,12 @@
 
 class Lesson < ActiveRecord::Base
 
+  STATUSES = {
+    NONE: "0",
+    IN_PROCESS: "1",
+    FINISHED: "2",
+  }
+
   belongs_to :course
   has_many :rolls
 
@@ -24,6 +30,10 @@ class Lesson < ActiveRecord::Base
   scope :fixed, -> {
     where(status: "2")
   }
+
+  def edit?
+    self.status != STATUSES[:FINISHED] && self.date <= Date.today
+  end
 
   def prev_lesson
     one_week_before = date - 7.day

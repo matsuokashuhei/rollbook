@@ -10,7 +10,9 @@
         <tr>
           <th><%= t("activerecord.attributes.member.number") %></th>
           <th><%= t("activerecord.attributes.member.name") %></th>
+          <th></th>
           <th><%= t("activerecord.attributes.member.gender") %></th>
+          <th><%= t("activerecord.attributes.member.status") %></th>
           <th>受講クラス数</th>
           <th>未消化振替数</th>
           <th></th>
@@ -21,12 +23,14 @@
           <tr>
             <td><%= member.number %></td>
             <td><%= member.name %></td>
+            <td><%= member.tuition %></td>
             <td><%= member.gender %></td>
+            <td><%= member.status %></td>
             <td><div class="pull-right"><%= member.courses.active.count %></div></td>
             <td><div class="pull-right"><%= member.rolls.absence.count %></div></td>
             <td>
-              <%= show_link_to member %>
-              <%= edit_link_to member %>
+              <%= show_link_to member_path(member) %>
+              <%= edit_link_to edit_member_path(member) %>
               <%= render "shared/delete_button", object: member %>
             </td>
           </tr>

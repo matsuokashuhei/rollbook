@@ -44,16 +44,16 @@ class Member < ActiveRecord::Base
   has_many :receipts
   belongs_to :bank_account
 
-  validates :number,
-            :first_name,
+  validates :first_name,
             :last_name,
             :first_name_kana,
             :last_name_kana,
             :status,
             presence: true
-  validates :number, uniqueness: true
-  validates :number, format: { with: /[0-9]{6}/, message: "は6桁の数字にしてください。" }
+  validates :number, uniqueness: true, if: Proc.new { self.status != "0" }
+  validates :number, format: { with: /[0-9]{6}/, message: "は6桁の数字にしてください。" }, if: Proc.new { self.status != "0" }
   validates :last_name_kana, :first_name_kana, format: { with: /\A[\p{katakana}ー－]+\Z/, message: "はカタカナで入力してください。" }
+  validates :number, presence: true, if: Proc.new { self.status != "0" }
   validates :enter_date, presence: true, if: Proc.new { self.status == "1" }
   validates :enter_date, absence: true, if: Proc.new { self.status == "0" }
 
@@ -75,8 +75,16 @@ class Member < ActiveRecord::Base
     return false
   end
 
+  def guest?
+    self.status == STATUSES[:TRIAL]
+  end
+
   def active?
     self.status == STATUSES[:ADMISSION]
+  end
+
+  def nonactive?
+    self.status == STATUSES[:SECESSION]
   end
 
   def total_monthly_fee(date)

@@ -9,7 +9,7 @@
   </div>
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav">
-      <li class="dropdown">
+      <li class="dropdown <%= 'active' if controller?(["courses", "instructors"]) %>">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <%= t("activerecord.models.school") %> <b class="caret"></b>
         </a>
@@ -18,8 +18,8 @@
           <li><%= instructors_link %></li>
         </ul>
       </li>
-      <li><%= lessons_link %></li>
-      <li class="dropdown">
+      <li class="<%= 'active' if controller?(["lessons", "rolls"]) %>"><%= lessons_link %></li>
+      <li class="dropdown <%= 'active' if controller?(["members", "members_courses", "recesses", "bank_accounts"]) %>">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <%= t("activerecord.models.member") %> <b class="caret"></b>
         </a>
@@ -28,7 +28,7 @@
           <li><%= bank_accounts_link %></li>
         </ul>
       </li>
-      <li class="dropdown">
+      <li class="dropdown <%= 'active' if controller?(["tuitions", "debits", "receipts"]) %>">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <%= t("activerecord.models.tuition") %> <b class="caret"></b>
         </a>

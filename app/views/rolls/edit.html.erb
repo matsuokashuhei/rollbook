@@ -1,8 +1,10 @@
 <%= render "breadcrumb" %>
+<%= link_to t("views.buttons.substitute"), absences_path(@lesson), class: "btn btn-default pull-right" %>
+<%= link_to t("views.buttons.trial"), nonmembers_path(@lesson), class: "btn btn-default pull-right" %>
 <div class="tab-content">
-  <br />
   <%= render "form" %>
-  <%= button_tag t("views.buttons.create"), class: "btn btn-default pull-right", form: "form" %>
-  <%= link_to t("views.buttons.back"), lessons_path(date: @lesson.date.strftime("%Y%m%d")), class: "btn btn-default pull-left" %>
+  <%= save_button_tag pull: "right" %>
+  <%# back_link_to lessons_path(date: @lesson.date.strftime("%Y%m%d")), pull: "left" %>
+  <%= back_link_to lesson_rolls_path(@lesson), pull: "left" %>
 </div>
 

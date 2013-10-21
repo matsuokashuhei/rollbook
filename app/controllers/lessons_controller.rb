@@ -38,8 +38,9 @@ class LessonsController < ApplicationController
       @courses.each do |course|
         lesson = Lesson.find_or_initialize_by(date: @date, course_id: course.id)
         lesson.status ||= "0"
-        @lessons << lesson
+        @lessons << lesson.decorate
       end
+      @lessons
     end
   end
 

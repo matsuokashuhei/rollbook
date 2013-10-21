@@ -89,7 +89,7 @@ class CoursesController < ApplicationController
 
   def lessons
     @studio = @course.timetable.studio
-    @lessons = @course.lessons
+    @lessons = @course.lessons.decorate
     respond_to do |format|
       format.html { render action: "lessons" }
     end

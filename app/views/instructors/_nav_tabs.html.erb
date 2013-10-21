@@ -1,12 +1,9 @@
 <ul class="nav nav-tabs">
-  <li class="active">
-    <a href="#instructor" data-toggle="tab"><%= t("activerecord.models.instructor") %></a>
-  </li>
-  <li>
-    <% if current_page?(instructor_path(@instructor)) %>
-      <%= link_to t("activerecord.models.course"), instructor_courses_path(@instructor), class: "btn btn-link" %>
-    <% else %>
-      <%= link_to t("activerecord.models.course"), instructor_courses_path(@instructor), class: "btn btn-link", disabled: "disabled" %>
-    <% end %>
+  <li class="active"><a href="#instructor" data-toggle="tab"><%= t("activerecord.models.instructor") %></a></li>
+  <% if current_page?(instructor_path(@instructor)) %>
+    <li><%= instructor_courses_link(@instructor) %></li>
+  <% else %>
+    <li class="disabled"><%= instructor_courses_link(@instructor, disable: true) %></li>
+  <% end %>
   </li>
 </ul>

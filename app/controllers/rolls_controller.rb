@@ -12,18 +12,19 @@ class RollsController < ApplicationController
         roll = Roll.find_or_initialize_by(lesson_id: @lesson.id, member_id: members_course.member_id)
         roll.status ||= "0"
         roll.status = "5" if Recess.exists?(members_course_id: members_course.id, month: @lesson.date.strftime("%Y/%m"))
-        @rolls << roll
+        @rolls << roll.decorate
       end
       Roll.where(lesson_id: @lesson.id, status: "4").each do |roll|
-        @rolls << roll
+        @rolls << roll.decorate
       end
       Roll.where(lesson_id: @lesson.id, status: "6").each do |roll|
-        @rolls << roll
+        @rolls << roll.decorate
       end
     end
     if @lesson.status == "2"
-      @rolls = @lesson.rolls
+      @rolls = @lesson.rolls.decorate
     end
+    #RollDecorator.decorate(@rolls)
   end
 
   # GET /rolls/1
@@ -106,7 +107,7 @@ class RollsController < ApplicationController
   def absences
     @rolls = []
     # レッスンを欠席したメンバーを検索する。
-    absences = Roll.absence.joins(:lesson).where("lessons.status = ?", "2").order("lessons.date", "rolls.id")
+    absences = Roll.absence.joins(:lesson).where("lessons.status = ?", "2").order("lessons.date", "rolls.id").decorate
     # レッスンを欠席したメンバーの最古の欠席したレッスンを検索する。
     absences.each do |absence|
       next if @lesson.course_id == absence.lesson.course_id
@@ -137,7 +138,7 @@ class RollsController < ApplicationController
     @rolls = []
     nonmembers = Member.where(status: "0").includes(:rolls).where(rolls: { id: nil })
     nonmembers.each do |nonmember|
-      @rolls << nonmember.rolls.build(lesson_id: @lesson.id, status: "6")
+      @rolls << nonmember.rolls.build(lesson_id: @lesson.id, status: "6").decorate
     end
   end
 

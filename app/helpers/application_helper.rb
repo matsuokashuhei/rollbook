@@ -4,14 +4,6 @@ module ApplicationHelper
     { 1 => "月", 2 => "火", 3 => "水", 4 => "木", 5 => "金", 6 => "土", 7 => "日" }[cwday]
   end
 
-  def members_full_name(member)
-    "<small>#{member.full_name_kana}</small><br />#{member.full_name}".html_safe
-  end
-
-  def display_member_name(member)
-    "<small>#{member.full_name_kana}</small><br />#{member.full_name}".html_safe
-  end
-
   def show_link_to(path, disabled: false)
     unless disabled
       link_to t("views.buttons.show"), path, class: "btn btn-default"
@@ -55,12 +47,11 @@ module ApplicationHelper
     button_tag t("views.buttons.create"), class: class_names, form: "form"
   end
 
-  def tab_link(name, path, disabled: false)
-    unless disabled
-      link_to name, path
-    else
-      link_to name, nil, class: "disabled"
+  def controller?(controllers)
+    controllers.each do |controller|
+      return true if params[:controller] == controller
     end
+    return false
   end
 
 end

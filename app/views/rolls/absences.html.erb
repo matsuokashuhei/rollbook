@@ -1,15 +1,13 @@
-<%= render "nav_tabs" %>
-
+<%= render "breadcrumb" %>
 <div class="tab-content">
   <br />
-  <%= render "breadcrumb" %>
   <%= form_tag({ action: "substitute" }, { method: "post", id: "form" }) do %>
     <div class="table-responsive">
       <table class="table">
         <thead>
           <tr>
             <th></th>
-            <th><%= t("activerecord.attributes.member.id") %></th>
+            <th><%= t("activerecord.attributes.member.number") %></th>
             <th><%= t("activerecord.attributes.member.name") %></th>
             <th><%= t("activerecord.attributes.lesson.date") %></th>
             <th><%= t("activerecord.models.school") %></th>
@@ -22,8 +20,8 @@
           <% @rolls.each do |roll| %>
             <tr>
               <td><div class="checkbox"><%= check_box_tag "rolls[][id]", roll.id %></div></td>
-              <td><%= roll.member_id %></td>
-              <td><%= display_member_name(roll.member) %></td>
+              <td><%= roll.member.number %></td>
+              <td><%= roll.member.name %></td>
               <td><%= roll.lesson.date %></td>
               <td><%= roll.lesson.course.timetable.studio.school.name %></td>
               <td><%= roll.lesson.course.timetable.studio.name %></td>
@@ -34,6 +32,7 @@
         </tbody>
       </table>
     </div>
+    <%= back_link_to edit_lesson_rolls_path(@lesson), pull: "left" %>
     <%= button_tag t("views.buttons.select"), class: "btn btn-default pull-right", form: "form" %>
   <% end %>
 </div>

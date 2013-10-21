@@ -13,6 +13,12 @@
 
 class Recess < ActiveRecord::Base
 
+  STATUSES = {
+    UNPAID: "0",
+    PAID: "1",
+    NONE: "2",
+  }
+
   belongs_to :members_course
 
   validates :members_course_id, :month, :status, presence: true

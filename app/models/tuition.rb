@@ -135,6 +135,14 @@ class Tuition < ActiveRecord::Base
     end
   end
 
+  def edit?
+    debit_status == DEBIT_STATUSES[:IN_PROCESS]
+  end
+
+  def fix?
+    debit_status == DEBIT_STATUSES[:IN_PROCESS]
+  end
+
   def delete?
     receipt_status == RECEIPT_STATUSES[:NONE]
   end

@@ -1,9 +1,7 @@
 <%= render "breadcrumb" %>
 
 <ul class="nav nav-tabs">
-  <li>
-    <%= link_to t("activerecord.models.instructor"), instructor_path(@instructor), class: "btn btn-link" %>
-  </li>
+  <li><%= link_to t("activerecord.models.instructor"), instructor_path(@instructor) %></li>
   <li class="active">
     <a href="#course" data-toggle="tab"><%= t("activerecord.models.course") %></a>
   </li>

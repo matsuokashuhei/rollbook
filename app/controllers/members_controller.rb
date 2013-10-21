@@ -63,7 +63,7 @@ class MembersController < ApplicationController
 
   # GET /members/1/rolls
   def rolls
-    @rolls = Roll.details.where("rolls.member_id = ?", @member.id)
+    @rolls = Roll.details.where("rolls.member_id = ?", @member.id).decorate
     respond_to do |format|
       format.html { render action: "rolls" }
     end

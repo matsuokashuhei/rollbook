@@ -15,7 +15,10 @@
     <li class="active"><%= t("views.buttons.edit") %></li>
   <% end %>
   <% if current_page?(instructor_courses_path(@instructor)) %>
+    <% if false %>
     <li><%= link_to @instructor.name, instructor_path(@instructor) %></li>
     <li class="active"><%= t("activerecord.models.course") %></li>
+    <% end %>
+    <li class="active"><%= @instructor.name %></li>
   <% end %>
 </ol>

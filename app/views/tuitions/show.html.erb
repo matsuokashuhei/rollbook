@@ -5,7 +5,7 @@
   <%= render "breadcrumb" %>
   <%= render "shared/notice" %>
   <%= render "form" %>
-  <%= link_to t("views.buttons.back"), tuitions_path, class: "btn btn-default pull-left" %>
-  <%= link_to t("views.buttons.edit"), edit_tuition_path(@tuition), class: "btn btn-default pull-right" %>
+  <%= back_link_to tuitions_path, pull: "left" %>
+  <%= edit_link_to edit_tuition_path(@tuition), pull: "right" %>
 </div>
 

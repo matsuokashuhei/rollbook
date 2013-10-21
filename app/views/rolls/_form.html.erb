@@ -18,19 +18,15 @@
           <tr>
             <td><%= roll.member.number %></td>
             <td>
-              <%= display_member_name(roll.member) %>
+              <%= roll.member.name %>
             </td>
+            <td><%= roll.member.tuition %></td>
             <td>
-              <% if roll.member.receipts.unpaid.count > 0 %>
-                <%= link_to member_receipts_path(roll.member) do %>
-                  <h3 style="margin: 8px; line-height: 0;">
-                    <span class="label label-danger">月謝未納!!!</span>
-                  </h3>
-                <% end %>
+              <% if params[:action] == "index" %>
+                <%= roll.status %>
+              <% else %>
+                <%= render "status", object: roll.model  %>
               <% end %>
-            </td>
-            <td>
-              <%= render "status", object: roll  %>
             </td>
             <td>
               <% substitute_roll = roll.substitute_roll %>

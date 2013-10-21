@@ -3,16 +3,8 @@
 <div class="tab-content">
   <br />
   <%= render "form" %>
-
   <%= render "lessons/fix_button" %>
-
-  <% if @lesson.status == "2" || @lesson.date > Date.today %>
-    <%= link_to t("views.buttons.edit"), edit_lesson_rolls_path(@lesson), class: "btn btn-default pull-right disabled" %>
-  <% else %>
-    <%= link_to t("views.buttons.edit"), edit_lesson_rolls_path(@lesson), class: "btn btn-default pull-right" %>
-  <% end %>
-
-  <%= link_to t("views.buttons.back"), lessons_path(date: @lesson.date.strftime("%Y%m%d")), class: "btn btn-default pull-left" %>
-
+  <%= edit_link_to edit_lesson_rolls_path(@lesson), pull: "right", disabled: @lesson.edit? == false %>
+  <%= back_link_to lessons_path(date: @lesson.date.strftime("%Y%m%d")), pull: "left" %>
 </div>
 

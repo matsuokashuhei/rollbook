@@ -6,7 +6,8 @@
     <table class="table">
       <thead>
         <tr>
-          <th><%= t("activerecord.attributes.receipt.member_id") %></th>
+          <th><%= t("activerecord.attributes.member.number") %></th>
+          <th><%= t("activerecord.attributes.member.name") %></th>
           <th><%= t("activerecord.attributes.receipt.amount") %></th>
           <th><%= t("activerecord.attributes.receipt.status") %></th>
           <th></th>
@@ -16,6 +17,7 @@
       <tbody>
         <% @receipts.each do |receipt| %>
           <tr>
+            <td><%= receipt.member.number %></td>
             <td><%= receipt.member.name %></td>
             <td><div class="pull-right"><%= number_to_currency(receipt.amount) %></div></td>
             <td><%= receipt.status %></td>

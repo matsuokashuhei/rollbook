@@ -2,18 +2,24 @@
   <li class="active">
     <a href="#member" data-toggle="tab"><%= t("activerecord.models.member") %></a>
   </li>
-  <% if current_page?(member_path(@member)) %>
-    <li>
-      <%= member_courses_link(@member) %>
-    </li>
+  <% unless @member.guest? %>
+    <% if current_page?(member_path(@member)) %>
+      <li>
+        <%= member_courses_link(@member) %>
+      </li>
+      <li>
+        <%= member_rolls_link(@member) %>
+      </li>
+      <li>
+        <%= recesses_link(@member) %>
+      </li>
+      <li>
+        <%= member_receipts_link(@member) %>
+      </li>
+    <% end %>
+  <% else %>
     <li>
       <%= member_rolls_link(@member) %>
-    </li>
-    <li>
-      <%= recesses_link(@member) %>
-    </li>
-    <li>
-      <%= member_receipts_link(@member) %>
     </li>
   <% end %>
   <% if current_page?(edit_member_path(@member)) %>
