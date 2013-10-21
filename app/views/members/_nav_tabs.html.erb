@@ -4,30 +4,31 @@
   </li>
   <% if current_page?(member_path(@member)) %>
     <li>
-      <%= link_to t("activerecord.models.course"), member_courses_path(@member), class: "btn btn-link" %>
+      <%= member_courses_link(@member) %>
     </li>
     <li>
-      <%= link_to t("activerecord.models.lesson"), member_rolls_path(@member), class: "btn btn-link" %>
+      <%= member_rolls_link(@member) %>
     </li>
     <li>
-      <%= link_to t("activerecord.models.recess"), member_course_recesses_path(@member, @members_course), class: "btn btn-link", disabled: "disabled" %>
+      <%= recesses_link(@member) %>
     </li>
     <li>
-      <%= link_to t("activerecord.models.receipt"), member_receipts_path(@member), class: "btn btn-link" %>
-    </li>
-  <% else %>
-    <li>
-      <%= link_to t("activerecord.models.course"), member_courses_path(@member), class: "btn btn-link", disabled: "disabled" %>
-    </li>
-    <li>
-      <%= link_to t("activerecord.models.lesson"), member_rolls_path(@member), class: "btn btn-link", disabled: "disabled"  %>
-    </li>
-    <li>
-      <%= link_to t("activerecord.models.recess"), member_course_recesses_path(@member, @members_course), class: "btn btn-link", disabled: "disabled" %>
+      <%= member_receipts_link(@member) %>
     </li>
   <% end %>
-  <% if current_page?(members_path) %>
-    <%= link_to t("views.buttons.new"), new_member_path, class: "btn btn-default pull-right" %>
+  <% if current_page?(edit_member_path(@member)) %>
+    <li class="disabled">
+      <%= member_courses_link(@member, disabled: true) %>
+    </li>
+    <li class="disabled">
+      <%= member_rolls_link(@member, disabled: true) %>
+    </li>
+    <li class="disabled">
+      <%= recesses_link(@member, disabled: true) %>
+    </li>
+    <li class="disabled">
+      <%= member_receipts_link(@member, disabled: true) %>
+    </li>
   <% end %>
 </ul>
 

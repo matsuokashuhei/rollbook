@@ -1,23 +1,27 @@
 class RecessesController < ApplicationController
   before_action :set_member
-  before_action :set_members_course
+  #before_action :set_members_course
   before_action :set_recess, only: [:show, :edit, :update, :destroy]
 
   # GET /recesses
   # GET /recesses.json
   def index
     #@recesses = Recess.all
-    @recesses = @members_course.recesses
+    #@recesses = @members_course.recesses
+    @recesses = Recess.joins(:members_course).where(members_courses: { member_id: @member.id }).decorate
   end
 
   # GET /recesses/1
   # GET /recesses/1.json
   def show
+    @members_courses = @member.members_courses.active.joins(:course)
   end
 
   # GET /recesses/new
   def new
-    @recess = @members_course.recesses.build(status: "0")
+    #@members_courses = @member.members_courses.active.joins(:course)
+    @recess = Recess.new(status: "0")
+    #@recess = @members_course.recesses.build(status: "0")
   end
 
   # GET /recesses/1/edit
@@ -31,7 +35,7 @@ class RecessesController < ApplicationController
 
     respond_to do |format|
       if @recess.save
-        format.html { redirect_to member_course_recesses_path(@member, @members_course), notice: 'Recess was successfully created.' }
+        format.html { redirect_to member_recesses_path(@member), notice: '休会を登録しました。' }
         format.json { render action: 'show', status: :created, location: @recess }
       else
         format.html { render action: 'new' }
@@ -58,16 +62,17 @@ class RecessesController < ApplicationController
   # DELETE /recesses/1.json
   def destroy
     ActiveRecord::Base.transaction do
+      members_course = @recess.members_course
       @recess.destroy if @recess.delete?
-      Roll.member(@members_course.member_id).each do |roll|
+      Roll.member(members_course.member_id).each do |roll|
         lesson = roll.lesson
-        if lesson.course_id == @members_course.course_id && @recess.month == lesson.date.strftime("%Y/%m")
+        if lesson.course_id == members_course.course_id && @recess.month == lesson.date.strftime("%Y%m")
           roll.destroy
         end
       end
     end
     respond_to do |format|
-      format.html { redirect_to member_course_recesses_path(@member, @members_course) }
+      format.html { redirect_to member_recesses_path(@member) }
       format.json { head :no_content }
     end
   end

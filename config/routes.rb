@@ -3,12 +3,13 @@ Rollbook::Application.routes.draw do
   # 会員
   resources :members do
     resources :members_courses, as: :courses, path: :courses do
-      resources :recesses
     end
+    resources :recesses
   end
   match "members/:id/rolls" => "members#rolls", via: :get, as: "member_rolls"
   match "members/:member_id/courses/:id/rolls" => "members_courses#rolls", via: :get, as: "member_course_rolls"
-  match "members/:id/bank_account" => "members#bank_account", via: :get, as: "member_bank_account"
+  #match "members/:id/recesses" => "members#recesses", via: :get, as: "member_recesses"
+  #match "members/:id/bank_account" => "members#bank_account", via: :get, as: "member_bank_account"
   match "members/:id/receipts" => "members#receipts", via: :get, as: "member_receipts"
 
   # 口座

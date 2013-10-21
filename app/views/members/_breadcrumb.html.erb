@@ -15,8 +15,18 @@
     <li class="active"><%= t("views.buttons.edit") %></li>
   <% end %>
   <% if current_page?(member_rolls_path(@member)) %>
+    <li class="active"><%= @member.full_name %></li>
+    <% if false %>
     <li><%= link_to @member.full_name, member_path(@member) %></li>
     <li class="active"><%= t("activerecord.models.lesson") %></li>
+    <% end %>
+  <% end %>
+  <% if current_page?(member_receipts_path(@member)) %>
+    <li class="active"><%= @member.full_name %></li>
+    <% if false %>
+    <li><%= link_to @member.full_name, member_path(@member) %></li>
+    <li class="active"><%= t("activerecord.models.lesson") %></li>
+    <% end %>
   <% end %>
 </ol>
 

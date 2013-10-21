@@ -1,20 +1,21 @@
 <ol class="breadcrumb">
   <li><%= link_to t("activerecord.models.member"), members_path %></li>
-  <li><%= link_to @member.full_name, member_path(@member) %></li>
-  <li><%= link_to t("activerecord.models.members_course"), member_courses_path(@member) %></li>
-  <li><%= link_to @members_course.course.name, member_course_path(@member, @members_course) %></li>
-  <% if current_page?(member_course_recesses_path(@member, @members_course)) %>
-    <li class="active"><%= t("activerecord.models.recess") %></li>
-  <% else %>
-    <li>
-      <%= link_to t("activerecord.models.recess"), member_course_recesses_path(@member, @members_course) %>
-    </li>
+  <% if current_page?(member_recesses_path(@member)) %>
+    <li class="active"><%= @member.full_name %></li>
   <% end %>
-  <% if current_page?(new_member_course_recess_path(@member, @members_course)) %>
-    <li class="active"><%= t("views.buttons.new") %></li>
+  <% if current_page?(member_recess_path(@member, @recess)) %>
+    <li><%= members_name_link(@member) %></li>
+    <li class="active"><%= recesses_link(@member) %></li>
   <% end %>
-  <% if current_page?(edit_member_course_recess_path(@member, @members_course, @recess)) %>
+  <% if current_page?(edit_member_recess_path(@member, @recess)) %>
+    <li><%= members_name_link(@member) %></li>
+    <li><%= recesses_link(@member) %></li>
     <li class="active"><%= t("views.buttons.edit") %></li>
+  <% end %>
+  <% if current_page?(new_member_recess_path(@member)) %>
+    <li><%= members_name_link(@member) %></li>
+    <li class="active"><%= t("activerecord.models.recess") %></li>
+    <li class="active"><%= t("views.buttons.new") %></li>
   <% end %>
 </ol>
 

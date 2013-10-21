@@ -1,5 +1,5 @@
 class MembersController < ApplicationController
-  before_action :set_member, only: [:show, :edit, :update, :destroy, :rolls, :bank_account, :receipts]
+  before_action :set_member, only: [:show, :edit, :update, :destroy, :rolls, :recesses, :receipts]
 
   # GET /members
   # GET /members.json
@@ -69,6 +69,14 @@ class MembersController < ApplicationController
     end
   end
 
+  def recesses
+    @recesses = Recess.joins(:members_course).where(members_courses: { member_id: @member.id })
+    respond_to do |format|
+      format.html { render action: "recesses" }
+    end
+  end
+
+=begin
   # GET /members/1/bank_account
   def bank_account
     @bank_account = @member.bank_account
@@ -76,6 +84,7 @@ class MembersController < ApplicationController
       format.html { render action: "bank_account" }
     end
   end
+=end
 
   def receipts
     @receipts = @member.receipts.joins(:tuition).decorate

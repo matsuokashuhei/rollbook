@@ -1,18 +1,12 @@
 <ul class="nav nav-tabs">
-  <li>
-    <%= link_to t("activerecord.models.member"), member_path(@member), class: "btn btn-link" %>
-  </li>
-  <li>
-    <%= link_to t("activerecord.models.members_course"), member_course_path(@member, @members_cours), class: "btn btn-link" %>
-  </li>
-  <li>
-    <%= link_to t("activerecord.models.roll"), member_course_rolls_path(@member, @members_course), class: "btn btn-link" %>
-  </li>
+  <li><%= member_link(@member) %></li>
+  <li><%= member_courses_link(@member) %></li>
+  <li><%= member_rolls_link(@member) %></li>
   <li class="active">
     <a href="#recess" data-toggle="tab"><%= t("activerecord.models.recess") %></a>
   </li>
-  <% if current_page?(member_course_recesses_path(@member, @members_course)) %>
-    <%= link_to t("views.buttons.new"), new_member_course_recess_path(@member, @members_course), class: "btn btn-default pull-right" %>
+  <li><%= member_receipts_link(@member) %></li>
+  <% if current_page?(member_recesses_path(@member)) %>
+    <%= new_link_to new_member_recess_path(@member), pull: "right" %>
   <% end %>
 </ul>
-

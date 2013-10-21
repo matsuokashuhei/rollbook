@@ -1,3 +1,4 @@
+<%= render "breadcrumb" %>
 <ul class="nav nav-tabs">
   <li>
     <%= link_to t("activerecord.models.member"), member_path(@member), class: "btn btn-link" %>
@@ -18,7 +19,6 @@
 
 <div class="tab-content">
   <br />
-  <%= render "breadcrumb" %>
   <div class="table-responsive">
     <table class="table">
       <thead>

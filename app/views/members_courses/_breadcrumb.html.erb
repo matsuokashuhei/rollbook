@@ -1,6 +1,24 @@
 <ol class="breadcrumb">
   <li><%= link_to t("activerecord.models.member"), members_path %></li>
-  <li><%= link_to @member.full_name, member_path(@member) %></li>
+  <% if current_page?(member_courses_path(@member)) %>
+    <li class="active"><%= @member.full_name %></li>
+  <% end %>
+  <% if current_page?(new_member_course_path(@member, @members_course)) %>
+    <li><%= link_to @member.full_name, member_path(@member) %></li>
+    <li class="active"><%= t("activerecord.models.course") %></li>
+    <li class="active"><%= t("views.buttons.new") %></li>
+  <% end %>
+  <% if current_page?(member_course_path(@member, @members_course)) %>
+    <li><%= link_to @member.full_name, member_path(@member) %></li>
+    <li class="active"><%= @members_course.course.name %></li>
+  <% end %>
+  <% if current_page?(edit_member_course_path(@member, @members_course)) %>
+    <li><%= link_to @member.full_name, member_path(@member) %></li>
+    <li><%= link_to @members_course.course.name, member_course_path(@member, @members_course) %></li>
+    <li class="active"><%= t("views.buttons.edit") %></li>
+  <% end %>
+
+  <% if false %>
   <% if current_page?(member_courses_path(@member)) %>
     <li class="active"><%= t("activerecord.models.members_course") %></li>
   <% else %>
@@ -20,5 +38,6 @@
     <li><%= link_to @members_course.course.name, member_course_path(@member, @members_course) %></li>
     <li class="active"><%= t("activerecord.models.lesson") %></li>
   <% end %>
+<% end %>
 </ol>
 

@@ -1,4 +1,13 @@
 module RollsHelper
+
+  def member_rolls_link(member, disabled: false)
+    unless disabled
+      link_to t("activerecord.models.lesson"), member_rolls_path(member)
+    else
+      link_to t("activerecord.models.lesson"), nil, class: "disabled"
+    end
+  end
+
   ROLL_STATUS = {
     "0" => { "name" => "未定", "label" => "label-default", "button" => "btn-default" },
     "1" => { "name" => "出席", "label" => "label-success", "button" => "btn-success" },

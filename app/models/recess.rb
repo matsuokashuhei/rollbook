@@ -45,10 +45,19 @@ class Recess < ActiveRecord::Base
   end
 
   def six_months
-    months = (1..6).map {|i| (month.to_date - i.month).strftime("%Y/%m") }
+    months = (1..6).map {|i| ((month + "01").to_date - i.month).strftime("%Y/%m") }
     recesses = Recess.where("members_course_id = ? and month in (?)", members_course_id, months)
     if recesses.count == 6
       errors.add(:base, "6ヶ月以上続けて休会できません。")
     end
   end
+
+  before_validation do
+    self.month = self.month.sub("/", "")
+  end
+
+  after_find do
+    self.month = self.month[0..3] + "/" + self.month[4..5]
+  end
+
 end

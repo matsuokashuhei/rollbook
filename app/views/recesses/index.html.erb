@@ -1,13 +1,15 @@
+<%= render "breadcrumb" %>
 <%= render "nav_tabs" %>
 
 <div class="tab-content">
   <br/>
-  <%= render "breadcrumb" %>
+  <%= render "shared/notice" %>
   <div class="table-responsive">
     <table class="table">
       <thead>
         <tr>
           <th><%= t("activerecord.attributes.recess.month") %></th>
+          <th><%= t("activerecord.attributes.recess.members_course_id") %></th>
           <th><%= t("activerecord.attributes.recess.status") %></th>
           <th></th>
           <th></th>
@@ -18,15 +20,16 @@
         <% @recesses.each do |recess| %>
           <tr>
             <td><%= recess.month %></td>
-            <td><%= display_recess_status(recess.status) %></td>
-            <td><%= link_to t("views.buttons.show"), member_course_recess_path(@member, @members_course, recess), class: "btn btn-default" %></td>
-            <td><%= link_to t("views.buttons.edit"), edit_member_course_recess_path(@member, @members_course, recess), class: "btn btn-default" %></td>
-            <td><%= render "delete_button", object: recess %></td>
+            <td><%= recess.members_course.course.name %></td>
+            <td><%= recess.status %></td>
+            <td>
+              <%= show_link_to member_recess_path(@member, recess) %>
+              <%= edit_link_to edit_member_recess_path(@member, recess) %>
+              <%= render "delete_button", object: recess %>
+            </td>
           </tr>
         <% end %>
       </tbody>
     </table>
   </div>
-  <br />
-  <%= link_to t("views.buttons.new"), new_member_course_recess_path(@member, @members_course), class: "btn btn-default" %>
 </div>
