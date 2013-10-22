@@ -66,6 +66,12 @@ class Member < ActiveRecord::Base
     where(status: "1")
   }
 
+  scope :new_members, -> (month) {
+    begin_date = (month + "01").to_date
+    end_date = begin_date.end_of_month
+    where(status: STATUSES[:ADMISSION]).where("members.enter_date >= ?", begin_date).where("members.enter_date <= ?", end_date).includes(:receipts).where(receipts: { id: nil })
+  }
+
   def delete?
     if members_courses.count == 0
       if bank_account.nil?

@@ -63,6 +63,10 @@ class ReceiptsController < ApplicationController
     end
   end
 
+  def new_members
+    @members = Member.new_members(@tuition.month)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tuition

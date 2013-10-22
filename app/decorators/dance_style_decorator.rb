@@ -1,53 +1,56 @@
 class DanceStyleDecorator < ApplicationDecorator
   delegate_all
 
-  BLUE = "#3069ff"
-  PINK = "#f01e8a"
-  GREEN = "#78be09"
-  ORAGE = "ffcc00"
-  RED = "#fd3131"
-  YELLOW = "ffcc00"
+  COLORS = {
+    blue: "#3069ff",
+    pink: "#f01e8a",
+    green: "#78be09",
+    orange: "#ffcc00",
+    red: "#fd3131",
+    yellow: "ffcc00",
+  }
+
   def name
     color = ""
     case model.name
     when "HIPHOP"
-      color = BLUE
+      color = COLORS[:blue]
     when "BasicHIPHOP"
-      color = BLUE
+      color = COLORS[:blue]
     when "StyleHIPHOP"
-      color = BLUE
+      color = COLORS[:blue]
     when "GirlsHIPHOP"
-      color = PINK
+      color = COLORS[:pink]
     when "KidsHIPHOP"
-      color = GREEN
+      color = COLORS[:green]
     when "Jr.HIPHOP"
-      color = GREEN
+      color = COLORS[:green]
     when "Jr.ADVANCE"
-      color = GREEN
+      color = COLORS[:green]
     when "LOCKIN'"
-      color = RED
+      color = COLORS[:red]
     when "BREAKIN'"
-      color = RED
+      color = COLORS[:red]
     when "HOUSE"
-      color = RED
+      color = COLORS[:red]
     when "POP"
-      color = RED
+      color = COLORS[:red]
     when "PUNKING"
-      color = RED
+      color = COLORS[:red]
     when "ANIMATION"
-      color = RED
+      color = COLORS[:red]
     when "REGGAE"
-      color = YELLOW
+      color = COLORS[:yellow]
     when "ReggaeHIPHOP"
-      color = YELLOW
+      color = COLORS[:yellow]
     when "EXERCISE"
-      color = YELLOW
+      color = COLORS[:yellow]
     when "JAZZ"
-      color = ORANGE
+      color = COLORS[:orange]
     when "JazzHIPHOP"
-      color = ORANGE
+      color = COLORS[:orange]
     when "R&B"
-      color = ORANGE
+      color = COLORS[:orange]
     else
       color = "gray"
     end
