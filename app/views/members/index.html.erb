@@ -27,7 +27,7 @@
             <td><%= member.gender %></td>
             <td><%= member.status %></td>
             <td><div class="pull-right"><%= member.courses.active.count %></div></td>
-            <td><div class="pull-right"><%= member.rolls.absence.count %></div></td>
+            <td><div class="pull-right"><%= member.rolls.absences.count %></div></td>
             <td>
               <%= show_link_to member_path(member) %>
               <%= edit_link_to edit_member_path(member) %>

@@ -23,7 +23,7 @@
               <%= link_to course do %>
                 <%= course.dance_style.name %><br />
                 <%= course.level.name %><br />
-                <%= course.instructor.name %><br />
+                <%= course.instructor.name %>
               <% end %>
             <% else %>
               <%= link_to t("views.buttons.new"), new_course_path(timetable_id: timetable.id), class: "btn btn-link" %>
@@ -39,62 +39,3 @@
   <%= back_link_to schools_path, pull: "left" %>
 </div>
 
-<% if false %>
-<%= render "nav_tabs" %>
-
-<div class="tab-content">
-  <br />
-
-<ul class="nav nav-pills">
-  <% @schools.each do |school| %>
-    <li class="<%= 'active' if school.id == @active_school_id %>">
-      <a href="#<%= school.id %>" data-toggle="tab"><%= school.name %></a>
-    </li>
-  <% end %>
-</ul>
-<br />
-<div class="tab-content">
-  <% @schools.each do |school| %>
-    <div class="tab-pane <%= 'active' if school.id == @active_school_id %>" id="<%= school.id %>">
-      <% school.studios.each do |studio| %>
-        <div class="table-responsive">
-          <table class="table">
-            <caption style="text-align: left;"><h4><%= studio.name %></h4></caption>
-            <thead>
-              <th style="width: 9%;"></th>
-              <% 1.step(7) do |cwday| %>
-                <th style="width: 13%;"><%= weekday_ja(cwday) %></th>
-              <% end %>
-            </thead>
-            <tbody>
-              <% studio.timetables.each do |timetable| %>
-                <% if timetable.weekday == 1 %>
-                  <tr>
-                    <th><%= timetable.time_slot.start_time.strftime("%H:%M") %></th>
-                <% end %>
-                <td>
-                  <% course = @courses.find {|course| course.timetable_id == timetable.id } %>
-                  <% if course.present? %>
-                    <%= link_to course do %>
-                      <%= course.dance_style.name %><br />
-                      <%= course.level.name %><br />
-                      <%= course.instructor.name %><br />
-                    <% end %>
-                  <% else %>
-                    <%= link_to t("views.buttons.new"), new_course_path(timetable_id: timetable.id), class: "btn btn-link" %>
-                    <%# new_icon_link_to new_course_path(timetable_id: timetable.id) %>
-                  <% end %>
-                </td>
-                <% if timetable.weekday == 7 %>
-                  </tr>
-                <% end %>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
-</div>
-</div>
-<% end %>

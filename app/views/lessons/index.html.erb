@@ -9,7 +9,11 @@
           <th><%= t("activerecord.models.studio") %></th>
           <th><%= t("activerecord.models.time_slot") %></th>
           <th><%= t("activerecord.attributes.lesson.course_id") %></th>
+          <th><%= t("activerecord.models.member") %></th>
           <th><%= t("activerecord.attributes.lesson.status") %></th>
+          <th>出　席</th>
+          <th>欠　席</th>
+          <th>その他</th>
           <th></th>
         </tr>
       </thead>
@@ -21,7 +25,11 @@
             <td><%= course.timetable.studio.name %></td>
             <td><%= course.timetable.time_slot.start_time %></td>
             <td><%= course.name %></td>
+            <td><%= lesson.number_of_members %></td>
             <td><%= lesson.status %></td>
+            <td><%= lesson.present_rolls %></div></td>
+            <td><%= lesson.absent_rolls %></td>
+            <td><%= lesson.other_rolls %></td>
             <td>
               <% if lesson.new_record? %>
                 <%= form_for(lesson) do |f| %>
