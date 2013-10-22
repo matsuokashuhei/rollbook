@@ -107,7 +107,7 @@ class RollsController < ApplicationController
   def absences
     @rolls = []
     # レッスンを欠席したメンバーを検索する。
-    absences = Roll.absence.joins(:lesson).where("lessons.status = ?", "2").order("lessons.date", "rolls.id").decorate
+    absences = Roll.absences.joins(:lesson).where("lessons.status = ?", "2").order("lessons.date", "rolls.id").decorate
     # レッスンを欠席したメンバーの最古の欠席したレッスンを検索する。
     absences.each do |absence|
       next if @lesson.course_id == absence.lesson.course_id
