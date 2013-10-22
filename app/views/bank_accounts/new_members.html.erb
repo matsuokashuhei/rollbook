@@ -17,7 +17,7 @@
         <thead>
           <tr>
             <th></th>
-            <th><%= t("activerecord.attributes.member.id") %></th>
+            <th><%= t("activerecord.attributes.member.number") %></th>
             <th><%= t("activerecord.attributes.member.name") %></th>
             <th><%= t("activerecord.attributes.member.enter_date") %></th>
           </tr>
@@ -26,8 +26,8 @@
           <% @members.each do |member| %>
             <tr>
               <td><div class="radio"><%= radio_button_tag "member_id", member.id %></div></td>
-              <td><%= member.id %></td>
-              <td><%= display_member_name(member) %></td>
+              <td><%= member.number %></td>
+              <td><%= member.name %></td>
               <td><%= member.enter_date %></td>
             </tr>
           <% end %>
@@ -36,4 +36,5 @@
       <%= button_tag t("views.buttons.select"), class: "btn btn-default pull-right", form: "form" %>
     <% end %>
   </div>
+  <%= back_link_to bank_account_members_path(@bank_account) %>
 </div>

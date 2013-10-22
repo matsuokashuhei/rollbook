@@ -81,13 +81,17 @@ class BankAccountsController < ApplicationController
   end
 
   def new_member
-    @members = Member.where(bank_account_id: nil, leave_date: nil)
+    @members = Member.where(status: "1", bank_account_id: nil, leave_date: nil).decorate
     respond_to do |format|
       format.html { render action: "new_members" }
     end
   end
 
   def create_member
+    if params[:member_id].nil?
+      redirect_to new_bank_account_member_path(@bank_account)
+      return
+    end
     member = Member.find(params[:member_id])
     member.bank_account_id = params[:bank_account_id]
     respond_to do |format|
