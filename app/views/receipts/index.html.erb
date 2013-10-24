@@ -8,8 +8,9 @@
         <tr>
           <th><%= t("activerecord.attributes.member.number") %></th>
           <th><%= t("activerecord.attributes.member.name") %></th>
-          <th><%= t("activerecord.attributes.receipt.amount") %></th>
           <th><%= t("activerecord.attributes.receipt.status") %></th>
+          <th><%= t("activerecord.attributes.receipt.amount") %></th>
+          <th><%= t("activerecord.attributes.receipt.date") %></th>
           <th></th>
           <th></th>
         </tr>
@@ -21,6 +22,7 @@
             <td><%= receipt.member.name %></td>
             <td><div class="pull-right"><%= number_to_currency(receipt.amount) %></div></td>
             <td><%= receipt.status %></td>
+            <td><%= receipt.date %></td>
             <td>
               <%= show_link_to tuition_receipt_path(@tuition, receipt) %>
               <%= edit_link_to edit_tuition_receipt_path(@tuition, receipt), disabled: receipt.edit? == false %>
