@@ -1,6 +1,7 @@
 ja:
   views:
-    title: ROLLBOOK
+    #title: ROLLBOOK
+    title: OGIKB
     buttons:
       new: 登録する
       show: 見　　る
