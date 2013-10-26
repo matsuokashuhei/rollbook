@@ -1,10 +1,9 @@
 class ReceiptsController < ApplicationController
 
-  before_action :set_tuition, only: [:index, :show, :edit, :create, :update]
+  before_action :set_tuition, only: [:index, :show, :edit, :create, :update, :new]
   before_action :set_receipt, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tuition = @tuition.decorate
     @receipts = @tuition.receipts.joins(:member).page(params[:page]).decorate
   end
 
@@ -14,9 +13,9 @@ class ReceiptsController < ApplicationController
   end
 
   # GET /receipts/new
-  def new
-    @receipt = Receipt.new
-  end
+  #def new
+  #  @receipt = Receipt.new
+  #end
 
   # GET /receipts/1/edit
   def edit
@@ -25,19 +24,19 @@ class ReceiptsController < ApplicationController
 
   # POST /receipts
   # POST /receipts.json
-  def create
-    @receipt = Receipt.new(receipt_params)
+  #def create
+  #  @receipt = Receipt.new(receipt_params)
 
-    respond_to do |format|
-      if @receipt.save
-        format.html { redirect_to @receipt, notice: 'Receipt was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @receipt }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @receipt.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  #  respond_to do |format|
+  #    if @receipt.save
+  #      format.html { redirect_to @receipt, notice: 'Receipt was successfully created.' }
+  #      format.json { render action: 'show', status: :created, location: @receipt }
+  #    else
+  #      format.html { render action: 'new' }
+  #      format.json { render json: @receipt.errors, status: :unprocessable_entity }
+  #    end
+  #  end
+  #end
 
   # PATCH/PUT /receipts/1
   # PATCH/PUT /receipts/1.json
@@ -63,8 +62,30 @@ class ReceiptsController < ApplicationController
     end
   end
 
-  def new_members
-    @members = Member.new_members(@tuition.month)
+  def new
+    @members = Member.new_members(@tuition.month.sub("/", "")).decorate
+  end
+
+  def create
+    if params[:members].nil?
+      redirect_to new_tuition_receipts_path(@tuition), flash: { alert: "会員を選んでください。" }
+      return
+    end
+    ActiveRecord::Base.transaction do
+      params[:members].each do |member_params|
+        member = Member.find(member_params[:id])
+        receipt = member.receipts.build(tuition_id: @tuition.id,
+                                        member_id: member.id,
+                                        method: Receipt::METHODS[:CASH],
+                                        amount: 0,
+                                        status: Receipt::STATUSES[:UNPAID])
+        member.members_courses.active.joins(:course).each do |members_course|
+          receipt.amount += members_course.course.monthly_fee
+        end
+        receipt.save
+      end
+    end
+    redirect_to tuition_receipts_path(@tuition)
   end
 
   private

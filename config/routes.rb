@@ -48,14 +48,8 @@ Rollbook::Application.routes.draw do
   match "tuitions/:tuition_id/debits/edit" => "debits#bulk_edit", via: :get, as: "edit_tuition_debits"
   match "tuitions/:tuition_id/debits" => "debits#bulk_update", via: :patch
   match "receipts" => "tuitions#receipts", via: :get, as: "receipts"
-
-  #match "debits/:month" => "debits#index", via: :get, as: "debits"
-  #match "debits/:month/edit" => "debits#bulk_edit", via: :get, as: "edit_debits"
-  #match "debits/:month" => "debits#bulk_update", via: :patch
-  #match "debits/:month/fix" => "debits#fix", via: :post, as: "fix_debits"
-  #resources :receipts
-
-
+  #match "tuitions/:tuition_id/newmembers/" => "receipts#newmembers", via: :get, as: "newmembers"
+  match "tuitions/:tuition_id/receipts/new" => "receipts#bulk_new", via: :get, as: "new_tuition_receipts"
 
   #resources :schools do
   #  resources :studios

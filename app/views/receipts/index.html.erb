@@ -2,6 +2,7 @@
 
 <div class="tab-content">
   <br />
+  <%= link_to t("views.buttons.new"), new_tuition_receipts_path(@tuition), class: "btn btn-default pull-right" %>
   <div class="table-responsive">
     <table class="table">
       <thead>
@@ -9,6 +10,7 @@
           <th><%= t("activerecord.attributes.member.number") %></th>
           <th><%= t("activerecord.attributes.member.name") %></th>
           <th><%= t("activerecord.attributes.receipt.status") %></th>
+          <th><%= t("activerecord.attributes.receipt.method") %></th>
           <th><%= t("activerecord.attributes.receipt.amount") %></th>
           <th><%= t("activerecord.attributes.receipt.date") %></th>
           <th></th>
@@ -20,8 +22,9 @@
           <tr>
             <td><%= receipt.member.number %></td>
             <td><%= receipt.member.name %></td>
-            <td><div class="pull-right"><%= number_to_currency(receipt.amount) %></div></td>
             <td><%= receipt.status %></td>
+            <td><%= receipt.method %></td>
+            <td><div class="pull-right"><%= number_to_currency(receipt.amount) %></div></td>
             <td><%= receipt.date %></td>
             <td>
               <%= show_link_to tuition_receipt_path(@tuition, receipt) %>
