@@ -16,7 +16,10 @@ module ApplicationHelper
     class_names = "btn btn-default"
     class_names << " pull-" + pull if pull.present?
     class_names << " disabled" if disabled
-    link_to t("views.buttons.new"), path, class: class_names
+    #link_to t("views.buttons.new"), path, class: class_names
+    link_to path, class: class_names do
+      content_tag(:span, " #{t("views.buttons.new")}", class: "glyphicon glyphicon-user")
+    end
   end
 
   def edit_link_to(path, disabled: false, pull: nil)
