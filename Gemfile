@@ -69,3 +69,5 @@ gem 'rails_12factor', '0.0.2', group: :production
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+gem "font-awesome-sass"
