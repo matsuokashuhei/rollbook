@@ -18,7 +18,8 @@ module ApplicationHelper
     class_names << " disabled" if disabled
     #link_to t("views.buttons.new"), path, class: class_names
     link_to path, class: class_names do
-      content_tag(:span, " #{t("views.buttons.new")}", class: "glyphicon glyphicon-user")
+      #content_tag(:span, " #{t("views.buttons.new")}", class: "glyphicon glyphicon-user")
+      content_tag(:i, nil, class: "fa fa-camera-retro")
     end
   end
 
