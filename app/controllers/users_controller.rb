@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     @user.password = "from1996"
     respond_to do |format|
       if @user.save
-        format.html { redirect_to users_path, notice: "ユーザーを登録しました。" }
+        format.html { redirect_to users_path, notice: "ユーザーを登録しました。初期パスワードは「from1996」です。" }
       else
         format.html { render action: "new" }
       end

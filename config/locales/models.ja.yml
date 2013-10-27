@@ -155,5 +155,7 @@ ja:
         name: 名前
         email: Eメール
         password: パスワード
+        password_confirmation: 確認用パスワード
+        current_password: 現在のパスワード
         role: 権限
         status: 状態

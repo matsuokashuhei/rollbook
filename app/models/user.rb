@@ -41,7 +41,11 @@ class User < ActiveRecord::Base
   end
 
   def delete?
-    true
+    unless self.admin?
+      true
+    else
+      false
+    end
   end
 
 end
