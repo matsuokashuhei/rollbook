@@ -41,7 +41,8 @@ end
 
 group :development do
   gem 'pry-rails'
-  gem 'pry-debugger'
+  gem 'pry-stack_explorer'
+  gem 'pry-byebug'
   gem 'hirb'
   gem 'hirb-unicode'
   gem 'awesome_print'
