@@ -1,5 +1,8 @@
 Rollbook::Application.routes.draw do
 
+  # ユーザー認証
+  devise_for :users
+
   # 会員
   resources :members do
     resources :members_courses, as: :courses, path: :courses do

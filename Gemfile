@@ -56,7 +56,7 @@ group :development, :test do
   gem 'debugger'
 end
 
-gem 'rails_12factor', '0.0.2', group: :production
+#gem 'rails_12factor', '0.0.2', group: :production
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -70,4 +70,7 @@ gem 'rails_12factor', '0.0.2', group: :production
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+gem "bootstrap-sass", '~> 3.0.0.0.rc'
 gem "font-awesome-sass"
+
+gem "devise"

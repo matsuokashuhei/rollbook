@@ -41,6 +41,6 @@ module Rollbook
     # すべてのヘルパーを読み込まない。
     #config.action_controller.include_all_helpers = false
 
-    config.assets.initialize_on_precompile = false
+    #config.assets.initialize_on_precompile = false
   end
 end
