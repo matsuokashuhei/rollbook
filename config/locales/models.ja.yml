@@ -17,6 +17,7 @@ ja:
       receipt: 支払い
       task: タスク
       tuition: 月謝
+      user: ユーザー
     attributes:
       school:
         name: 名前
@@ -150,3 +151,9 @@ ja:
         debit_status: 残高不足
         receipt_status: 状態
         note: メモ
+      user:
+        name: 名前
+        email: Eメール
+        password: パスワード
+        role: 権限
+        status: 状態

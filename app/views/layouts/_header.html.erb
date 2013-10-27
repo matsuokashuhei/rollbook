@@ -39,6 +39,9 @@
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
+      <% if current_user.admin? %>
+        <li class="<%= 'active' if controller?(["users"]) %>"><%= users_link %></li>
+      <% end %>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
           <%= current_user.try(:name) %> <b class="caret"></b>

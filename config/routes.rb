@@ -1,7 +1,21 @@
 Rollbook::Application.routes.draw do
 
-  # ユーザー認証
-  devise_for :users
+  get "users/index"
+  # ユーザー
+  devise_for :users, skip: :registrations
+  devise_scope :user do
+    resource :registration,
+      only: [:create, :edit, :update],
+      path: 'users',
+      path_names: { new: 'sign_up' },
+      controller: 'devise/registrations',
+      as: :user_registration do
+        get :cancel
+      end
+  end
+  scope "/admin" do
+    resources :users
+  end
 
   # 会員
   resources :members do

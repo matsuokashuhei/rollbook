@@ -1,0 +1,37 @@
+<%= render "breadcrumb" %>
+
+<div class="tab-content">
+  <br/>
+  <%= new_link_to new_user_path, pull: "right" %>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= t("activerecord.attributes.user.name") %></th>
+          <th><%= t("activerecord.attributes.user.email") %></th>
+          <th><%= t("activerecord.attributes.user.role") %></th>
+          <th><%= t("activerecord.attributes.user.status") %></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td><%= user.role %></td>
+            <td><%= user.status %></td>
+            <td>
+              <%= show_link_to user_path(user) %>
+              <% unless current_user.id == user.id %>
+                <%= edit_link_to edit_user_path(user) %>
+                <%= render "shared/delete_button", object: user %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+

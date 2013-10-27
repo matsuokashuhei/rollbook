@@ -1,0 +1,37 @@
+<%= form_for(@user, url: user_path(@user), html: { role: "form", class: "form-horizontal", id: "form" }) do |f| %>
+
+  <%= render "shared/errors", object: @user %>
+
+  <%= "<fieldset disabled>".html_safe if current_page?(user_path(@user)) %>
+
+  <div class="form-group">
+    <%= f.label :name, class: "col-md-1" %>
+    <div class="col-md-2 <%= 'has-error' if @user.errors[:name].present? %>">
+      <%= f.text_field :name, class: "form-control"  %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email, class: "col-md-1" %>
+    <div class="col-md-3 <%= 'has-error' if @user.errors[:email].present? %>">
+      <%= f.text_field :email, class: "form-control"  %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :role, class: "col-md-1" %>
+    <div class="col-md-2 <%= 'has-error' if @user.errors[:role].present? %>">
+      <%= f.select :role, [["管理者", "1"], ["店長", "2"], ["スタッフ", "3"]], {}, { class: "form-control" } %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :status, class: "col-md-1" %>
+    <div class="col-md-1 <%= 'has-error' if @user.errors[:status].present? %>">
+      <%= f.select :status, [["有効", "1"], ["無効", "0"]], {}, { class: "form-control" } %>
+    </div>
+  </div>
+
+  <%= "</fieldset>".html_safe if current_page?(user_path(@user)) %>
+
+<% end %>

@@ -1,0 +1,8 @@
+<%= render "breadcrumb" %>
+<div class="tab-content">
+  <br />
+  <%= render 'form' %>
+  <%= edit_link_to edit_user_path(@user), pull: "right" %>
+  <%= back_to_index_link_to users_path, pull: "left" %>
+</div>
+
