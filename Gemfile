@@ -72,6 +72,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 gem "bootstrap-sass", '~> 3.0.0.0.rc'
-gem "font-awesome-sass"
+#gem "font-awesome-sass"
+gem "font-awesome-rails", "4.0.1.0"
 
 gem "devise"

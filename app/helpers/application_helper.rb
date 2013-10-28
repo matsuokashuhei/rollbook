@@ -9,7 +9,9 @@ module ApplicationHelper
   end
 
   def icon_to_new
-    content_tag :span, nil, class: "glyphicon glyphicon-plus"
+    #fa_icon "camera-retro"
+    #content_tag :span, nil, class: "glyphicon glyphicon-plus"
+    content_tag :i, nil, class: "fa fa-camera-retro"
   end
 
   def icon_to_edit

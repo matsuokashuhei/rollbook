@@ -73,8 +73,8 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
-    font-awesome-sass (3.2.1.4)
-      sass-rails (>= 3.1.1)
+    font-awesome-rails (4.0.1.0)
+      railties (>= 3.2, < 5.0)
     hike (1.2.3)
     hirb (0.7.1)
     hirb-unicode (0.0.5)
@@ -205,7 +205,7 @@ DEPENDENCIES
   debugger
   devise
   draper (~> 1.0)
-  font-awesome-sass
+  font-awesome-rails (= 4.0.1.0)
   hirb
   hirb-unicode
   jbuilder (~> 1.2)
