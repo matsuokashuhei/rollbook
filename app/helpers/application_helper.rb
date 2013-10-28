@@ -5,25 +5,29 @@ module ApplicationHelper
   end
 
   def icon_to_show
-    content_tag :span, nil, class: "glyphicon glyphicon-play-circle"
+    fa_icon "square-o lg"
+    #content_tag :span, nil, class: "glyphicon glyphicon-play-circle"
   end
 
   def icon_to_new
-    #fa_icon "camera-retro"
+    fa_icon "plus lg"
     #content_tag :span, nil, class: "glyphicon glyphicon-plus"
-    content_tag :i, nil, class: "fa fa-camera-retro"
+    #content_tag :i, nil, class: "fa fa-camera-retro"
   end
 
   def icon_to_edit
-    content_tag :span, nil, class: "glyphicon glyphicon-edit"
+    #content_tag :span, nil, class: "glyphicon glyphicon-edit"
+    fa_icon "edit lg"
   end
 
   def icon_to_destroy
+    fa_icon "trash lg"
     content_tag :span, nil, class: "glyphicon glyphicon-trash"
   end
 
   def icon_to_save
-    content_tag :span, nil, class: "glyphicon glyphicon-floppy-save"
+    fa_icon "save lg"
+    #content_tag :span, nil, class: "glyphicon glyphicon-floppy-save"
   end
 
   def link_to_show(path, disabled: false)
@@ -99,8 +103,9 @@ module ApplicationHelper
     class_value << " pull-" + pull if pull.present?
     class_value << " disabled" unless save
     button_tag class: class_value, form: "form" do
-      icon_to_save + " " + t("views.buttons.create")
-      content_tag(:span, nil, class: "glyphicon glyphicon-floppy-save") + " " + t("views.buttons.create")
+      fa_icon "save lg", text: t("views.buttons.create")
+      #icon_to_save + " " + t("views.buttons.create")
+      #content_tag(:span, nil, class: "glyphicon glyphicon-floppy-save") + " " + t("views.buttons.create")
     end
   end
 

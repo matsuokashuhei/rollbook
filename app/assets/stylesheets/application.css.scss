@@ -19,3 +19,6 @@ $iconWhiteSpritePath: "/assets/glyphicons-halflings-white.png";
 
 @import "font-awesome";
 
+.table tbody > tr > td {
+  vertical-align: middle;
+}
