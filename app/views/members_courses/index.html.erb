@@ -1,10 +1,10 @@
 <%= render "breadcrumb" %>
 <%= render "nav_tabs" %>
-<%= new_link_to new_member_course_path(@member), pull: "right" %>
+<br />
+<%= button_to_new new_member_course_path(@member), pull: "right" %>
 <div class="tab-content">
-  <br />
   <div class="table-responsive">
-    <table class="table">
+    <table class="table table-striped table-condensed">
       <thead>
         <tr>
           <th><%= t("activerecord.models.school") %></th>
@@ -33,32 +33,9 @@
             <td><%= members_course.begin_date %></td>
             <td><%= members_course.end_date %></td>
             <td>
-            <%= link_to t("views.buttons.show"), member_course_path(@member, members_course), class: "btn btn-default" %>
-            <%= link_to t("views.buttons.edit"), edit_member_course_path(@member, members_course), class: "btn btn-default" %>
-              <% if members_course.delete? %>
-                <a data-toggle="modal" href="#object_<%= members_course.id %>" class="btn btn-default"><%= t("views.buttons.delete") %></a>
-                <div class="modal fade" id="object_<%= members_course.id %>">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">確認</h4>
-                      </div>
-                      <div class="modal-body">
-                        削除してよいですか？
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">閉 じ る</button>
-                        <%= link_to t("views.buttons.delete"), member_course_path(@member, members_course), method: :delete, class: "btn btn-default" %>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              <% else %>
-                <button type="button" class="btn btn-default" disabled="disabled">
-                  <%= t("views.buttons.delete") %>
-                </button>
-              <% end %>
+              <%= link_to_show member_course_path(@member, members_course) %>
+              <%= link_to_edit edit_member_course_path(@member, members_course) %>
+              <%= link_to_destroy members_course.id, member_course_path(@member, members_course), destroy: members_course.delete? %>
             </td>
           </tr>
         <% end %>

@@ -33,7 +33,7 @@
             <td><%= lesson.date %></td>
             <td><%= course.name %></td>
             <td><%= roll.status %></td>
-            <td><%= link_to t("views.buttons.show"), lesson_rolls_path(lesson), class: "btn btn-default" %></td>
+            <td><%= link_to_show lesson_rolls_path(lesson) %></td>
           </tr>
         <% end %>
     </table>

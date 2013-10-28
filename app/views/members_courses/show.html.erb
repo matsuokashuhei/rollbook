@@ -5,6 +5,6 @@
   <br />
   <%= render "shared/notice" %>
   <%= render "form" %>
-  <%= back_link_to member_courses_path(@member), pull: "left" %>
-  <%= edit_link_to edit_member_course_path(@member, @members_course), pull: "right" %>
+  <%= button_to_back member_courses_path(@member), pull: "left" %>
+  <%= button_to_edit edit_member_course_path(@member, @members_course), pull: "right" %>
 </div>

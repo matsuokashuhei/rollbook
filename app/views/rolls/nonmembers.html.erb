@@ -23,7 +23,7 @@
         </tbody>
       </table>
     </div>
-    <%= back_link_to edit_lesson_rolls_path(@lesson), pull: "left" %>
+    <%= button_to_back edit_lesson_rolls_path(@lesson), pull: "left" %>
     <%= button_tag t("views.buttons.select"), class: "btn btn-default pull-right", form: "form" %>
   <% end %>
 </div>

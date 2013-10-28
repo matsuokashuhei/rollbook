@@ -6,7 +6,4 @@
     <a href="#recess" data-toggle="tab"><%= t("activerecord.models.recess") %></a>
   </li>
   <li><%= member_receipts_link(@member) %></li>
-  <% if current_page?(member_recesses_path(@member)) %>
-    <%= new_link_to new_member_recess_path(@member), pull: "right" %>
-  <% end %>
 </ul>

@@ -36,10 +36,12 @@
                   <%= f.hidden_field :course_id %>
                   <%= f.hidden_field :date %>
                   <%= f.hidden_field :status %>
-                  <%= f.submit t("views.buttons.show"), class: "btn btn-default" %>
+                  <%= button_tag class: "btn btn-link" do %>
+                    <%= icon_to_show %>
+                  <% end %>
                 <% end %>
               <% else %>
-                <%= show_link_to lesson_rolls_path(lesson) %>
+                <%= link_to_show lesson_rolls_path(lesson) %>
               <% end %>
             </td>
           </tr>
@@ -48,7 +50,7 @@
     </table>
     <%# link_to_if(@date.yesterday.day < 29, @date.yesterday, lessons_path(date: @date.yesterday.strftime("%Y%m%d")), class: "btn btn-link pull-left") {} %>
     <%# link_to_if(@date.tomorrow.day < 29, @date.tomorrow, lessons_path(date: @date.tomorrow.strftime("%Y%m%d")), class: "btn btn-link pull-right") {} %>
-    <%= back_link_to lessons_path(month: @date.strftime("%Y%m")), pull: "left" %>
+    <%= button_to_back lessons_path(month: @date.strftime("%Y%m")), pull: "left" %>
   </div>
 </div>
 

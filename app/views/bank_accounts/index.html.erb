@@ -1,7 +1,6 @@
-<%# render "nav_tabs" %>
 <%= render "breadcrumb" %>
 
-<%= new_link_to new_bank_account_path, pull: "right" %>
+<%= button_to_new new_bank_account_path, pull: "right" %>
 
 <div class="tab-content">
   <br />
@@ -24,9 +23,9 @@
             <td><%= bank_account.status %></td>
             <td><div class="pull-right"><%= bank_account.members.active.count %></div></td>
             <td>
-              <%= show_link_to bank_account_path(bank_account) %>
-              <%= edit_link_to edit_bank_account_path(bank_account) %>
-              <%= render "shared/delete_button", object: bank_account %>
+              <%= link_to_show bank_account_path(bank_account) %>
+              <%= link_to_edit edit_bank_account_path(bank_account) %>
+              <%= link_to_destroy bank_account.id, bank_account_path(bank_account) %>
             </td>
           </tr>
         <% end %>

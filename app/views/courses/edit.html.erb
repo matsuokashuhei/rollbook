@@ -3,6 +3,6 @@
   <%= render "nav_tabs" %>
   <br />
   <%= render 'form' %>
-  <%= save_button_tag pull: "right" %>
-  <%= back_link_to course_path(@course), pull: "left" %>
+  <%= button_to_save pull: "right" %>
+  <%= button_to_back courses_path, pull: "left" %>
 </div>

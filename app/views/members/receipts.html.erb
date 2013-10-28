@@ -28,7 +28,7 @@
             <td><%= receipt.tuition.month %></td>
             <td><div class="pull-right"><%= number_to_currency(receipt.amount) %></div></td>
             <td><%= receipt.status %></td>
-            <td><%= show_link_to(tuition_receipt_path(receipt.tuition, receipt)) %></td>
+            <td><%= link_to_show tuition_receipt_path(receipt.tuition, receipt) %></td>
           </tr>
         <% end %>
     </table>

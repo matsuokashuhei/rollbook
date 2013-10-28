@@ -36,7 +36,7 @@
             <td><%= members_course.member.decorate.tuition %></td>
             <td><%= members_course.begin_date %></td>
             <td><%= members_course.end_date %></td>
-            <td><%= link_to t("views.buttons.show"), member_course_path(members_course.member, members_course), class: "btn btn-default" %></td>
+            <td><%= link_to_show member_course_path(members_course.member, members_course) %></td>
           </tr>
         <% end %>
       </tbody>

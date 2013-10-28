@@ -2,6 +2,6 @@
 <div class="tab-content">
   <br />
   <%= render "bulk_form" %>
-  <%= save_button_tag pull: "right" %>
-  <%= back_link_to tuition_debits_path(@tuition), pull: "left" %>
+  <%= button_to_save pull: "right" %>
+  <%= button_to_back tuition_debits_path(@tuition), pull: "left" %>
 </div>

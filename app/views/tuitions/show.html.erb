@@ -5,7 +5,7 @@
   <%= render "breadcrumb" %>
   <%= render "shared/notice" %>
   <%= render "form" %>
-  <%= back_link_to tuitions_path, pull: "left" %>
-  <%= edit_link_to edit_tuition_path(@tuition), pull: "right" %>
+  <%= button_to_back tuitions_path, pull: "left" %>
+  <%= button_to_edit edit_tuition_path(@tuition), pull: "right" %>
 </div>
 

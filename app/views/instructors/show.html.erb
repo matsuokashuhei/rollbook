@@ -4,6 +4,6 @@
   <br />
   <%= render "shared/notice" %>
   <%= render "form" %>
-  <%= back_link_to instructors_path, pull: "left" %>
-  <%= edit_link_to edit_instructor_path(@instructor), pull: "right" %>
+  <%= button_to_back instructors_path, pull: "left" %>
+  <%= button_to_edit edit_instructor_path(@instructor), pull: "right" %>
 </div>

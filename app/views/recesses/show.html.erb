@@ -4,6 +4,6 @@
 <div class="tab-content">
   <br />
   <%= render "form" %>
-  <%= edit_link_to edit_member_recess_path(@member, @recess), pull: "right" %>
-  <%= back_link_to member_recesses_path(@member), pull: "left" %>
+  <%= button_to_edit edit_member_recess_path(@member, @recess), pull: "right" %>
+  <%= button_to_back member_recesses_path(@member), pull: "left" %>
 </div>

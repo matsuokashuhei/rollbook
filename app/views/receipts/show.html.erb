@@ -4,6 +4,6 @@
   <br />
   <%= render "shared/notice" %>
   <%= render "form" %>
-  <%= back_link_to tuition_receipts_path(@tuition), pull: "left" %>
-  <%= edit_link_to edit_tuition_receipt_path(@tuition, @receipt), pull: "right", disabled: @receipt.edit? == false %>
+  <%= button_to_back tuition_receipts_path(@tuition), pull: "left" %>
+  <%= button_to_edit edit_tuition_receipt_path(@tuition, @receipt), pull: "right", edit: @receipt.edit? %>
 </div>

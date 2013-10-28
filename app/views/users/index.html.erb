@@ -1,9 +1,8 @@
 <%= render "breadcrumb" %>
 
 <div class="tab-content">
-  <br/>
   <%= render "shared/notice" %>
-  <%= new_link_to new_user_path, pull: "right" %>
+  <%= button_to_new new_user_path, pull: "right" %>
   <div class="table-responsive">
     <table class="table">
       <thead>
@@ -23,10 +22,10 @@
             <td><%= user.role %></td>
             <td><%= user.status %></td>
             <td>
-              <%= show_link_to user_path(user) %>
+              <%= link_to_show user_path(user) %>
               <% unless current_user.id == user.id %>
-                <%= edit_link_to edit_user_path(user) %>
-                <%= render "shared/delete_button", object: user %>
+                <%= link_to_edit edit_user_path(user) %>
+                <%= link_to_destroy user.id, user_path(user) %>
               <% end %>
             </td>
           </tr>

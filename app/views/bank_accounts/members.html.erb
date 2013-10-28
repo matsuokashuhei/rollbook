@@ -28,8 +28,9 @@
             <td><%= member.name %></td>
             <td><div class="pull-right"><%= member.members_courses.active.count %></div></td>
             <td>
-              <%= show_link_to member_path(member) %>
-              <%= link_to t("views.buttons.delete"), destroy_bank_account_member_path(@bank_account, member), method: :delete, class: "btn btn-default" %>
+              <%= link_to_show member_path(member) %>
+              <%= link_to_destroy member.id, destroy_bank_account_member_path(@bank_account, member) %>
+              <%# link_to t("views.buttons.delete"), destroy_bank_account_member_path(@bank_account, member), method: :delete, class: "btn btn-default" %>
             </td>
           </tr>
         <% end %>

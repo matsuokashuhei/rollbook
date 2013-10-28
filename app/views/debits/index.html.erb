@@ -23,11 +23,11 @@
     </table>
   </div>
   <%= paginate @debits %>
-  <%= back_link_to tuitions_path, pull: "left" %>
+  <%= button_to_back tuitions_path, pull: "left" %>
   <% if @tuition.fix? %>
     <%= render "fix_button" %>
   <% else %>
     <%= link_to t("views.buttons.fix"), nil, class: "btn btn-default pull-right disabled" %>
   <% end %>
-  <%= edit_link_to edit_tuition_debits_path, pull: "right", disabled: @tuition.edit? == false %>
+  <%= button_to_edit edit_tuition_debits_path, pull: "right", edit: @tuition.edit? %>
 </div>

@@ -14,4 +14,10 @@
 $iconSpritePath: "/assets/glyphicons-halflings.png";
 $iconWhiteSpritePath: "/assets/glyphicons-halflings-white.png";
 @import "bootstrap";
+//$fa-font-path: "/assets/fontawesome-webfont";
+//@import "font-awesome";
+
+.table tbody > tr > td {
+    vertical-align: middle;
+}
 

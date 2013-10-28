@@ -4,7 +4,7 @@
   <br />
   <%= render "form" %>
   <%= render "lessons/fix_button" %>
-  <%= edit_link_to edit_lesson_rolls_path(@lesson), pull: "right", disabled: @lesson.edit? == false %>
-  <%= back_link_to lessons_path(date: @lesson.date.strftime("%Y%m%d")), pull: "left" %>
+  <%= button_to_edit edit_lesson_rolls_path(@lesson), pull: "right", edit: @lesson.edit? %>
+  <%= button_to_back lessons_path(date: @lesson.date.strftime("%Y%m%d")), pull: "left" %>
 </div>
 

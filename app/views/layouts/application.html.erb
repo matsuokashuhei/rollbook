@@ -14,7 +14,13 @@
     <div class="container">
       <%= yield %>
 
+      <%= tag(:br) if Rails.env.development? %>
+      <%= tag(:br) if Rails.env.development? %>
       <%= debug(params) if Rails.env.development? %>
     </div>
+    <script>
+      $("[data-toggle~='tooltip']").tooltip()
+      $("[data-toggle~='modal']").tooltip()
+    </script>
   </body>
 </html>

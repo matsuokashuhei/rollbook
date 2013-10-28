@@ -45,8 +45,8 @@
               <%= tuition.debit_status %>
             </td>
             <td>
-              <%= show_link_to tuition_debits_path(tuition) %>
-              <%= render "shared/delete_button", object: tuition %>
+              <%= link_to_show tuition_debits_path(tuition) %>
+              <%= link_to_destroy tuition.id, tuition_path(tuition), destroy: tuition.delete? %>
             </td>
           </tr>
         <% end %>

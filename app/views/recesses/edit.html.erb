@@ -4,6 +4,6 @@
 <div class="tab-content">
   <br />
   <%= render "form" %>
-  <%= save_button_tag pull: "right" %>
-  <%= back_link_to member_recesses_path(@member), pull: "left" %>
+  <%= button_to_save pull: "right" %>
+  <%= button_to_back member_recesses_path(@member), pull: "left" %>
 </div>

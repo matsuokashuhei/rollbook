@@ -36,7 +36,7 @@ $(document).on("focus", "[data-behaviour~='monthpicker']", function(e) {
   });
 });
 
-$(document).on("focus", "[data-toggle~='tooltip']", function(e) {
-  $(this).tooltip()
-});
+//$(document).on("focus", "[data-toggle~='tooltip']", function(e) {
+//  $(this).tooltip()
+//});
 //$("[data-toggle~='tooltip']").tooltip()

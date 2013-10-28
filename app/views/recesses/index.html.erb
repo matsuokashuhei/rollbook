@@ -1,7 +1,8 @@
 <%= render "breadcrumb" %>
 <%= render "nav_tabs" %>
+<br />
+<%= button_to_new new_member_recess_path(@member), pull: "right" %>
 <div class="tab-content">
-  <br/>
   <%= render "shared/notice" %>
   <div class="table-responsive">
     <table class="table">
@@ -22,9 +23,9 @@
             <td><%= recess.members_course.course.name %></td>
             <td><%= recess.status %></td>
             <td>
-              <%= show_link_to member_recess_path(@member, recess) %>
-              <%= edit_link_to edit_member_recess_path(@member, recess) %>
-              <%= render "delete_button", object: recess %>
+              <%= link_to_show member_recess_path(@member, recess) %>
+              <%= link_to_edit edit_member_recess_path(@member, recess) %>
+              <%= link_to_destroy recess.id, member_recess_path(@member, recess), destroy: recess.delete? %>
             </td>
           </tr>
         <% end %>

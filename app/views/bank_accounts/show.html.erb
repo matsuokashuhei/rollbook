@@ -4,10 +4,10 @@
   <br />
   <%= render "shared/notice" %>
   <%= render "form" %>
-  <%= back_link_to bank_accounts_path, pull: "left" %>
+  <%= button_to_back bank_accounts_path, pull: "left" %>
   <% if @member.present? %>
-    <%= edit_link_to edit_bank_account_path(@bank_account, member_id: @member.id), pull: "right" %>
+    <%= button_to_edit edit_bank_account_path(@bank_account, member_id: @member.id), pull: "right" %>
   <% else %>
-    <%= edit_link_to edit_bank_account_path(@bank_account), pull: "right" %>
+    <%= button_to_edit edit_bank_account_path(@bank_account), pull: "right" %>
   <% end %>
 </div>

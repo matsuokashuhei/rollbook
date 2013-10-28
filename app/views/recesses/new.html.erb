@@ -3,6 +3,6 @@
 <div class="tab-content">
   <br />
   <%= render "form" %>
-  <%= button_tag t("views.buttons.create"), class: "btn btn-default pull-right", form: "form" %>
-  <%= link_to t("views.buttons.back"), member_recesses_path(@member), class: "btn btn-default pull-left" %>
+  <%= button_to_save pull: "right" %>
+  <%= button_to_back member_recesses_path(@member), pull: "left" %>
 </div>

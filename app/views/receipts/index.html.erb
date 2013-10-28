@@ -1,8 +1,7 @@
 <%= render "breadcrumb" %>
 
+<%= button_to_new new_tuition_receipts_path(@tuition), pull: "right" %>
 <div class="tab-content">
-  <br />
-  <%= link_to t("views.buttons.new"), new_tuition_receipts_path(@tuition), class: "btn btn-default pull-right" %>
   <div class="table-responsive">
     <table class="table">
       <thead>
@@ -27,8 +26,8 @@
             <td><div class="pull-right"><%= number_to_currency(receipt.amount) %></div></td>
             <td><%= receipt.date %></td>
             <td>
-              <%= show_link_to tuition_receipt_path(@tuition, receipt) %>
-              <%= edit_link_to edit_tuition_receipt_path(@tuition, receipt), disabled: receipt.edit? == false %>
+              <%= link_to_show tuition_receipt_path(@tuition, receipt) %>
+              <%= link_to_edit edit_tuition_receipt_path(@tuition, receipt), edit: receipt.edit? %>
             </td>
           </tr>
         <% end %>
