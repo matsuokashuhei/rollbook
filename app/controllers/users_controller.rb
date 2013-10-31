@@ -3,7 +3,8 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @users = User.where("role >= ?", current_user.role).decorate
+    #@users = User.where("role >= ?", current_user.role).decorate
+    @users = User.all.decorate
   end
 
   def new
