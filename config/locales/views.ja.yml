@@ -28,6 +28,7 @@ ja:
     pagination:
       previous: "← 前へ"
       next: "次へ →"
+      truncate: "..."
     weekdays:
       1: 月
       2: 火

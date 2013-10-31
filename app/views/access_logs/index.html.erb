@@ -35,7 +35,13 @@
           <tr>
             <td style="padding: 0px;"><%= access_log.created_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
             <td style="padding: 0px;"><%= access_log.user_name %></td>
-            <td style="padding: 0px;"><%= link_to access_log.operation, access_log.fullpath %></td>
+            <td style="padding: 0px;">
+              <% if access_log.request_method == "GET" %>
+                <%= link_to access_log.operation, access_log.fullpath %>
+              <% else %>
+                <%= access_log.fullpath %>
+              <% end %>
+            </td>
             <td style="padding: 0px;"><%= access_log.operation_type %></td>
             <td style="padding: 0px;"><%= access_log.ip %></td>
             <td style="padding: 0px;"><%= access_log.remote_ip %></td>
