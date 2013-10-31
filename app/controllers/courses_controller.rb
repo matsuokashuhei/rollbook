@@ -15,10 +15,12 @@ class CoursesController < ApplicationController
       redirect_to schools_path
       return
     end
-    #@schools = School.where(id: params[:school_id]).includes(studios: [timetables: [:courses, :time_slot]]).order("schools.open_date, studios.open_date, time_slots.start_time, timetables.weekday" )
+    @current_date = params[:date].to_date
     @studio = Studio.find(params[:studio_id])
     @timetables = @studio.timetables.joins(:time_slot).order("time_slots.start_time, timetables.weekday")
-    @courses = Course.joins(:instructor, :dance_style, :level).active(params[:date].to_date).decorate
+    @courses = Course.joins(:instructor, :dance_style, :level).active(@current_date).decorate
+    @before_month = (@current_date - 1.month).beginning_of_month
+    @next_month = (@current_date + 1.month).beginning_of_month
   end
 
   # GET /courses/1

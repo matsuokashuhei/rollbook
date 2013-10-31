@@ -36,6 +36,23 @@
       </tbody>
     </table>
   </div>
-  <%= button_to_back schools_path, pull: "left" %>
+  <div class="row">
+    <div class="col-md-6">
+      <%= link_to courses_path(date: @before_month.strftime("%Y%m%d"), studio_id: @studio.id), class: "btn btn-link pull-left" do %>
+        <%= fa_icon "caret-left", text: @before_month.strftime("%Y年%m月") %>
+      <% end %>
+    </div>
+    <div class="col-md-6">
+      <%= link_to courses_path(date: @next_month.strftime("%Y%m%d"), studio_id: @studio.id), class: "btn btn-link pull-right" do %>
+        <%= @next_month.strftime("%Y年%m月") %> <%= fa_icon "caret-right" %>
+      <% end %>
+    </div>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-md-1">
+      <%= button_to_back schools_path, pull: "left" %>
+    </div>
+  </div>
 </div>
 
