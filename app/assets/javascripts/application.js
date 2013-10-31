@@ -36,6 +36,14 @@ $(document).on("focus", "[data-behaviour~='monthpicker']", function(e) {
   });
 });
 
+$(document).on("focus", "[data-behaviour~='datetimepicker']", function(e) {
+  $(this).datetimepicker({
+    startView: 1,
+    format: "yyyy/MM/dd hh:mm:ss",
+    language: "ja"
+  });
+});
+
 //$(document).on("focus", "[data-toggle~='tooltip']", function(e) {
 //  $(this).tooltip()
 //});

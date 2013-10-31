@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
          :trackable,
          :validatable,
          :timeoutable
+  has_many :access_logs
 
   ROLES = {
     SYSTEM: "0",

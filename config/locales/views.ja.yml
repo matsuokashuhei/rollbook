@@ -19,6 +19,7 @@ ja:
       roll: 出　　欠
       course: ク ラ ス
       bank_account: 支　　払
+      search: 検索する
     messages:
       validates:
         title: 保存に失敗しました。

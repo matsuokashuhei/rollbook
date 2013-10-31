@@ -18,6 +18,7 @@ ja:
       task: タスク
       tuition: 月謝
       user: ユーザー
+      access_log: ログ
     attributes:
       school:
         name: 名前
@@ -159,3 +160,10 @@ ja:
         current_password: 現在のパスワード
         role: 権限
         status: 状態
+      access_log:
+        user_id: ユーザー
+        ip: IP
+        remote_ip: リモートIP
+        request_method: HTTPメソッド
+        fullpath: URL
+

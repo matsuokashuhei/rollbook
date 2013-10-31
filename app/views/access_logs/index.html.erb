@@ -1,0 +1,49 @@
+<ol class="breadcrumb">
+  <li class="active"><%= t("activerecord.models.access_log") %></li>
+</ol>
+
+<div class="tab-content">
+
+  <form class="form-inline" fole="form">
+    <div class="form-group">
+      <%= select_tag "user_id", options_from_collection_for_select(User.all, :id, :name, params[:user_id]), class: "form-control", prompt: "" %>
+    </div>
+    <div class="form-group">
+      <%= text_field_tag "date_from", params[:date_from], class: "form-control", placeholder: "から", data: { behaviour: "datepicker" } %>
+    </div>
+    <div class="form-group">
+      <%= text_field_tag "date_to", params[:date_to], class: "form-control", placeholder: "まで", data: { behaviour: "datepicker" } %>
+    </div>
+    <%= submit_tag t("views.buttons.search"), name: nil, class: "btn btn-default" %>
+  </form>
+  <hr />
+  <div class="table-responsive">
+    <table class="table table-striped table-condensed">
+      <thead>
+        <tr>
+          <th>日時</th>
+          <th><%= t("activerecord.attributes.access_log.user_id") %></th>
+          <th><%= t("activerecord.attributes.access_log.ip") %></th>
+          <th><%= t("activerecord.attributes.access_log.fullpath") %></th>
+          <th>操作</th>
+          <th><%= t("activerecord.attributes.access_log.remote_ip") %></th>
+          <th><%= t("activerecord.attributes.access_log.request_method") %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @access_logs.each do |access_log| %>
+          <tr>
+            <td style="padding: 0px;"><%= access_log.created_at.strftime("%Y/%m/%d %H:%M:%S") %></td>
+            <td style="padding: 0px;"><%= access_log.user_name %></td>
+            <td style="padding: 0px;"><%= link_to access_log.operation, access_log.fullpath %></td>
+            <td style="padding: 0px;"><%= access_log.operation_type %></td>
+            <td style="padding: 0px;"><%= access_log.ip %></td>
+            <td style="padding: 0px;"><%= access_log.remote_ip %></td>
+            <td style="padding: 0px;"><%= access_log.request_method %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <%= paginate @access_logs %>
+</div>

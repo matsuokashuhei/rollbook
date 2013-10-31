@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_user!
   before_action :active_user!
+  before_action :log!
 
   def active_user!
     return if params[:controller] == "devise/sessions" && params[:action] == "destroy"
@@ -26,6 +27,16 @@ class ApplicationController < ActionController::Base
 
   def admin_user!
     redirect_to root_path unless current_user.admin?
+  end
+
+  def log!
+    return if params[:controller] == "access_logs"
+    access_log = AccessLog.new(ip: request.ip,
+                               remote_ip: request.remote_ip,
+                               request_method: request.request_method,
+                               fullpath: request.fullpath)
+    access_log.user_id = current_user.id if user_signed_in?
+    access_log.save!
   end
 
 end
