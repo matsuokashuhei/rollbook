@@ -17,6 +17,8 @@ class AccessLogDecorator < ApplicationDecorator
       when "PUT"
         h.content_tag :span, "変更", class: "label label-success"
         #h.t("views.buttons.edit")
+      when "PATCH"
+        h.content_tag :span, "変更", class: "label label-success"
       when "DELETE"
         h.content_tag :span, "削除", class: "label label-warning"
         #h.t("views.buttons.delete")
