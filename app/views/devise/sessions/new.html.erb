@@ -1,3 +1,4 @@
+<% if false %>
 <h2>Sign in</h2>
 
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
@@ -15,3 +16,15 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+<% end %>
+<div style="width: 330px; padding-top: 100px; padding-left: 15px; padding-right: 15px; margin: 0 auto;">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), class: "form-signin") do |f| %>
+    <%= f.email_field :email, class: "form-control", placeholder: t("activerecord.attributes.user.email"), autofocus: true %>
+    <%= f.password_field :password, class: "form-control", placeholder: t("activerecord.attributes.user.password"), required: "required" %>
+    <label class="checkbox">
+      <%= f.check_box :remember_me %> <%= f.label :remember_me %>
+    </label>
+    <%= f.submit "ログイン", class: "btn btn-lg btn-primary btn-block" %>
+  <% end %>
+</div>
+

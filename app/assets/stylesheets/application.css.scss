@@ -14,11 +14,13 @@
 $iconSpritePath: "/assets/glyphicons-halflings.png";
 $iconWhiteSpritePath: "/assets/glyphicons-halflings-white.png";
 @import "bootstrap";
-//$fa-font-path: "/assets/fontawesome-webfont";
-//@import "font-awesome";
-
 @import "font-awesome";
-
 .table tbody > tr > td {
-  vertical-align: middle;
+    vertical-align: middle;
+}
+
+form.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
 }
