@@ -4,6 +4,8 @@ class UserDecorator < ApplicationDecorator
   def role
     h.content_tag(:h3, style: "margin: 0px; line-height: 0;") do
       case model.role
+      when User::ROLES[:SYSTEM]
+        h.content_tag(:span, "システム", class: "label label-default")
       when User::ROLES[:ADMIN]
         h.content_tag(:span, "管理者", class: "label label-success")
       when User::ROLES[:MANAGER]

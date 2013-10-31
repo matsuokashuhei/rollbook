@@ -23,8 +23,8 @@
             <td><%= user.status %></td>
             <td>
               <%= link_to_show user_path(user) %>
-              <% unless current_user.id == user.id %>
                 <%= link_to_edit edit_user_path(user) %>
+              <% unless current_user.id == user.id %>
                 <%= link_to_destroy user.id, user_path(user) %>
               <% end %>
             </td>

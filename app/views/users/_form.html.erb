@@ -21,7 +21,12 @@
   <div class="form-group">
     <%= f.label :role, class: "col-md-1" %>
     <div class="col-md-2 <%= 'has-error' if @user.errors[:role].present? %>">
-      <%= f.select :role, [["管理者", "1"], ["店長", "2"], ["スタッフ", "3"]], {}, { class: "form-control" } %>
+      <% if current_user.role == User::ROLES[:SYSTEM] %>
+        <%= f.select :role, [["システム", "0"], ["管理者", "1"], ["店長", "2"], ["スタッフ", "3"]], {}, { class: "form-control" } %>
+      <% end %>
+      <% if current_user.role == User::ROLES[:ADMIN] %>
+        <%= f.select :role, [["管理者", "1"], ["店長", "2"], ["スタッフ", "3"]], {}, { class: "form-control" } %>
+      <% end %>
     </div>
   </div>
 

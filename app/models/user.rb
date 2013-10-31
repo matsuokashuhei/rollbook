@@ -26,15 +26,15 @@ class User < ActiveRecord::Base
   end
 
   def admin?
-    role == ROLES[:ADMIN]
+    role <= ROLES[:ADMIN]
   end
 
   def manager?
-    role == ROLES[:MANAGER]
+    role <= ROLES[:MANAGER]
   end
 
   def staff?
-    role == ROLES[:STAFF]
+    role <= ROLES[:STAFF]
   end
 
   def active?
