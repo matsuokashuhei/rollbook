@@ -39,7 +39,7 @@
               <% if access_log.request_method == "GET" %>
                 <%= link_to access_log.operation, access_log.fullpath %>
               <% else %>
-                <%= access_log.fullpath %>
+                <%= access_log.operation %>
               <% end %>
             </td>
             <td style="padding: 0px;"><%= access_log.operation_type %></td>

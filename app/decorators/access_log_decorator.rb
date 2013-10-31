@@ -30,10 +30,9 @@ class AccessLogDecorator < ApplicationDecorator
   end
 
   def operation
-    case model.fullpath
-    when "/users/sign_in"
+    if model.request_method == "POST" && model.fullpath == "/users/sign_in"
       "ログイン"
-    when "/users/sign_out"
+    elsif model.request_method == "DELETE" && model.fullpath == "/users/sign_out"
       "ログアウト"
     else
       model.fullpath
