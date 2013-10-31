@@ -76,11 +76,10 @@ class Course < ActiveRecord::Base
   end
 
   def non_active_members
-    members_courses.each do |members_course|
+    self.members_courses.each do |members_course|
       if members_course.end_date.blank? || close_date < members_course.end_date
-        errors.add(:base, "クラスを終了する場合、会員をクラスから退会してください。")
+        errors.add(:base, "クラスを終了する場合、%sさんをクラスから退会してください。" % members_course.member.full_name)
       end
-
     end
   end
 
@@ -89,7 +88,7 @@ class Course < ActiveRecord::Base
   end
 
   # その他
-  def delete?
+  def destroy?
     members_courses.count == 0
   end
 

@@ -59,7 +59,7 @@ class Recess < ActiveRecord::Base
   end
 
   before_validation do
-    self.month = self.month.sub("/", "")
+    self.month.sub!("/", "")
   end
 
   after_find do

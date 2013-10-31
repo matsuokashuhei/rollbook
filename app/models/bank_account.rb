@@ -14,6 +14,11 @@
 #  note             :text
 #  created_at       :datetime
 #  updated_at       :datetime
+#  receipt_date     :date
+#  ship_date        :date
+#  begin_date       :date
+#  self_proceed     :boolean
+#  change_bank      :boolean
 #
 
 class BankAccount < ActiveRecord::Base

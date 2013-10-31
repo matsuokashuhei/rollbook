@@ -26,6 +26,7 @@ class MembersCourse < ActiveRecord::Base
   validate :begin_date, :weekday_of_course
   validate :end_date, :end_of_month
   validate :end_date, :term_dates
+  validate :end_date, :no_recesses, if: Proc.new { self.end_date.present? }
 
   default_scope -> {
     order(:member_id, :begin_date, :course_id)
@@ -37,10 +38,6 @@ class MembersCourse < ActiveRecord::Base
 
   scope :details, -> {
     joins(course: [[timetable: [[studio: :school], :time_slot]], :dance_style, :level, :instructor]).order("members_courses.begin_date")
-  }
-
-  scope :active, ->(date = Date.today) {
-    where("members_courses.begin_date <= ? and ? <= coalesce(members_courses.end_date, '9999-12-31')", date, date)
   }
 
   def after_enter_date
@@ -74,12 +71,20 @@ class MembersCourse < ActiveRecord::Base
     end
   end
 
+  def no_recesses
+    self.recesses.each do |recess|
+      if recess.month > self.end_date.strftime("%Y/%m")
+        errors.add(:base, "クラスを退会する場合は%sの休会を取り消ししてください。" % recess.decorate.month)
+      end
+    end
+  end
+
   def rolls
     @rolls = Roll.member(member_id).course(course_id).details
   end
 
-  def delete?
-    if recesses.count == 0
+  def destroy?
+    if self.recesses.count == 0
       if Roll.member(member_id).where("rolls.status > ?", "0").course(course_id).count == 0
         return true
       end

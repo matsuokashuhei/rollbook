@@ -1,58 +1,59 @@
 <%= render "breadcrumb" %>
-
-<div class="tab-content">
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <th style="width: 9%;"></th>
-        <% 1.step(7) do |cwday| %>
-          <th style="width: 13%;">
-            <%= weekday_ja(cwday) %>
-          </th>
-        <% end %>
-      </thead>
-      <tbody>
-        <% @timetables.each do |timetable| %>
-          <% if timetable.weekday == 1 %>
-            <tr>
-              <th><%= timetable.time_slot.start_time.strftime("%H:%M") %></th>
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <th style="width: 9%;"></th>
+          <% 1.step(7) do |cwday| %>
+            <th style="width: 13%;">
+              <%= weekday_ja(cwday) %>
+            </th>
           <% end %>
-          <td>
-            <% course = @courses.find {|course| course.timetable_id == timetable.id } %>
-            <% if course.present? %>
-              <%= link_to course do %>
-                <%= course.dance_style.name %><br />
-                <%= course.level.name %><br />
-                <%= course.instructor.name %>
-              <% end %>
-            <% else %>
-              <%= link_to t("views.buttons.new"), new_course_path(timetable_id: timetable.id), class: "btn btn-link" %>
+        </thead>
+        <tbody>
+          <% @timetables.each do |timetable| %>
+            <% if timetable.weekday == 1 %>
+              <tr>
+                <th><%= timetable.time_slot.start_time.strftime("%H:%M") %></th>
             <% end %>
-          </td>
-          <% if timetable.weekday == 7 %>
-            </tr>
+            <td>
+              <% course = @courses.find {|course| course.timetable_id == timetable.id } %>
+              <% if course.present? %>
+                <%= link_to course do %>
+                  <%= course.dance_style.name %><br />
+                  <%= course.level.name %><br />
+                  <%= course.instructor.name %>
+                <% end %>
+              <% else %>
+                <%= link_to t("views.buttons.new"), new_course_path(timetable_id: timetable.id), class: "btn btn-link" %>
+              <% end %>
+            </td>
+            <% if timetable.weekday == 7 %>
+              </tr>
+            <% end %>
           <% end %>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <%= link_to courses_path(date: @before_month.strftime("%Y%m%d"), studio_id: @studio.id), class: "btn btn-link pull-left" do %>
-        <%= fa_icon "caret-left", text: @before_month.strftime("%Y年%m月") %>
-      <% end %>
-    </div>
-    <div class="col-md-6">
-      <%= link_to courses_path(date: @next_month.strftime("%Y%m%d"), studio_id: @studio.id), class: "btn btn-link pull-right" do %>
-        <%= @next_month.strftime("%Y年%m月") %> <%= fa_icon "caret-right" %>
-      <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
-  <hr />
-  <div class="row">
-    <div class="col-md-1">
-      <%= button_to_back schools_path, pull: "left" %>
-    </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <%= link_to courses_path(date: @before_month.strftime("%Y%m%d"), studio_id: @studio.id), class: "btn btn-link pull-left" do %>
+      <%= fa_icon "caret-left", text: @before_month.strftime("%Y年%m月") %>
+    <% end %>
+  </div>
+  <div class="col-md-6">
+    <%= link_to courses_path(date: @next_month.strftime("%Y%m%d"), studio_id: @studio.id), class: "btn btn-link pull-right" do %>
+      <%= @next_month.strftime("%Y年%m月") %> <%= fa_icon "caret-right" %>
+    <% end %>
+  </div>
+</div>
+<hr />
+<div class="row">
+  <div class="col-md-1">
+    <%= button_to_back schools_path, pull: "left" %>
   </div>
 </div>
 

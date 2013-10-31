@@ -35,7 +35,7 @@
             <td>
               <%= link_to_show member_course_path(@member, members_course) %>
               <%= link_to_edit edit_member_course_path(@member, members_course) %>
-              <%= link_to_destroy members_course.id, member_course_path(@member, members_course), destroy: members_course.delete? %>
+              <%= link_to_destroy members_course.id, member_course_path(@member, members_course), destroy: members_course.destroy? %>
             </td>
           </tr>
         <% end %>

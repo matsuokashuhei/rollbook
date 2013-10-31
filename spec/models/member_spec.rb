@@ -11,7 +11,7 @@
 #  birth_date      :date
 #  zip             :string(255)
 #  address         :string(255)
-#  phone           :string(255)
+#  phone_mobile    :string(255)
 #  email_pc        :string(255)
 #  email_mobile    :string(255)
 #  note            :text
@@ -22,6 +22,8 @@
 #  nearby_station  :string(255)
 #  created_at      :datetime
 #  updated_at      :datetime
+#  phone_land      :string(255)
+#  number          :string(255)
 #
 
 require 'spec_helper'

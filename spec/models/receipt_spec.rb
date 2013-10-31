@@ -4,7 +4,6 @@
 #
 #  id         :integer          not null, primary key
 #  member_id  :integer
-#  month      :string(255)
 #  amount     :integer
 #  method     :string(255)
 #  date       :date
@@ -13,6 +12,7 @@
 #  note       :text
 #  created_at :datetime
 #  updated_at :datetime
+#  tuition_id :integer
 #
 
 require 'spec_helper'

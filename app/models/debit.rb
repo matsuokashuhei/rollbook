@@ -9,6 +9,7 @@
 #  note            :text
 #  created_at      :datetime
 #  updated_at      :datetime
+#  tuition_id      :integer
 #
 
 class Debit < ActiveRecord::Base

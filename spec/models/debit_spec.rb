@@ -4,12 +4,12 @@
 #
 #  id              :integer          not null, primary key
 #  bank_account_id :integer
-#  month           :string(255)
 #  amount          :integer
 #  status          :string(255)
 #  note            :text
 #  created_at      :datetime
 #  updated_at      :datetime
+#  tuition_id      :integer
 #
 
 require 'spec_helper'
