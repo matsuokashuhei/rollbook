@@ -29,7 +29,8 @@ class InstructorsController < ApplicationController
 
     respond_to do |format|
       if @instructor.save
-        format.html { redirect_to @instructor, notice: 'インストラクターを登録しました。' }
+        notice = "#{@instructor.name}先生を登録しました。"
+        format.html { redirect_to @instructor, notice: notice }
         format.json { render action: 'show', status: :created, location: @instructor }
       else
         format.html { render action: 'new' }
@@ -43,7 +44,8 @@ class InstructorsController < ApplicationController
   def update
     respond_to do |format|
       if @instructor.update(instructor_params)
-        format.html { redirect_to @instructor, notice: 'インストラクターを変更しました。' }
+        notice = "#{@instructor.name}先生を変更しました。"
+        format.html { redirect_to @instructor, notice: notice }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -55,9 +57,10 @@ class InstructorsController < ApplicationController
   # DELETE /instructors/1
   # DELETE /instructors/1.json
   def destroy
+    notice = "#{@instructor.name}先生を削除しました。" if @instructor.destroy?
     @instructor.destroy if @instructor.destroy?
     respond_to do |format|
-      format.html { redirect_to instructors_url }
+      format.html { redirect_to instructors_url, notice: notice }
       format.json { head :no_content }
     end
   end
