@@ -29,7 +29,6 @@
           <th><%= t("activerecord.attributes.access_log.fullpath") %></th>
           <th>操作</th>
           <th><%= t("activerecord.attributes.access_log.ip") %></th>
-          <th><%= t("activerecord.attributes.access_log.remote_ip") %></th>
           <th><%= t("activerecord.attributes.access_log.request_method") %></th>
         </tr>
       </thead>
@@ -47,7 +46,6 @@
             </td>
             <td style="padding: 0px;"><%= access_log.operation_type %></td>
             <td style="padding: 0px;"><%= access_log.ip %></td>
-            <td style="padding: 0px;"><%= access_log.remote_ip %></td>
             <td style="padding: 0px;"><%= access_log.request_method %></td>
           </tr>
         <% end %>

@@ -1,46 +1,50 @@
-<ol class="breadcrumb">
-  <li><%= schools_link %></li>
-  <li><%= link_to "#{@studio.school.name}　#{@studio.name}", courses_path(date: Date.today.strftime("%Y%m%d"), studio_id: @studio.id) %></li>
-  <li class="active"><%= @course.decorate.name %></li>
-  <% if false %>
-  <li><%= link_to @course.decorate.name, course_path(@course) %></li>
-  <li class="active"><%= t("activerecord.models.member") %></li>
-  <% end %>
-</ol>
-
-<ul class="nav nav-tabs">
-  <li><%= link_to t("activerecord.models.course"), course_path(@course), class: "btn btn-link" %></li>
-  <li class="active"><a href="#member" data-toggle="tab"><%= t("activerecord.models.member") %></a></li>
-  <li><%= link_to t("activerecord.models.lesson"), course_lessons_path(@course), class: "btn btn-link" %></li>
-</ul>
-
-<div class="tab-content">
-  <br />
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th><%= t("activerecord.attributes.member.number") %></th>
-          <th><%= t("activerecord.attributes.member.name") %></th>
-          <th></th>
-          <th><%= t("activerecord.attributes.members_course.begin_date") %></th>
-          <th><%= t("activerecord.attributes.members_course.end_date") %></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @members_courses.each do |members_course| %>
-          <tr>
-            <td><%= members_course.member.number %></td>
-            <td><%= members_course.member.decorate.name %></td>
-            <td><%= members_course.member.decorate.tuition %></td>
-            <td><%= members_course.begin_date %></td>
-            <td><%= members_course.end_date %></td>
-            <td><%= link_to_show member_course_path(members_course.member, members_course) %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_schools %>
+      <%= list_item_to_courses(@studio) %>
+      <%= list_item_to_course(@course, active: true) %>
+    </ol>
   </div>
 </div>
 
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-tabs">
+      <li><%= link_to t("activerecord.models.course"), course_path(@course), class: "btn btn-link" %></li>
+      <li class="active"><a href="#member" data-toggle="tab"><%= t("activerecord.models.member") %></a></li>
+      <li><%= link_to t("activerecord.models.lesson"), course_lessons_path(@course), class: "btn btn-link" %></li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th><%= t("activerecord.attributes.member.number") %></th>
+            <th><%= t("activerecord.attributes.member.name") %></th>
+            <th></th>
+            <th><%= t("activerecord.attributes.members_course.begin_date") %></th>
+            <th><%= t("activerecord.attributes.members_course.end_date") %></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @members_courses.each do |members_course| %>
+            <tr>
+              <td><%= members_course.member.number %></td>
+              <td><%= members_course.member.decorate.name %></td>
+              <td><%= members_course.member.decorate.tuition %></td>
+              <td><%= members_course.begin_date %></td>
+              <td><%= members_course.end_date %></td>
+              <td><%= link_to_show member_course_path(members_course.member, members_course) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

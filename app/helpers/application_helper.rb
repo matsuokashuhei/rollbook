@@ -58,6 +58,14 @@ module ApplicationHelper
     end
   end
 
+  def link_to_new(path, new: true)
+    class_value = "btn btn-link"
+    class_value += " disabled" unless new
+    link_to path, class: class_value, data: { toggle: "tooltip", "original-title" => t("views.buttons.new") } do
+      icon_to_new
+    end
+  end
+
   def link_to_destroy(id, path, destroy: true)
     if destroy
       text = link_to "##{id}", class: "btn btn-link", data: { toggle: "modal", "original-title" => t("views.buttons.delete")} do
@@ -148,6 +156,22 @@ module ApplicationHelper
     class_names << " pull-" + pull if pull.present?
     link_to t("views.buttons.back"), path, class: class_names
   end
+
+  def list_item_to_new
+    content_tag :li, class: "active" do
+      t("views.buttons.new")
+    end
+  end
+
+  def list_item_to_edit
+    content_tag :li, class: "active" do
+      t("views.buttons.edit")
+    end
+  end
+
+
+
+
 
   def controller?(controllers)
     controllers.each do |controller|

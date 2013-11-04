@@ -1,35 +1,58 @@
-<%= render "breadcrumb" %>
-<%= render "nav_tabs" %>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_members %>
+      <%= list_item_to_member(@member, active: true) %>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-tabs">
+      <%= tab_to_member(@member) %>
+      <%= tab_to_members_courses(@member) %>
+      <%= tab_to_members_rolls(@member) %>
+      <%= tab_to_members_recesses(@member, active: true) %>
+      <%= tab_to_members_receipts(@member) %>
+    </ul>
+  </div>
+</div>
 <br />
-<%= button_to_new new_member_recess_path(@member), pull: "right" %>
-<div class="tab-content">
-  <%= render "shared/notice" %>
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th><%= t("activerecord.attributes.recess.month") %></th>
-          <th><%= t("activerecord.attributes.recess.members_course_id") %></th>
-          <th><%= t("activerecord.attributes.recess.status") %></th>
-          <th></th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @recesses.each do |recess| %>
+<div class="row">
+  <div class="col-md-12">
+    <%= button_to_new new_member_recess_path(@member), pull: "right" %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <%= render "shared/notice" %>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
           <tr>
-            <td><%= recess.month %></td>
-            <td><%= recess.members_course.course.name %></td>
-            <td><%= recess.status %></td>
-            <td>
-              <%= link_to_show member_recess_path(@member, recess) %>
-              <%= link_to_edit edit_member_recess_path(@member, recess) %>
-              <%= link_to_destroy recess.id, member_recess_path(@member, recess), destroy: recess.delete? %>
-            </td>
+            <th><%= t("activerecord.attributes.recess.month") %></th>
+            <th><%= t("activerecord.attributes.recess.members_course_id") %></th>
+            <th><%= t("activerecord.attributes.recess.status") %></th>
+            <th></th>
+            <th></th>
+            <th></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @recesses.each do |recess| %>
+            <tr>
+              <td><%= recess.month %></td>
+              <td><%= recess.members_course.course.name %></td>
+              <td><%= recess.status %></td>
+              <td>
+                <%= link_to_show member_recess_path(@member, recess) %>
+                <%= link_to_edit edit_member_recess_path(@member, recess) %>
+                <%= link_to_destroy recess.id, member_recess_path(@member, recess), destroy: recess.delete? %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

@@ -1,9 +1,27 @@
-<%= render "breadcrumb" %>
-<%= render "nav_tabs" %>
-
-<div class="tab-content">
-  <br />
-  <%= render "form" %>
-  <%= button_to_save pull: "right" %>
-  <%= button_to_back member_recesses_path(@member), pull: "left" %>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_members %>
+      <%= list_item_to_member(@member, active: true) %>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-tabs">
+      <%= tab_to_member(@member) %>
+      <%= tab_to_members_courses(@member) %>
+      <%= tab_to_members_rolls(@member) %>
+      <%= tab_to_members_recesses(@member, active: true) %>
+      <%= tab_to_members_receipts(@member) %>
+    </ul>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <%= render "form" %>
+    <%= button_to_save pull: "right" %>
+    <%= button_to_back member_recesses_path(@member), pull: "left" %>
+  </div>
 </div>

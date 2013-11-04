@@ -1,4 +1,10 @@
-<%= render "breadcrumb" %>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_instructors(active: true) %>
+    </ol>
+  </div>
+</div>
 <div class="row">
   <div class="col-md-12">
     <%= button_to_new new_instructor_path, pull: "right" %>

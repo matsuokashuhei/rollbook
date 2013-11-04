@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_tuitions active: true %>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <a data-toggle="modal" href="#tuition" class="btn btn-default pull-right">
+      <%= t("views.buttons.new") %>
+    </a>
+  </div>
+</div>
+<div class="modal fade" id="tuition">
+  <%= form_for new_tuition_path do |f| %>
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">月謝の引落</h4>
+        </div>
+        <div class="modal-body">
+          <%= Date.today.strftime("%Y年%m月") %>の残高不足のリストアップを始めます。よいですか？
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal"><%= t("views.buttons.close") %></button>
+          <%= hidden_field_tag "tuition[month]", Date.today.strftime("%Y%m") %>
+          <%= hidden_field_tag "tuition[debit_status]", Tuition::DEBIT_STATUSES[:IN_PROCESS] %>
+          <%= hidden_field_tag "tuition[receipt_status]", Tuition::RECEIPT_STATUSES[:NONE] %>
+          <%= f.submit t("views.buttons.begin"), class: "btn btn-default" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <% scope = "activerecord.attributes.tuition" %>
+            <th><%= t("month", scope: scope) %></th>
+            <th><%= t("debit_status", scope: scope) %></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @tuitions.each do |tuition| %>
+            <tr>
+              <td><%= tuition.month %></td>
+              <td>
+                <%= tuition.debit_status %>
+              </td>
+              <td>
+                <%= link_to_show tuition_debits_path(tuition) %>
+                <%= link_to_destroy tuition.id, tuition_path(tuition), destroy: tuition.delete? %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

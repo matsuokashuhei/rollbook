@@ -1,42 +1,52 @@
-<%= render "breadcrumb" %>
-
-<%= button_to_new new_member_path, pull: "right" %>
-
-<div class="tab-content">
-  <br />
-  <div class="table-responsive">
-    <table class="table table-striped table-condensed">
-      <thead>
-        <tr>
-          <th><%= t("activerecord.attributes.member.number") %></th>
-          <th><%= t("activerecord.attributes.member.name") %></th>
-          <th></th>
-          <th><%= t("activerecord.attributes.member.gender") %></th>
-          <th><%= t("activerecord.attributes.member.status") %></th>
-          <th>受講クラス数</th>
-          <th>未消化振替数</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @members.each do |member| %>
-          <tr>
-            <td><%= member.number %></td>
-            <td><%= member.name %></td>
-            <td><%= member.tuition %></td>
-            <td><%= member.gender %></td>
-            <td><%= member.status %></td>
-            <td><div class="pull-right"><%= member.members_courses.active.count %></div></td>
-            <td><div class="pull-right"><%= member.rolls.absences.count %></div></td>
-            <td>
-              <%= link_to_show member_path(member) %>
-              <%= link_to_edit edit_member_path(member) %>
-              <%= link_to_destroy member.id, member_path(member), destroy: member.delete? %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <%= paginate @members %>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_members(active: true) %>
+    </ol>
   </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <%= button_to_new new_member_path, pull: "right" %>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-striped table-condensed">
+        <thead>
+          <tr>
+            <th><%= t("activerecord.attributes.member.number") %></th>
+            <th><%= t("activerecord.attributes.member.name") %></th>
+            <th></th>
+            <th><%= t("activerecord.attributes.member.gender") %></th>
+            <th><%= t("activerecord.attributes.member.status") %></th>
+            <th>受講クラス数</th>
+            <th>未消化振替数</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @members.each do |member| %>
+            <tr>
+              <td><%= member.number %></td>
+              <td><%= member.name %></td>
+              <td><%= member.tuition %></td>
+              <td><%= member.gender %></td>
+              <td><%= member.status %></td>
+              <td><div class="pull-right"><%= member.members_courses.active.count %></div></td>
+              <td><div class="pull-right"><%= member.rolls.absences.count %></div></td>
+              <td>
+                <%= link_to_show member_path(member) %>
+                <%= link_to_edit edit_member_path(member) %>
+                <%= link_to_destroy member.id, member_path(member), destroy: member.delete? %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= paginate @members %>
+    </div>
+</div>
 </div>

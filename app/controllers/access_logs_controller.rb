@@ -6,7 +6,7 @@ class AccessLogsController < ApplicationController
   def index
     #conditions = {}
     #conditions[:user_id] ||= params[:user_id]
-    @access_logs = AccessLog.user(params[:user_id]).terms(params[:date_from], params[:date_to]).page(params[:page]).per(25).decorate
+    @access_logs = AccessLog.user(params[:user_id]).date_from(params[:date_from]).date_to(params[:date_to]).page(params[:page]).per(25).decorate
   end
 
   # GET /access_logs/1

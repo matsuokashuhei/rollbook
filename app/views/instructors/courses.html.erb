@@ -1,4 +1,11 @@
-<%= render "breadcrumb" %>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_instructors %>
+      <%= list_item_to_instructor(@instructor, active: true) %>
+    </ol>
+  </div>
+</div>
 
 <ul class="nav nav-tabs">
   <li><%= link_to t("activerecord.models.instructor"), instructor_path(@instructor) %></li>

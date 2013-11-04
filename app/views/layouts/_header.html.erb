@@ -24,8 +24,8 @@
           <%= t("activerecord.models.member") %> <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-          <li><%= members_link %></li>
-          <li><%= bank_accounts_link %></li>
+          <li><%= link_to_members %></li>
+          <%= list_item_to_bank_accounts %>
         </ul>
       </li>
       <li class="dropdown <%= 'active' if controller?(["tuitions", "debits", "receipts"]) %>">
@@ -33,8 +33,8 @@
           <%= t("activerecord.models.tuition") %> <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-          <li><%= link_to t("activerecord.models.debit"), tuitions_path %></li>
-          <li><%= link_to t("activerecord.models.receipt"), receipts_path %></li>
+          <li><%= link_to t("activerecord.models.debit"), tuitions_path(payment_method: "DEBIT") %></li>
+          <li><%= link_to t("activerecord.models.receipt"), tuitions_path(payment_method: "CASH") %></li>
         </ul>
       </li>
     </ul>

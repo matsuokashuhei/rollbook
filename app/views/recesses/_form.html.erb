@@ -1,4 +1,13 @@
-<%= form_for([@member, @recess], url: member_recess_path(@member, @recess), html: { roll: "form", class: "form-horizontal", id: "form" }) do |f| %>
+<%
+  url = nil
+  if @recess.new_record?
+    url = member_recesses_path(@member)
+  else
+    url = member_recess_path(@member, @recess)
+  end
+%>
+<%# form_for([@member, @recess], url: member_recess_path(@member, @recess), html: { roll: "form", class: "form-horizontal", id: "form" }) do |f| %>
+<%= form_for([@member, @recess], url: url, html: { roll: "form", class: "form-horizontal", id: "form" }) do |f| %>
 
   <%= render "shared/errors", object: @recess %>
 

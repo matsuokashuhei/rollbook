@@ -1,9 +1,18 @@
-<%= render "breadcrumb" %>
-
-<div class="tab-content">
-  <br />
-  <%= render "shared/notice" %>
-  <%= render "form" %>
-  <%= button_to_back tuition_receipts_path(@tuition), pull: "left" %>
-  <%= button_to_edit edit_tuition_receipt_path(@tuition, @receipt), pull: "right", edit: @receipt.edit? %>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_tuitions payment_method: "CASH" %>
+      <%= list_item_to_receipts @tuition %>
+      <%= list_item_to_receipt @tuition, @receipt, active: true %>
+    </ol>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <%= render "shared/notice" %>
+    <%= render "form" %>
+    <%= button_to_back tuition_receipts_path(@tuition), pull: "left" %>
+    <%= button_to_edit edit_tuition_receipt_path(@tuition, @receipt), pull: "right", edit: @receipt.edit? %>
+  </div>
 </div>

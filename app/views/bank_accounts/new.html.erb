@@ -1,8 +1,23 @@
-<%= render "breadcrumb" %>
-<%= render "nav_tabs" %>
-<div class="tab-content">
-  <br />
-  <%= render 'form' %>
-  <%= button_to_save pull: "right" %>
-  <%= button_to_back bank_accounts_path, pull: "left" %>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_bank_accounts %>
+      <%= list_item_to_new %>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-tabs">
+      <%= tab_to_bank_account nil, active: true %>
+    </ul>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <%= render 'form' %>
+    <%= button_to_save pull: "right" %>
+    <%= button_to_back bank_accounts_path, pull: "left" %>
+  </div>
 </div>

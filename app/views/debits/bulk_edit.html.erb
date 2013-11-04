@@ -1,7 +1,17 @@
-<%= render "breadcrumb" %>
-<div class="tab-content">
-  <br />
-  <%= render "bulk_form" %>
-  <%= button_to_save pull: "right" %>
-  <%= button_to_back tuition_debits_path(@tuition), pull: "left" %>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_tuitions %>
+      <%= list_item_to_debits(@tuition) %>
+      <%= list_item_to_edit %>
+    </ol>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <%= render "bulk_form" %>
+    <%= button_to_save pull: "right" %>
+    <%= button_to_back tuition_debits_path(@tuition), pull: "left" %>
+  </div>
 </div>

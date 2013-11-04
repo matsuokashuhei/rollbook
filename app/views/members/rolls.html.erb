@@ -1,42 +1,59 @@
-<%= render "breadcrumb" %>
-
-<ul class="nav nav-tabs">
-  <% unless @member.guest? %>
-    <li><%= link_to t("activerecord.models.member"), member_path(@member) %></li>
-    <li><%= member_courses_link(@member) %></li>
-    <li class="active"><a href="#roll" data-toggle="tab"><%= t("activerecord.models.lesson") %></a></li>
-    <li><%= recesses_link(@member) %></li>
-    <li><%= member_receipts_link(@member) %></li>
-  <% else %>
-    <li><%= link_to t("activerecord.models.member"), member_path(@member) %></li>
-    <li class="active"><a href="#roll" data-toggle="tab"><%= t("activerecord.models.lesson") %></a></li>
-  <% end %>
-</ul>
-
-<div class="tab-content">
-  <br />
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th><%= t("activerecord.attributes.lesson.date") %></th>
-          <th><%= t("activerecord.models.course") %></th>
-          <th><%= t("activerecord.attributes.roll.status") %></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @rolls.each do |roll| %>
-          <% lesson = roll.lesson %>
-          <% course = lesson.course %>
-          <tr>
-            <td><%= lesson.date %></td>
-            <td><%= course.name %></td>
-            <td><%= roll.status %></td>
-            <td><%= link_to_show lesson_rolls_path(lesson) %></td>
-          </tr>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_members %>
+      <%= list_item_to_member(@member, active: true) %>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-tabs">
+      <%= tab_to_member(@member) %>
+      <%= tab_to_members_courses(@member) %>
+      <%= tab_to_members_rolls(@member, active: true) %>
+      <%= tab_to_members_recesses(@member) %>
+      <%= tab_to_members_receipts(@member) %>
+      <% if false %>
+        <% unless @member.guest? %>
+          <li><%= link_to t("activerecord.models.member"), member_path(@member) %></li>
+          <li><%= member_courses_link(@member) %></li>
+          <li class="active"><a href="#roll" data-toggle="tab"><%= t("activerecord.models.lesson") %></a></li>
+          <li><%= recesses_link(@member) %></li>
+          <li><%= member_receipts_link(@member) %></li>
+        <% else %>
+          <li><%= link_to t("activerecord.models.member"), member_path(@member) %></li>
+          <li class="active"><a href="#roll" data-toggle="tab"><%= t("activerecord.models.lesson") %></a></li>
         <% end %>
-    </table>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th><%= t("activerecord.attributes.lesson.date") %></th>
+            <th><%= t("activerecord.models.course") %></th>
+            <th><%= t("activerecord.attributes.roll.status") %></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @rolls.each do |roll| %>
+            <% lesson = roll.lesson %>
+            <% course = lesson.course %>
+            <tr>
+              <td><%= lesson.date %></td>
+              <td><%= course.name %></td>
+              <td><%= roll.status %></td>
+              <td><%= link_to_show lesson_rolls_path(lesson) %></td>
+            </tr>
+          <% end %>
+      </table>
+    </div>
   </div>
 </div>
 

@@ -5,7 +5,27 @@ class TuitionsController < ApplicationController
   # GET /tuitions
   # GET /tuitions.json
   def index
+    redirect_to tuitions_path payment_method: "DEBIT" if params[:payment_method].nil?
+    if params[:payment_method] == "DEBIT"
+      debits
+    elsif params[:payment_method] == "CASH"
+      receipts
+    end
+  end
+
+  def debits
     @tuitions = Tuition.all.decorate
+    respond_to do |format|
+      format.html { render action: "debits" }
+    end
+  end
+
+  def receipts
+    statuses = [Tuition::RECEIPT_STATUSES[:IN_PROCESS], Tuition::RECEIPT_STATUSES[:FINISHED]]
+    @tuitions = Tuition.where(receipt_status: statuses).decorate
+    respond_to do |format|
+      format.html { render action: "receipts" }
+    end
   end
 
   # GET /tuitions/1
@@ -69,11 +89,6 @@ class TuitionsController < ApplicationController
       format.html { redirect_to tuitions_url }
       format.json { head :no_content }
     end
-  end
-
-  def receipts
-    statuses = [Tuition::RECEIPT_STATUSES[:IN_PROCESS], Tuition::RECEIPT_STATUSES[:FINISHED]]
-    @tuitions = Tuition.where(receipt_status: statuses).decorate
   end
 
   private

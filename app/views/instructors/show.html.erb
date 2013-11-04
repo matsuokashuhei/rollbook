@@ -1,9 +1,18 @@
-<%= render "breadcrumb" %>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_instructors %>
+      <%= list_item_to_instructor(@instructor, active: true) %>
+    </ol>
+  </div>
+</div>
 <%= render "nav_tabs" %>
-<div class="tab-content">
-  <br />
-  <%= render "shared/notice" %>
-  <%= render "form" %>
-  <%= button_to_back instructors_path, pull: "left" %>
-  <%= button_to_edit edit_instructor_path(@instructor), pull: "right" %>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <%= render "shared/notice" %>
+    <%= render "form" %>
+    <%= button_to_back instructors_path, pull: "left" %>
+    <%= button_to_edit edit_instructor_path(@instructor), pull: "right" %>
+  </div>
 </div>

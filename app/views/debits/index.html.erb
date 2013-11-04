@@ -1,33 +1,41 @@
-<%= render "breadcrumb" %>
-
-<div class="tab-content">
-  <br />
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th class="col-md-2"><%= t("activerecord.attributes.debit.bank_account_id") %></th>
-          <th class="col-md-2"><%= t("activerecord.attributes.debit.amount") %></th>
-          <th class="col-md-2"><%= t("activerecord.attributes.debit.status") %></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @debits.each do |debit| %>
-          <tr>
-            <td><%= debit.bank_account.holder_name %></td>
-            <td><div class="pull-right"><%= number_to_currency(debit.amount) %></div></td>
-            <td><%= debit.status %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_tuitions %>
+      <%= list_item_to_debits(@tuition, active: true) %>
+    </ol>
   </div>
-  <%= paginate @debits %>
-  <%= button_to_back tuitions_path, pull: "left" %>
-  <% if @tuition.fix? %>
-    <%= render "fix_button" %>
-  <% else %>
-    <%= link_to t("views.buttons.fix"), nil, class: "btn btn-default pull-right disabled" %>
-  <% end %>
-  <%= button_to_edit edit_tuition_debits_path, pull: "right", edit: @tuition.edit? %>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="col-md-2"><%= t("activerecord.attributes.debit.bank_account_id") %></th>
+            <th class="col-md-2"><%= t("activerecord.attributes.debit.amount") %></th>
+            <th class="col-md-2"><%= t("activerecord.attributes.debit.status") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @debits.each do |debit| %>
+            <tr>
+              <td><%= debit.bank_account.holder_name %></td>
+              <td><div class="pull-right"><%= number_to_currency(debit.amount) %></div></td>
+              <td><%= debit.status %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <%= paginate @debits %>
+    <%= button_to_back tuitions_path, pull: "left" %>
+    <% if @tuition.fix? %>
+      <%= render "fix_button" %>
+    <% else %>
+      <%= link_to t("views.buttons.fix"), nil, class: "btn btn-default pull-right disabled" %>
+    <% end %>
+    <%= button_to_edit edit_tuition_debits_path, pull: "right", edit: @tuition.edit? %>
+  </div>
 </div>

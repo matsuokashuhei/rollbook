@@ -1,4 +1,12 @@
-<%= render "breadcrumb" %>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li><%= instructors_link %></li>
+      <li><%= instructor_link(@instructor) %></li>
+      <li class="active"><%= t("views.buttons.edit") %></li>
+    </ol>
+  </div>
+</div>
 <%= render "nav_tabs" %>
 <div class="tab-content">
   <br />

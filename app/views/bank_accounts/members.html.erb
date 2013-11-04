@@ -1,41 +1,54 @@
-<%= render "breadcrumb" %>
-<ul class="nav nav-tabs">
-  <li>
-    <%= link_to t("activerecord.models.bank_account"), bank_account_path(@bank_account), class: "btn btn-link" %>
-  </li>
-  <li class="active">
-    <a href="#members" data-toggle="tab"><%= t("activerecord.models.member") %></a>
-  </li>
-  <%= link_to t("views.buttons.new"), new_bank_account_member_path(@bank_account), class: "btn btn-default pull-right" %>
-</ul>
-<div class="tab-content">
-  <br />
-  <%= render "shared/notice" %>
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th><%= t("activerecord.attributes.member.number") %></th>
-          <th><%= t("activerecord.attributes.member.name") %></th>
-          <th>受講クラス数</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @members.each do |member| %>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_bank_accounts %>
+      <%= list_item_to_bank_account @bank_account, active: true %>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-tabs">
+      <%= tab_to_bank_account @bank_account %>
+      <%= tab_to_bank_account_members @bank_account, active: true %>
+    </ul>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <%= button_to_new new_bank_account_member_path(@bank_account), pull: "right" %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <%= render "shared/notice" %>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
           <tr>
-            <td><%= member.number %></td>
-            <td><%= member.name %></td>
-            <td><div class="pull-right"><%= member.members_courses.active.count %></div></td>
-            <td>
-              <%= link_to_show member_path(member) %>
-              <%= link_to_destroy member.id, destroy_bank_account_member_path(@bank_account, member) %>
-              <%# link_to t("views.buttons.delete"), destroy_bank_account_member_path(@bank_account, member), method: :delete, class: "btn btn-default" %>
-            </td>
+            <th><%= t("activerecord.attributes.member.number") %></th>
+            <th><%= t("activerecord.attributes.member.name") %></th>
+            <th>受講クラス数</th>
+            <th></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <% @members.each do |member| %>
+            <tr>
+              <td><%= member.number %></td>
+              <td><%= member.name %></td>
+              <td><div class="pull-right"><%= member.members_courses.active.count %></div></td>
+              <td>
+                <%= link_to_show member_path(member) %>
+                <%= link_to_destroy member.id, destroy_bank_account_member_path(@bank_account, member) %>
+                <%# link_to t("views.buttons.delete"), destroy_bank_account_member_path(@bank_account, member), method: :delete, class: "btn btn-default" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 

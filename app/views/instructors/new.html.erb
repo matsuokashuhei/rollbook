@@ -1,8 +1,19 @@
-<%= render "breadcrumb" %>
-<%= render "nav_tabs" %>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_instructors %>
+      <%= list_item_to_new %>
+    </ol>
+  </div>
+</div>
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a href="#instructor" data-toggle="tab"><%= t("activerecord.models.instructor") %></a>
+  </li>
+</ul>
 <div class="tab-content">
   <br />
   <%= render 'form' %>
   <%= button_to_save pull: "right" %>
-  <%= button_to_back instructor_path(@instructor), pull: "left" %>
+  <%= button_to_back instructors_path, pull: "left" %>
 </div>

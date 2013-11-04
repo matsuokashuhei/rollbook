@@ -17,7 +17,8 @@ class CoursesController < ApplicationController
     end
     @current_date = params[:date].to_date
     @studio = Studio.find(params[:studio_id])
-    @timetables = @studio.timetables.joins(:time_slot).order("time_slots.start_time, timetables.weekday")
+    @time_slots = TimeSlot.joins(:timetables).where(timetables: { studio_id: @studio.id }).uniq
+    @timetables = @studio.timetables.joins(:time_slot)
     @courses = Course.joins(:instructor, :dance_style, :level).active(@current_date).decorate
     @before_month = (@current_date - 1.month).beginning_of_month
     @next_month = (@current_date + 1.month).beginning_of_month

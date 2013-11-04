@@ -21,20 +21,14 @@ class AccessLog < ActiveRecord::Base
       where(user_id: user_id)
     end
   }
-  scope :terms, -> (from = nil, to = nil) {
-    if from.present?
-      date = from.to_date
-      where("created_at >= ?", date)
-    end
-    if to.present?
-      date = to.to_date
-      where("created_at <= ?", date)
+  scope :date_from, -> (date = nil) {
+    if date.present?
+      where("created_at >= ?", date.to_date)
     end
   }
-  scope :to, -> (to = nil) {
-    if to.present?
-      date = to.to_date
-      where("created_at >= ?", date)
+  scope :date_to, -> (date = nil) {
+    if date.present?
+      where("created_at >= ?", date.to_date)
     end
   }
 end

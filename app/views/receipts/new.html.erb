@@ -1,43 +1,40 @@
-<%= render "breadcrumb" %>
-
-<div class="tab-content">
-  <br />
-  <%= render "shared/notice" %>
-  <div class="table-responsive">
-    <%= form_tag({ action: "create" }, { method: "post", id: "form" }) do %>
-      <table class="table">
-        <thead>
-          <tr>
-            <th></th>
-            <th><%= t("activerecord.attributes.member.number") %></th>
-            <th><%= t("activerecord.attributes.member.name") %></th>
-            <th><%= t("activerecord.attributes.member.enter_date") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @members.each do |member| %>
-            <tr>
-              <td><div class="check_box"><%= check_box_tag "members[][id]", member.id %></div></td>
-              <td><%= member.number %></td>
-              <td><%= member.name %></td>
-              <td><%= member.enter_date %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-      <%= button_tag t("views.buttons.select"), class: "btn btn-default pull-right", form: "form" %>
-    <% end %>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_tuitions payment_method: "CASH" %>
+      <%= list_item_to_receipts @tuition %>
+      <%= list_item_to_new %>
+    </ol>
   </div>
 </div>
-
-<% if false %>
-<%= render "nav_tabs" %>
-
-<div class="tab-content">
-  <br />
-  <%= render "breadcrumb" %>
-  <%= render 'form' %>
-  <%= button_tag t("views.buttons.create"), class: "btn btn-default pull-right", form: "form" %>
-  <%= link_to t("views.buttons.back"), receipts_path, class: "btn btn-default pull-left" %>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <%= render "shared/notice" %>
+    <div class="table-responsive">
+      <%= form_tag({ action: "create" }, { method: "post", id: "form" }) do %>
+        <table class="table">
+          <thead>
+            <tr>
+              <th></th>
+              <th><%= t("activerecord.attributes.member.number") %></th>
+              <th><%= t("activerecord.attributes.member.name") %></th>
+              <th><%= t("activerecord.attributes.member.enter_date") %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @members.each do |member| %>
+              <tr>
+                <td><div class="check_box"><%= check_box_tag "members[][id]", member.id %></div></td>
+                <td><%= member.number %></td>
+                <td><%= member.name %></td>
+                <td><%= member.enter_date %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= button_tag t("views.buttons.select"), class: "btn btn-default pull-right", form: "form" %>
+      <% end %>
+    </div>
+  </div>
 </div>
-<% end %>

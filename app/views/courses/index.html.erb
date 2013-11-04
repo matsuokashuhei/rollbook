@@ -1,37 +1,51 @@
-<%= render "breadcrumb" %>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_schools %>
+      <%= list_item_to_courses(@studio, date: @current_date, active: true) %>
+    </ol>
+  </div>
+</div>
 <div class="row">
   <div class="col-md-12">
     <div class="table-responsive">
       <table class="table">
+        <caption style="text-align: center;"><%= @current_date.strftime("%Y年%m月") %></caption>
         <thead>
-          <th style="width: 9%;"></th>
-          <% 1.step(7) do |cwday| %>
-            <th style="width: 13%;">
-              <%= weekday_ja(cwday) %>
+          <tr>
+            <th style="width: 9%;">
             </th>
-          <% end %>
+            <% 1.step 7 do |cwday| %>
+              <th style="width: 13%;">
+                <%= weekday_ja(cwday) if cwday > 0 %>
+              </th>
+            <% end %>
+          </tr>
         </thead>
         <tbody>
-          <% @timetables.each do |timetable| %>
-            <% if timetable.weekday == 1 %>
-              <tr>
-                <th><%= timetable.time_slot.start_time.strftime("%H:%M") %></th>
-            <% end %>
-            <td>
-              <% course = @courses.find {|course| course.timetable_id == timetable.id } %>
-              <% if course.present? %>
-                <%= link_to course do %>
-                  <%= course.dance_style.name %><br />
-                  <%= course.level.name %><br />
-                  <%= course.instructor.name %>
-                <% end %>
-              <% else %>
-                <%= link_to t("views.buttons.new"), new_course_path(timetable_id: timetable.id), class: "btn btn-link" %>
+          <% @time_slots.each do |time_slot| %>
+            <tr>
+              <th>
+                <%= time_slot.start_time %>
+              </th>
+              <% 1.step 7 do |cwday| %>
+                <td>
+                  <% timetable = @timetables.find_by weekday: cwday, time_slot_id: time_slot.id %>
+                  <% course = @courses.find { |c| c.timetable_id == timetable.id } %>
+                  <% if course.present? %>
+                    <%= link_to course do %>
+                      <%= course.dance_style.name %><br />
+                      <%= course.level.name %><br />
+                      <%= course.instructor.name %>
+                    <% end %>
+                  <% else %>
+                    <%= link_to new_course_path(timetable_id: timetable.id), class: "btn btn-link", data: { toggle: "tooltip", "original-title" => t("views.buttons.new") } do %>
+                      <%= fa_icon "plus" %>
+                    <% end %>
+                  <% end %>
+                </td>
               <% end %>
-            </td>
-            <% if timetable.weekday == 7 %>
-              </tr>
-            <% end %>
+            </tr>
           <% end %>
         </tbody>
       </table>

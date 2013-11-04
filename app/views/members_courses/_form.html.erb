@@ -1,4 +1,13 @@
-<%= form_for([@member, @members_course], url: member_course_path(@member, @members_course), html: { role: "form", class: "form-horizontal", id: "form" }) do |f| %>
+<%
+    url = nil
+    if @members_course.new_record?
+      url = member_courses_path(@member)
+    else
+      url = member_course_path(@member, @members_course)
+    end
+%>
+<%# form_for([@member, @members_course], url: member_course_path(@member, @members_course), html: { role: "form", class: "form-horizontal", id: "form" }) do |f| %>
+<%= form_for([@member, @members_course], url: url, html: { role: "form", class: "form-horizontal", id: "form" }) do |f| %>
 
   <%= render "shared/errors", object: @members_course %>
 

@@ -6,12 +6,22 @@ module RecessesHelper
     ["残不", "2"],
   ]
 
-  def recesses_link(member, disabled: false)
-    unless disabled
-      link_to t("activerecord.models.recess"), member_recesses_path(member)
+  # タブ用
+  def tab_to_members_recesses(member, active: false)
+    text = t("activerecord.models.recess")
+    if active
+      content_tag :li, class: "active" do
+        link_to text, '#members_recesses', data: { toggle: "tab" }
+      end
     else
-      link_to t("activerecord.models.recess"), nil, class: "disabled"
+      content_tag :li, link_to_members_recesses(member)
     end
+  end
+
+  private
+
+  def link_to_members_recesses(member)
+    link_to t("activerecord.models.recess"), member_recesses_path(member)
   end
 
 end
