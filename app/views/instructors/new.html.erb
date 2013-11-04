@@ -6,14 +6,18 @@
     </ol>
   </div>
 </div>
-<ul class="nav nav-tabs">
-  <li class="active">
-    <a href="#instructor" data-toggle="tab"><%= t("activerecord.models.instructor") %></a>
-  </li>
-</ul>
-<div class="tab-content">
-  <br />
-  <%= render 'form' %>
-  <%= button_to_save pull: "right" %>
-  <%= button_to_back instructors_path, pull: "left" %>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-tabs">
+      <%= tab_to_instructor @instructor, active: true %>
+    </ul>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <%= render 'form' %>
+    <%= button_to_save pull: "right" %>
+    <%= button_to_back instructors_path, pull: "left" %>
+  </div>
 </div>

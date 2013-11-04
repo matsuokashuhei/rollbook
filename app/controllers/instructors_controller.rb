@@ -1,10 +1,10 @@
 class InstructorsController < ApplicationController
+
   before_action :set_instructor, only: [:show, :edit, :update, :destroy, :courses]
 
   # GET /instructors
   # GET /instructors.json
   def index
-    #@instructors = Instructor.all
     @instructors = Instructor.page(params[:page]).decorate
   end
 
@@ -63,7 +63,7 @@ class InstructorsController < ApplicationController
   end
 
   def courses
-    @courses = Course.details.where("instructors.id = ?", @instructor.id)
+    @courses = Course.where(instructor_id: @instructor.id).details
     respond_to do |format|
       format.html { render action: "courses" }
     end

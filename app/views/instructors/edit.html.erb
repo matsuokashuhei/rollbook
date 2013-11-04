@@ -1,16 +1,25 @@
 <div class="row">
   <div class="col-md-12">
     <ol class="breadcrumb">
-      <li><%= instructors_link %></li>
-      <li><%= instructor_link(@instructor) %></li>
-      <li class="active"><%= t("views.buttons.edit") %></li>
+      <%= list_item_to_instructors %>
+      <%= list_item_to_instructor(@instructor) %>
+      <%= list_item_to_edit %>
     </ol>
   </div>
 </div>
-<%= render "nav_tabs" %>
-<div class="tab-content">
-  <br />
-  <%= render 'form' %>
-  <%= button_to_save pull: "right" %>
-  <%= button_to_back instructor_path(@instructor), pull: "left" %>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-tabs">
+      <%= tab_to_instructor @instructor, active: true %>
+      <%= tab_to_instructors_courses @instructor %>
+    </ul>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <%= render "form" %>
+    <%= button_to_save pull: "right" %>
+    <%= button_to_back instructor_path(@instructor), pull: "left" %>
+  </div>
 </div>

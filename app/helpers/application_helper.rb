@@ -34,12 +34,10 @@ module ApplicationHelper
     else
       fa_icon "trash-o lg"
     end
-    #content_tag :span, nil, class: "glyphicon glyphicon-trash"
   end
 
   def icon_to_save
     fa_icon "save lg"
-    #content_tag :span, nil, class: "glyphicon glyphicon-floppy-save"
   end
 
   def link_to_show(path, disabled: false)
@@ -77,33 +75,6 @@ module ApplicationHelper
         icon_to_destroy
       end
     end
-    #else
-    #  text = link_to "##{id}", class: "btn btn-link", data: { toggle: "modal", "original-title" => t("views.buttons.delete")} do
-    #    icon_to_destroy
-    #  end
-    #  text += "<div class='modal fade' id='#{id}'>".html_safe
-    #  text += "<div class='modal-dialog'>".html_safe
-    #  text += "<div class='modal-content'>".html_safe
-    #  text += "<div class='modal-header'>".html_safe
-    #  text += button_tag type: "button", class: "close", data: { dismiss: "modal" }, "aria-hidden" => true do
-    #    "×"
-    #  end
-    #  text += content_tag :h4, "確認", class: "modal-title"
-    #  text += "</div>".html_safe
-    #  text += content_tag :div, class: "modal-body" do
-    #    "削除してよいですか？"
-    #  end
-    #  text += "<div class='modal-footer'>".html_safe
-    #  text += button_tag type: "button", class: "btn btn-default pull-left", data: { dismiss: "modal" } do
-    #    "閉じる"
-    #  end
-    #  text += link_to t("views.buttons.delete"), path, method: :delete, class: "btn btn-default"
-    #  text += "</div>".html_safe
-    #  text += "</div>".html_safe
-    #  text += "</div>".html_safe
-    #  text += "</div>".html_safe
-    #  text.html_safe
-    #end
   end
 
   def button_to_new(path, new: true, pull: nil)
@@ -130,8 +101,6 @@ module ApplicationHelper
     class_value << " disabled" unless save
     button_tag class: class_value, form: "form" do
       fa_icon "save lg", text: t("views.buttons.create")
-      #icon_to_save + " " + t("views.buttons.create")
-      #content_tag(:span, nil, class: "glyphicon glyphicon-floppy-save") + " " + t("views.buttons.create")
     end
   end
 
@@ -183,11 +152,6 @@ module ApplicationHelper
   private
 
   def modal_to_destroy(id, path)
-    #class_value = "btn btn-link"
-    #class_value += "pull-#{pull}" if pull.present?
-    #text = link_to "##{id}", class: "btn btn-link", data: { toggle: "modal", "original-title" => t("views.buttons.delete")} do
-    #  icon_to_destroy
-    #end
     text  = "<div class='modal fade' id='#{id}'>".html_safe
     text += "<div class='modal-dialog'>".html_safe
     text += "<div class='modal-content'>".html_safe
