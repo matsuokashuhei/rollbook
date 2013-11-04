@@ -5,7 +5,7 @@ class InstructorsController < ApplicationController
   # GET /instructors
   # GET /instructors.json
   def index
-    @instructors = Instructor.page(params[:page]).decorate
+    @instructors = Instructor.search(params[:kana]).page(params[:page]).decorate
   end
 
   # GET /instructors/1

@@ -7,7 +7,13 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <%= button_to_new new_instructor_path, pull: "right" %>
+    <%= form_tag instructors_path, method: :get, class: "form-inline" do %>
+      <div class="form-group">
+        <%= text_field_tag "kana", params[:kana], class: "form-control", placeholder: "カナ", autofocus: true %>
+      </div>
+      <%= button_to_search %>
+      <%= button_to_new new_instructor_path, pull: "right" %>
+    <% end %>
   </div>
 </div>
 <div class="row">

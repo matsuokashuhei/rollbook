@@ -27,4 +27,11 @@ class Instructor < ActiveRecord::Base
   def destroy?
     courses.count == 0
   end
+
+  scope :search, -> (kana = nil) {
+    if kana.present?
+      where("kana like ?", "#{kana}%")
+    end
+  }
+
 end

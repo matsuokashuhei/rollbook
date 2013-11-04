@@ -40,6 +40,10 @@ module ApplicationHelper
     fa_icon "save lg"
   end
 
+  def icon_to_search
+    fa_icon "search lg", text: t("views.buttons.search")
+  end
+
   def link_to_show(path, disabled: false)
     class_value = "btn btn-link"
     class_value += " disabled" if disabled
@@ -124,6 +128,12 @@ module ApplicationHelper
     class_names = "btn btn-default"
     class_names << " pull-" + pull if pull.present?
     link_to t("views.buttons.back"), path, class: class_names
+  end
+
+  def button_to_search
+    button_tag method: :get, class: "btn btn-success" do
+      fa_icon "search lg", text: t("views.buttons.search")
+    end
   end
 
   def list_item_to_new

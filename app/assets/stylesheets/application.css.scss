@@ -18,6 +18,9 @@ $iconWhiteSpritePath: "/assets/glyphicons-halflings-white.png";
 .table tbody > tr > td {
     vertical-align: middle;
 }
+body {
+    padding-top: 70px;
+}
 
 form.form-signin {
     max-width: 330px;
