@@ -7,11 +7,17 @@
     </ol>
   </div>
 </div>
-<%= render "nav_tabs" %>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-tabs">
+      <%= tab_to_course @course, active: true %>
+    </ul>
+  </div>
+</div>
 <br />
 <div class="row">
   <div class="col-md-12">
-    <%= render 'form' %>
+    <%= render "form" %>
     <%= button_to_save pull: "right" %>
     <%= button_to_back courses_path, pull: "left" %>
   </div>

@@ -58,6 +58,7 @@ ja:
         open_date: 開始日
         close_date: 終了日
         monthly_fee: 料金
+        note: メモ
       dance_style:
         name: 名前
         order_no: 並び順

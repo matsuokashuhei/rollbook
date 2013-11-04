@@ -63,6 +63,12 @@
       <%= f.date_field :close_date,  class: "form-control", min: @course.open_date %>
     </div>
   </div>
+  <div class="form-group <%= 'has-error' if @course.errors[:note].present? %>">
+    <%= f.label :note, class: "col-md-1 control-label" %>
+    <div class="col-md-6">
+      <%= f.text_area :note, class: "form-control", rows: 5 %>
+    </div>
+  </div>
 
   <% if params[:action] == "show" %>
     </fieldset>

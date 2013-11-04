@@ -7,17 +7,16 @@
     </ol>
   </div>
 </div>
-
 <div class="row">
   <div class="col-md-12">
     <ul class="nav nav-tabs">
-      <li><%= link_to t("activerecord.models.course"), course_path(@course), class: "btn btn-link" %></li>
-      <li class="active"><a href="#member" data-toggle="tab"><%= t("activerecord.models.member") %></a></li>
-      <li><%= link_to t("activerecord.models.lesson"), course_lessons_path(@course), class: "btn btn-link" %></li>
+      <%= tab_to_course @course %>
+      <%= tab_to_courses_members @course, active: true %>
+      <%= tab_to_courses_lessons @course %>
     </ul>
   </div>
 </div>
-
+<br />
 <div class="row">
   <div class="col-md-12">
     <div class="table-responsive">

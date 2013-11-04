@@ -7,7 +7,15 @@
     </ol>
   </div>
 </div>
-<%= render "nav_tabs" %>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-tabs">
+      <%= tab_to_course @course, active: true %>
+      <%= tab_to_courses_members @course %>
+      <%= tab_to_courses_lessons @course %>
+    </ul>
+  </div>
+</div>
 <br />
 <div class="row">
   <div class="col-md-12">

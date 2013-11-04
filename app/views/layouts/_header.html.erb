@@ -14,7 +14,7 @@
           <%= t("activerecord.models.school") %> <b class="caret"></b>
         </a>
         <ul class="dropdown-menu">
-          <li><%= link_to t("activerecord.models.course"), schools_path %></li>
+          <%= list_item_to_schools %>
           <%= list_item_to_instructors %>
         </ul>
       </li>
