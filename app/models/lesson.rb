@@ -31,6 +31,12 @@ class Lesson < ActiveRecord::Base
     where(status: "2")
   }
 
+  scope :month, -> (month) {
+    if month.present?
+      where('"date" between ? and ?', month.to_date, month.to_date.end_of_month)
+    end
+  }
+
   def edit?
     self.status != STATUSES[:FINISHED] && self.date <= Date.today
   end

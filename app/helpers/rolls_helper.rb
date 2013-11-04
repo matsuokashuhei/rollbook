@@ -1,5 +1,15 @@
 module RollsHelper
 
+  def options_of_status
+    [["未定", "0"],
+     ["出席", "1"],
+     ["欠席", "2"],
+     ["欠席", "3"],
+     ["振替", "4"],
+     ["休会", "5"],
+     ["体験", "6"],]
+  end
+
   def member_rolls_link(member, disabled: false)
     unless disabled
       link_to t("activerecord.models.lesson"), member_rolls_path(member)
