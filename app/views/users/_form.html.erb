@@ -1,8 +1,15 @@
-<%= form_for(@user, url: user_path(@user), html: { role: "form", class: "form-horizontal", id: "form" }) do |f| %>
+<%
+  url = users_path
+  if @user.persisted?
+    url = user_path(@user)
+  end
+%>
+<%# form_for(@user, url: user_path(@user), html: { role: "form", class: "form-horizontal", id: "form" }) do |f| %>
+<%= form_for(@user, url: url, html: { role: "form", class: "form-horizontal", id: "form" }) do |f| %>
 
   <%= render "shared/errors", object: @user %>
 
-  <%= "<fieldset disabled>".html_safe if current_page?(user_path(@user)) %>
+  <%= "<fieldset disabled>".html_safe if params[:action] == "show" %>
 
   <div class="form-group">
     <%= f.label :name, class: "col-md-1" %>
@@ -39,6 +46,6 @@
     </div>
   </div>
 
-  <%= "</fieldset>".html_safe if current_page?(user_path(@user)) %>
+  <%= "</fieldset>".html_safe if params[:action] == "show" %>
 
 <% end %>
