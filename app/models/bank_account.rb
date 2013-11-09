@@ -40,6 +40,12 @@ class BankAccount < ActiveRecord::Base
     where("begin_date is null or begin_date > ?", date)
   }
 
+  scope :name_like, -> (holder_name_kana = nil) {
+    if holder_name_kana.present?
+      where("holder_name_kana like ?", "#{holder_name_kana}%")
+    end
+  }
+
   def delete?
     self.members.count == 0
   end

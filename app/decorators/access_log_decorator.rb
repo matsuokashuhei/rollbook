@@ -35,7 +35,7 @@ class AccessLogDecorator < ApplicationDecorator
     elsif model.request_method == "DELETE" && model.fullpath == "/users/sign_out"
       "ログアウト"
     else
-      model.fullpath
+      h.truncate(model.fullpath, length: 50)
     end
   end
   # Define presentation-specific methods here. Helpers are accessed through
