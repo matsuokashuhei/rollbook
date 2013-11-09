@@ -9,38 +9,10 @@ class LessonsController < ApplicationController
       return
     end
     if params[:month].present?
-      year = params[:month].slice(0, 4).to_i
-      month = params[:month].slice(4, 2).to_i
-      @begin_date = Date.new(year, month, 1)
-      @end_date = @begin_date.end_of_month
-      dates = (@begin_date..@end_date).map {|date| date }
-      cwday = 1
-      while cwday < @begin_date.cwday
-        dates.unshift(nil)
-        cwday += 1
-      end
-      cwday = @end_date.cwday
-      while cwday < 7
-        dates.push(nil)
-        cwday += 1
-      end
-      @weeks = dates.each_slice(7).map {|week| week }
-      @month = params[:month]
-      respond_to do |format|
-        format.html { render action: "calendar" }
-      end
-      return
+      return index_of_month
     end
     if params[:date].present?
-      @date = params[:date].to_date
-      @courses = Course.active(@date).joins(:timetable).where("timetables.weekday = ?", @date.cwday)
-      @lessons = []
-      @courses.each do |course|
-        lesson = Lesson.find_or_initialize_by(date: @date, course_id: course.id)
-        lesson.status ||= "0"
-        @lessons << lesson.decorate
-      end
-      @lessons
+      return index_of_day
     end
   end
 
@@ -111,5 +83,42 @@ class LessonsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def lesson_params
       params.require(:lesson).permit(:course_id, :date, :status, :note)
+    end
+
+    def index_of_month
+      year = params[:month].slice(0, 4).to_i
+      month = params[:month].slice(4, 2).to_i
+      @begin_date = Date.new(year, month, 1)
+      @end_date = @begin_date.end_of_month
+      dates = (@begin_date..@end_date).map {|date| date }
+      cwday = 1
+      while cwday < @begin_date.cwday
+        dates.unshift(nil)
+        cwday += 1
+      end
+      cwday = @end_date.cwday
+      while cwday < 7
+        dates.push(nil)
+        cwday += 1
+      end
+      @weeks = dates.each_slice(7).map {|week| week }
+      @month = params[:month]
+      respond_to do |format|
+        format.html { render action: "calendar" }
+      end
+    end
+
+    def index_of_day
+      @date = params[:date].to_date
+      @lessons = []
+      if @date.day < 29
+        @courses = Course.active(@date).joins(:timetable).where("timetables.weekday = ?", @date.cwday)
+        @courses.each do |course|
+          lesson = Lesson.find_or_initialize_by(date: @date, course_id: course.id)
+          lesson.status ||= "0"
+          @lessons << lesson.decorate
+        end
+      end
+      @lessons
     end
 end

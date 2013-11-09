@@ -1,37 +1,43 @@
-<%= render "breadcrumb" %>
-<div class="tab-content">
-  <br />
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <% 1.step(7) do |cwday| %>
-            <th><%= weekday_ja(cwday) %></th>
-          <% end %>
-        </tr>
-        <tbody>
-          <% @weeks.each do |week| %>
-            <tr>
-              <% week.each do |date| %>
-                <td class="<%= "active" if date == Date.today %>" style="text-align: center;">
-                  <% if date.present? %>
-                    <% if date.day < 29 %>
-                      <%= link_to date.day, lessons_path(date: date.strftime("%Y%m%d")), class: "btn btn-link" %>
-                    <% else %>
-                      <%= link_to date.day, "#", class: "btn btn-link", disabled: "disabled" %>
-                    <% end %>
-                  <% end %>
-                </td>
-              <% end %>
-            </tr>
-          <% end %>
-        </tbody>
-      </thead>
-    </table>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_lessons %>
+      <%= list_item_to_lessons_of_month @month, active: true %>
+    </ol>
   </div>
-  <% prev_month = @begin_date - 1.day %>
-  <% next_month = @end_date + 1.day %>
-  <%= link_to prev_month.strftime("%Y年%m月"), lessons_path(month: prev_month.strftime("%Y%m")), class: "btn btn-link pull-left" %>
-  <%= link_to next_month.strftime("%Y年%m月"), lessons_path(month: next_month.strftime("%Y%m")), class: "btn btn-link pull-right" %>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <% 1.step(7) do |cwday| %>
+              <th><%= weekday_ja(cwday) %></th>
+            <% end %>
+          </tr>
+          <tbody>
+            <% @weeks.each do |week| %>
+              <tr>
+                <% week.each do |date| %>
+                  <td class="<%= "active" if date == Date.today %>" style="text-align: center;">
+                    <% if date.present? %>
+                      <% if date.day < 29 %>
+                        <%= link_to date.day, lessons_path(date: date.strftime("%Y%m%d")), class: "btn btn-link" %>
+                      <% else %>
+                        <%= link_to date.day, "#", class: "btn btn-link", disabled: "disabled" %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </thead>
+      </table>
+    </div>
+    <%= link_to_prev_months_lessons @month %>
+    <%= link_to_next_months_lessons @month %>
+  </div>
 </div>
 

@@ -1,29 +1,39 @@
-<%= render "breadcrumb" %>
-
-<div class="tab-content">
-  <br />
-  <%= form_tag({ action: "trial" }, { method: "post", id: "form" }) do %>
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th></th>
-            <th><%= t("activerecord.attributes.member.number") %></th>
-            <th><%= t("activerecord.attributes.member.name") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @rolls.each do |roll| %>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_lessons %>
+      <%= list_item_to_lessons_of_month @lesson.date.strftime("%Y%m") %>
+      <%= list_item_to_lessons_of_day @lesson.date %>
+      <%= list_item_to_lesson @lesson %>
+      <li class="active"><%= t("views.buttons.trial") %></li>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <%= form_tag({ action: "trial" }, { method: "post", id: "form" }) do %>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
             <tr>
-              <td><div class="checkbox"><%= check_box_tag "rolls[][member_id]", roll.member_id %></div></td>
-              <td><%= roll.member.number %></td>
-              <td><%= roll.member.name %></td>
+              <th></th>
+              <th><%= t("activerecord.attributes.member.number") %></th>
+              <th><%= t("activerecord.attributes.member.name") %></th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-    <%= button_to_back edit_lesson_rolls_path(@lesson), pull: "left" %>
-    <%= button_tag t("views.buttons.select"), class: "btn btn-default pull-right", form: "form" %>
-  <% end %>
+          </thead>
+          <tbody>
+            <% @rolls.each do |roll| %>
+              <tr>
+                <td><div class="checkbox"><%= check_box_tag "rolls[][member_id]", roll.member_id %></div></td>
+                <td><%= roll.member.number %></td>
+                <td><%= roll.member.name %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <%= button_to_back edit_lesson_rolls_path(@lesson), pull: "left" %>
+      <%= button_tag t("views.buttons.select"), class: "btn btn-default pull-right", form: "form" %>
+    <% end %>
+  </div>
 </div>

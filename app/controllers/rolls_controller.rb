@@ -11,7 +11,7 @@ class RollsController < ApplicationController
       MembersCourse.where(course_id: @lesson.course_id).active(@lesson.date).each do |members_course|
         roll = Roll.find_or_initialize_by(lesson_id: @lesson.id, member_id: members_course.member_id)
         roll.status ||= "0"
-        roll.status = "5" if Recess.exists?(members_course_id: members_course.id, month: @lesson.date.strftime("%Y/%m"))
+        roll.status = "5" if Recess.exists?(members_course_id: members_course.id, month: @lesson.date.strftime("%Y%m"))
         @rolls << roll.decorate
       end
       Roll.where(lesson_id: @lesson.id, status: "4").each do |roll|

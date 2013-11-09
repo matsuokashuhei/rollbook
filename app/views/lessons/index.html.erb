@@ -1,55 +1,69 @@
-<%= render "breadcrumb" %>
-<div class="tab-content">
-  <br />
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th><%= t("activerecord.models.school") %></th>
-          <th><%= t("activerecord.models.studio") %></th>
-          <th><%= t("activerecord.models.time_slot") %></th>
-          <th><%= t("activerecord.attributes.lesson.course_id") %></th>
-          <th><%= t("activerecord.models.member") %></th>
-          <th><%= t("activerecord.attributes.lesson.status") %></th>
-          <th>出　席</th>
-          <th>欠　席</th>
-          <th>その他</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @lessons.each do |lesson| %>
-          <% course = @courses.find {|course| course.id == lesson.course_id } %>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_lessons %>
+      <%= list_item_to_lessons_of_month @date.strftime("%Y%m") %>
+      <%= list_item_to_lessons_of_day @date, active: true %>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
           <tr>
-            <td><%= course.timetable.studio.school.name %></td>
-            <td><%= course.timetable.studio.name %></td>
-            <td><%= course.timetable.time_slot.start_time %></td>
-            <td><%= course.name %></td>
-            <td><%= lesson.number_of_members %></td>
-            <td><%= lesson.status %></td>
-            <td><%= lesson.present_rolls %></div></td>
-            <td><%= lesson.absent_rolls %></td>
-            <td><%= lesson.other_rolls %></td>
-            <td>
-              <% if lesson.new_record? %>
-                <%= form_for(lesson) do |f| %>
-                  <%= f.hidden_field :course_id %>
-                  <%= f.hidden_field :date %>
-                  <%= f.hidden_field :status %>
-                  <%= button_tag class: "btn btn-link" do %>
-                    <%= icon_to_show %>
-                  <% end %>
-                <% end %>
-              <% else %>
-                <%= link_to_show lesson_rolls_path(lesson) %>
-              <% end %>
-            </td>
+            <th><%= t("activerecord.models.school") %></th>
+            <th><%= t("activerecord.models.studio") %></th>
+            <th><%= t("activerecord.models.time_slot") %></th>
+            <th><%= t("activerecord.attributes.lesson.course_id") %></th>
+            <th><%= t("activerecord.models.member") %></th>
+            <th><%= t("activerecord.attributes.lesson.status") %></th>
+            <th>出　席</th>
+            <th>欠　席</th>
+            <th>その他</th>
+            <th></th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <%# link_to_if(@date.yesterday.day < 29, @date.yesterday, lessons_path(date: @date.yesterday.strftime("%Y%m%d")), class: "btn btn-link pull-left") {} %>
-    <%# link_to_if(@date.tomorrow.day < 29, @date.tomorrow, lessons_path(date: @date.tomorrow.strftime("%Y%m%d")), class: "btn btn-link pull-right") {} %>
+        </thead>
+        <tbody>
+          <% @lessons.each do |lesson| %>
+            <% course = @courses.find {|course| course.id == lesson.course_id } %>
+            <tr>
+              <td><%= course.timetable.studio.school.name %></td>
+              <td><%= course.timetable.studio.name %></td>
+              <td><%= course.timetable.time_slot.start_time %></td>
+              <td><%= course.name %></td>
+              <td><%= lesson.number_of_members %></td>
+              <td><%= lesson.status %></td>
+              <td><%= lesson.present_rolls %></div></td>
+              <td><%= lesson.absent_rolls %></td>
+              <td><%= lesson.other_rolls %></td>
+              <td>
+                <% if lesson.new_record? %>
+                  <%= form_for(lesson) do |f| %>
+                    <%= f.hidden_field :course_id %>
+                    <%= f.hidden_field :date %>
+                    <%= f.hidden_field :status %>
+                    <%= button_tag class: "btn btn-link" do %>
+                      <%= icon_to_show %>
+                    <% end %>
+                  <% end %>
+                <% else %>
+                  <%= link_to_show lesson_rolls_path(lesson) %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <%= link_to_yesterdays_lessons @date %>
+    <%= link_to_tomorrows_lessons @date %>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-12">
     <%= button_to_back lessons_path(month: @date.strftime("%Y%m")), pull: "left" %>
   </div>
 </div>

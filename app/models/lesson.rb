@@ -41,6 +41,13 @@ class Lesson < ActiveRecord::Base
     self.status != STATUSES[:FINISHED] && self.date <= Date.today
   end
 
+  def fix?
+    return false if self.rolls.size == 0
+    return false if self.rolls.select { |roll| roll.status == "0" }.size > 0
+    return false if self.status == "2"
+    true
+  end
+
   def prev_lesson
     one_week_before = date - 7.day
     Lesson.find_by(course_id: course_id, date: one_week_before)

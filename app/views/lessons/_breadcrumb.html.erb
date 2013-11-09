@@ -1,9 +1,0 @@
-<ol class="breadcrumb">
-  <li><%= lessons_link %></li>
-  <% if params[:month].present? %>
-    <li class="active"><%= @begin_date.strftime("%Y年%m月") %></li>
-  <% else %>
-    <li><%= link_to @date.strftime("%Y年%m月"), lessons_path(month: @date.strftime("%Y%m")) %></li>
-    <li class="active"><%= @date.strftime("%d日") %></li>
-  <% end %>
-</ol>

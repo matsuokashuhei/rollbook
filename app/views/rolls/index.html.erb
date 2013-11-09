@@ -1,10 +1,21 @@
-<%= render "breadcrumb" %>
-
-<div class="tab-content">
-  <br />
-  <%= render "form" %>
-  <%= render "lessons/fix_button" %>
-  <%= button_to_edit edit_lesson_rolls_path(@lesson), pull: "right", edit: @lesson.edit? %>
-  <%= button_to_back lessons_path(date: @lesson.date.strftime("%Y%m%d")), pull: "left" %>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_lessons %>
+      <%= list_item_to_lessons_of_month @lesson.date.strftime("%Y%m") %>
+      <%= list_item_to_lessons_of_day @lesson.date %>
+      <%= list_item_to_lesson @lesson, active: true %>
+    </ol>
+  </div>
 </div>
-
+<div class="row">
+  <div class="col-md-12">
+    <%= render "form" %>
+    <%= button_to_fix @lesson %>
+    <% if @lesson.fix? %>
+      <%= render "lessons/modal_to_fix" %>
+    <% end %>
+    <%= button_to_edit edit_lesson_rolls_path(@lesson), pull: "right", edit: @lesson.edit? %>
+    <%= button_to_back lessons_path(date: @lesson.date.strftime("%Y%m%d")), pull: "left" %>
+  </div>
+</div>

@@ -1,6 +1,5 @@
 Rollbook::Application.routes.draw do
 
-
   get "users/index"
   # ユーザー
   devise_for :users, skip: :registrations

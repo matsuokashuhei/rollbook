@@ -40,4 +40,15 @@ module RollsHelper
     ROLL_STATUS[status]["button"]
   end
 
+  def list_item_to_lesson lesson, active: false
+    text = lesson.course.name
+    if active
+      content_tag :li, text, class: "active"
+    else
+      content_tag :li do
+        link_to text, lesson_rolls_path(lesson)
+      end
+    end
+  end
+
 end

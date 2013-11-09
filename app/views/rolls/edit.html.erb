@@ -1,9 +1,25 @@
-<%= render "breadcrumb" %>
-<%= link_to t("views.buttons.substitute"), absences_path(@lesson), class: "btn btn-default pull-right" %>
-<%= link_to t("views.buttons.trial"), nonmembers_path(@lesson), class: "btn btn-default pull-right" %>
-<div class="tab-content">
-  <%= render "form" %>
-  <%= button_to_save pull: "right" %>
-  <%= button_to_back lesson_rolls_path(@lesson), pull: "left" %>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_lessons %>
+      <%= list_item_to_lessons_of_month @lesson.date.strftime("%Y%m") %>
+      <%= list_item_to_lessons_of_day @lesson.date %>
+      <%= list_item_to_lesson @lesson %>
+      <%= list_item_to_edit %>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <%= link_to t("views.buttons.substitute"), absences_path(@lesson), class: "btn btn-default pull-right" %>
+    <%= link_to t("views.buttons.trial"), nonmembers_path(@lesson), class: "btn btn-default pull-right" %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <%= render "form" %>
+    <%= button_to_save pull: "right" %>
+    <%= button_to_back lesson_rolls_path(@lesson), pull: "left" %>
+  </div>
 </div>
 
