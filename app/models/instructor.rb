@@ -18,7 +18,8 @@ class Instructor < ActiveRecord::Base
 
   has_many :courses
 
-  validates :name, :kana, :phone, presence: true
+  #validates :name, :kana, :phone, presence: true
+  validates :name, presence: true
   validates :kana, format: { with: /\A[\p{katakana}ー－]+\Z/, message: "はカタカナで入力してください。" }
   validates :name, uniqueness: { scope: :team }
 
