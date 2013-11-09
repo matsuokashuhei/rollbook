@@ -1,7 +1,7 @@
 ja:
   views:
     #title: ROLLBOOK
-    title: OGIKB
+    title: "Landin'"
     buttons:
       new: 登録する
       show: 見　　る

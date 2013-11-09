@@ -29,9 +29,9 @@ class Instructor < ActiveRecord::Base
     courses.count == 0
   end
 
-  scope :search, -> (kana = nil) {
-    if kana.present?
-      where("kana like ?", "#{kana}%")
+  scope :search, -> (name = nil) {
+    if name.present?
+      where("name like ?", "#{name}%")
     end
   }
 

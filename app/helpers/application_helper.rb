@@ -103,6 +103,7 @@ module ApplicationHelper
     class_value = "btn btn-primary"
     class_value << " pull-" + pull if pull.present?
     class_value << " disabled" unless save
+    #button_tag class: class_value, form: "form", data: { disable_with: "保存中..." } do
     button_tag class: class_value, form: "form" do
       fa_icon "save lg", text: t("views.buttons.create")
     end

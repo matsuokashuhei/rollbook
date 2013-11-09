@@ -2,7 +2,11 @@ class InstructorDecorator < ApplicationDecorator
   delegate_all
 
   def name
-    h.content_tag(:small, model.kana) + h.tag(:br) + model.name
+    if model.kana.present?
+      h.content_tag(:small, model.kana) + h.tag(:br) + model.name
+    else
+      model.name
+    end
   end
 
   def team
