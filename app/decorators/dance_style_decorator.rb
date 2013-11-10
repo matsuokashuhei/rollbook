@@ -7,7 +7,7 @@ class DanceStyleDecorator < ApplicationDecorator
     green: "#78be09",
     orange: "#ffcc00",
     red: "#fd3131",
-    yellow: "ffcc00",
+    yellow: "#ffcc00",
   }
 
   def name
