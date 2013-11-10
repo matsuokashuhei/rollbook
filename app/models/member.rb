@@ -52,10 +52,11 @@ class Member < ActiveRecord::Base
             :last_name_kana,
             :status,
             presence: true
-  validates :number, uniqueness: true, if: Proc.new { self.status != "0" }
-  validates :number, format: { with: /[0-9]{6}/, message: "は6桁の数字にしてください。" }, if: Proc.new { self.status != "0" }
+  # 会員番号のチェックを無効にする。
+  #validates :number, uniqueness: true, if: Proc.new { self.status != "0" }
+  #validates :number, format: { with: /[0-9]{6}/, message: "は6桁の数字にしてください。" }, if: Proc.new { self.status != "0" }
+  #validates :number, presence: true, if: Proc.new { self.status != "0" }
   validates :last_name_kana, :first_name_kana, format: { with: /\A[\p{katakana}ー－]+\Z/, message: "はカタカナで入力してください。" }
-  validates :number, presence: true, if: Proc.new { self.status != "0" }
   validates :enter_date, presence: true, if: Proc.new { self.status == "1" }
   validates :enter_date, absence: true, if: Proc.new { self.status == "0" }
 

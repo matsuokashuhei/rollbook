@@ -7,8 +7,10 @@ module ApplicationHelper
   def icon_to_show text: nil
     if text.present?
       fa_icon "square-o lg", text: text
+      #fa_icon "caret-square-o-right lg", text: text
     else
       fa_icon "square-o lg"
+      #fa_icon "caret-square-o-right lg"
     end
   end
 
