@@ -1,21 +1,16 @@
 class RollsController < ApplicationController
-  #before_action :set_roll, only: [:show, :edit, :update, :destroy]
-  #before_action :set_lesson, only: [:edit, :update, :absence, :substitute]
   before_action :set_lesson, only: [:index, :new, :create, :edit, :create_or_update, :absences, :substitute, :nonmembers, :trial]
 
   # GET /lessons/:lesson_id/rolls
   # GET /lessons/:lesson_id/rolls.json
   def index
     if @lesson.status == "0" || @lesson.status == "1"
+      # クラスを受講している会員の出欠情報
       rolls = @lesson.find_or_initialize_rolls
-      # 振替
-      Roll.where(lesson_id: @lesson.id, status: "4").each do |roll|
-        rolls << roll
-      end
-      # 体験
-      Roll.where(lesson_id: @lesson.id, status: "6").each do |roll|
-        rolls << roll
-      end
+      # 振替の出席情報
+      rolls.concat(@lesson.rolls.where(status: "4"))
+      # 体験の出席情報
+      rolls.concat(@lesson.rolls.where(status: "6"))
     end
     if @lesson.status == "2"
       rolls = @lesson.rolls
@@ -84,13 +79,17 @@ class RollsController < ApplicationController
     ActiveRecord::Base.transaction do
       @lesson.update_attributes(status: "1")
       params[:rolls].each do |roll_params|
+        # 出欠情報を取得（または作成）する。
         roll = Roll.find_or_initialize_by(lesson_id: @lesson.id, member_id: roll_params[:member_id])
         roll.status = roll_params[:status]
         if roll.status != "9"
+          # ステータスが9:取り消し以外の場合は保存する。
           roll.save
         elsif roll.substitute_roll_id.blank?
+          # ステータスが9:取り消しで、振替のロールIDがない場合は出欠情報を削除する。
           roll.destroy
         else
+          # ステータスが9:取り消しで、振替のロールIDがある場合は振替のロールIDを削除する。
           roll.cancel_substitute
         end
       end
@@ -121,6 +120,9 @@ class RollsController < ApplicationController
     end
     ActiveRecord::Base.transaction do
       @lesson.update_attributes(status: "1")
+      @lesson.find_or_initialize_rolls.each do |roll|
+        roll.save if roll.new_record?
+      end
       params[:rolls].each do |roll_params|
         Roll.find(roll_params[:id]).substitute(@lesson)
       end
@@ -145,6 +147,9 @@ class RollsController < ApplicationController
     end
     ActiveRecord::Base.transaction do
       @lesson.update_attributes(status: "1")
+      @lesson.find_or_initialize_rolls.each do |roll|
+        roll.save if roll.new_record?
+      end
       params[:rolls].each do |roll_params|
         roll = Roll.new(lesson_id: @lesson.id, member_id: roll_params[:member_id], status: "6")
         roll.save

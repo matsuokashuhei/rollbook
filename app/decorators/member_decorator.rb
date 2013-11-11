@@ -17,16 +17,14 @@ class MemberDecorator < ApplicationDecorator
   end
 
   def gender
-=begin
-    h.content_tag(:span, class: "badge") do
-      case model.gender
-      when "M"
-        "男"
-      else
-        "女"
-      end
-    end
-=end
+    #h.content_tag(:span, class: "badge") do
+    #  case model.gender
+    #  when "M"
+    #    h.fa_icon "male"
+    #  else
+    #    h.fa_icon "female"
+    #  end
+    #end
     model.gender == "M" ? "男" : "女"
   end
 
