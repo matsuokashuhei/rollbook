@@ -55,7 +55,7 @@ class MembersController < ApplicationController
   # DELETE /members/1
   # DELETE /members/1.json
   def destroy
-    @member.destroy if @member.delete?
+    @member.destroy if @member.destroy?
     respond_to do |format|
       format.html { redirect_to members_url }
       format.json { head :no_content }

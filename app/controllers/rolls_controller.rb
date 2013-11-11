@@ -7,24 +7,20 @@ class RollsController < ApplicationController
   # GET /lessons/:lesson_id/rolls.json
   def index
     if @lesson.status == "0" || @lesson.status == "1"
-      @rolls = []
-      MembersCourse.where(course_id: @lesson.course_id).active(@lesson.date).each do |members_course|
-        roll = Roll.find_or_initialize_by(lesson_id: @lesson.id, member_id: members_course.member_id)
-        roll.status ||= "0"
-        roll.status = "5" if Recess.exists?(members_course_id: members_course.id, month: @lesson.date.strftime("%Y%m"))
-        @rolls << roll.decorate
-      end
+      rolls = @lesson.find_or_initialize_rolls
+      # 振替
       Roll.where(lesson_id: @lesson.id, status: "4").each do |roll|
-        @rolls << roll.decorate
+        rolls << roll
       end
+      # 体験
       Roll.where(lesson_id: @lesson.id, status: "6").each do |roll|
-        @rolls << roll.decorate
+        rolls << roll
       end
     end
     if @lesson.status == "2"
-      @rolls = @lesson.rolls.decorate
+      rolls = @lesson.rolls
     end
-    #RollDecorator.decorate(@rolls)
+    @rolls = rolls.map { |roll| roll.decorate }
   end
 
   # GET /rolls/1

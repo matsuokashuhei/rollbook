@@ -60,7 +60,7 @@ class MembersCoursesController < ApplicationController
   # DELETE /members_courses/1.json
   def destroy
     ActiveRecord::Base.transaction do
-      @members_course.destroy! if @members_course.delete?
+      @members_course.destroy! if @members_course.destroy?
       Roll.member(@members_course.member_id).each do |roll|
         roll.destroy! if roll.lesson.course_id == @members_course.course_id
       end

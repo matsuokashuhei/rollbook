@@ -58,4 +58,19 @@ class Lesson < ActiveRecord::Base
     Lesson.find_by(course_id: course_id, date: one_week_after)
   end
 
+  def find_or_initialize_rolls
+    # クラスを受講中の会員と、休会中の会員の出欠情報を作る。
+    rolls = []
+    MembersCourse.where(course_id: self.course_id).active(self.date).each do |members_course|
+      roll = Roll.find_or_initialize_by(lesson_id: self.id,
+                                        member_id: members_course.member_id)
+      roll.status = "0" if roll.new_record?
+      # 休会中
+      roll.status = "5" if Recess.exists?(members_course_id: members_course.id,
+                                          month: self.date.strftime("%Y%m"))
+      rolls << roll
+    end
+    rolls
+  end
+
 end

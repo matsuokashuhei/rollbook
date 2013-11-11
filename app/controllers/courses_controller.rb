@@ -84,7 +84,7 @@ class CoursesController < ApplicationController
 
   def members
     @studio = @course.timetable.studio
-    @members_courses = MembersCourse.joins(:member).where("members_courses.course_id = ?", @course.id).order("members_courses.begin_date", "members.id")
+    @members_courses = MembersCourse.joins(:member).where(members_courses: { course_id: @course.id }).unscope(:order).reorder('"members_courses"."begin_date"', '"members"."id"')
     respond_to do |format|
       format.html { render action: "members" }
     end

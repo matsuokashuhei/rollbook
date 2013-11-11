@@ -103,7 +103,7 @@ class Member < ActiveRecord::Base
     end
   }
 
-  def delete?
+  def destroy?
     if members_courses.count == 0
       if bank_account.nil?
         return true

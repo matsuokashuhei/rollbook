@@ -52,7 +52,7 @@
               <td>
                 <%= link_to_show member_path(member) %>
                 <%= link_to_edit edit_member_path(member) %>
-                <%= link_to_destroy member.id, member_path(member), destroy: member.delete? %>
+                <%= link_to_destroy member.id, member_path(member), destroy: member.destroy? %>
               </td>
             </tr>
           <% end %>
