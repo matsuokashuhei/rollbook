@@ -1,6 +1,6 @@
 Rollbook::Application.routes.draw do
 
-  get "users/index"
+  #get "users/index"
   # ユーザー
   devise_for :users, skip: :registrations
   devise_scope :user do
@@ -40,6 +40,8 @@ Rollbook::Application.routes.draw do
   resources :lessons do
     resources :rolls, only: :index
   end
+  match "lessons/:id/fix" => "lessons#fix", via: :post, as: "fix_lesson"
+
   match "lessons/:lesson_id/rolls/edit" => "rolls#edit", via: :get, as: "edit_lesson_rolls"
   match "lessons/:lesson_id/rolls" => "rolls#create_or_update", via: :post
   match "lessons/:lesson_id/absences" => "rolls#absences", via: :get, as: "absences"

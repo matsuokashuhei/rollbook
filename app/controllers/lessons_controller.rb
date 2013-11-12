@@ -1,5 +1,5 @@
 class LessonsController < ApplicationController
-  before_action :set_lesson, only: [:show, :edit, :update, :destroy]
+  before_action :set_lesson, only: [:show, :edit, :update, :destroy, :fix]
 
   # GET /lessons
   # GET /lessons.json
@@ -71,6 +71,17 @@ class LessonsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to lessons_url }
       format.json { head :no_content }
+    end
+  end
+
+  # POST /lessons/1/fix
+  def fix
+    if @lesson.fix?
+      @lesson.fix
+      notice = "#{@lesson.course.name}のレッスンを確定しました。}"
+    end
+    respond_to do |format|
+      format.html { redirect_to lesson_rolls_url(@lesson), notice: notice }
     end
   end
 

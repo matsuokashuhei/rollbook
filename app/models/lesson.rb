@@ -48,6 +48,11 @@ class Lesson < ActiveRecord::Base
     true
   end
 
+  def fix
+    self.status = STATUSES[:FINISHED]
+    self.save
+  end
+
   def prev_lesson
     one_week_before = date - 7.day
     Lesson.find_by(course_id: course_id, date: one_week_before)

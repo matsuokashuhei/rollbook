@@ -10,6 +10,7 @@
 </div>
 <div class="row">
   <div class="col-md-12">
+    <%= render "shared/notice" %>
     <%= render "form" %>
     <%= button_to_fix @lesson %>
     <% if @lesson.fix? %>
