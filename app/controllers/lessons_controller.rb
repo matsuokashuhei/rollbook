@@ -112,7 +112,9 @@ class LessonsController < ApplicationController
       @date = params[:date].to_date
       @lessons = []
       if @date.day < 29
-        @courses = Course.active(@date).joins(:timetable).where("timetables.weekday = ?", @date.cwday)
+        @courses = Course.active(@date).details.merge(Timetable.weekday(@date.cwday)).unscope(:order).reorder('"time_slots"."start_time"',
+                                                                                                              '"schools"."open_date"',
+                                                                                                              '"studios"."open_date"')
         @courses.each do |course|
           lesson = Lesson.find_or_initialize_by(date: @date, course_id: course.id)
           lesson.status ||= "0"

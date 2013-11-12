@@ -29,4 +29,8 @@ class Timetable < ActiveRecord::Base
     WEEKDAYS[weekday]
   end
 
+  scope :weekday, -> (cwday) {
+    where(weekday: cwday)
+  }
+
 end
