@@ -11,9 +11,26 @@
 </div>
 <div class="row">
   <div class="col-md-12">
+    <%= form_tag absences_path(@lesson), method: :get, class: "form-inline" do %>
+      <div class="form-group">
+        <%= text_field_tag "number", params[:number], class: "form-control", placeholder: "会員番号", autofocus: true %>
+      </div>
+      <div class="form-group">
+        <%= text_field_tag "last_name_kana", params[:last_name_kana], class: "form-control", placeholder: "姓 (フリガナ)" %>
+      </div>
+      <div class="form-group">
+        <%= text_field_tag "first_name_kana", params[:first_name_kana], class: "form-control", placeholder: "名 (フリガナ)"  %>
+      </div>
+      <%= button_to_search %>
+    <% end %>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-12">
     <%= form_tag({ action: "substitute" }, { method: "post", id: "form" }) do %>
       <div class="table-responsive">
-        <table class="table">
+        <table class="table table-striped">
           <thead>
             <tr>
               <th></th>
@@ -29,7 +46,7 @@
           <tbody>
             <% @rolls.each do |roll| %>
               <tr>
-                <td><div class="checkbox"><%= check_box_tag "rolls[][id]", roll.id %></div></td>
+                <td style="pading: 1px"><div class="checkbox"><%= check_box_tag "rolls[][id]", roll.id %></div></td>
                 <td><%= roll.member.number %></td>
                 <td><%= roll.member.name %></td>
                 <td><%= roll.lesson.date %></td>
@@ -42,9 +59,18 @@
           </tbody>
         </table>
       </div>
-      <%= button_to_back edit_lesson_rolls_path(@lesson), pull: "left" %>
-      <%= button_tag t("views.buttons.select"), class: "btn btn-default pull-right", form: "form" %>
     <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <%= paginate @rolls %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <%= button_to_back edit_lesson_rolls_path(@lesson), pull: "left" %>
+    <%= button_tag t("views.buttons.select"), class: "btn btn-default pull-right", form: "form" %>
   </div>
 </div>
 

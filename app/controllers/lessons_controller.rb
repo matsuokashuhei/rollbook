@@ -78,7 +78,7 @@ class LessonsController < ApplicationController
   def fix
     if @lesson.fix?
       @lesson.fix
-      notice = "#{@lesson.course.name}のレッスンを確定しました。}"
+      notice = "#{@lesson.course.name}のレッスンを確定しました。"
     end
     respond_to do |format|
       format.html { redirect_to lesson_rolls_url(@lesson), notice: notice }

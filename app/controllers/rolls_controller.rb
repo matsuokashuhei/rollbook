@@ -100,17 +100,18 @@ class RollsController < ApplicationController
   end
 
   def absences
-    @rolls = []
+    rolls = []
     # レッスンを欠席したメンバーを検索する。
-    absences = Roll.absences.joins(:lesson).where("lessons.status = ?", "2").order("lessons.date", "rolls.id").decorate
+    absences = Roll.absences.joins(:lesson, :member).merge(Lesson.fixed).merge(Member.number(params[:number])).merge(Member.name_like(params[:last_name_kana], params[:first_name_kana])).unscope(:order).reorder('"lessons"."date"', '"rolls"."id"').decorate
     # レッスンを欠席したメンバーの最古の欠席したレッスンを検索する。
     absences.each do |absence|
       next if @lesson.course_id == absence.lesson.course_id
-      if @rolls.select { |roll| roll.member_id == absence.member_id }.count == 0
-        @rolls << absence
+      if rolls.select { |roll| roll.member_id == absence.member_id }.count == 0
+        rolls << absence
       end
     end
     # ページネーションがない。
+    @rolls = Kaminari.paginate_array(rolls).page(params[:page])
   end
 
   def substitute
@@ -173,6 +174,13 @@ class RollsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def roll_params
       params.require(:roll).permit(:lesson_id, :member_id, :status, :substitute_roll_id)
+    end
+
+    def search?
+      return true if params[:number].present?
+      return true if params[:last_name_kana].present?
+      return true if params[:first_name_kana].present?
+      false
     end
 
 end
