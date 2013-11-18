@@ -33,8 +33,9 @@
         <thead>
           <tr>
             <th><%= t("activerecord.attributes.member.number") %></th>
-            <th><%= t("activerecord.attributes.member.name") %></th>
             <th></th>
+            <th><%= t("activerecord.attributes.member.name") %></th>
+            <th><%= t("activerecord.attributes.member.age") %></th>
             <th><%= t("activerecord.attributes.member.gender") %></th>
             <th><%= t("activerecord.attributes.member.status") %></th>
             <th>受講クラス数</th>
@@ -46,8 +47,9 @@
           <% @members.each do |member| %>
             <tr>
               <td><%= member.number %></td>
-              <td><%= member.name %></td>
               <td><%= member.tuition %></td>
+              <td><%= member.name %></td>
+              <td><%= member.age %></td>
               <td><%= member.gender %></td>
               <td><%= member.status %></td>
               <td><div class="pull-right"><%= member.members_courses.active.count %></div></td>

@@ -14,18 +14,6 @@
       <%= tab_to_members_rolls(@member, active: true) %>
       <%= tab_to_members_recesses(@member) %>
       <%= tab_to_members_receipts(@member) %>
-      <% if false %>
-        <% unless @member.guest? %>
-          <li><%= link_to t("activerecord.models.member"), member_path(@member) %></li>
-          <li><%= member_courses_link(@member) %></li>
-          <li class="active"><a href="#roll" data-toggle="tab"><%= t("activerecord.models.lesson") %></a></li>
-          <li><%= recesses_link(@member) %></li>
-          <li><%= member_receipts_link(@member) %></li>
-        <% else %>
-          <li><%= link_to t("activerecord.models.member"), member_path(@member) %></li>
-          <li class="active"><a href="#roll" data-toggle="tab"><%= t("activerecord.models.lesson") %></a></li>
-        <% end %>
-      <% end %>
     </ul>
   </div>
 </div>
@@ -63,6 +51,7 @@
             <th><%= t("activerecord.models.course") %></th>
             <th><%= t("activerecord.attributes.roll.status") %></th>
             <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -73,6 +62,9 @@
               <td><%= lesson.date %></td>
               <td><%= course.name %></td>
               <td><%= roll.status %></td>
+              <td>
+                <%= roll.substitute_roll.try(:lesson).try(:date) %>
+              </td>
               <td><%= link_to_show lesson_rolls_path(lesson) %></td>
             </tr>
           <% end %>

@@ -20,6 +20,13 @@ class MemberDecorator < ApplicationDecorator
     model.gender == "M" ? "男" : "女"
   end
 
+  def age
+    return if birth_date.nil?
+    today = Date.today.strftime("%Y%m%d").to_i
+    age = (today - birth_date.strftime("%Y%m%d").to_i) / 10000
+    "#{age}才"
+  end
+
   def status
     h.content_tag(:h3, style: "margin: 0px; line-height: 0;") do
       case model.status
