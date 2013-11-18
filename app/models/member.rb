@@ -103,6 +103,12 @@ class Member < ActiveRecord::Base
     end
   }
 
+  scope :status, -> (status = nil) {
+    if status.present?
+      where(status: status)
+    end
+  }
+
   def destroy?
     if members_courses.count == 0
       if bank_account.nil?

@@ -17,14 +17,6 @@ class MemberDecorator < ApplicationDecorator
   end
 
   def gender
-    #h.content_tag(:span, class: "badge") do
-    #  case model.gender
-    #  when "M"
-    #    h.fa_icon "male"
-    #  else
-    #    h.fa_icon "female"
-    #  end
-    #end
     model.gender == "M" ? "男" : "女"
   end
 
@@ -39,8 +31,8 @@ class MemberDecorator < ApplicationDecorator
         h.content_tag(:span, "退会", class: "label label-default")
       end
     end
-
   end
+
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:
   #

@@ -62,6 +62,11 @@ module MembersHelper
     end
   end
 
+  # セレクトボックス
+  def options_of_member_status
+    [["未入会", "0"], ["入会", "1"], ["退会", "2"]]
+  end
+
   MEMBER_STATUS = Member::STATUS
 
   def display_gender(gender)

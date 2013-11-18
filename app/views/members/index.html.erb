@@ -17,6 +17,9 @@
       <div class="form-group">
         <%= text_field_tag "first_name_kana", params[:first_name_kana], class: "form-control", placeholder: "名 (フリガナ)"  %>
       </div>
+      <div class="form-group">
+        <%= select_tag "status", options_for_select(options_of_member_status, params[:status]), class: "form-control", prompt: t("activerecord.attributes.member.status") %>
+      </div>
       <%= button_to_search %>
       <%= button_to_new new_member_path, pull: "right" %>
     <% end %>
