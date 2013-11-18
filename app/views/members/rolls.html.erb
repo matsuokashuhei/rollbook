@@ -9,11 +9,17 @@
 <div class="row">
   <div class="col-md-12">
     <ul class="nav nav-tabs">
-      <%= tab_to_member(@member) %>
-      <%= tab_to_members_courses(@member) %>
-      <%= tab_to_members_rolls(@member, active: true) %>
-      <%= tab_to_members_recesses(@member) %>
-      <%= tab_to_members_receipts(@member) %>
+      <% if @member.active? %>
+        <%= tab_to_member(@member) %>
+        <%= tab_to_members_courses(@member) %>
+        <%= tab_to_members_rolls(@member, active: true) %>
+        <%= tab_to_members_recesses(@member) %>
+        <%= tab_to_members_receipts(@member) %>
+      <% end %>
+      <% if @member.guest? %>
+        <%= tab_to_member(@member) %>
+        <%= tab_to_members_rolls(@member, active: true) %>
+      <% end %>
     </ul>
   </div>
 </div>

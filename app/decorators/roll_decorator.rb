@@ -18,7 +18,7 @@ class RollDecorator < ApplicationDecorator
       when "5"
         h.content_tag(:span, "休会", class: "label label-default")
       when "6"
-        h.content_tag(:span, "体験", class: "label label-default")
+        h.content_tag(:span, "体験", class: "label label-info")
       when "9"
         h.content_tag(:span, "取消", class: "label label-default")
       end
