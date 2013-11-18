@@ -6,7 +6,8 @@ class BankAccountDecorator < ApplicationDecorator
   end
 
   def status
-    h.content_tag(:h3, style: "margin: 8px; line-height: 0;") do
+    #h.content_tag(:h3, style: "margin: 8px; line-height: 0;") do
+    h.content_tag :h3, style: "margin: 0px; line-height: 0;" do
       if model.active?
         h.content_tag(:span, "引落中", class: "label label-success")
       else

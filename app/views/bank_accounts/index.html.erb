@@ -12,12 +12,20 @@
         <%= text_field_tag "holder_name_kana", params[:holder_name_kana], class: "form-control", placeholder: t("activerecord.attributes.bank_account.holder_name_kana"), autofocus: true %>
       </div>
       <div class="form-group">
+        <%= text_field_tag "receipt_date", params[:receipt_date], class: "form-control", placeholder: t("activerecord.attributes.bank_account.receipt_date"), data: { behaviour: "monthpicker" } %>
+      </div>
+      <div class="form-group">
+        <%= text_field_tag "ship_date", params[:ship_date], class: "form-control", placeholder: t("activerecord.attributes.bank_account.ship_date"), data: { behaviour: "monthpicker" } %>
+      </div>
+      <div class="form-group">
+        <%= text_field_tag "begin_date", params[:begin_date], class: "form-control", placeholder: t("activerecord.attributes.bank_account.begin_date"), data: { behaviour: "monthpicker" } %>
       </div>
       <%= button_to_search %>
       <%= button_to_new new_bank_account_path, pull: "right" %>
     <% end %>
   </div>
 </div>
+<br />
 <div class="row">
   <div class="col-md-12">
     <div class="table-responsive">
@@ -27,6 +35,9 @@
             <th><%= t("activerecord.attributes.bank_account.id") %></th>
             <th><%= t("activerecord.attributes.bank_account.holder_name") %></th>
             <th><%= t("activerecord.attributes.bank_account.status") %></th>
+            <th><%= t("activerecord.attributes.bank_account.receipt_date") %></th>
+            <th><%= t("activerecord.attributes.bank_account.ship_date") %></th>
+            <th><%= t("activerecord.attributes.bank_account.begin_date") %></th>
             <th><%= t("activerecord.models.member") %></th>
             <th></th>
           </tr>
@@ -37,6 +48,9 @@
               <td><%= bank_account.id %></td>
               <td><%= bank_account.holder_name %></td>
               <td><%= bank_account.status %></td>
+              <td><%= bank_account.receipt_date %></td>
+              <td><%= bank_account.ship_date %></td>
+              <td><%= bank_account.begin_date %></td>
               <td><div class="pull-right"><%= bank_account.members.active.count %></div></td>
               <td>
                 <%= link_to_show bank_account_path(bank_account) %>

@@ -4,7 +4,18 @@ class BankAccountsController < ApplicationController
   # GET /bank_accounts
   # GET /bank_accounts.json
   def index
-    @bank_accounts = BankAccount.name_like(params[:holder_name_kana]).page(params[:page]).decorate
+    @bank_accounts = BankAccount.name_like(params[:holder_name_kana])
+    if params[:receipt_date].present?
+      @bank_accounts = @bank_accounts.where('to_char("receipt_date", \'YYYY/mm\') = ?', params[:receipt_date])
+    end
+    if params[:ship_date].present?
+      @bank_accounts = @bank_accounts.where('to_char("ship_date", \'YYYY/mm\') = ?', params[:ship_date])
+    end
+    if params[:begin_date].present?
+      @bank_accounts = @bank_accounts.where('to_char("begin_date", \'YYYY/mm\') = ?', params[:begin_date])
+    end
+    @bank_accounts = @bank_accounts.page(params[:page]).decorate
+    #@bank_accounts = BankAccount.name_like(params[:holder_name_kana]).page(params[:page]).decorate
   end
 
   # GET /bank_accounts/1

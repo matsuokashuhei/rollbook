@@ -38,8 +38,8 @@
   <div class="form-group <%= 'has-error' if @member.errors[:birth_date].present? %>">
     <%= f.label t("activerecord.attributes.member.birth_date"), class: "col-md-1 control-label" %>
     <div class="col-md-2">
-      <%# f.text_field :birth_date, class: "form-control", "data-behaviour" => "datepicker" %>
-      <%= f.date_field :birth_date, class: "form-control" %>
+      <%= f.text_field :birth_date, class: "form-control", data: { behaviour: "datepicker" } %>
+      <%# f.date_field :birth_date, class: "form-control" %>
     </div>
   </div>
   <div class="form-group <%= 'has-error' if @member.errors[:zip].present? %>">
