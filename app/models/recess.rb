@@ -29,32 +29,49 @@ class Recess < ActiveRecord::Base
   default_scope -> { order(:month) }
 
   def create?
-    rolls = members_course.rolls.joins(:lesson)
-    rolls = rolls.where!("to_char(lessons.date, 'yyyy/mm') = ?", month)
-    rolls = rolls.where!("lessons.status = ?", "2")
-    rolls = rolls.where!("rolls.status in (?)", ["1", "3"])
-    rolls.count > 0
+    # レッスンを受けていない場合は休会できる。
+    members_course = self.members_course
+    beginning_of_month = (month + "01").to_date
+    end_of_month = beginning_of_month.end_of_month
+    Lesson.joins(:rolls).where(rolls: { member_id: members_course.member_id }).scoping do
+      Lesson.where(course_id: members_course.course_id).scoping do
+        Lesson.where("date >= ?", beginning_of_month).where("date <= ?", end_of_month).scoping do
+          Lesson.fixed.each do |lesson|
+            return false
+          end
+        end
+      end
+    end
+    true
   end
 
   def delete?
-    rolls = members_course.rolls.joins(:lesson)
-    rolls = rolls.where!("to_char(lessons.date, 'yyyy/mm') = ?", month)
-    rolls = rolls.where!("lessons.status = ?", "2")
-    rolls = rolls.where!("rolls.status = ?", "5")
-    rolls.count == 0
+    # レッスンが確定していない場合は休会を取り消せる。
+    members_course = self.members_course
+    beginning_of_month = (month + "/01").to_date
+    end_of_month = beginning_of_month.end_of_month
+    Lesson.joins(:rolls).where(rolls: { member_id: members_course.member_id }).scoping do
+      Lesson.where(course_id: members_course.course_id).scoping do
+        Lesson.where("date >= ?", beginning_of_month).where("date <= ?", end_of_month).scoping do
+          Lesson.fixed.each do |lesson|
+            return false
+          end
+        end
+      end
+    end
+    true
   end
 
   def present_rolls
-    if create?
-      errors.add(:base, "%sはすでにレッスンを受けているので休会することはできません。" % (month.sub("/", "年") + "月"))
+    unless create?
+      errors.add(:base, "%sはすでにレッスンを受けているので休会することはできません。" % month)
     end
   end
 
   def six_months
-    months = (1..6).map {|i| ((month + "01").to_date - i.month).strftime("%Y/%m") }
-    recesses = Recess.where("members_course_id = ? and month in (?)", members_course_id, months)
-    if recesses.count == 6
-      errors.add(:base, "6ヶ月以上続けて休会できません。")
+    longest_month = (Date.today + 6.month).strftime("%Y%m")
+    if month > longest_month
+      errors.add(:base, "6ヶ月以上先の休会は登録できません。")
     end
   end
 

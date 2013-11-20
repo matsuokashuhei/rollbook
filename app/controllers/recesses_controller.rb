@@ -1,13 +1,11 @@
 class RecessesController < ApplicationController
+
   before_action :set_member
-  #before_action :set_members_course
   before_action :set_recess, only: [:show, :edit, :update, :destroy]
 
   # GET /recesses
   # GET /recesses.json
   def index
-    #@recesses = Recess.all
-    #@recesses = @members_course.recesses
     @recesses = Recess.joins(:members_course).where(members_courses: { member_id: @member.id }).decorate
   end
 
@@ -49,7 +47,7 @@ class RecessesController < ApplicationController
   def update
     respond_to do |format|
       if @recess.update(recess_params)
-        format.html { redirect_to member_course_recess_path(@member, @members_course, @recess), notice: 'Recess was successfully updated.' }
+        format.html { redirect_to member_recess_path(@member, @recess), notice: 'Recess was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
