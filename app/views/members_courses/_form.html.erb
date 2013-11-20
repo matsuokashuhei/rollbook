@@ -78,7 +78,8 @@
   <div class="form-group <%= 'has-error' if @members_course.errors[:begin_date].present? %>">
     <%= f.label t("activerecord.attributes.members_course.begin_date"), class: "col-md-1 control-label" %>
     <div class="col-md-2">
-      <%= f.date_field :begin_date, class: "form-control", min: min_begin_date(@member.enter_date, timetable.try(:weekday)), step: 7 %>
+      <%# f.date_field :begin_date, class: "form-control", min: min_begin_date(@member.enter_date, timetable.try(:weekday)), step: 7 %>
+      <%= f.date_field :begin_date, class: "form-control" %>
     </div>
   </div>
   <div class="form-group <%= 'has-error' if @members_course.errors[:end_date].present? %>">

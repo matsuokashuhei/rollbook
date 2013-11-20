@@ -19,17 +19,14 @@ class MembersCourse < ActiveRecord::Base
   belongs_to :course, class_name: "Course"
   has_many :recesses
 
-=begin
   validates :member_id, :course_id, :begin_date, presence: true
   validates :course_id, uniqueness: { scope: :member_id }
   validate :begin_date, :after_enter_date
   validate :begin_date, :after_open_date
-  validate :begin_date, :weekday_of_course
+  #validate :begin_date, :weekday_of_course
   validate :end_date, :end_of_month
   validate :end_date, :term_dates
   validate :end_date, :no_recesses, if: Proc.new { self.end_date.present? }
-=end
-  # 初期データ登録中はチェックしない。
   validates :member_id, :course_id, presence: true
   validates :course_id, uniqueness: { scope: :member_id }
 
