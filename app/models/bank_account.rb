@@ -29,6 +29,8 @@ class BankAccount < ActiveRecord::Base
   #validates :holder_name_kana, :status, presence: true
   validates :holder_name_kana, presence: true
   validates :holder_name_kana, uniqueness: { scope: [:bank_id, :branch_id] }
+  validates :begin_date, absence: { message: "は書類不備のときは登録できません。" }, if: Proc.new { self.self_proceed }
+  validates :begin_date, absence: { message: "は口座変更のときは登録できません。" }, if: Proc.new { self.self_proceed }
 
   default_scope -> { order(:holder_name_kana) }
 
