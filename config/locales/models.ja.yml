@@ -108,8 +108,8 @@ ja:
       members_course:
         member_id: 会員
         course_id: クラス
-        begin_date: 開始日
-        end_date: 終了日
+        begin_date: 受講開始日
+        end_date: 受講終了日
         note: メモ
         introduction: インストラクター紹介
       lesson:

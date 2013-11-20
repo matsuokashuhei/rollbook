@@ -8,10 +8,10 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
-    <% if user_signed_in? %>
-      <%= render "layouts/header" %>
-    <% end %>
     <div class="container">
+      <% if user_signed_in? %>
+        <%= render "layouts/header" %>
+      <% end %>
       <%= yield %>
       <%= tag(:br) if Rails.env.development? %>
       <%= tag(:br) if Rails.env.development? %>
