@@ -13,15 +13,15 @@ class ApplicationController < ActionController::Base
         sign_out current_user
         redirect_to :root
       end
-      return if current_user.admin?
-      if Time.now.strftime("%H%m") < "1400"
-        sign_out current_user
-        redirect_to :root
-      end
-      if Date.today.strftime("%d") > "28"
-        sign_out current_user
-        redirect_to :root
-      end
+      #return if current_user.admin?
+      #if Time.now.strftime("%H%m") < "1400"
+      #  sign_out current_user
+      #  redirect_to :root
+      #end
+      #if Date.today.strftime("%d") > "28"
+      #  sign_out current_user
+      #  redirect_to :root
+      #end
     end
   end
 

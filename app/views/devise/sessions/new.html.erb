@@ -21,10 +21,8 @@
   <%= form_for(resource, as: resource_name, url: session_path(resource_name), class: "form-signin") do |f| %>
     <%= f.email_field :email, class: "form-control", placeholder: t("activerecord.attributes.user.email"), autofocus: true %>
     <%= f.password_field :password, class: "form-control", placeholder: t("activerecord.attributes.user.password"), required: "required" %>
-    <label class="checkbox">
-      <%= f.check_box :remember_me %> <%= f.label :remember_me %>
-    </label>
-    <%= f.submit "ログイン", class: "btn btn-lg btn-primary btn-block" %>
+    <br />
+    <%= f.submit "ログイン", class: "btn btn-primary pull-right", data: { disable_with: "ログイン" } %>
   <% end %>
 </div>
 
