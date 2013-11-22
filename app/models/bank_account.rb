@@ -35,6 +35,7 @@ class BankAccount < ActiveRecord::Base
   default_scope -> { order(:holder_name_kana) }
 
   scope :active, -> (date = Date.today) {
+    # 引落日が引数の日以下である。
     where("begin_date is not null and begin_date <= ?", date)
   }
 
