@@ -16,7 +16,7 @@ class DebitsController < ApplicationController
 
   def bulk_edit
     if params[:ids].nil?
-      flash[:alert] = "口座名義人を選んでください。"
+      flash[:error] = "口座名義人を選んでください。"
       redirect_to :back
       return
     end
@@ -121,7 +121,8 @@ class DebitsController < ApplicationController
       @debit = Debit.find(params[:id])
     end
     def set_tuition
-      @tuition = Tuition.find(params[:tuition_id]).decorate
+      #@tuition = Tuition.find(params[:tuition_id]).decorate
+      @tuition = Tuition.find(params[:tuition_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

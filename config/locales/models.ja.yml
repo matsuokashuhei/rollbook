@@ -8,10 +8,10 @@ ja:
       course: クラス
       dance_style: ダンスの種類
       member: 会員
-      members_course: クラス
+      members_course: 受講クラス
       bank_account: 引落口座
       lesson: レッスン
-      roll: レッスン
+      roll: 出欠
       recess: 休会
       debit: 口座振替
       receipt: 支払い

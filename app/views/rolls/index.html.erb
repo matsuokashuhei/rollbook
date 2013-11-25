@@ -14,7 +14,7 @@
     <%= render "form" %>
     <%= button_to_fix @lesson %>
     <% if @lesson.fix? %>
-      <%= render "lessons/modal_to_fix" %>
+      <%= render "shared/modal_to_fix", id: "lesson", path: fix_lesson_path(@lesson) %>
     <% end %>
     <%= button_to_edit edit_lesson_rolls_path(@lesson), pull: "right", edit: @lesson.edit? %>
     <%= button_to_back lessons_path(date: @lesson.date.strftime("%Y%m%d")), pull: "left" %>

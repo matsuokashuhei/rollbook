@@ -72,27 +72,6 @@ module LessonsHelper
     end
   end
 
-  def button_to_fix lesson
-    text = t "views.buttons.fix"
-    if lesson.fix?
-      link_to '#lesson', class: "btn btn-primary pull-right", data: { toggle: "modal" } do
-        fa_icon "lock", text: text
-      end
-    else
-      link_to nil, class: "btn btn-primary pull-right disabled" do
-        fa_icon "lock", text: text
-      end
-    end
-  end
-
-  #def course_lessons_link(course, disable: false)
-  #  unless disable
-  #    link_to t("activerecord.models.lesson"), lessons_path
-  #  else
-  #    link_to t("activerecord.models.lesson"), nil, class: "disabled"
-  #  end
-  #end
-
   private
 
 end

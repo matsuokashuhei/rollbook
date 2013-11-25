@@ -60,17 +60,13 @@
 <div class="row">
   <div class="col-md-12">
     <%= button_to_back tuitions_path, pull: "left" %>
-    <% if @tuition.fix? %>
-      <%= render "fix_button" %>
-    <% else %>
-      <%= link_to t("views.buttons.fix"), nil, class: "btn btn-default pull-right disabled" %>
-    <% end %>
+    <%= button_to_fix @tuition %>
+    <%= render "shared/modal_to_fix", id: "tuition", path: fix_tuition_path(@tuition) %>
     <% if @tuition.edit? %>
       <%= button_tag class: "btn btn-info pull-right", form: "form" do %>
         <%= icon_to_edit + " " + t("views.buttons.edit") %>
       <% end %>
     <% end %>
-    <%# button_to_edit edit_tuition_debits_path, pull: "right", edit: @tuition.edit? %>
   </div>
 </div>
 

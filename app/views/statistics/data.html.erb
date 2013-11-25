@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-md-3">
+    <div class="table-responsive">
+      <table class="table table-striped table-condensed table-bordered">
+        <thead>
+          <tr>
+            <th>テーブル</th>
+            <th>数</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= t "activerecord.models.member" %></td>
+            <td><div class="pull-right"><%= Member.count %></div></td>
+          </tr>
+          <tr>
+            <td><%= t "activerecord.models.bank_account" %></td>
+            <td><div class="pull-right"><%= BankAccount.count %></div></td>
+          </tr>
+          <tr>
+            <td><%= t "activerecord.models.members_course" %></td>
+            <td><div class="pull-right"><%= MembersCourse.count %></div></td>
+          </tr>
+          <tr>
+            <td><%= t "activerecord.models.lesson" %></td>
+            <td><div class="pull-right"><%= Lesson.count %></div></td>
+          </tr>
+          <tr>
+            <td><%= t "activerecord.models.roll" %></td>
+            <td><div class="pull-right"><%= Roll.count %></div></td>
+          </tr>
+          <tr>
+            <td><%= t "activerecord.models.school" %></td>
+            <td><div class="pull-right"><%= School.count %></div></td>
+          </tr>
+          <tr>
+            <td><%= t "activerecord.models.studio" %></td>
+            <td><div class="pull-right"><%= Studio.count %></div></td>
+          </tr>
+          <tr>
+            <td><%= t "activerecord.models.course" %></td>
+            <td><div class="pull-right"><%= Course.count %></div></td>
+          </tr>
+          <tr>
+            <td><%= t "activerecord.models.access_log" %></td>
+            <td><div class="pull-right"><%= AccessLog.count %></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-9">
+  </div>
+</div>

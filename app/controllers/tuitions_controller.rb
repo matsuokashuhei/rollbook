@@ -1,6 +1,6 @@
 class TuitionsController < ApplicationController
 
-  before_action :set_tuition, only: [:show, :edit, :update, :destroy]
+  before_action :set_tuition, only: [:show, :edit, :update, :destroy, :fix]
 
   # GET /tuitions
   # GET /tuitions.json
@@ -47,7 +47,11 @@ class TuitionsController < ApplicationController
   # POST /tuitions.json
   def create
     ActiveRecord::Base.transaction do
-      TuitionsService.new(params[:month]).begin_debit
+      tuition = Tuition.new month: params[:month],
+                            debit_status: Tuition::DEBIT_STATUSES[:IN_PROCESS],
+                            receipt_status: Tuition::RECEIPT_STATUSES[:NONE]
+      tuition.save!
+      TuitionsService.new(tuition).begin
     end
     respond_to do |format|
       format.html { redirect_to tuitions_url }
@@ -55,6 +59,18 @@ class TuitionsController < ApplicationController
   rescue => e
     flash[:error] = "登録に失敗しました。" + e.to_s
     redirect_to action: "index"
+  end
+
+  def fix
+    ActiveRecord::Base.transaction do
+      TuitionsService.new(@tuition).end
+    end
+    respond_to do |format|
+      format.html { redirect_to tuition_debits_path(@tuition) }
+    end
+  rescue => e
+    flash[:error] = "確定に失敗しました。" + e.to_s
+    redirect_to tuition_debits_path(@tution)
   end
 
   # PATCH/PUT /tuitions/1

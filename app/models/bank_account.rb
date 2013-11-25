@@ -30,7 +30,7 @@ class BankAccount < ActiveRecord::Base
   validates :holder_name_kana, presence: true
   validates :holder_name_kana, uniqueness: { scope: [:bank_id, :branch_id] }
   validates :begin_date, absence: { message: "は書類不備のときは登録できません。" }, if: Proc.new { self.self_proceed }
-  validates :begin_date, absence: { message: "は口座変更のときは登録できません。" }, if: Proc.new { self.self_proceed }
+  validates :begin_date, absence: { message: "は口座変更のときは登録できません。" }, if: Proc.new { self.change_bank }
 
   default_scope -> { order(:holder_name_kana) }
 
@@ -39,8 +39,12 @@ class BankAccount < ActiveRecord::Base
     where("begin_date is not null and begin_date <= ?", date)
   }
 
-  scope :nonactive, -> (date = Date.today) {
-    where("begin_date is null or begin_date > ?", date)
+  scope :in_process, -> (date = Date.today) {
+    where('coalesce("begin_date", \'9999-12-31\') > ?', date).where(self_proceed: false).where(change_bank: false)
+  }
+
+  scope :invalid, -> {
+    where("self_proceed = ? or change_bank = ?", true, true)
   }
 
   scope :name_like, -> (holder_name_kana = nil) {
@@ -59,6 +63,14 @@ class BankAccount < ActiveRecord::Base
     else
       false
     end
+  end
+
+  def payable_members(date)
+    payable_members = []
+    members.active.each do |member|
+      payable_members << member if member.members_courses.active(date).count > 0
+    end
+    payable_members
   end
 
 end

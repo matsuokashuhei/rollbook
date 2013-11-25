@@ -1,4 +1,5 @@
 class AccessLogsController < ApplicationController
+  before_action :admin_user!
   before_action :set_access_log, only: [:show, :edit, :update, :destroy]
 
   # GET /access_logs
