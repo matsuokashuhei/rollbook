@@ -1,6 +1,7 @@
 Rollbook::Application.routes.draw do
 
   get "statistics/data"
+
   # ユーザー
   devise_for :users, skip: :registrations
   devise_scope :user do
