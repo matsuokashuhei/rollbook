@@ -6,12 +6,21 @@ class DebitsController < ApplicationController
   # GET /tuitions/:tuition_id/debits
   # GET /tuitions/:tuition_id/debits.json
   def index
-    @debits = @tuition.debits.page(params[:page]).decorate
-    #@debits = Debit.where(month: @month).page(params[:page]).decorate
+    @debits = @tuition.debits.joins(:bank_account)
+    @debits = @debits.merge(BankAccount.name_like(params[:holder_name_kana]))
+    @debits = @debits.where('"bank_accounts"."holder_name" like ?', "#{params[:holder_name]}%") if params[:holder_name].present?
+    @debits = @debits.where(status: params[:status]) if params[:status].present?
+    @debits = @debits.page(params[:page]).decorate
+    @options_of_status = [["引落", "1"], ["残不", "2"], ["その他", "3"]]
   end
 
   def bulk_edit
-    @debits = @tuition.debits.page(params[:page])
+    if params[:ids].nil?
+      flash[:alert] = "口座名義人を選んでください。"
+      redirect_to :back
+      return
+    end
+    @debits = Debit.find(params[:ids])
   end
 
   def bulk_update
@@ -23,7 +32,7 @@ class DebitsController < ApplicationController
         end
       end
     end
-    flash[:notice] = "更新しました。"
+    flash[:notice] = "口座振替を更新しました。"
     redirect_to tuition_debits_path(@tuition)
   end
 

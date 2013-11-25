@@ -21,13 +21,17 @@
           <h4 class="modal-title">月謝の引落</h4>
         </div>
         <div class="modal-body">
-          <%= Date.today.strftime("%Y年%m月") %>の残高不足のリストアップを始めます。よいですか？
+          <% next_month = Date.today + 1.month %>
+          <%= next_month.strftime("%Y年%m月") %>の残高不足のリストアップを始めます。よいですか？
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal"><%= t("views.buttons.close") %></button>
-          <%= hidden_field_tag "tuition[month]", Date.today.strftime("%Y%m") %>
+          <% if false %>
+          <%= hidden_field_tag "tuition[month]", next_month.strftime("%Y%m") %>
           <%= hidden_field_tag "tuition[debit_status]", Tuition::DEBIT_STATUSES[:IN_PROCESS] %>
           <%= hidden_field_tag "tuition[receipt_status]", Tuition::RECEIPT_STATUSES[:NONE] %>
+          <% end %>
+          <%= hidden_field_tag "month", next_month.strftime("%Y%m") %>
           <%= f.submit t("views.buttons.begin"), class: "btn btn-default" %>
         </div>
       </div>
@@ -36,6 +40,7 @@
 </div>
 <div class="row">
   <div class="col-md-12">
+    <%= render "shared/notice" %>
     <div class="table-responsive">
       <table class="table">
         <thead>

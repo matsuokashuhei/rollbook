@@ -1,6 +1,5 @@
 Rollbook::Application.routes.draw do
 
-  #get "users/index"
   # ユーザー
   devise_for :users, skip: :registrations
   devise_scope :user do
@@ -64,7 +63,8 @@ Rollbook::Application.routes.draw do
     resources :debits, only: [:index]
     resources :receipts
   end
-  match "tuitions/:tuition_id/debits/edit" => "debits#bulk_edit", via: :get, as: "edit_tuition_debits"
+  #match "tuitions/:tuition_id/debits/edit" => "debits#bulk_edit", via: :get, as: "edit_tuition_debits"
+  match "tuitions/:tuition_id/debits/edit" => "debits#bulk_edit", via: :post, as: "edit_tuition_debits"
   match "tuitions/:tuition_id/debits" => "debits#bulk_update", via: :patch
   match "receipts" => "tuitions#receipts", via: :get, as: "receipts"
   #match "tuitions/:tuition_id/newmembers/" => "receipts#newmembers", via: :get, as: "newmembers"

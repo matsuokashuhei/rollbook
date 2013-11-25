@@ -29,10 +29,8 @@ class Tuition < ActiveRecord::Base
 
   default_scope -> { order(:month) }
 
-  #validates :month, :debit_status, :receipt_status, presence: true
   validates :month, :debit_status, presence: true
   validates :debit_status, inclusion: { in: DEBIT_STATUSES.map {|k, v| v } }
-  #validates :receipt_status, inclusion: { in: RECEIPT_STATUSES.map {|k, v| v } }
   validates :month, uniqueness: true
 
   after_find do
@@ -48,25 +46,6 @@ class Tuition < ActiveRecord::Base
 
   after_save do
     self.month = self.month[0..3] + "/" + self.month[4..5]
-  end
-
-  after_create do
-    date = Date.new(self.month[0..3].to_i, self.month[4..5].to_i, 1)
-    # 次の条件の口座を選ぶ。
-    # ・引落をしている。
-    # ・会員が入会している。
-    BankAccount.active(date).each do |bank_account|
-      debit = self.debits.build(bank_account_id: bank_account.id,
-                                amount: 0,
-                                status: Debit::STATUSES[:SUCCESS])
-      bank_account.members.each do |member|
-        next unless member.active?
-        member.members_courses.active(date).joins(:course).each do |members_course|
-          debit.amount += tax_with(members_course.course.monthly_fee)
-        end
-      end
-      debit.save if debit.amount > 0
-    end
   end
 
   after_update do

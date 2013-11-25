@@ -6,36 +6,71 @@
     </ol>
   </div>
 </div>
+<div class="row">
+  <div class="col-md-12">
+    <%= form_tag tuition_debits_path(@tuition), method: :get, class: "form-inline" do %>
+      <div class="form-group">
+        <%= text_field_tag "holder_name_kana", params[:holder_name_kana], class: "form-control", placeholder: t("activerecord.attributes.bank_account.holder_name_kana"), autofocus: true %>
+      </div>
+      <div class="form-group">
+        <%= text_field_tag "holder_name", params[:holder_name], class: "form-control", placeholder: t("activerecord.attributes.bank_account.holder_name") %>
+      </div>
+      <div class="form-group">
+        <%= select_tag "status", options_for_select(@options_of_status, params[:status]), class: "form-control", prompt: t("activerecord.attributes.debit.status") %>
+      </div>
+      <%= button_to_search %>
+    <% end %>
+  </div>
+</div>
 <br />
 <div class="row">
   <div class="col-md-12">
+    <%= render "shared/notice" %>
     <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th class="col-md-2"><%= t("activerecord.attributes.debit.bank_account_id") %></th>
-            <th class="col-md-2"><%= t("activerecord.attributes.debit.amount") %></th>
-            <th class="col-md-2"><%= t("activerecord.attributes.debit.status") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @debits.each do |debit| %>
+      <%= form_tag edit_tuition_debits_path(@tuition), method: :post, id: "form" do %>
+        <table class="table">
+          <thead>
             <tr>
-              <td><%= debit.bank_account.holder_name %></td>
-              <td><div class="pull-right"><%= number_to_currency(debit.amount) %></div></td>
-              <td><%= debit.status %></td>
+              <th></th>
+              <th><%= t("activerecord.attributes.debit.bank_account_id") %></th>
+              <th><%= t("activerecord.attributes.debit.amount") %></th>
+              <th><%= t("activerecord.attributes.debit.status") %></th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% @debits.each do |debit| %>
+              <tr>
+                <td>
+                  <div class="checkbox">
+                    <%= check_box_tag "ids[]", debit.id %>
+                  </div>
+                </td>
+                <td><%= debit.bank_account.holder_name %></td>
+                <td><div class="pull-right"><%= number_to_currency(debit.amount) %></div></td>
+                <td><%= debit.status %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
     </div>
     <%= paginate @debits %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
     <%= button_to_back tuitions_path, pull: "left" %>
     <% if @tuition.fix? %>
       <%= render "fix_button" %>
     <% else %>
       <%= link_to t("views.buttons.fix"), nil, class: "btn btn-default pull-right disabled" %>
     <% end %>
-    <%= button_to_edit edit_tuition_debits_path, pull: "right", edit: @tuition.edit? %>
+    <% if @tuition.edit? %>
+      <%= button_tag class: "btn btn-info pull-right", form: "form" do %>
+        <%= icon_to_edit + " " + t("views.buttons.edit") %>
+      <% end %>
+    <% end %>
+    <%# button_to_edit edit_tuition_debits_path, pull: "right", edit: @tuition.edit? %>
   </div>
 </div>
+

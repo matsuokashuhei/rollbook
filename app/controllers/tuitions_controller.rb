@@ -46,24 +46,15 @@ class TuitionsController < ApplicationController
   # POST /tuitions
   # POST /tuitions.json
   def create
-    @tuition = Tuition.new(tuition_params)
-
-    respond_to do |format|
-      if @tuition.save
-        format.html { redirect_to tuitions_url, notice: "月謝の引落を登録しました。" }
-      else
-        format.html { render action: 'index' }
-      end
+    ActiveRecord::Base.transaction do
+      TuitionsService.new(params[:month]).begin_debit
     end
-    #respond_to do |format|
-    #  if @tuition.save
-    #    format.html { redirect_to @tuition, notice: 'Tuition was successfully created.' }
-    #    format.json { render action: 'show', status: :created, location: @tuition }
-    #  else
-    #    format.html { render action: 'new' }
-    #    format.json { render json: @tuition.errors, status: :unprocessable_entity }
-    #  end
-    #end
+    respond_to do |format|
+      format.html { redirect_to tuitions_url }
+    end
+  rescue => e
+    flash[:error] = "登録に失敗しました。" + e.to_s
+    redirect_to action: "index"
   end
 
   # PATCH/PUT /tuitions/1
