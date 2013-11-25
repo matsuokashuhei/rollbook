@@ -4,7 +4,15 @@ class ReceiptsController < ApplicationController
   before_action :set_receipt, only: [:show, :edit, :update, :destroy]
 
   def index
-    @receipts = @tuition.receipts.joins(:member).page(params[:page]).decorate
+    #@receipts = @tuition.receipts.joins(:member).page(params[:page]).decorate
+    @receipts = @tuition.receipts.joins(:member)
+    @receipts = @receipts.merge(Member.number(params[:number]))
+    @receipts = @receipts.merge(Member.name_like(params[:last_name_kana], nil))
+    @receipts = @receipts.where(status: params[:status]) if params[:status].present?
+    @receipts = @receipts.where(method: params[:method]) if params[:method].present?
+    @receipts = @receipts.page(params[:page]).decorate
+    @options_of_status = [["未払い", "0"], ["支払い済", "1"]]
+    @options_of_method = [["銀行振込", "0"], ["現金払い", "1"]]
   end
 
   # GET /receipts/1

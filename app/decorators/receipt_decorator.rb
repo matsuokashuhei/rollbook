@@ -4,9 +4,9 @@ class ReceiptDecorator < ApplicationDecorator
 
   def method
     if model.method == Receipt::METHODS[:DEBIT]
-      "振込"
+      "銀行振込"
     else
-      "現金"
+      "現金払い"
     end
   end
 
