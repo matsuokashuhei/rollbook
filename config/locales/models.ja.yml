@@ -101,7 +101,7 @@ ja:
         receipt_date: 受取日
         ship_date: 発送日
         begin_date: 引落日
-        self_proceed: 書類不備
+        imperfect: 書類不備
         change_bank: 口座変更
         status: 状態
         note: メモ

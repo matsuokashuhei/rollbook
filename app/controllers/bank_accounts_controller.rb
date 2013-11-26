@@ -14,6 +14,8 @@ class BankAccountsController < ApplicationController
     if params[:begin_date].present?
       @bank_accounts = @bank_accounts.where('to_char("begin_date", \'YYYY/mm\') = ?', params[:begin_date])
     end
+    @bank_accounts = @bank_accounts.where(imperfect: params[:imperfect].present?)
+    @bank_accounts = @bank_accounts.where(change_bank: params[:change_bank].present?)
     @bank_accounts = @bank_accounts.page(params[:page]).decorate
     #@bank_accounts = BankAccount.name_like(params[:holder_name_kana]).page(params[:page]).decorate
   end
@@ -153,7 +155,7 @@ class BankAccountsController < ApplicationController
                                            :receipt_date,
                                            :ship_date,
                                            :begin_date,
-                                           :self_proceed,
+                                           :imperfect,
                                            :change_bank,
                                            :status,
                                            :note)

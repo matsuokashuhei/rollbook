@@ -17,7 +17,7 @@
 #  receipt_date     :date
 #  ship_date        :date
 #  begin_date       :date
-#  self_proceed     :boolean
+#  imperfect        :boolean
 #  change_bank      :boolean
 #
 
@@ -29,7 +29,7 @@ class BankAccount < ActiveRecord::Base
   #validates :holder_name_kana, :status, presence: true
   validates :holder_name_kana, presence: true
   validates :holder_name_kana, uniqueness: { scope: [:bank_id, :branch_id] }
-  validates :begin_date, absence: { message: "は書類不備のときは登録できません。" }, if: Proc.new { self.self_proceed }
+  validates :begin_date, absence: { message: "は書類不備のときは登録できません。" }, if: Proc.new { self.imperfect }
   validates :begin_date, absence: { message: "は口座変更のときは登録できません。" }, if: Proc.new { self.change_bank }
 
   default_scope -> { order(:holder_name_kana) }
@@ -40,11 +40,11 @@ class BankAccount < ActiveRecord::Base
   }
 
   scope :in_process, -> (date = Date.today) {
-    where('coalesce("begin_date", \'9999-12-31\') > ?', date).where(self_proceed: false).where(change_bank: false)
+    where('coalesce("begin_date", \'9999-12-31\') > ?', date).where(imperfect: false).where(change_bank: false)
   }
 
   scope :invalid, -> {
-    where("self_proceed = ? or change_bank = ?", true, true)
+    where("imperfect = ? or change_bank = ?", true, true)
   }
 
   scope :name_like, -> (holder_name_kana = nil) {
