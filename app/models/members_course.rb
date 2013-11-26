@@ -94,4 +94,16 @@ class MembersCourse < ActiveRecord::Base
     return false
   end
 
+  def start_week_of_month
+    begin_date.day / 7 + 1
+  end
+
+  def fee(month)
+    fee = course.monthly_fee
+    return fee if begin_date.strftime("%Y%m") < month
+    return 0 if begin_date.strftime("%Y%m") > month
+    unit_price = fee / 4
+    return unit_price + unit_price * (4 - start_week_of_month)
+  end
+
 end
