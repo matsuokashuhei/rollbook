@@ -7,11 +7,24 @@ class MemberDecorator < ApplicationDecorator
 
   def tuition
     if model.receipts.unpaid.count > 0
+      tooltip_options = { toggle: "tooltip", "original-title" => "月謝未払い" }
       h.link_to h.member_receipts_path(model) do
-      h.content_tag(:span, class: "badge", style: "background-color: red; font-size: 18px; font-weight: normal;") do
-        #'(╬ ಠ益ಠ)'
-        h.fa_icon "warning"
+        h.content_tag(:span, class: "badge", style: "background-color: red; font-size: 18px; font-weight: normal;", data: tooltip_options) do
+          #'(╬ ಠ益ಠ)'
+          h.fa_icon "warning"
+        end
       end
+    end
+  end
+
+  def imperfect
+    if model.bank_account.try(:imperfect)
+      tooltip_options = { toggle: "tooltip", "original-title" => "口座書類不備" }
+      #tooltip_options = { toggle: "tooltip", "original-title" => h.t("activerecord.attributes.bank_account.imperfect") }
+      h.link_to h.bank_account_path(model.bank_account) do
+        h.content_tag :span, class: "badge", style: "background-color: orange; font-size: 18px; font-weight: normal;", data: tooltip_options  do
+          h.fa_icon "warning"
+        end
       end
     end
   end
