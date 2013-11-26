@@ -6,6 +6,7 @@
           <th><%= t("activerecord.attributes.member.number") %></th>
           <th><%= t("activerecord.attributes.roll.member_id") %></th>
           <th></th>
+          <th></th>
           <th><%= t("activerecord.attributes.roll.status") %></th>
           <th><%= t("activerecord.attributes.roll.substitute_roll_id") %></th>
         </tr>
@@ -21,6 +22,7 @@
               <%= roll.member.name %>
             </td>
             <td><%= roll.member.tuition %></td>
+            <td><%= roll.member.imperfect %></td>
             <td>
               <% if params[:action] == "index" %>
                 <%= roll.status %>

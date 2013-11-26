@@ -26,6 +26,8 @@
             <th><%= t("activerecord.attributes.member.number") %></th>
             <th><%= t("activerecord.attributes.member.name") %></th>
             <th></th>
+            <th></th>
+            <th></th>
             <th><%= t("activerecord.attributes.members_course.begin_date") %></th>
             <th><%= t("activerecord.attributes.members_course.end_date") %></th>
             <th></th>
@@ -37,6 +39,8 @@
               <td><%= members_course.member.number %></td>
               <td><%= members_course.member.decorate.name %></td>
               <td><%= members_course.member.decorate.tuition %></td>
+              <td><%= members_course.member.decorate.imperfect %></td>
+              <td><%= members_course.introduction %></td>
               <td><%= members_course.begin_date %></td>
               <td><%= members_course.end_date %></td>
               <td><%= link_to_show member_course_path(members_course.member, members_course) %></td>
