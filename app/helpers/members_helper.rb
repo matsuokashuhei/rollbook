@@ -32,7 +32,7 @@ module MembersHelper
   end
 
   def tab_to_members_rolls(member, active: false)
-    text = t("activerecord.models.lesson")
+    text = t("activerecord.models.roll")
     if active
       content_tag :li, class: "active" do
         link_to text, "#members_rolls", data: { toggle: "tab" }
