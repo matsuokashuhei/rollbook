@@ -53,7 +53,7 @@ class BankAccount < ActiveRecord::Base
     end
   }
 
-  def delete?
+  def destroy?
     self.members.count == 0
   end
 

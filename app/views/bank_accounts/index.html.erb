@@ -65,7 +65,7 @@
               <td>
                 <%= link_to_show bank_account_path(bank_account) %>
                 <%= link_to_edit edit_bank_account_path(bank_account) %>
-                <%= link_to_destroy bank_account.id, bank_account_path(bank_account) %>
+                <%= link_to_destroy bank_account.id, bank_account_path(bank_account), destroy: bank_account.destroy? %>
               </td>
             </tr>
           <% end %>
