@@ -76,3 +76,5 @@ gem "bootstrap-sass", '~> 3.0.0.0.rc'
 gem "font-awesome-rails", "4.0.1.0"
 
 gem "devise"
+
+gem "newrelic_rpm"
