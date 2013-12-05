@@ -1,5 +1,6 @@
 class CoursesController < ApplicationController
   before_action :set_course, only: [:show, :edit, :update, :destroy, :members, :lessons]
+  before_action :set_studio, :set_school, only: [:show, :edit, :update, :destroy, :members, :lessons]
 
   def schools
     @schools = School.all
@@ -28,7 +29,7 @@ class CoursesController < ApplicationController
   # GET /courses/1.json
   def show
     @course = Course.joins([timetable: [[studio: :school], :time_slot]], :instructor, :dance_style, :level).find(params[:id])
-    @studio = @course.timetable.studio
+    #@studio = @course.timetable.studio
   end
 
   # GET /courses/new
@@ -39,14 +40,14 @@ class CoursesController < ApplicationController
 
   # GET /courses/1/edit
   def edit
-    @studio = @course.timetable.studio
+    #@studio = @course.timetable.studio
   end
 
   # POST /courses
   # POST /courses.json
   def create
     @course = Course.new(course_params)
-
+    @studio = @course.timetable.studio
     respond_to do |format|
       if @course.save
         format.html { redirect_to @course, notice: 'クラスを登録しました。' }
@@ -61,6 +62,7 @@ class CoursesController < ApplicationController
   # PATCH/PUT /courses/1
   # PATCH/PUT /courses/1.json
   def update
+    @studio = @course.timetable.studio
     respond_to do |format|
       if @course.update(course_params)
         format.html { redirect_to @course, notice: 'クラスを変更しました。' }
@@ -102,6 +104,12 @@ class CoursesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_course
       @course = Course.find(params[:id])
+    end
+    def set_studio
+      @studio = @course.timetable.studio if @course.present?
+    end
+    def set_school
+      @school = @studio.school if @studio.present?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

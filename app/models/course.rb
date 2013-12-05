@@ -47,6 +47,7 @@ class Course < ActiveRecord::Base
   validate :close_date, :non_active_members, if: Proc.new { self.close_date.present? }
 
   def beginning_of_month
+    return if open_date.nil?
     unless open_date == open_date.beginning_of_month
       errors.add(:open_date, "は月のはじめの日にしてください。")
     end
