@@ -30,6 +30,11 @@
             <td><div class="pull-right"><%= Roll.count %></div></td>
           </tr>
           <tr>
+            <td><%= t "activerecord.models.recess" %></td>
+            <td><div class="pull-right"><%= Recess.count %></div></td>
+          </tr>
+          <% if false %>
+          <tr>
             <td><%= t "activerecord.models.school" %></td>
             <td><div class="pull-right"><%= School.count %></div></td>
           </tr>
@@ -37,6 +42,7 @@
             <td><%= t "activerecord.models.studio" %></td>
             <td><div class="pull-right"><%= Studio.count %></div></td>
           </tr>
+          <% end %>
           <tr>
             <td><%= t "activerecord.models.course" %></td>
             <td><div class="pull-right"><%= Course.count %></div></td>
