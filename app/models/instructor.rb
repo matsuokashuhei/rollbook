@@ -23,7 +23,8 @@ class Instructor < ActiveRecord::Base
   validates :kana, format: { with: /\A[\p{katakana}ー－]+\Z/, message: "はカタカナで入力してください。" }, if: Proc.new { self.kana.present? }
   validates :name, uniqueness: { scope: :team }
 
-  default_scope -> { order(:kana) }
+  #default_scope -> { order(:kana) }
+  default_scope -> { order(:name) }
 
   def destroy?
     courses.count == 0

@@ -33,12 +33,14 @@
     </div>
   </div>
 
-  <%= f.hidden_field :method %>
   <% if false %>
+  <%= f.hidden_field :method %>
+  <% end %>
   <div class="form-group <%= 'has-error' if @receipt.errors[:method].present? %>">
     <%= f.label t("activerecord.attributes.receipt.method"), class: "col-md-1 control-label" %>
     <div class="col-md-2">
-      <%= f.select :method, [["振替", Receipt::METHODS[:DEBIT]], ["現金", Receipt::METHODS[:CASH]]], {}, { class: "form-control", disabled: "disabled" } %>
+      <%# f.select :method, [["振替", Receipt::METHODS[:DEBIT]], ["現金", Receipt::METHODS[:CASH]]], {}, { class: "form-control", disabled: "disabled" } %>
+      <%= f.select :method, [["振替", Receipt::METHODS[:DEBIT]], ["現金", Receipt::METHODS[:CASH]]], {}, { class: "form-control" } %>
     </div>
     <%= f.hidden_field :debit_id %>
     <% if @receipt.method == Receipt::METHODS[:DEBIT] %>
@@ -47,7 +49,6 @@
       </div>
     <% end %>
   </div>
-  <% end %>
 
   <div class="form-group <%= 'has-error' if @receipt.errors[:note].present? %>">
     <%= f.label :note, class: "col-md-1 control-label" %>
