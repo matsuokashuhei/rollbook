@@ -79,6 +79,7 @@ class ReceiptsController < ApplicationController
       redirect_to new_tuition_receipts_path(@tuition), flash: { alert: "会員を選んでください。" }
       return
     end
+    month = @tuition.month.sub("/", "") if @tuition.month.length > 6
     ActiveRecord::Base.transaction do
       params[:members].each do |member_params|
         member = Member.find(member_params[:id])
@@ -87,8 +88,8 @@ class ReceiptsController < ApplicationController
                                         method: Receipt::METHODS[:CASH],
                                         amount: 0,
                                         status: Receipt::STATUSES[:UNPAID])
-        member.members_courses.active.joins(:course).each do |members_course|
-          receipt.amount += members_course.course.monthly_fee
+        member.members_courses.active.each do |members_course|
+          receipt.amount += members_course.fee(month)
         end
         receipt.save
       end
