@@ -113,6 +113,7 @@ class LessonsController < ApplicationController
         cwday += 1
       end
       @weeks = dates.each_slice(7).map {|week| week }
+      @holidays = Holiday.where('"date" between ? and ?', @begin_date, @end_date).pluck(:date)
       @month = params[:month]
       respond_to do |format|
         format.html { render action: "calendar" }
@@ -122,7 +123,7 @@ class LessonsController < ApplicationController
     def index_of_day
       @date = params[:date].to_date
       @lessons = []
-      if @date.day < 29
+      unless Holiday.exists? date: @date
         @courses = Course.active(@date).details.merge(Timetable.weekday(@date.cwday)).unscope(:order).reorder('"time_slots"."start_time"',
                                                                                                               '"schools"."open_date"',
                                                                                                               '"studios"."open_date"')
