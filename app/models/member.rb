@@ -62,6 +62,7 @@ class Member < ActiveRecord::Base
 
   validates :leave_date, absence: true, if: Proc.new { self.status == "0" || self.status == "1" }
   validates :leave_date, presence: true, if: Proc.new { self.status == "2" }
+  validate :leave_date, :leaved_all_courses, if: Proc.new { self.leave_date.present? }
 
   default_scope -> { order(:last_name_kana, :first_name_kana) }
 
@@ -108,6 +109,17 @@ class Member < ActiveRecord::Base
       where(status: status)
     end
   }
+
+  def leaved_all_courses
+    self.members_courses.each do |members_course|
+      if members_course.end_date.blank?
+        errors.add(:base, "スクールを退会する場合はその前に受講クラスを退会してください。")
+      end
+      if leave_date < members_course.end_date
+        errors.add(:base, "受講クラスの終了日より前には退会できません。")
+      end
+    end
+  end
 
   def destroy?
     if members_courses.count == 0
