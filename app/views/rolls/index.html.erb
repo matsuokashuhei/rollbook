@@ -12,6 +12,16 @@
   <div class="col-md-12">
     <%= render "shared/notice" %>
     <%= render "form" %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <%= link_to_prev_lesson @lesson.prev_lesson %>
+    <%= link_to_next_lesson @lesson.next_lesson %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
     <%= button_to_fix @lesson %>
     <% if @lesson.fix? %>
       <%= render "shared/modal_to_fix", id: "lesson", path: fix_lesson_path(@lesson) %>
