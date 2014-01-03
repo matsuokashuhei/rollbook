@@ -2,14 +2,15 @@ class SalariesController < ApplicationController
   before_action :set_month
 
   def index
-    @target_date = (@month + "01").to_date
-    @instructors = Instructor.search(params[:name]).joins(:courses).merge(Course.active(@target_date)).unscope(:order).uniq.page(params[:page]).decorate
+    @beginning_of_month = (@month + "01").to_date
+    @instructors = Instructor.search(params[:name]).joins(:courses).merge(Course.active(@beginning_of_month)).unscope(:order).uniq.page(params[:page]).decorate
   end
 
   def show
     @instructor = Instructor.find params[:instructor_id]
-    @target_date = (@month + "01").to_date
-    @courses = @instructor.courses.active(@target_date).details
+    @beginning_of_month = (@month + "01").to_date
+    @end_of_month = @beginning_of_month.end_of_month
+    @courses = @instructor.courses.active(@end_of_month).details
   end
 
   private

@@ -80,7 +80,7 @@ module SalariesHelper
 
   def link_to_next_months_salary month, instructor
     end_of_month = (month + "01").to_date.end_of_month
-    begining_of_next_month = end_of_month - 1.day
+    begining_of_next_month = end_of_month + 1.day
     text = begining_of_next_month.strftime("%Y年%m月 ")
     if instructor.courses.active(begining_of_next_month).count > 0
       link_to salary_path(begining_of_next_month.strftime("%Y%m"), instructor), class: "btn btn-link pull-right" do

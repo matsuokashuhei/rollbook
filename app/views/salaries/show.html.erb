@@ -12,7 +12,7 @@
     <% total_of_course = 0 %>
     <% @courses.each do |course| %>
       <% total_of_members_course = 0 %>
-      <% members_courses = course.members_courses.active(@target_date).decorate %>
+      <% members_courses = course.members_courses.active(@end_of_month).decorate %>
       <div class="table-responsive">
         <table class="table">
           <thead>
@@ -66,6 +66,12 @@
                     <%= number_to_currency salary %>
                   </div>
                 </td>
+                <td>
+                  <%= @end_of_date %>
+                  <% if members_course.end_date == @end_of_month %>
+                    当月で退会
+                  <% end %>
+                </td>
               </tr>
             <% end %>
             <tr>
@@ -78,6 +84,7 @@
                   <% total_of_course += total_of_members_course %>
                 </div>
               </td>
+              <td></td>
             </tr>
           </tbody>
         </table>
