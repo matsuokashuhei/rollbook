@@ -51,6 +51,7 @@
                 <li><%= users_link %></li>
                 <li><%= link_to t("activerecord.models.access_log"), access_logs_path %></li>
                 <li><%= link_to "データ量", "/statistics/data" %></li>
+                <%= list_item_to_salaries %>
               </ul>
             </li>
           <% end %>

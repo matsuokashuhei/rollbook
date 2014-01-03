@@ -1,5 +1,5 @@
-class InstructorsController < ApplicationController
-
+class  InstructorsController < ApplicationController
+  before_action :admin_user!
   before_action :set_instructor, only: [:show, :edit, :update, :destroy, :courses]
 
   # GET /instructors

@@ -94,6 +94,10 @@ class MembersCourse < ActiveRecord::Base
     return false
   end
 
+  def introduction?
+    return introduction
+  end
+
   def start_week_of_month
     begin_date.day / 7 + 1
   end
@@ -104,6 +108,16 @@ class MembersCourse < ActiveRecord::Base
     return 0 if begin_date.strftime("%Y%m") > month
     unit_price = fee / 4
     return unit_price + unit_price * (4 - start_week_of_month)
+  end
+
+  def salary_for_instructor(month)
+    return 0 if self.recesses.find_by(month: month)
+    fee = fee(month)
+    if introduction?
+      (fee * 0.6).to_i
+    else
+      (fee * 0.4).to_i
+    end
   end
 
 end
