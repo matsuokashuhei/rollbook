@@ -17,6 +17,7 @@ class Recess < ActiveRecord::Base
     UNPAID: "0",
     PAID: "1",
     NONE: "2",
+    NO_BANK: "3",
   }
 
   belongs_to :members_course

@@ -3,6 +3,7 @@ module RecessesHelper
   RECESS_STATUSES = [
     ["未返金", "0"],
     ["返金済", "1"],
+    ["引落前", "3"],
     ["残不", "2"],
   ]
 

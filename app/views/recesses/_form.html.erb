@@ -18,7 +18,8 @@
   <div class="form-group <%= 'has-error' if @recess.errors[:members_course_id].present? %>">
     <%= f.label :members_course_id, class: "col-md-1 control-label" %>
     <div class="col-md-3">
-      <% members_courses = @member.members_courses.active(Date.today + 1.month).joins(:course) %>
+      <%# members_courses = @member.members_courses.active(Date.today + 1.month).joins(:course) %>
+      <% members_courses = @member.members_courses.joins(:course) %>
       <% if params[:action] == "edit" %>
         <%= f.select :members_course_id, members_courses.map {|c| [c.course.name, c.id] }, {}, { class: "form-control", disabled: "disabled" } %>
       <% else %>

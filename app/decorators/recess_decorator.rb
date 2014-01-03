@@ -8,6 +8,8 @@ class RecessDecorator < ApplicationDecorator
         h.content_tag(:span, "未", class: "label label-default")
       when Recess::STATUSES[:PAID]
         h.content_tag(:span, "済", class: "label label-success")
+      when Recess::STATUSES[:NO_BANK]
+        h.content_tag(:span, "引落前", class: "label label-warning")
       when Recess::STATUSES[:NONE]
         h.content_tag(:span, "残不", class: "label label-info")
       end
