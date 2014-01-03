@@ -66,8 +66,8 @@ ja:
         number: 会員番号
         last_name: 姓 (漢字)
         first_name: 名 (漢字)
-        last_name_kana: 姓 (フリガナ)
-        first_name_kana: 名 (フリガナ)
+        last_name_kana: 姓 (ふりがな)
+        first_name_kana: 名 (ふりがな)
         gender: 性別
         age: 年齢
         birth_date: 生年月日
