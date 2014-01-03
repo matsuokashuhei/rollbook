@@ -42,6 +42,7 @@ ja:
         email: Eメール
         email_pc: Eメール (PC)
         email_mobile: Eメール (モバイル)
+        transportation: 交通費
         note: メモ
       timetable:
         weekday: 曜日
