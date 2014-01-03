@@ -74,18 +74,45 @@
                 </td>
               </tr>
             <% end %>
-            <tr>
-              <td></td>
-              <td></td>
-              <th>合計</th>
-              <td>
-                <div class="pull-right">
-                  <h4 style="margin-top: 0px;"><%= number_to_currency total_of_members_course %></h4>
-                  <% total_of_course += total_of_members_course %>
-                </div>
-              </td>
-              <td></td>
-            </tr>
+            <% if members_courses.count > 0 %>
+              <tr>
+                <td></td>
+                <td></td>
+                <th>合計</th>
+                <td>
+                  <div class="pull-right">
+                    <h4 style="margin-top: 0px;"><%= number_to_currency total_of_members_course %></h4>
+                    <% total_of_course += total_of_members_course %>
+                  </div>
+                </td>
+                <td></td>
+              </tr>
+            <% else %>
+              <tr>
+                <td style="vertical-align: top;">
+                  <ul class="list-unstyled">
+                    <li>
+                      <h6 style="margin-bottom: 0px">
+                        <%= "#{course.timetable.studio.school.name}#{course.timetable.studio.name}　#{course.timetable.decorate.weekday}曜#{course.timetable.time_slot.start_time}〜" %>
+                      </h6>
+                    </li>
+                    <li>
+                      <h3 style="margin-top: 0px">
+                        <%= "#{course.dance_style.name}#{course.level.name}" %>
+                      </h3>
+                    </li>
+                  </ul>
+                </td>
+                <td style="vertical-align: top;">
+                  <div class="pull-right"><h3 style="margin-top: 23px; margin-bottom: 0px;"><%= "#{members_courses.count}人" %></h3></div>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            <% end %>
           </tbody>
         </table>
       </div>
