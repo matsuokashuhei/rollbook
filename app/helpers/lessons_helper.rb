@@ -54,19 +54,19 @@ module LessonsHelper
     end
   end
 
-  def link_to_yesterdays_lessons date
+  def link_to_yesterdays_lessons date, school_id
     yesterday = date - 1.day
     if yesterday.day < 29
-      link_to lessons_path(date: yesterday.strftime("%Y%m%d")), class: "btn btn-link pull-left" do
+      link_to lessons_path(date: yesterday.strftime("%Y%m%d"), school_id: school_id), class: "btn btn-link pull-left" do
         fa_icon "caret-left", text: yesterday.strftime("%Y年%m月%d日")
       end
     end
   end
 
-  def link_to_tomorrows_lessons date
+  def link_to_tomorrows_lessons date, school_id
     tomorrow = date + 1.day
     if tomorrow.day < 29
-      link_to lessons_path(date: tomorrow.strftime("%Y%m%d")), class: "btn btn-link pull-right" do
+      link_to lessons_path(date: tomorrow.strftime("%Y%m%d"), school_id: school_id), class: "btn btn-link pull-right" do
         tomorrow.strftime("%Y年%m月%d日 ").concat(fa_icon("caret-right")).html_safe
       end
     end

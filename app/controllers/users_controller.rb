@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
-  before_action :admin_user!
+  before_action :admin_user!, only: [:index, :create, :destroy]
+  #before_action :admin_user!
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :my_user!
 
   def index
     #@users = User.where("role >= ?", current_user.role).decorate
@@ -22,7 +24,7 @@ class UsersController < ApplicationController
     @user.password = "from1996"
     respond_to do |format|
       if @user.save
-        format.html { redirect_to users_path, notice: "ユーザーを登録しました。初期パスワードは「from1996」です。" }
+        format.html { redirect_to user_path(@user), notice: "ユーザーを登録しました。初期パスワードは「from1996」です。" }
       else
         format.html { render action: "new" }
       end
@@ -32,7 +34,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to users_path, notice: "ユーザーを変更しました。" }
+        format.html { redirect_to user_path(@user), notice: "ユーザーを変更しました。" }
       else
         format.html { render action: "edit" }
       end
@@ -51,7 +53,12 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
     end
     def user_params
-      params.require(:user).permit(:name, :email, :role, :status)
+      params.require(:user).permit(:name, :email, :school_id, :role, :status)
+    end
+    def my_user!
+      unless current_user.admin?
+        redirect_to root_path unless @user == current_user
+      end
     end
 
 end

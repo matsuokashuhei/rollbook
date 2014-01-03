@@ -17,6 +17,7 @@
 class School < ActiveRecord::Base
 
   has_many :studios
+  has_many :users
 
   #validates :name, :zip, :address, :phone, :open_date, presence: true
   validates :name, :open_date, presence: true

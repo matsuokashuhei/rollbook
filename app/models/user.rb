@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
          :validatable,
          :timeoutable
   has_many :access_logs
+  belongs_to :school
 
   ROLES = {
     SYSTEM: "0",

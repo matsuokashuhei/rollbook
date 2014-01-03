@@ -124,9 +124,16 @@ class LessonsController < ApplicationController
       @date = params[:date].to_date
       @lessons = []
       unless Holiday.exists? date: @date
+=begin
         @courses = Course.active(@date).details.merge(Timetable.weekday(@date.cwday)).unscope(:order).reorder('"time_slots"."start_time"',
                                                                                                               '"schools"."open_date"',
                                                                                                               '"studios"."open_date"')
+=end
+        @courses = Course.active(@date).details
+        @courses = @courses.merge(Timetable.weekday(@date.cwday))
+        @courses = @courses.where(schools: { id: params[:school_id]}) if params[:school_id].present?
+        @courses = @courses.unscope(:order).reorder('"time_slots"."start_time"', '"schools"."open_date"', '"studios"."open_date"')
+
         @courses.each do |course|
           lesson = Lesson.find_or_initialize_by(date: @date, course_id: course.id)
           lesson.status ||= "0"

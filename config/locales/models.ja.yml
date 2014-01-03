@@ -157,6 +157,7 @@ ja:
         note: メモ
       user:
         name: 名前
+        school_id: スクール
         email: Eメール
         password: パスワード
         password_confirmation: 確認用パスワード

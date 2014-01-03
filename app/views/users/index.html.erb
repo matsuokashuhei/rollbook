@@ -12,12 +12,12 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <%= render "shared/notice" %>
     <div class="table-responsive">
       <table class="table">
         <thead>
           <tr>
             <th><%= t("activerecord.attributes.user.name") %></th>
+            <th><%= t("activerecord.attributes.user.school_id") %></th>
             <th><%= t("activerecord.attributes.user.email") %></th>
             <th><%= t("activerecord.attributes.user.role") %></th>
             <th><%= t("activerecord.attributes.user.status") %></th>
@@ -28,6 +28,7 @@
           <% @users.each do |user| %>
             <tr>
               <td><%= user.name %></td>
+              <td><%= user.school.name if user.school_id %></td>
               <td><%= user.email %></td>
               <td><%= user.role %></td>
               <td><%= user.status %></td>
