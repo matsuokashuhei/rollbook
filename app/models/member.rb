@@ -66,8 +66,30 @@ class Member < ActiveRecord::Base
 
   default_scope -> { order(:last_name_kana, :first_name_kana) }
 
-  scope :active, -> {
-    where(status: "1")
+  # 受講中の会員（当月の入会、退会含む）
+  scope :active, -> (month = Date.today.strftime("%Y%m")) {
+    beginning_of_month = (month + "01").to_date.beginning_of_month
+    end_of_month = beginning_of_month.end_of_month
+    query = where(status: [STATUSES[:ADMISSION], STATUSES[:SECESSION]])
+    #query = query.where('"members"."enter_date" <= ?', beginning_of_month)
+    query = query.where('"members"."enter_date" <= ?', end_of_month)
+    query = query.where('coalesce("members"."leave_date", \'9999-12-31\') >= ?', end_of_month)
+  }
+
+  # 入会した会員
+  scope :registered, -> (month = Date.today.strftime("%Y%m")) {
+    beginning_of_month = (month + "01").to_date.beginning_of_month
+    end_of_month = beginning_of_month.end_of_month
+    query = where(status: [STATUSES[:ADMISSION], STATUSES[:SECESSION]])
+    query = query.where('"members"."enter_date" between ? and ?', beginning_of_month, end_of_month)
+    query = query.where('coalesce("members"."leave_date", \'9999-12-31\') >= ?', end_of_month)
+  }
+
+  # 退会する会員
+  scope :canceled, -> (month = Date.today.strftime("%Y%m")) {
+    end_of_month = (month + "01").to_date.end_of_month
+    query = where(status: [STATUSES[:ADMISSION], STATUSES[:SECESSION]])
+    query = query.where(leave_date: end_of_month)
   }
 
   scope :new_members, -> (month) {

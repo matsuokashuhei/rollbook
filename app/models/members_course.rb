@@ -34,8 +34,31 @@ class MembersCourse < ActiveRecord::Base
     order(:member_id, :begin_date, :course_id)
   }
 
+  # 受講中のクラス
   scope :active, -> (date = Date.today) {
     where("members_courses.begin_date <= ? and ? <= coalesce(members_courses.end_date, '9999-12-31')", date, date)
+  }
+
+  # 入会したクラス
+  scope :registered, -> (month = Date.today.strftime("%Y%m")) {
+    beginning_of_month = (month + "01").to_date.beginning_of_month
+    end_of_month = beginning_of_month.end_of_month
+    where('"members_courses"."begin_date" between ? and ?', beginning_of_month, end_of_month)
+  }
+
+  # 退会したクラス
+  scope :canceled, -> (month = Date.today.strftime("%Y%m")) {
+    beginning_of_month = (month + "01").to_date.beginning_of_month
+    end_of_month = beginning_of_month.end_of_month
+    where('"members_courses"."end_date" = ?', end_of_month)
+  }
+
+  # 入会して退会したクラス
+  scope :registered_and_canceled, -> (month = Date.today.strftime("%Y%m")) {
+    beginning_of_month = (month + "01").to_date.beginning_of_month
+    end_of_month = beginning_of_month.end_of_month
+    query = where('"members_courses"."begin_date" between ? and ?', beginning_of_month, end_of_month)
+    query = query.where('"members_courses"."end_date" = ?', end_of_month)
   }
 
   scope :details, -> {
@@ -140,4 +163,10 @@ class MembersCourse < ActiveRecord::Base
     end
   end
 
+  private
+
+  def begin_and_end_of_month month
+    beginning_of_month = (month + "01").to_date
+    [beginning_of_month, beginning_of_month.end_of_month]
+  end
 end

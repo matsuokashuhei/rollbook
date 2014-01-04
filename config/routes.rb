@@ -86,6 +86,10 @@ Rollbook::Application.routes.draw do
   resources :access_logs, only: [:index]
   get "statistics/data"
 
+  # 統計
+  match "statistics" => "statistics#index", via: :get, as: "statistics"
+  match "statistics/members" => "statistics#members", via: :get, as: "statistics_members"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
