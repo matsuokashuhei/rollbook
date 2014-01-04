@@ -30,25 +30,25 @@
             <% members_courses.each_with_index do |members_course, i| %>
               <tr>
                 <% if i == 0 %>
-                <td rowspan="<%= members_courses.count + 1 %>" style="vertical-align: top;">
-                  <ul class="list-unstyled">
-                    <li>
-                      <h6 style="margin-bottom: 0px">
-                        <%= "#{course.timetable.studio.school.name}#{course.timetable.studio.name}　#{course.timetable.decorate.weekday}曜#{course.timetable.time_slot.start_time}〜" %>
-                      </h6>
-                    </li>
-                    <li>
-                      <h3 style="margin-top: 0px">
-                        <%= "#{course.dance_style.name}#{course.level.name}" %>
-                      </h3>
-                    </li>
-                  </ul>
-                </td>
-                <td rowspan="<%= members_courses.count + 1 %>" style="vertical-align: top;">
-                  <div class="pull-right"><h3 style="margin-top: 23px; margin-bottom: 0px;"><%= "#{members_courses.count}人" %></h3></div>
-                </td>
+                  <td rowspan="<%= members_courses.count + 1 %>" style="vertical-align: top;">
+                    <ul class="list-unstyled">
+                      <li>
+                        <h6 style="margin-bottom: 0px">
+                          <%= "#{course.timetable.studio.school.name}#{course.timetable.studio.name}　#{course.timetable.decorate.weekday}曜#{course.timetable.time_slot.start_time}〜" %>
+                        </h6>
+                      </li>
+                      <li>
+                        <h3 style="margin-top: 0px">
+                          <%= "#{course.dance_style.name}#{course.level.name}" %>
+                        </h3>
+                      </li>
+                    </ul>
+                  </td>
+                  <td rowspan="<%= members_courses.count + 1 %>" style="vertical-align: top;">
+                    <div class="pull-right"><h3 style="margin-top: 23px; margin-bottom: 0px;"><%= "#{members_courses.count}人" %></h3></div>
+                  </td>
                 <% end %>
-                <td><%= members_course.member.decorate.name %></td>
+                <td><%= link_to members_course.member.decorate.name, member_course_path(members_course.member, members_course) %></td>
                 <td><%= members_course.introduction %></td>
                 <td>
                   <% if members_course.recesses.find_by(month: @month) %>
