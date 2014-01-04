@@ -87,7 +87,7 @@ module SalariesHelper
         text.concat(fa_icon("caret-right")).html_safe
       end
     else
-      link_to nil, class: "btn btn-link pull-left disabled" do
+      link_to nil, class: "btn btn-link pull-right disabled" do
         fa_icon "caret-left", text: text
       end
     end
