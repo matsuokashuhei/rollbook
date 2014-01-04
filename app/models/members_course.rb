@@ -94,14 +94,32 @@ class MembersCourse < ActiveRecord::Base
     return false
   end
 
+  # インストラクター紹介であるかどうかを判定する。
   def introduction?
     return introduction
   end
 
+  # 第何週入会かを計算する。
   def start_week_of_month
-    begin_date.day / 7 + 1
+    # 開始日が1〜7日の場合は第１週入会
+    # 開始日が8〜14日の場合は第２週入会
+    # 開始日が15〜21日の場合は第３週入会
+    # 開始日が22〜28日の場合は第４週入会
+    case begin_date.day
+    when 1..7
+      1
+    when 8..14
+      2
+    when 15..21
+      3
+    else
+      4
+    end
   end
 
+  # 月謝を計算する。
+  # === Args
+  # month :: 月
   def fee(month)
     fee = course.monthly_fee
     return fee if begin_date.strftime("%Y%m") < month
@@ -110,6 +128,8 @@ class MembersCourse < ActiveRecord::Base
     return unit_price + unit_price * (4 - start_week_of_month)
   end
 
+  # インストラクターの給料を計算する。
+  # === Args :: 月
   def salary_for_instructor(month)
     return 0 if self.recesses.find_by(month: month)
     fee = fee(month)
