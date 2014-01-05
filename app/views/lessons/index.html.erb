@@ -29,6 +29,10 @@
             <th><%= t("activerecord.models.studio") %></th>
             <th><%= t("activerecord.models.time_slot") %></th>
             <th><%= t("activerecord.attributes.lesson.course_id") %></th>
+            <% if false %>
+            <th><%= t("activerecord.models.course") %></th>
+            <th><%= t("activerecord.models.instructor") %></th>
+            <% end %>
             <th><%= t("activerecord.models.member") %></th>
             <th><%= t("activerecord.attributes.lesson.status") %></th>
             <th>出　席</th>
@@ -45,6 +49,10 @@
               <td><%= course.timetable.studio.name %></td>
               <td><%= course.timetable.time_slot.start_time %></td>
               <td><%= course.name %></td>
+            <% if false %>
+              <td><%= course.decorate.name %></td>
+              <td><%= course.instructor.decorate.name %></td>
+            <% end %>
               <td><%= lesson.number_of_members %></td>
               <td><%= lesson.status %></td>
               <td><%= lesson.present_rolls %></div></td>
