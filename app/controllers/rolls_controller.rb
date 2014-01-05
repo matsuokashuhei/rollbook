@@ -1,5 +1,7 @@
 class RollsController < ApplicationController
-  before_action :set_lesson, only: [:index, :new, :create, :edit, :create_or_update, :absences, :substitute, :nonmembers, :trial]
+  # 体験は設計ミスのため削除する。
+  #before_action :set_lesson, only: [:index, :new, :create, :edit, :create_or_update, :absences, :substitute, :nonmembers, :trial]
+  before_action :set_lesson, only: [:index, :new, :create, :edit, :create_or_update, :absences, :substitute]
 
   # GET /lessons/:lesson_id/rolls
   # GET /lessons/:lesson_id/rolls.json
@@ -133,33 +135,35 @@ class RollsController < ApplicationController
     end
   end
 
-  def nonmembers
-    @rolls = []
-    nonmembers = Member.where(status: "0").includes(:rolls).where(rolls: { id: nil })
-    nonmembers.each do |nonmember|
-      @rolls << nonmember.rolls.build(lesson_id: @lesson.id, status: "6").decorate
-    end
-  end
+  # 体験は設計ミスのため削除する。
+  #def nonmembers
+  #  @rolls = []
+  #  nonmembers = Member.where(status: "0").includes(:rolls).where(rolls: { id: nil })
+  #  nonmembers.each do |nonmember|
+  #    @rolls << nonmember.rolls.build(lesson_id: @lesson.id, status: "6").decorate
+  #  end
+  #end
 
-  def trial
-    if params[:rolls].nil?
-      redirect_to lesson_rolls_path(@lesson)
-      return
-    end
-    ActiveRecord::Base.transaction do
-      @lesson.update_attributes(status: "1")
-      @lesson.find_or_initialize_rolls.each do |roll|
-        roll.save if roll.new_record?
-      end
-      params[:rolls].each do |roll_params|
-        roll = Roll.new(lesson_id: @lesson.id, member_id: roll_params[:member_id], status: "6")
-        roll.save
-      end
-    end
-    respond_to do |format|
-      format.html { redirect_to lesson_rolls_path(@lesson) }
-    end
-  end
+  # 体験は設計ミスのため削除する。
+  #def trial
+  #  if params[:rolls].nil?
+  #    redirect_to lesson_rolls_path(@lesson)
+  #    return
+  #  end
+  #  ActiveRecord::Base.transaction do
+  #    @lesson.update_attributes(status: "1")
+  #    @lesson.find_or_initialize_rolls.each do |roll|
+  #      roll.save if roll.new_record?
+  #    end
+  #    params[:rolls].each do |roll_params|
+  #      roll = Roll.new(lesson_id: @lesson.id, member_id: roll_params[:member_id], status: "6")
+  #      roll.save
+  #    end
+  #  end
+  #  respond_to do |format|
+  #    format.html { redirect_to lesson_rolls_path(@lesson) }
+  #  end
+  #end
 
   private
     # Use callbacks to share common setup or constraints between actions.

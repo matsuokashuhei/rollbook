@@ -24,8 +24,6 @@ Rollbook::Application.routes.draw do
   end
   match "members/:id/rolls" => "members#rolls", via: :get, as: "member_rolls"
   match "members/:member_id/courses/:id/rolls" => "members_courses#rolls", via: :get, as: "member_course_rolls"
-  #match "members/:id/recesses" => "members#recesses", via: :get, as: "member_recesses"
-  #match "members/:id/bank_account" => "members#bank_account", via: :get, as: "member_bank_account"
   match "members/:id/receipts" => "members#receipts", via: :get, as: "member_receipts"
 
   # 口座
@@ -45,8 +43,9 @@ Rollbook::Application.routes.draw do
   match "lessons/:lesson_id/rolls" => "rolls#create_or_update", via: :post
   match "lessons/:lesson_id/absences" => "rolls#absences", via: :get, as: "absences"
   match "lessons/:lesson_id/substitutes" => "rolls#substitute", via: :post
-  match "lessons/:lesson_id/nonmembers" => "rolls#nonmembers", via: :get, as: "nonmembers"
-  match "lessons/:lesson_id/trials" => "rolls#trial", via: :post
+  # 体験は設計ミスのため削除する。
+  #match "lessons/:lesson_id/nonmembers" => "rolls#nonmembers", via: :get, as: "nonmembers"
+  #match "lessons/:lesson_id/trials" => "rolls#trial", via: :post
 
   # クラス
   resources :courses

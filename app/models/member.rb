@@ -29,16 +29,18 @@
 class Member < ActiveRecord::Base
 
   STATUSES = {
-    TRIAL: "0",
+    # 体験は設計ミスため削除する。
+    #TRIAL: "0",
     ADMISSION: "1",
     SECESSION: "2",
   }
 
-  STATUS = {
-    "0" => "未入会",
-    "1" => "入会",
-    "2" => "退会",
-  }
+  #STATUS = {
+  #  # 体験は設計ミスため削除する。
+  #  #"0" => "未入会",
+  #  "1" => "入会",
+  #  "2" => "退会",
+  #}
 
   has_many :members_courses
   has_many :courses, through: :members_courses, source: :course
@@ -152,9 +154,9 @@ class Member < ActiveRecord::Base
     return false
   end
 
-  def guest?
-    self.status == STATUSES[:TRIAL]
-  end
+  #def guest?
+  #  self.status == STATUSES[:TRIAL]
+  #end
 
   def active?
     self.status == STATUSES[:ADMISSION]
@@ -169,7 +171,8 @@ class Member < ActiveRecord::Base
   end
 
   def full_name
-    "%s　%s" % [last_name, first_name]
+    #"%s　%s" % [last_name, first_name]
+    "#{last_name}　#{first_name}"
   end
 
 end

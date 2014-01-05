@@ -12,7 +12,8 @@
 <div class="row">
   <div class="col-md-12">
     <%= link_to t("views.buttons.substitute"), absences_path(@lesson), class: "btn btn-default pull-right" %>
-    <%= link_to t("views.buttons.trial"), nonmembers_path(@lesson), class: "btn btn-default pull-right" %>
+    <!-- 体験は設計ミスのため削除する。 -->
+    <%# link_to t("views.buttons.trial"), nonmembers_path(@lesson), class: "btn btn-default pull-right" %>
   </div>
 </div>
 <div class="row">

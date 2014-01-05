@@ -43,8 +43,9 @@ class MemberDecorator < ApplicationDecorator
   def status
     h.content_tag(:h3, style: "margin: 0px; line-height: 0;") do
       case model.status
-      when Member::STATUSES[:TRIAL]
-        h.content_tag(:span, "体験", class: "label label-info")
+      # 体験は設計ミスのため削除する。
+      #when Member::STATUSES[:TRIAL]
+      #  h.content_tag(:span, "体験", class: "label label-info")
       when Member::STATUSES[:ADMISSION]
         h.content_tag(:span, "入会", class: "label label-success")
       when Member::STATUSES[:SECESSION]
