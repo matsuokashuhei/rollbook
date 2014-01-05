@@ -1,5 +1,9 @@
 module ReceiptsHelper
 
+  def options_of_method
+    [["引落", Receipt::METHODS[:DEBIT]], ["現金", Receipt::METHODS[:PAID_CASH]], ["振済", Receipt::METHODS[:PAID_BANK]], ["相殺", Receipt::METHODS[:OFFSET]]]
+  end
+
   # パン屑
   def list_item_to_receipts tuition, active: false
     #text = t "activerecord.models.receipt"

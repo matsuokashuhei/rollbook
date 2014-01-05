@@ -19,7 +19,9 @@ class Receipt < ActiveRecord::Base
 
   METHODS = {
     DEBIT: "0",
-    CASH: "1",
+    PAID_CASH: "1",
+    PAID_BANK: "2",
+    OFFSET: "3",
   }
 
   STATUSES = {

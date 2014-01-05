@@ -5,5 +5,5 @@ PENALTY = 150
 # 消費税率
 TAX_RATE = 0.05
 # 月謝の支払い月
-TUITION_MONTH = "2013/12"
+TUITION_MONTH = "2014/01"
 

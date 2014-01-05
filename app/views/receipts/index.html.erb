@@ -19,7 +19,7 @@
         <%= select_tag "status", options_for_select(@options_of_status, params[:status]), class: "form-control", prompt: t("activerecord.attributes.receipt.status") %>
       </div>
       <div class="form-group">
-        <%= select_tag "method", options_for_select(@options_of_method, params[:method]), class: "form-control", prompt: t("activerecord.attributes.receipt.method") %>
+        <%= select_tag "method", options_for_select(options_of_method, params[:method]), class: "form-control", prompt: t("activerecord.attributes.receipt.method") %>
       </div>
       <%= button_to_search %>
       <%= button_to_new new_tuition_receipts_path(@tuition), pull: "right" %>

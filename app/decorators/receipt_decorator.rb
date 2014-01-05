@@ -3,10 +3,16 @@ class ReceiptDecorator < ApplicationDecorator
   delegate_all
 
   def method
-    if model.method == Receipt::METHODS[:DEBIT]
-      "銀行振込"
-    else
-      "現金払い"
+    #[["引落", Receipt::METHODS[:DEBIT]], ["現金", Receipt::METHODS[:PAID_CASH]], ["振済", Receipt::METHODS[:PAID_BANK]], ["相殺", Receipt::METHODS[:OFFSET]]]
+    case model.method
+    when Receipt::METHODS[:DEBIT]
+      "引落"
+    when Receipt::METHODS[:PAID_CASH]
+      "現金"
+    when Receipt::METHODS[:PAID_BANK]
+      "振済"
+    when Receipt::METHODS[:OFFSET]
+      "相殺"
     end
   end
 
