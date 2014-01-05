@@ -18,7 +18,7 @@
           <%= hidden_field_tag "rolls[][member_id]", roll.member_id %>
           <tr>
             <td><%= roll.member.number %></td>
-            <td><%= roll.member.name %></td>
+            <td><%= roll.member.name_with_link %></td>
             <td><%= roll.member.tuition %></td>
             <td><%= roll.member.imperfect %></td>
             <td>

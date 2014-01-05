@@ -2,7 +2,26 @@ class MemberDecorator < ApplicationDecorator
   delegate_all
 
   def name
-    h.content_tag(:small, "#{model.last_name_kana}　#{model.first_name_kana}") + h.tag(:br) + "#{model.last_name}　#{model.first_name}"
+    text =  "<ul class='list-unstyled' style='margin-top: 1px; margin-bottom: 1px;'>"
+    text += "<li>"
+    text += h.content_tag :h6, style: "margin-top: 0px; margin-bottom: 0px;" do
+      "#{model.last_name_kana}　#{model.first_name_kana}"
+    end
+    text += "</li>"
+    text += "<li>"
+    text += h.content_tag :h4, style: "margin-top: 0px; margin-bottom: 0px;" do
+      "#{model.last_name}　#{model.first_name}"
+    end
+    text += "</li>"
+    text += "</ul>"
+    text.html_safe
+    #h.content_tag(:small, "#{model.last_name_kana}　#{model.first_name_kana}") + h.tag(:br) + "#{model.last_name}　#{model.first_name}"
+  end
+
+  def name_with_link
+    h.link_to h.member_path model do
+      self.name
+    end
   end
 
   def tuition
