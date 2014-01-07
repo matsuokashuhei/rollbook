@@ -13,13 +13,13 @@
   <div class="col-md-12">
     <%= form_tag absences_path(@lesson), method: :get, class: "form-inline" do %>
       <div class="form-group">
-        <%= text_field_tag "number", params[:number], class: "form-control", placeholder: "会員番号", autofocus: true %>
+        <%= text_field_tag "number", params[:number], class: "form-control", placeholder: t "activerecord.attributes.member.number", autofocus: true %>
       </div>
       <div class="form-group">
-        <%= text_field_tag "last_name_kana", params[:last_name_kana], class: "form-control", placeholder: "姓 (フリガナ)" %>
+        <%= text_field_tag "last_name_kana", params[:last_name_kana], class: "form-control", placeholder: t "activerecord.attributes.member.last_name_kana" %>
       </div>
       <div class="form-group">
-        <%= text_field_tag "first_name_kana", params[:first_name_kana], class: "form-control", placeholder: "名 (フリガナ)"  %>
+        <%= text_field_tag "first_name_kana", params[:first_name_kana], class: "form-control", placeholder: t "activerecord.attributes.member.first_name_kana"  %>
       </div>
       <%= button_to_search %>
     <% end %>
