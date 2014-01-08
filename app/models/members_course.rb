@@ -28,7 +28,6 @@ class MembersCourse < ActiveRecord::Base
   validate :end_date, :term_dates
   validate :end_date, :no_recesses, if: Proc.new { self.end_date.present? }
   validates :member_id, :course_id, presence: true
-  validates :course_id, uniqueness: { scope: :member_id }
 
   default_scope -> {
     order(:member_id, :begin_date, :course_id)
