@@ -16,8 +16,14 @@
 </div>
 <div class="row">
   <div class="col-md-12">
+    <ul class="pager">
+      <li class="previous">
     <%= link_to_prev_lesson @lesson.prev_lesson %>
+      </li>
+      <li class="next">
     <%= link_to_next_lesson @lesson.next_lesson %>
+      </li>
+    </ul>
   </div>
 </div>
 <div class="row">

@@ -160,8 +160,14 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <%= link_to_prev_months_salary @month, @instructor %>
-    <%= link_to_next_months_salary @month, @instructor %>
+    <ul class="pager">
+      <li class="previous">
+        <%= link_to_prev_months_salary @month, @instructor %>
+      </li>
+      <li class="next">
+        <%= link_to_next_months_salary @month, @instructor %>
+      </li>
+    </ul>
   </div>
 </div>
 <br />

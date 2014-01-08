@@ -44,8 +44,14 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <%= link_to_prev_months_salaries @month %>
-    <%= link_to_next_months_salaries @month %>
+    <ul class="pager">
+      <li class="previous">
+        <%= link_to_prev_months_salaries @month %>
+      </li>
+      <li class="next">
+        <%= link_to_next_months_salaries @month %>
+      </li>
+    </ul>
   </div>
 </div>
 

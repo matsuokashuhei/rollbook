@@ -56,25 +56,25 @@ module LessonsHelper
 
   def link_to_yesterdays_lessons date, school_id
     yesterday = date - 1.day
-    if yesterday.day < 29
+    unless Holiday.exists? date: yesterday
       link_to lessons_path(date: yesterday.strftime("%Y%m%d"), school_id: school_id), class: "btn btn-link pull-left" do
-        fa_icon "caret-left", text: yesterday.strftime("%Y年%m月%d日")
+        fa_icon "caret-left", text: yesterday.strftime("%m月%d日")
       end
     end
   end
 
   def link_to_tomorrows_lessons date, school_id
     tomorrow = date + 1.day
-    if tomorrow.day < 29
+    unless Holiday.exists? date: tomorrow
       link_to lessons_path(date: tomorrow.strftime("%Y%m%d"), school_id: school_id), class: "btn btn-link pull-right" do
-        tomorrow.strftime("%Y年%m月%d日 ").concat(fa_icon("caret-right")).html_safe
+        tomorrow.strftime("%m月%d日 ").concat(fa_icon("caret-right")).html_safe
       end
     end
   end
 
   def link_to_prev_lesson lesson
     if lesson
-      text = "先週へ"
+      text = "先週"
       link_to lesson_rolls_path(lesson), class: "btn btn-link pull-left" do
         fa_icon "caret-left", text: text
       end
@@ -83,7 +83,7 @@ module LessonsHelper
 
   def link_to_next_lesson lesson
     if lesson
-      text = "次週へ "
+      text = "翌週 "
       link_to lesson_rolls_path(lesson), class: "btn btn-link pull-right" do
         (text.concat(fa_icon("caret-right"))).html_safe
       end

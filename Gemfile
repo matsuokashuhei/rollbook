@@ -71,7 +71,7 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem "bootstrap-sass", '~> 3.0.0.0.rc'
+gem "bootstrap-sass", '~> 3.0.3.0'
 #gem "font-awesome-sass"
 gem "font-awesome-rails", "4.0.1.0"
 

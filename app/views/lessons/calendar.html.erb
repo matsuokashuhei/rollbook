@@ -36,8 +36,14 @@
         </thead>
       </table>
     </div>
-    <%= link_to_prev_months_lessons @month %>
-    <%= link_to_next_months_lessons @month %>
+    <ul class="pager">
+      <li class="previous">
+        <%= link_to_prev_months_lessons @month %>
+      </li>
+      <li class="next">
+        <%= link_to_next_months_lessons @month %>
+      </li>
+    </ul>
   </div>
 </div>
 
