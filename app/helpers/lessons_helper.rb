@@ -79,6 +79,17 @@ module LessonsHelper
         fa_icon "caret-left", text: text
       end
     end
+=begin
+    text = "先週"
+    if lesson.new_record?
+      form_for(lesson) do |f|
+      end
+    else
+      link_to lesson_rolls_path(lesson), class: "btn btn-link pull-left" do
+        fa_icon "caret-left", text: text
+      end
+    end
+=end
   end
 
   def link_to_next_lesson lesson

@@ -13,13 +13,13 @@
   <div class="col-md-12">
     <%= form_tag absences_path(@lesson), method: :get, class: "form-inline" do %>
       <div class="form-group">
-        <%= text_field_tag "number", params[:number], class: "form-control", placeholder: t "activerecord.attributes.member.number", autofocus: true %>
+        <%= text_field_tag "number", params[:number], class: "form-control", placeholder: t("activerecord.attributes.member.number") %>
       </div>
       <div class="form-group">
-        <%= text_field_tag "last_name_kana", params[:last_name_kana], class: "form-control", placeholder: t "activerecord.attributes.member.last_name_kana" %>
+        <%= text_field_tag "last_name_kana", params[:last_name_kana], class: "form-control", placeholder: t("activerecord.attributes.member.last_name_kana"), autofocus: true %>
       </div>
       <div class="form-group">
-        <%= text_field_tag "first_name_kana", params[:first_name_kana], class: "form-control", placeholder: t "activerecord.attributes.member.first_name_kana"  %>
+        <%= text_field_tag "first_name_kana", params[:first_name_kana], class: "form-control", placeholder: t("activerecord.attributes.member.first_name_kana")  %>
       </div>
       <%= button_to_search %>
     <% end %>
@@ -30,30 +30,24 @@
   <div class="col-md-12">
     <%= form_tag({ action: "substitute" }, { method: "post", id: "form" }) do %>
       <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table table-hover">
           <thead>
             <tr>
+              <th class="col-md-1"></th>
+              <th class="col-md-1"><%= t("activerecord.attributes.member.number") %></th>
+              <th class="col-md-2"><%= t("activerecord.attributes.member.name") %></th>
+              <th class="col-md-1"><%= "欠席回数" %></th>
               <th></th>
-              <th><%= t("activerecord.attributes.member.number") %></th>
-              <th><%= t("activerecord.attributes.member.name") %></th>
-              <th><%= t("activerecord.attributes.lesson.date") %></th>
-              <th><%= t("activerecord.models.school") %></th>
-              <th><%= t("activerecord.models.studio") %></th>
-              <th><%= t("activerecord.attributes.timetable.weekday") %></th>
-              <th><%= t("activerecord.models.course") %></th>
             </tr>
           </thead>
           <tbody>
-            <% @rolls.each do |roll| %>
+            <% @members.each do |member| %>
               <tr>
-                <td style="pading: 1px"><div class="checkbox"><%= check_box_tag "rolls[][id]", roll.id %></div></td>
-                <td><%= roll.member.number %></td>
-                <td><%= roll.member.name %></td>
-                <td><%= roll.lesson.date %></td>
-                <td><%= roll.lesson.course.timetable.studio.school.name %></td>
-                <td><%= roll.lesson.course.timetable.studio.name %></td>
-                <td><%= roll.lesson.course.timetable.weekday_ja %></td>
-                <td><%= roll.lesson.course.name %></td>
+                <td style="pading: 1px"><div class="radio"><%= radio_button_tag "member_id", member.id %></div></td>
+                <td><%= member.number %></td>
+                <td><%= member.name %></td>
+                <td><div class="pull-right"><%= link_to Roll.where(member_id: member.id).absences.count, member_rolls_path(member.id, status: 2) %></div></td>
+                <td></td>
               </tr>
             <% end %>
           </tbody>
@@ -64,7 +58,7 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <%= paginate @rolls %>
+    <%= paginate @members if @members.any? %>
   </div>
 </div>
 <div class="row">

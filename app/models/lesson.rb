@@ -56,11 +56,13 @@ class Lesson < ActiveRecord::Base
   def prev_lesson
     one_week_before = date - 7.day
     Lesson.find_by(course_id: course_id, date: one_week_before)
+    #Lesson.find_or_initialize_by(course_id: course_id, date: one_week_before)
   end
 
   def next_lesson
     one_week_after = date + 7.day
     Lesson.find_by(course_id: course_id, date: one_week_after)
+    #Lesson.find_or_initialize_by(course_id: course_id, date: one_week_after)
   end
 
   def find_or_initialize_rolls

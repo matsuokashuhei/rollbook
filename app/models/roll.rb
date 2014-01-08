@@ -39,7 +39,7 @@ class Roll < ActiveRecord::Base
   validates :lesson_id, :member_id, :status, presence: true
   validates :member_id, uniqueness: { scope: :lesson_id }
 
-  default_scope -> { order(:lesson_id, :member_id) }
+  #default_scope -> { order(:lesson_id, :member_id) }
 
   scope :presences, -> {
     where(status: "1")

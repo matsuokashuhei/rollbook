@@ -3,12 +3,13 @@
     <table class="table table-condensed table-hover">
       <thead>
         <tr>
-          <th><%= t("activerecord.attributes.member.number") %></th>
-          <th><%= t("activerecord.attributes.roll.member_id") %></th>
+          <th class="col-md-1"><%= t("activerecord.attributes.member.number") %></th>
+          <th class="col-md-2"><%= t("activerecord.attributes.roll.member_id") %></th>
+          <th class="col-md-1"></th>
+          <th class="col-md-1"></th>
+          <th class="col-md-2"><%= t("activerecord.attributes.roll.status") %></th>
+          <th class="col-md-1"><%= t("activerecord.attributes.roll.substitute_roll_id") %></th>
           <th></th>
-          <th></th>
-          <th><%= t("activerecord.attributes.roll.status") %></th>
-          <th><%= t("activerecord.attributes.roll.substitute_roll_id") %></th>
         </tr>
       </thead>
       <tbody>
@@ -35,6 +36,7 @@
                 <%= link_to lesson.date, lesson_rolls_path(lesson), class: "btn btn-link" %>
               <% end %>
             </td>
+            <td></td>
           </tr>
         <% end %>
       </tbody>

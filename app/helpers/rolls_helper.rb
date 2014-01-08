@@ -51,4 +51,13 @@ module RollsHelper
     end
   end
 
+  def button_to_absences path, pull:nil
+    class_value = "btn btn-success"
+    class_value += " pull-#{pull}" if pull.present?
+    text = t "views.buttons.substitute"
+    link_to path, class: class_value do
+      fa_icon "exchange", text: text
+    end
+  end
+
 end

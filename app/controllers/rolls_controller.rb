@@ -102,22 +102,27 @@ class RollsController < ApplicationController
   end
 
   def absences
-    rolls = []
-    # レッスンを欠席したメンバーを検索する。
-    absences = Roll.absences.joins(:lesson, :member).merge(Lesson.fixed).merge(Member.number(params[:number])).merge(Member.name_like(params[:last_name_kana], params[:first_name_kana])).unscope(:order).reorder('"lessons"."date"', '"rolls"."id"').decorate
-    # レッスンを欠席したメンバーの最古の欠席したレッスンを検索する。
-    absences.each do |absence|
-      next if @lesson.course_id == absence.lesson.course_id
-      if rolls.select { |roll| roll.member_id == absence.member_id }.count == 0
-        rolls << absence
-      end
+    @members = []
+    if params.values_at(:number, :last_name_kana, :first_name_kana).any?
+      member_ids = Roll.absences.joins(:lesson, :member).merge(Lesson.fixed).merge(Member.number(params[:number])).merge(Member.name_like(params[:last_name_kana], params[:first_name_kana])).pluck(:member_id).uniq
+      @members = Member.where(id: member_ids).page(params[:page]).decorate
     end
+    #rolls = []
+    ## レッスンを欠席したメンバーを検索する。
+    #absences = Roll.absences.joins(:lesson, :member).merge(Lesson.fixed).merge(Member.number(params[:number])).merge(Member.name_like(params[:last_name_kana], params[:first_name_kana])).unscope(:order).reorder('"lessons"."date"', '"rolls"."id"').decorate
+    ## レッスンを欠席したメンバーの最古の欠席したレッスンを検索する。
+    #absences.each do |absence|
+    #  next if @lesson.course_id == absence.lesson.course_id
+    #  if rolls.select { |roll| roll.member_id == absence.member_id }.count == 0
+    #    rolls << absence
+    #  end
+    #end
     # ページネーションがない。
-    @rolls = Kaminari.paginate_array(rolls).page(params[:page])
+    #@rolls = Kaminari.paginate_array(rolls).page(params[:page])
   end
 
   def substitute
-    if params[:rolls].nil?
+    if params[:member_id].nil?
       redirect_to lesson_rolls_path(@lesson)
       return
     end
@@ -126,9 +131,8 @@ class RollsController < ApplicationController
       @lesson.find_or_initialize_rolls.each do |roll|
         roll.save if roll.new_record?
       end
-      params[:rolls].each do |roll_params|
-        Roll.find(roll_params[:id]).substitute(@lesson)
-      end
+      roll = Roll.where(member_id: params[:member_id]).absences.joins(:lesson).readonly(false).order('"lessons"."date"').first
+      roll.substitute(@lesson)
     end
     respond_to do |format|
       format.html { redirect_to lesson_rolls_path(@lesson) }
