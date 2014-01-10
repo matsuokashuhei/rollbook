@@ -28,7 +28,7 @@ class MembersCourse < ActiveRecord::Base
   validate :end_date, :no_recesses, if: Proc.new { self.end_date.present? }
 
   default_scope -> {
-    order(:member_id, :begin_date, :course_id)
+    order(:begin_date, :course_id)
   }
 
   # 受講中のクラス
@@ -59,7 +59,7 @@ class MembersCourse < ActiveRecord::Base
   }
 
   scope :details, -> {
-    joins(course: [[timetable: [[studio: :school], :time_slot]], :dance_style, :level, :instructor]).order("members_courses.begin_date")
+    joins(course: [[timetable: [[studio: :school], :time_slot]], :dance_style, :level, :instructor]).unscope(:order).reorder("members_courses.begin_date DESC")
   }
 
   def after_enter_date

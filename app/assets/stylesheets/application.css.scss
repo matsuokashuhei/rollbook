@@ -35,6 +35,17 @@ form.form-signin {
     padding-right: 5px;
 }
 
+.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover > th {
+    background-color: #fcf8e3;
+}
+
+.table-hover > tbody > tr > .active:hover,
+.table-hover > tbody > .active:hover > td,
+.table-hover > tbody > .active:hover > th {
+    background-color: #fcf8e3;
+}
+
 .form-horizontal .control-label {
     text-align: left;
 }
