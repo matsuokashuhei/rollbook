@@ -15,9 +15,7 @@ class MembersController < ApplicationController
 
   # GET /members/new
   def new
-    # TODO データ登録中は入会日を2013/05/01に固定する。
-    #@member = Member.new
-    @member = Member.new enter_date: Date.new(2013, 5, 1), status: Member::STATUSES[:ADMISSION]
+    @member = Member.new enter_date: Date.today, status: Member::STATUSES[:ADMISSION]
   end
 
   # GET /members/1/edit

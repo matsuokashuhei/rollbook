@@ -17,8 +17,11 @@ class MembersCoursesController < ApplicationController
 
   # GET /members_courses/new
   def new
-    @members_course = @member.members_courses.build(course_id: params[:course_id], begin_date: @member.enter_date )
-    #@members_course = @member.members_courses.build(course_id: params[:course_id])
+    if @member.members_courses.count == 0
+      @members_course = @member.members_courses.build(course_id: params[:course_id], begin_date: @member.enter_date )
+    else
+      @members_course = @member.members_courses.build(course_id: params[:course_id])
+    end
   end
 
   # GET /members_courses/1/edit

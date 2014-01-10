@@ -20,14 +20,12 @@ class MembersCourse < ActiveRecord::Base
   has_many :recesses
 
   validates :member_id, :course_id, :begin_date, presence: true
-  validates :course_id, uniqueness: { scope: :member_id }
   validate :begin_date, :after_enter_date
   validate :begin_date, :after_open_date
-  #validate :begin_date, :weekday_of_course
+  validate :begin_date, :weekday_of_course
   validate :end_date, :end_of_month
   validate :end_date, :term_dates
   validate :end_date, :no_recesses, if: Proc.new { self.end_date.present? }
-  validates :member_id, :course_id, presence: true
 
   default_scope -> {
     order(:member_id, :begin_date, :course_id)

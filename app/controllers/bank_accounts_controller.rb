@@ -32,8 +32,6 @@ class BankAccountsController < ApplicationController
       @member = Member.find(params[:member_id])
       @bank_account.holder_name = "#{@member.last_name}#{@member.first_name}"
       @bank_account.holder_name_kana = "#{@member.last_name_kana}#{@member.first_name_kana}"
-      # TODO データ登録中は引落開始日を2013/05/26に固定する。
-      @bank_account.begin_date = Date.new(2013, 5, 26)
     end
   end
 
