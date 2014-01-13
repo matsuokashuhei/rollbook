@@ -13,9 +13,13 @@
         <%= render "layouts/header" %>
       <% end %>
       <%= yield %>
-      <%= tag(:br) if Rails.env.development? %>
-      <%= tag(:br) if Rails.env.development? %>
-      <%= debug(params) if Rails.env.development? %>
+      <% if Rails.env.development? %>
+        <div class="row">
+          <div class="col-md-12">
+            <%= debug(params) %>
+          </div>
+        </div>
+      <% end %>
     </div>
     <script>
       $("[data-toggle~='tooltip']").tooltip()
