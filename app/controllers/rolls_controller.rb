@@ -104,21 +104,18 @@ class RollsController < ApplicationController
   def absences
     @members = []
     if params.values_at(:number, :last_name_kana, :first_name_kana).any?
-      member_ids = Roll.absences.joins(:lesson, :member).merge(Lesson.fixed).merge(Member.number(params[:number])).merge(Member.name_like(params[:last_name_kana], params[:first_name_kana])).pluck(:member_id).uniq
-      @members = Member.where(id: member_ids).page(params[:page]).decorate
+      # 振替の対象にならない（レッスンを受けている）会員
+      exclude_member_ids = @lesson.rolls.joins(:member).pluck(:member_id)
+      #member_ids = Roll.absences.joins(:lesson, :member).merge(Lesson.fixed).merge(Member.number(params[:number])).merge(Member.name_like(params[:last_name_kana], params[:first_name_kana])).where.not(member_id: exclude_member_ids).pluck(:member_id).uniq
+      # 振替の対象になる会員
+      rolls = Roll.absences.joins(:lesson, :member)
+      rolls = rolls.merge(Lesson.fixed)
+      rolls = rolls.merge(Member.number(params[:number]))
+      rolls = rolls.merge(Member.name_like(params[:last_name_kana], params[:first_name_kana]))
+      rolls = rolls.where.not(member_id: exclude_member_ids)
+      include_member_ids = rolls.pluck(:member_id).uniq
+      @members = Member.where(id: include_member_ids).page(params[:page]).decorate
     end
-    #rolls = []
-    ## レッスンを欠席したメンバーを検索する。
-    #absences = Roll.absences.joins(:lesson, :member).merge(Lesson.fixed).merge(Member.number(params[:number])).merge(Member.name_like(params[:last_name_kana], params[:first_name_kana])).unscope(:order).reorder('"lessons"."date"', '"rolls"."id"').decorate
-    ## レッスンを欠席したメンバーの最古の欠席したレッスンを検索する。
-    #absences.each do |absence|
-    #  next if @lesson.course_id == absence.lesson.course_id
-    #  if rolls.select { |roll| roll.member_id == absence.member_id }.count == 0
-    #    rolls << absence
-    #  end
-    #end
-    # ページネーションがない。
-    #@rolls = Kaminari.paginate_array(rolls).page(params[:page])
   end
 
   def substitute
@@ -135,7 +132,7 @@ class RollsController < ApplicationController
       roll.substitute(@lesson)
     end
     respond_to do |format|
-      format.html { redirect_to lesson_rolls_path(@lesson) }
+      format.html { redirect_to edit_lesson_rolls_path(@lesson) }
     end
   end
 
