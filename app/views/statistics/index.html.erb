@@ -60,16 +60,22 @@
                 <% registered_and_canceled = MembersCourse.registered_and_canceled(month).joins(course: [timetable: [studio: :school]]).where(schools: { id: school.id }).count %>
                 <% recessed = Recess.where(month: month).joins(members_course: [course: [timetable: [studio: :school]]]).merge(MembersCourse.active(end_of_month)).where(schools: { id: school.id }).count %>
                 <td>
-                  <div class="pull-right"><%= registered %></div>
+                  <div class="pull-right">
+                    <%= link_to_if registered > 0, registered, statistics_members_courses_path(month: month, school_id: school.id, status: "registered") %>
+                  </div>
                 </td>
                 <td>
                   <div class="pull-right"><%= active - (registered - registered_and_canceled) - canceled %></div>
                 </td>
                 <td>
-                  <div class="pull-right"><%= canceled %></div>
+                  <div class="pull-right">
+                    <%= link_to_if canceled > 0, canceled, statistics_members_courses_path(month: month, school_id: school.id, status: "canceled") %>
+                  </div>
                 </td>
                 <td>
-                  <div class="pull-right"><%= recessed %></div>
+                  <div class="pull-right">
+                    <%= link_to_if recessed > 0, recessed, statistics_recesses_path(month: month, school_id: school.id, status: "recessed") %>
+                  </div>
                 </td>
               <% else %>
                 <td></td><td></td><td></td><td></td>

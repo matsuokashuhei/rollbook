@@ -28,4 +28,19 @@ class StatisticsController < ApplicationController
     end
   end
 
+  def members_courses
+    case params[:status]
+    when "registered"
+      @members_courses = MembersCourse.registered(params[:month]).joins([course: [timetable: [studio: :school]]], :member).where(schools: { id: params[:school_id] })
+    when "canceled"
+      @members_courses = MembersCourse.canceled(params[:month]).joins([course: [timetable: [studio: :school]]], :member).where(schools: { id: params[:school_id] })
+    end
+
+  end
+
+  def recesses
+    end_of_month = (params[:month] + "01").to_date.end_of_month
+    @recesses = Recess.where(month: params[:month]).joins(members_course: [course: [timetable: [studio: :school]]]).merge(MembersCourse.active(end_of_month)).where(schools: { id: params[:school_id] })
+  end
+
 end
