@@ -24,18 +24,6 @@ class MemberDecorator < ApplicationDecorator
     end
   end
 
-  def tuition
-    if model.receipts.unpaid.count > 0
-      tooltip_options = { toggle: "tooltip", "original-title" => "月謝未払い" }
-      h.link_to h.member_receipts_path(model) do
-        h.content_tag(:span, class: "badge", style: "background-color: red; font-size: 18px; font-weight: normal;", data: tooltip_options) do
-          #'(╬ ಠ益ಠ)'
-          h.fa_icon "warning"
-        end
-      end
-    end
-  end
-
   def imperfect
     if model.bank_account.try(:imperfect)
       tooltip_options = { toggle: "tooltip", "original-title" => "口座書類不備" }

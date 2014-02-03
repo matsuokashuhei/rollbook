@@ -24,7 +24,6 @@
 class BankAccount < ActiveRecord::Base
 
   has_many :members
-  has_many :debits, -> { order(:tuition_id) }
 
   #validates :holder_name_kana, :status, presence: true
   validates :holder_name_kana, presence: true

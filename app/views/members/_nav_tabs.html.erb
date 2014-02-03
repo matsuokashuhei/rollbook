@@ -19,9 +19,6 @@
     <li>
       <%= recesses_link(@member) %>
     </li>
-    <li>
-      <%= member_receipts_link(@member) %>
-    </li>
   <% end %>
   <% if current_page?(edit_member_path(@member)) %>
     <li class="disabled">
@@ -32,9 +29,6 @@
     </li>
     <li class="disabled">
       <%= recesses_link(@member, disabled: true) %>
-    </li>
-    <li class="disabled">
-      <%= member_receipts_link(@member, disabled: true) %>
     </li>
   <% end %>
 </ul>

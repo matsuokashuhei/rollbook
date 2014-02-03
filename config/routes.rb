@@ -24,7 +24,6 @@ Rollbook::Application.routes.draw do
   end
   match "members/:id/rolls" => "members#rolls", via: :get, as: "member_rolls"
   match "members/:member_id/courses/:id/rolls" => "members_courses#rolls", via: :get, as: "member_course_rolls"
-  match "members/:id/receipts" => "members#receipts", via: :get, as: "member_receipts"
 
   # 口座
   resources :bank_accounts
@@ -60,17 +59,6 @@ Rollbook::Application.routes.draw do
   # インストラクターの給与計算
   match "salaries/:month/instructors" => "salaries#index", via: :get, as: "salaries"
   match "salaries/:month/instructors/:instructor_id" => "salaries#show", via: :get, as: "salary"
-
-  # 入金
-  resources :tuitions do
-    resources :debits, only: [:index]
-    resources :receipts
-  end
-  match "tuitions/:id/fix" => "tuitions#fix", via: :post, as: "fix_tuition"
-  match "tuitions/:tuition_id/debits/edit" => "debits#bulk_edit", via: :post, as: "edit_tuition_debits"
-  match "tuitions/:tuition_id/debits" => "debits#bulk_update", via: :patch
-  match "receipts" => "tuitions#receipts", via: :get, as: "receipts"
-  match "tuitions/:tuition_id/receipts/new" => "receipts#bulk_new", via: :get, as: "new_tuition_receipts"
 
   #resources :schools do
   #  resources :studios

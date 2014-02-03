@@ -4,14 +4,12 @@
     <li class="active"><a href="#members_courses" data-toggle="tab"><%= t("activerecord.models.members_course") %></a></li>
     <li><%= member_rolls_link(@member) %></li>
     <li><%= recesses_link(@member) %></li>
-    <li><%= member_receipts_link(@member) %></li>
   <% end %>
   <% if current_page?(edit_member_course_path(@member, @members_course)) || current_page?(new_member_course_path(@member, @members_course)) %>
     <li class="disabled"><%= member_link(@member, disable: true) %></li>
     <li class="active"><a href="#members_courses" data-toggle="tab"><%= t("activerecord.models.members_course") %></a></li>
     <li class="disabled"><%= member_rolls_link(@member, disabled: true) %></li>
     <li class="disabled"><%= recesses_link(@member, disabled: true) %></li>
-    <li class="disabled"><%= member_receipts_link(@member, disabled: true) %></li>
   <% end %>
 </ul>
 

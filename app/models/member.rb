@@ -45,7 +45,6 @@ class Member < ActiveRecord::Base
   has_many :members_courses
   has_many :courses, through: :members_courses, source: :course
   has_many :rolls
-  has_many :receipts
   belongs_to :bank_account
 
   validates :first_name,
@@ -92,12 +91,6 @@ class Member < ActiveRecord::Base
     end_of_month = (month + "01").to_date.end_of_month
     query = where(status: [STATUSES[:ADMISSION], STATUSES[:SECESSION]])
     query = query.where(leave_date: end_of_month)
-  }
-
-  scope :new_members, -> (month) {
-    begin_date = (month + "01").to_date
-    end_date = begin_date.end_of_month
-    where(status: STATUSES[:ADMISSION]).where("members.enter_date >= ?", begin_date).where("members.enter_date <= ?", end_date).includes(:receipts).where(receipts: { id: nil })
   }
 
   scope :number, -> (number = nil) {

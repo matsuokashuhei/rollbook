@@ -1,5 +1,5 @@
 class MembersController < ApplicationController
-  before_action :set_member, only: [:show, :edit, :update, :destroy, :rolls, :recesses, :receipts]
+  before_action :set_member, only: [:show, :edit, :update, :destroy, :rolls, :recesses,]
 
   # GET /members
   # GET /members.json
@@ -80,24 +80,6 @@ class MembersController < ApplicationController
       format.html { render action: "recesses" }
     end
   end
-
-=begin
-  # GET /members/1/bank_account
-  def bank_account
-    @bank_account = @member.bank_account
-    respond_to do |format|
-      format.html { render action: "bank_account" }
-    end
-  end
-=end
-
-  def receipts
-    @receipts = @member.receipts.joins(:tuition).decorate
-    respond_to do |format|
-      format.html { render action: "receipts" }
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_member

@@ -6,7 +6,6 @@
           <th class="col-md-1"><%= t("activerecord.attributes.member.number") %></th>
           <th class="col-md-2"><%= t("activerecord.attributes.roll.member_id") %></th>
           <th class="col-md-1"></th>
-          <th class="col-md-1"></th>
           <th class="col-md-2"><%= t("activerecord.attributes.roll.status") %></th>
           <th class="col-md-1"><%= t("activerecord.attributes.roll.substitute_roll_id") %></th>
           <th></th>
@@ -20,7 +19,6 @@
           <tr>
             <td><%= roll.member.number %></td>
             <td><%= roll.member.name_with_link %></td>
-            <td><%= roll.member.tuition %></td>
             <td><%= roll.member.imperfect %></td>
             <td>
               <% if params[:action] == "index" %>

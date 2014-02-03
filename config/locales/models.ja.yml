@@ -13,10 +13,6 @@ ja:
       lesson: レッスン
       roll: 出欠
       recess: 休会
-      debit: 口座振替
-      receipt: 支払い
-      task: タスク
-      tuition: 月謝
       user: ユーザー
       access_log: ログ
     attributes:
@@ -128,32 +124,6 @@ ja:
         members_course_id: クラス
         month: 月
         status: 返金
-        note: メモ
-      debit:
-        bank_account_id: 口座
-        month: 月
-        amount: 金額
-        status: 状態
-        note: メモ
-      receipt:
-        member_id: 会員
-        month: 月
-        amount: 金額
-        date: 支払日
-        method: 方法
-        debit_id: 振込
-        status: 状態
-        note: メモ
-      task:
-        name: 名前
-        due_date: 期日
-        frequency: 頻度
-        status: 状態
-        note: メモ
-      tuition:
-        month: 月
-        debit_status: 残高不足
-        receipt_status: 状態
         note: メモ
       user:
         name: 名前

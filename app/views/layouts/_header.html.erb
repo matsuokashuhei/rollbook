@@ -31,15 +31,6 @@
               <%= list_item_to_bank_accounts %>
             </ul>
           </li>
-          <li class="dropdown <%= 'active' if controller?(["tuitions", "debits", "receipts"]) %>">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <%= t("activerecord.models.tuition") %> <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-              <li><%= link_to t("activerecord.models.debit"), tuitions_path(payment_method: "DEBIT") %></li>
-              <li><%= link_to t("activerecord.models.receipt"), tuitions_path(payment_method: "CASH") %></li>
-            </ul>
-          </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <% if current_user.admin? %>

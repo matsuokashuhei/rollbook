@@ -38,7 +38,6 @@
             <th class="col-md-1"><%= t("activerecord.attributes.member.gender") %></th>
             <th class="col-md-1"><%= t("activerecord.attributes.member.status") %></th>
             <th class="col-md-1"></th>
-            <th class="col-md-1"></th>
             <th class="col-md-1">受講クラス</th>
             <th class="col-md-1">未消化振替</th>
             <th class="col-md-2"></th>
@@ -52,7 +51,6 @@
               <td><%= member.age %></td>
               <td><%= member.gender %></td>
               <td><%= member.status %></td>
-              <td><%= member.tuition %></td>
               <td><%= member.imperfect %></td>
               <td><%= "#{member.members_courses.active.count} クラス" %></td>
               <td><div class="pull-right"><%= "#{member.rolls.absences.count}" if member.rolls.absences.count > 0 %></div></td>
