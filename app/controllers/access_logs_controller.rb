@@ -5,7 +5,10 @@ class AccessLogsController < ApplicationController
   # GET /access_logs
   # GET /access_logs.json
   def index
-    @access_logs = AccessLog.user(params[:user_id]).date_from(params[:date_from]).date_to(params[:date_to]).page(params[:page]).per(25).decorate
+    #@access_logs = AccessLog.user(params[:user_id]).date_from(params[:date_from]).date_to(params[:date_to]).page(params[:page]).per(25).decorate
+    @access_logs = AccessLog.user(params[:user_id]).date_from(params[:date_from]).date_to(params[:date_to])
+    @access_logs = @access_logs.where("fullpath like ?", "#{params[:url]}%") if params[:url].present?
+    @access_logs = @access_logs.page(params[:page]).per(25).decorate
   end
 
   # GET /access_logs/1

@@ -29,7 +29,8 @@ class AccessLogDecorator < ApplicationDecorator
     end
   end
 
-  def operation
+  def display_path
+=begin
     if model.request_method == "POST" && model.fullpath == "/users/sign_in"
       "ログイン"
     elsif model.request_method == "DELETE" && model.fullpath == "/users/sign_out"
@@ -37,7 +38,10 @@ class AccessLogDecorator < ApplicationDecorator
     else
       h.truncate(model.fullpath, length: 50)
     end
+=end
+    h.truncate(model.fullpath, length: 50)
   end
+
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:
   #
