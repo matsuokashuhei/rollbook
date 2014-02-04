@@ -4,33 +4,29 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        お知らせ
+  <div class="col-md-7">
+    <% if Post.active.exists? %>
+      <div class="panel panel-default">
+        <div class="panel-heading"><%= t "activerecord.models.post" %></div>
+          <table class="table">
+            <tbody>
+              <% Post.active.all.each do |post| %>
+                <tr>
+                  <td class="col-md-2">
+                    <%= post.open_date.strftime("%Y年%m月%d日") %>
+                  </td>
+                  <td class="col-md-3">
+                    <%= link_to post.title, post_comments_path(post), class: "btn btn-link" %>
+                  </td>
+                  <td class="col-md-2">
+                    <%= post.user.name %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <table class="table">
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>2014/01/03</td>
-            <td>
-              会員の名前のふりがなをカタカナ表記からひらがな表記に変えました。<br />
-              会員を名前で検索するとき、これまではカタカナでしたがこれからはひらがなで検索してください。また会員を登録するときもふりがなをひらがなで登録してください。
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>2014/01/03</td>
-            <td>
-              レッスンの一覧に検索を追加しました。<br />
-              レッスンを立川校だけ、国分寺校だけというように絞り込むことができるようになります。
-              常に絞り込んでおきたい場合は、右上にあるご自身の名前のリンクから「設定変更」を選んで、名前、Eメールの次にあるスクールに絞り込みたいスクールを選んでを登録してください。
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <% end %>
   </div>
 </div>
-

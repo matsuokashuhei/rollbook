@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_posts %>
+      <%= list_item_to_post(@post, active: true) %>
+    </ol>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <%= render "shared/notice" %>
+    <%= render "form" %>
+    <%= button_to_back posts_path, pull: "left" %>
+    <%= button_to_edit edit_post_path(@post), pull: "right" %>
+  </div>
+</div>
+</>

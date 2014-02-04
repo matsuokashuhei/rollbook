@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_posts %>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <%= button_to_new new_post_path, pull: "right" %>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th class="col-md-3"><%= t "activerecord.attributes.post.title" %></th>
+            <th class="col-md-4"><%= t "activerecord.attributes.post.content" %></th>
+            <th class="col-md-1"><%= t "activerecord.attributes.post.user_id" %></th>
+            <th class="col-md-1"><%= t "activerecord.attributes.post.open_date" %></th>
+            <th class="col-md-1"><%= t "activerecord.attributes.post.close_date" %></th>
+            <th class="col-md-2"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @posts.each do |post| %>
+            <tr>
+              <td><%= post.title  %></td>
+              <td><%= truncate(post.content, length: 25) %></td>
+              <td><%= post.user.name if post.user %></td>
+              <td><%= post.open_date %></td>
+              <td><%= post.close_date %></td>
+              <td>
+                <%= link_to_show post_path(post) %>
+                <%= link_to_edit edit_post_path(post) %>
+                <%= link_to_destroy post.id, post_path(post), destroy: [current_user.admin?, post.user_id == current_user.id].any? %>
+              </td>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

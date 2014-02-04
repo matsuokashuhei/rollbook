@@ -18,6 +18,7 @@
 #  name                   :string(255)
 #  role                   :string(255)
 #  status                 :string(255)
+#  school_id              :integer
 #
 
 class User < ActiveRecord::Base
@@ -31,6 +32,8 @@ class User < ActiveRecord::Base
          :validatable,
          :timeoutable
   has_many :access_logs
+  has_many :posts
+  has_many :comments
   belongs_to :school
 
   ROLES = {

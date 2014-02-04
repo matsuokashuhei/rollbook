@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_posts %>
+      <%= list_item_to_new %>
+    </ol>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <%= render "form" %>
+    <%= button_to_save pull: "right" %>
+    <%= button_to_back posts_path, pull: "left" %>
+  </div>
+</div>

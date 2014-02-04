@@ -18,6 +18,7 @@
 #  name                   :string(255)
 #  role                   :string(255)
 #  status                 :string(255)
+#  school_id              :integer
 #
 
 require 'spec_helper'

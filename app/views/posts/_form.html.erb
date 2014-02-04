@@ -1,0 +1,37 @@
+<%= form_for(@post, html: { role: "form", class: "form-horizontal", id: "form" }) do |f| %>
+
+  <%= render "shared/errors", object: @post %>
+
+  <% if params[:action] == "show" %>
+    <fieldset disabled>
+  <% end %>
+
+  <%= f.hidden_field :user_id %>
+  <div class="form-group <%= 'has-error' if @post.errors[:title].present? %>">
+    <%= f.label :title, class: "col-md-1 control-label" %>
+    <div class="col-md-6">
+      <%= f.text_field :title, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group <%= 'has-error' if @post.errors[:content].present? %>">
+    <%= f.label :content, class: "col-md-1 control-label" %>
+    <div class="col-md-6">
+      <%= f.text_area :content, class: "form-control", rows: 6 %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :open_date, class: "col-md-1 control-label" %>
+    <div class="col-md-2 <%= 'has-error' if @post.errors[:open_date].present? %>">
+      <%= f.text_field :open_date, class: "form-control", data: { behaviour: "datepicker" } %>
+    </div>
+    <%= f.label :close_date, class: "col-md-1 col-md-offset-1 control-label" %>
+    <div class="col-md-2 <%= 'has-error' if @post.errors[:close_date].present? %>">
+      <%= f.text_field :close_date, class: "form-control", data: { behaviour: "datepicker" } %>
+    </div>
+  </div>
+
+  <% if params[:action] == "show" %>
+    </fieldset>
+  <% end %>
+
+<% end %>

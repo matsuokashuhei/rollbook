@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="page-header">
+      <h3><%= @post.title %> <small><%= @post.user.name %></small></h3>
+    </div>
+    <%= simple_format(@post.content) %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8">
+    <% @post.comments.each do |comment| %>
+      <% if comment.persisted? %>
+        <hr />
+        <dl>
+          <dd>
+            <p><%= simple_format(comment.content) %></p>
+          </dd>
+          <dt>
+            <h6><%= comment.user.name %> <small><%= comment.created_at.strftime("%m月%d日 %H:%M") %></small></h5>
+          </dt>
+        </dl>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8">
+    <hr />
+    <%= form_for [@post, @comment], html: { role: "form", class: "form-horizontal col-md-12", id: "form" } do |f| %>
+      <%= render "shared/errors", object: @comment %>
+      <%= f.hidden_field :post_id %>
+      <%= f.hidden_field :user_id %>
+      <div class="form-group <%= 'has-error' if @comment.errors[:content].present? %>">
+        <%= f.text_area :content, class: "form-control", rows: 4, placeholder: "コメント" %>
+      </div>
+      <%= button_to_save pull: "right" %>
+    <% end %>
+  </div>
+</div>

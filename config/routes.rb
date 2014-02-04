@@ -1,5 +1,9 @@
 Rollbook::Application.routes.draw do
 
+  resources :posts do
+    resources :comments
+  end
+
   # ユーザー
   devise_for :users, skip: :registrations
   devise_scope :user do

@@ -17,7 +17,7 @@
 #  receipt_date     :date
 #  ship_date        :date
 #  begin_date       :date
-#  self_proceed     :boolean
+#  imperfect        :boolean
 #  change_bank      :boolean
 #
 
