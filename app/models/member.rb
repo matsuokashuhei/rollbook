@@ -29,18 +29,9 @@
 class Member < ActiveRecord::Base
 
   STATUSES = {
-    # 体験は設計ミスため削除する。
-    #TRIAL: "0",
     ADMISSION: "1",
     SECESSION: "2",
   }
-
-  #STATUS = {
-  #  # 体験は設計ミスため削除する。
-  #  #"0" => "未入会",
-  #  "1" => "入会",
-  #  "2" => "退会",
-  #}
 
   has_many :members_courses
   has_many :courses, through: :members_courses, source: :course
@@ -53,15 +44,10 @@ class Member < ActiveRecord::Base
             :last_name_kana,
             :status,
             presence: true
-  # 会員番号のチェックを無効にする。
-  #validates :number, uniqueness: true, if: Proc.new { self.status != "0" }
-  #validates :number, format: { with: /[0-9]{6}/, message: "は6桁の数字にしてください。" }, if: Proc.new { self.status != "0" }
-  #validates :number, presence: true, if: Proc.new { self.status != "0" }
+  validates :number, uniqueness: true, if: Proc.new { number.present? }
+  validates :number, numericality: { greater_than: 0, less_than_or_equal_to: 999999 }, if: Proc.new { number.present? }
   validates :last_name_kana, :first_name_kana, format: { with: /\A[\p{hiragana}ー－]+\Z/, message: "はひらがなで入力してください。" }
-  validates :enter_date, presence: true, if: Proc.new { self.status == "1" }
-  validates :enter_date, absence: true, if: Proc.new { self.status == "0" }
-
-  validates :leave_date, absence: true, if: Proc.new { self.status == "0" || self.status == "1" }
+  validates :enter_date, presence: true
   validates :leave_date, presence: true, if: Proc.new { self.status == "2" }
   validate :leave_date, :leaved_all_courses, if: Proc.new { self.leave_date.present? }
 
@@ -72,7 +58,6 @@ class Member < ActiveRecord::Base
     beginning_of_month = (month + "01").to_date.beginning_of_month
     end_of_month = beginning_of_month.end_of_month
     query = where(status: [STATUSES[:ADMISSION], STATUSES[:SECESSION]])
-    #query = query.where('"members"."enter_date" <= ?', beginning_of_month)
     query = query.where('"members"."enter_date" <= ?', end_of_month)
     query = query.where('coalesce("members"."leave_date", \'9999-12-31\') >= ?', end_of_month)
   }
@@ -146,10 +131,6 @@ class Member < ActiveRecord::Base
     end
     return false
   end
-
-  #def guest?
-  #  self.status == STATUSES[:TRIAL]
-  #end
 
   def active?
     self.status == STATUSES[:ADMISSION]
