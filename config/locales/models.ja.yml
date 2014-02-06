@@ -114,6 +114,7 @@ ja:
       lesson:
         course_id: クラス
         date: 日
+        rolls_status: 出欠
         status: 状態
         note: メモ
       roll:

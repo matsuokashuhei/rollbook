@@ -2,18 +2,19 @@
 #
 # Table name: lessons
 #
-#  id         :integer          not null, primary key
-#  course_id  :integer
-#  date       :date
-#  status     :string(255)
-#  note       :text
-#  created_at :datetime
-#  updated_at :datetime
+#  id           :integer          not null, primary key
+#  course_id    :integer
+#  date         :date
+#  status       :string(255)
+#  note         :text
+#  created_at   :datetime
+#  updated_at   :datetime
+#  rolls_status :string(255)
 #
 
 class Lesson < ActiveRecord::Base
 
-  STATUSES = {
+  ROLLS_STATUS = {
     NONE: "0",
     IN_PROCESS: "1",
     FINISHED: "2",
@@ -22,13 +23,13 @@ class Lesson < ActiveRecord::Base
   belongs_to :course
   has_many :rolls
 
-  validates :course_id, :date, :status, presence: true
+  validates :course_id, :date, :rolls_status, presence: true
   validates :date, uniqueness: { scope: :course_id }
 
   default_scope -> { order(:date, :course_id) }
 
   scope :fixed, -> {
-    where(status: "2")
+    where(rolls_status: "2")
   }
 
   scope :month, -> (month) {
@@ -38,18 +39,22 @@ class Lesson < ActiveRecord::Base
   }
 
   def edit?
-    self.status != STATUSES[:FINISHED] && self.date <= Date.today
+    self.rolls_status != ROLLS_STATUS[:FINISHED] && self.date <= Date.today
+  end
+
+  def in_process?
+    self.rolls_status == ROLLS_STATUS[:NONE] || self.rolls_status == ROLLS_STATUS[:IN_PROCESS]
   end
 
   def fix?
     return false if self.rolls.size == 0
     return false if self.rolls.select { |roll| roll.status == "0" }.size > 0
-    return false if self.status == "2"
+    return false if self.rolls_status == ROLLS_STATUS[:FINISHED]
     true
   end
 
   def fix
-    self.status = STATUSES[:FINISHED]
+    self.rolls_status = ROLLS_STATUS[:FINISHED]
     self.save
   end
 

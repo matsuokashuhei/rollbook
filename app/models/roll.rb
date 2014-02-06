@@ -42,11 +42,19 @@ class Roll < ActiveRecord::Base
   #default_scope -> { order(:lesson_id, :member_id) }
 
   scope :presences, -> {
-    where(status: "1")
+    where status: "1"
   }
 
   scope :absences, -> {
-    where(status: "2")
+    where status: ["2", "3"]
+  }
+
+  scope :substitutes, -> {
+    where status: "4"
+  }
+
+  scope :recesses, -> {
+    where status: "5"
   }
 
   scope :member, ->(member_id) {

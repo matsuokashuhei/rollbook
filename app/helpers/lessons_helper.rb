@@ -24,7 +24,7 @@ module LessonsHelper
       content_tag :li, text, class: "active"
     else
       content_tag :li do
-        link_to text, lessons_path(date: date)
+        link_to text, lessons_path(date: date.strftime("%Y%m%d"))
       end
     end
   end

@@ -35,7 +35,7 @@ class LessonsController < ApplicationController
   def create
     #@lesson = Lesson.new(lesson_params)
     @lesson = Lesson.find_or_initialize_by(course_id: params[:lesson][:course_id], date: params[:lesson][:date])
-    @lesson.status ||= params[:lesson][:status]
+    @lesson.rolls_status ||= params[:lesson][:rolls_status]
 
     respond_to do |format|
       if @lesson.save
@@ -93,7 +93,7 @@ class LessonsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def lesson_params
-      params.require(:lesson).permit(:course_id, :date, :status, :note)
+      params.require(:lesson).permit(:course_id, :date, :rolls_status, :status, :note)
     end
 
     def index_of_month
@@ -136,7 +136,8 @@ class LessonsController < ApplicationController
 
         @courses.each do |course|
           lesson = Lesson.find_or_initialize_by(date: @date, course_id: course.id)
-          lesson.status ||= "0"
+          #lesson.rolls_status ||= "0"
+          lesson.rolls_status ||= Lesson::ROLLS_STATUS[:NONE]
           @lessons << lesson.decorate
         end
       end

@@ -6,15 +6,14 @@ class RollsController < ApplicationController
   # GET /lessons/:lesson_id/rolls
   # GET /lessons/:lesson_id/rolls.json
   def index
-    if @lesson.status == "0" || @lesson.status == "1"
+    if @lesson.in_process?
       # クラスを受講している会員の出欠情報
       rolls = @lesson.find_or_initialize_rolls
       # 振替の出席情報
       rolls.concat(@lesson.rolls.where(status: "4"))
       # 体験の出席情報
       rolls.concat(@lesson.rolls.where(status: "6"))
-    end
-    if @lesson.status == "2"
+    else
       rolls = @lesson.rolls
     end
     @rolls = rolls.map { |roll| roll.decorate }
@@ -55,7 +54,7 @@ class RollsController < ApplicationController
   # PATCH/PUT /rolls/1.json
   def update
     ActiveRecord::Base.transaction do
-      @lesson.update_attributes(status: "1")
+      @lesson.update_attributes(rolls_status: Lesson::ROLLS_STATUS[:IN_PROCESS])
       params[:rolls].each do |roll_params|
         roll = Roll.find(roll_params[:id])
         roll.update_attributes(status: roll_params[:status])
@@ -79,7 +78,7 @@ class RollsController < ApplicationController
   # POST /lesson/:lesson_id/rolls
   def create_or_update
     ActiveRecord::Base.transaction do
-      @lesson.update_attributes(status: "1")
+      @lesson.update_attributes(rolls_status: Lesson::ROLLS_STATUS[:IN_PROCESS])
       params[:rolls].each do |roll_params|
         # 出欠情報を取得（または作成）する。
         roll = Roll.find_or_initialize_by(lesson_id: @lesson.id, member_id: roll_params[:member_id])
@@ -124,7 +123,7 @@ class RollsController < ApplicationController
       return
     end
     ActiveRecord::Base.transaction do
-      @lesson.update_attributes(status: "1")
+      @lesson.update_attributes(rolls_status: Lesson::ROLLS_STATUS[:IN_PROCESS])
       @lesson.find_or_initialize_rolls.each do |roll|
         roll.save if roll.new_record?
       end
@@ -135,36 +134,6 @@ class RollsController < ApplicationController
       format.html { redirect_to edit_lesson_rolls_path(@lesson) }
     end
   end
-
-  # 体験は設計ミスのため削除する。
-  #def nonmembers
-  #  @rolls = []
-  #  nonmembers = Member.where(status: "0").includes(:rolls).where(rolls: { id: nil })
-  #  nonmembers.each do |nonmember|
-  #    @rolls << nonmember.rolls.build(lesson_id: @lesson.id, status: "6").decorate
-  #  end
-  #end
-
-  # 体験は設計ミスのため削除する。
-  #def trial
-  #  if params[:rolls].nil?
-  #    redirect_to lesson_rolls_path(@lesson)
-  #    return
-  #  end
-  #  ActiveRecord::Base.transaction do
-  #    @lesson.update_attributes(status: "1")
-  #    @lesson.find_or_initialize_rolls.each do |roll|
-  #      roll.save if roll.new_record?
-  #    end
-  #    params[:rolls].each do |roll_params|
-  #      roll = Roll.new(lesson_id: @lesson.id, member_id: roll_params[:member_id], status: "6")
-  #      roll.save
-  #    end
-  #  end
-  #  respond_to do |format|
-  #    format.html { redirect_to lesson_rolls_path(@lesson) }
-  #  end
-  #end
 
   private
     # Use callbacks to share common setup or constraints between actions.

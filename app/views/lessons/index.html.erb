@@ -34,10 +34,11 @@
             <th><%= t("activerecord.models.instructor") %></th>
             <% end %>
             <th><%= t("activerecord.models.member") %></th>
-            <th><%= t("activerecord.attributes.lesson.status") %></th>
-            <th>出　席</th>
-            <th>欠　席</th>
-            <th>その他</th>
+            <th><%= t("activerecord.attributes.lesson.rolls_status") %></th>
+            <th>出席</th>
+            <th>欠席</th>
+            <th>振替</th>
+            <th>休会</th>
             <th></th>
           </tr>
         </thead>
@@ -54,16 +55,17 @@
               <td><%= course.instructor.decorate.name %></td>
             <% end %>
               <td><%= lesson.number_of_members %></td>
-              <td><%= lesson.status %></td>
+              <td><%= lesson.rolls_status %></td>
               <td><%= lesson.present_rolls %></div></td>
               <td><%= lesson.absent_rolls %></td>
-              <td><%= lesson.other_rolls %></td>
+              <td><%= lesson.substitute_rolls %></td>
+              <td><%= lesson.recess_rolls %></td>
               <td>
                 <% if lesson.new_record? %>
                   <%= form_for(lesson) do |f| %>
                     <%= f.hidden_field :course_id %>
                     <%= f.hidden_field :date %>
-                    <%= f.hidden_field :status %>
+                    <%= f.hidden_field :rolls_status %>
                     <%= button_tag class: "btn btn-link" do %>
                       <%= icon_to_show %>
                     <% end %>
