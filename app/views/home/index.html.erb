@@ -10,7 +10,7 @@
         <div class="panel-heading"><%= t "activerecord.models.post" %></div>
           <table class="table">
             <tbody>
-              <% Post.active.order("open_date desc").all.each do |post| %>
+              <% Post.active.order("open_date desc, updated_at desc").all.each do |post| %>
                 <tr>
                   <td class="col-md-2">
                     <%= post.open_date.strftime("%Y年%m月%d日") %>
