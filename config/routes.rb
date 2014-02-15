@@ -82,6 +82,7 @@ Rollbook::Application.routes.draw do
   match "statistics/members" => "statistics#members", via: :get, as: "statistics_members"
   match "statistics/members_courses" => "statistics#members_courses", via: :get, as: "statistics_members_courses"
   match "statistics/recesses" => "statistics#recesses", via: :get, as: "statistics_recesses"
+  match "statistics/courses" => "statistics#courses", via: :get, as: "statistics_courses"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

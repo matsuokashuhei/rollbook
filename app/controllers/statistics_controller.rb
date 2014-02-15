@@ -35,12 +35,20 @@ class StatisticsController < ApplicationController
     when "canceled"
       @members_courses = MembersCourse.canceled(params[:month]).joins([course: [timetable: [studio: :school]]], :member).where(schools: { id: params[:school_id] })
     end
-
   end
 
   def recesses
     end_of_month = (params[:month] + "01").to_date.end_of_month
     @recesses = Recess.where(month: params[:month]).joins(members_course: [course: [timetable: [studio: :school]]]).merge(MembersCourse.active(end_of_month)).where(schools: { id: params[:school_id] })
+  end
+
+  def courses
+    return redirect_to statistics_path if params[:year].blank?
+    @start_date = Date.new(params[:year].to_i, 4, 1)
+    @end_date = (@start_date + 12.month).end_of_month
+    # 開始日がTOより過去で、終了日がFROMより未来のクラスを検索する。
+    @courses = Course.where('"courses"."open_date" < ? and coalesce("courses"."close_date", \'9999-12-31\') > ?', @end_date, @start_date).details
+    @months = [*0..11].map {|i| @start_date + i.month }
   end
 
 end
