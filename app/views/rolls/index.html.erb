@@ -10,6 +10,23 @@
 </div>
 <div class="row">
   <div class="col-md-12">
+    <%= form_tag(cancel_lesson_path(@lesson), method: "post", id: "cancel_form") do %>
+      <div class="btn-group pull-right">
+        <button type="button" class="btn btn-default">休　　講</button>
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+        </button>
+        <input type="hidden" name="status" id="status" />
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="javascript:void(0)" onclick="$('#status').val('2'); $('#cancel_form').submit(); return false;">先生の欠席</a></li>
+          <li><a href="javascript:void(0)" onclick="$('#status').val('3'); $('#cancel_form').submit(); return false;">自然災害等</a></li>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
     <%= render "shared/notice" %>
     <%= render "form" %>
   </div>

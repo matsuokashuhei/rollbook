@@ -11,8 +11,6 @@ class RollsController < ApplicationController
       rolls = @lesson.find_or_initialize_rolls
       # 振替の出席情報
       rolls.concat(@lesson.rolls.where(status: "4"))
-      # 体験の出席情報
-      rolls.concat(@lesson.rolls.where(status: "6"))
     else
       rolls = @lesson.rolls
     end

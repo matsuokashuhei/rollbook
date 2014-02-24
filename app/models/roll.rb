@@ -20,7 +20,7 @@ class Roll < ActiveRecord::Base
     "3" => "欠席",
     "4" => "振替",
     "5" => "休会",
-    "6" => "体験",
+    "6" => "休講",
   }
   STATUS_ = {
     NONE: "0",
@@ -29,7 +29,7 @@ class Roll < ActiveRecord::Base
     ABSENT_SUB: "3",
     SUBSTITUTE: "4",
     RECESS: "5",
-    TRIAL: "6",
+    CANCEL: "6",
   }
 
 
@@ -93,6 +93,16 @@ class Roll < ActiveRecord::Base
 
   def substitute_roll
     Roll.find(substitute_roll_id) if substitute_roll_id.present?
+  end
+
+  def cancel_lesson
+    case self.status.to_i
+    when 0,1,2,3
+      self.status = "6"
+      self.save
+    when 4
+      self.cancel_substitute
+    end
   end
 
 end

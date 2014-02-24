@@ -53,6 +53,10 @@ class Lesson < ActiveRecord::Base
     true
   end
 
+  def fixed?
+    return self.rolls_status == ROLLS_STATUS[:FINISHED]
+  end
+
   def fix
     self.rolls_status = ROLLS_STATUS[:FINISHED]
     self.save
@@ -83,6 +87,17 @@ class Lesson < ActiveRecord::Base
       rolls << roll
     end
     rolls
+  end
+
+  def reset_rolls
+    self.rolls.each do |roll|
+      if roll.status == "4"
+        roll.cancel_substitute
+      else
+        roll.destroy
+      end
+    end
+    find_or_initialize_rolls
   end
 
 end

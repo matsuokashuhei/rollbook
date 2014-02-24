@@ -1,57 +1,60 @@
 class LessonsController < ApplicationController
-  before_action :set_lesson, only: [:show, :edit, :update, :destroy, :fix]
+  before_action :set_lesson, only: [:show, :edit, :update, :destroy, :fix, :cancel]
+  before_action :require_month_or_date, only: [:index]
 
   # GET /lessons
   # GET /lessons.json
   def index
-    if params[:month].blank? and params[:date].blank?
-      redirect_to lessons_path(month: Date.today.strftime("%Y%m"))
-      return
+    return calendar if params[:month].present?
+    @lessons = []
+    @date = params[:date].to_date
+    return if Holiday.exists? date: @date
+    @courses = Course.active(@date).details
+    @courses = @courses.merge(Timetable.weekday(@date.cwday))
+    @courses = @courses.where(schools: { id: params[:school_id]}) if params[:school_id].present?
+    @courses = @courses.unscope(:order).reorder('"time_slots"."start_time"', '"schools"."open_date"', '"studios"."open_date"')
+    @courses.each do |course|
+      lesson = Lesson.find_or_initialize_by(date: @date, course_id: course.id) do |l|
+        l.rolls_status = Lesson::ROLLS_STATUS[:NONE]
+      end
+      @lessons << lesson.decorate
     end
-    if params[:month].present?
-      return index_of_month
-    end
-    if params[:date].present?
-      return index_of_day
-    end
+    @lessons
   end
 
   # GET /lessons/1
   # GET /lessons/1.json
   def show
+    redirect_to lesson_rolls_path(@lesson)
   end
 
   # GET /lessons/new
   def new
+    # TODO 使っていないから削除する。
     @lesson = Lesson.new
   end
 
   # GET /lessons/1/edit
   def edit
+    # TODO 使っていないから削除する。
   end
 
   # POST /lessons
   # POST /lessons.json
   def create
-    #@lesson = Lesson.new(lesson_params)
-    @lesson = Lesson.find_or_initialize_by(course_id: params[:lesson][:course_id], date: params[:lesson][:date])
-    @lesson.rolls_status ||= params[:lesson][:rolls_status]
-
-    respond_to do |format|
-      if @lesson.save
-        format.html { redirect_to lesson_rolls_path(@lesson) }
-#        format.html { redirect_to @lesson, notice: 'Lesson was successfully created.' }
-#        format.json { render action: 'show', status: :created, location: @lesson }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @lesson.errors, status: :unprocessable_entity }
-      end
+    @lesson = Lesson.find_or_initialize_by(course_id: params[:lesson][:course_id], date: params[:lesson][:date]) do |lesson|
+      lesson.rolls_status = params[:lesson][:rolls_status]
     end
+    if @lesson.new_record?
+      @lesson.save!
+    end
+    redirect_to lesson_rolls_path(@lesson)
   end
 
   # PATCH/PUT /lessons/1
   # PATCH/PUT /lessons/1.json
   def update
+    # TODO 使っていないから削除する。
     respond_to do |format|
       if @lesson.update(lesson_params)
         #format.html { redirect_to @lesson, notice: 'Lesson was successfully updated.' }
@@ -67,6 +70,7 @@ class LessonsController < ApplicationController
   # DELETE /lessons/1
   # DELETE /lessons/1.json
   def destroy
+    # TODO 使っていないから削除する。
     @lesson.destroy
     respond_to do |format|
       format.html { redirect_to lessons_url }
@@ -85,6 +89,19 @@ class LessonsController < ApplicationController
     end
   end
 
+  def cancel
+    return redirect_to lesson_rolls_path(@lesson) if params[:status].blank?
+    return redirect_to lesson_rolls_path(@lesson) if @lesson.fixed?
+    ActiveRecord::Base.transaction do
+      @lesson.update_attributes status: params[:status], rolls_status: "1"
+      @lesson.reset_rolls.each do |roll|
+        roll.status = "6" if roll.status == "0"
+        roll.save
+      end
+    end
+    redirect_to lesson_rolls_path(@lesson)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_lesson
@@ -96,7 +113,11 @@ class LessonsController < ApplicationController
       params.require(:lesson).permit(:course_id, :date, :rolls_status, :status, :note)
     end
 
-    def index_of_month
+    def require_month_or_date
+      return redirect_to lessons_path(month: Date.today.strftime("%Y%m")) if params[:month].blank? && params[:date].blank?
+    end
+
+    def calendar
       year = params[:month].slice(0, 4).to_i
       month = params[:month].slice(4, 2).to_i
       @begin_date = Date.new(year, month, 1)
@@ -120,27 +141,4 @@ class LessonsController < ApplicationController
       end
     end
 
-    def index_of_day
-      @date = params[:date].to_date
-      @lessons = []
-      unless Holiday.exists? date: @date
-=begin
-        @courses = Course.active(@date).details.merge(Timetable.weekday(@date.cwday)).unscope(:order).reorder('"time_slots"."start_time"',
-                                                                                                              '"schools"."open_date"',
-                                                                                                              '"studios"."open_date"')
-=end
-        @courses = Course.active(@date).details
-        @courses = @courses.merge(Timetable.weekday(@date.cwday))
-        @courses = @courses.where(schools: { id: params[:school_id]}) if params[:school_id].present?
-        @courses = @courses.unscope(:order).reorder('"time_slots"."start_time"', '"schools"."open_date"', '"studios"."open_date"')
-
-        @courses.each do |course|
-          lesson = Lesson.find_or_initialize_by(date: @date, course_id: course.id)
-          #lesson.rolls_status ||= "0"
-          lesson.rolls_status ||= Lesson::ROLLS_STATUS[:NONE]
-          @lessons << lesson.decorate
-        end
-      end
-      @lessons
-    end
 end
