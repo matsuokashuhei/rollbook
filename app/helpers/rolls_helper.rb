@@ -7,7 +7,7 @@ module RollsHelper
      ["欠席", "3"],
      ["振替", "4"],
      ["休会", "5"],
-     ["体験", "6"],]
+     ["休講", "6"],]
   end
 
   def member_rolls_link(member, disabled: false)
@@ -24,8 +24,8 @@ module RollsHelper
     "2" => { "name" => "欠席", "label" => "label-danger", "button" => "btn-danger" },
     "3" => { "name" => "欠席", "label" => "label-warning", "button" => "btn-warning" },
     "4" => { "name" => "振替", "label" => "label-info", "button" => "btn-info" },
-    "5" => { "name" => "休会", "label" => "label-primary", "button" => "btn-primary" },
-    "6" => { "name" => "体験", "label" => "label-success", "button" => "btn-success" },
+    "5" => { "name" => "休会", "label" => "label-default", "button" => "btn-default" },
+    "6" => { "name" => "休講", "label" => "label-default", "button" => "btn-default" },
     "9" => { "name" => "取消", "label" => "label-default", "button" => "btn-default" },
   }
 

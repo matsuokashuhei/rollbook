@@ -15,6 +15,7 @@ class LessonsController < ApplicationController
     @courses = @courses.unscope(:order).reorder('"time_slots"."start_time"', '"schools"."open_date"', '"studios"."open_date"')
     @courses.each do |course|
       lesson = Lesson.find_or_initialize_by(date: @date, course_id: course.id) do |l|
+        l.status = "1"
         l.rolls_status = Lesson::ROLLS_STATUS[:NONE]
       end
       @lessons << lesson.decorate
@@ -43,6 +44,7 @@ class LessonsController < ApplicationController
   # POST /lessons.json
   def create
     @lesson = Lesson.find_or_initialize_by(course_id: params[:lesson][:course_id], date: params[:lesson][:date]) do |lesson|
+      lesson.status = params[:lesson][:status]
       lesson.rolls_status = params[:lesson][:rolls_status]
     end
     if @lesson.new_record?
@@ -95,7 +97,8 @@ class LessonsController < ApplicationController
     ActiveRecord::Base.transaction do
       @lesson.update_attributes status: params[:status], rolls_status: "1"
       @lesson.reset_rolls.each do |roll|
-        roll.status = "6" if roll.status == "0"
+        roll.status = "6" if roll.status == "0" && @lesson.status != "1"
+        roll.status = "0" if roll.status == "0" && @lesson.status == "1"
         roll.save
       end
     end

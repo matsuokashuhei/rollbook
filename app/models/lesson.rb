@@ -39,7 +39,7 @@ class Lesson < ActiveRecord::Base
   }
 
   def edit?
-    self.rolls_status != ROLLS_STATUS[:FINISHED] && self.date <= Date.today
+    self.rolls_status != ROLLS_STATUS[:FINISHED] && self.date <= Date.today && self.status == "1"
   end
 
   def in_process?
@@ -47,7 +47,6 @@ class Lesson < ActiveRecord::Base
   end
 
   def fix?
-    return false if self.rolls.size == 0
     return false if self.rolls.select { |roll| roll.status == "0" }.size > 0
     return false if self.rolls_status == ROLLS_STATUS[:FINISHED]
     true

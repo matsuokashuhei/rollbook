@@ -16,9 +16,9 @@ class RollDecorator < ApplicationDecorator
       when "4"
         h.content_tag(:span, "振替", class: "label label-warning")
       when "5"
-        h.content_tag(:span, "休会", class: "label label-default")
+        h.content_tag(:span, "休会", class: "label label-default", style: "background-color: gray")
       when "6"
-        h.content_tag(:span, "休講", class: "label label-info")
+        h.content_tag(:span, "休講", class: "label label-default", style: "background-color: silver")
       when "9"
         h.content_tag(:span, "取消", class: "label label-default")
       end
