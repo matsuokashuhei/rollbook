@@ -25,21 +25,22 @@
       <table class="table table-striped table-condensed table-hover">
         <thead>
           <tr>
-            <th><%= t("activerecord.models.school") %></th>
-            <th><%= t("activerecord.models.studio") %></th>
-            <th><%= t("activerecord.models.time_slot") %></th>
-            <th><%= t("activerecord.attributes.lesson.course_id") %></th>
+            <th class="col-md-1"><%= t("activerecord.models.school") %></th>
+            <th class="col-md-1"><%= t("activerecord.models.studio") %></th>
+            <th class="col-md-1"><%= t("activerecord.models.time_slot") %></th>
+            <th class="col-md-3"><%= t("activerecord.attributes.lesson.course_id") %></th>
             <% if false %>
             <th><%= t("activerecord.models.course") %></th>
             <th><%= t("activerecord.models.instructor") %></th>
             <% end %>
-            <th><%= t("activerecord.models.member") %></th>
-            <th><%= t("activerecord.attributes.lesson.rolls_status") %></th>
-            <th>出席</th>
-            <th>欠席</th>
-            <th>振替</th>
-            <th>休会</th>
-            <th></th>
+            <th class="col-md-1"><%= t("activerecord.models.member") %></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.lesson.status") %></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.lesson.rolls_status") %></th>
+            <th class="col-md-1">出席</th>
+            <th class="col-md-1">欠席</th>
+            <th class="col-md-1">振替</th>
+            <th class="col-md-1">休会</th>
+            <th class="col-md-1"></th>
           </tr>
         </thead>
         <tbody>
@@ -55,6 +56,7 @@
               <td><%= course.instructor.decorate.name %></td>
             <% end %>
               <td><%= lesson.number_of_members %></td>
+              <td><%= lesson.status %></td>
               <td><%= lesson.rolls_status %></td>
               <td><%= lesson.present_rolls %></div></td>
               <td><%= lesson.absent_rolls %></td>

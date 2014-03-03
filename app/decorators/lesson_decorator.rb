@@ -1,6 +1,23 @@
 class LessonDecorator < ApplicationDecorator
   delegate_all
 
+  def status
+    h.content_tag(:h3, style: "margin: 0px; line-height: 0;") do
+      case model.status
+      when Lesson::STATUS[:ON_SCHEDULE]
+        h.content_tag(:span, "通常営業", class: "label label-success")
+      when Lesson::STATUS[:CANCEL_BY_INSTRUCTOR]
+        h.link_to '#', data: { toggle: "tooltip", "original-title" => "インストラクターの欠勤" } do
+        h.content_tag(:span, "休講", class: "label label-danger")
+        end
+      when Lesson::STATUS[:CANCEL_BY_OTHERS]
+        h.link_to '#', data: { toggle: "tooltip", "original-title" => "自然災害などその他の理由" } do
+        h.content_tag(:span, "休講", class: "label label-warning")
+        end
+      end
+    end
+  end
+
   def rolls_status
     h.content_tag(:h3, style: "margin: 0px; line-height: 0;") do
       case model.rolls_status

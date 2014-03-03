@@ -14,6 +14,12 @@
 
 class Lesson < ActiveRecord::Base
 
+  STATUS = {
+    ON_SCHEDULE: "1",
+    CANCEL_BY_INSTRUCTOR: "2",
+    CANCEL_BY_OTHERS: "3",
+  }
+
   ROLLS_STATUS = {
     NONE: "0",
     IN_PROCESS: "1",

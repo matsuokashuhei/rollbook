@@ -24,6 +24,7 @@
         <thead>
           <tr>
             <th><%= t("activerecord.attributes.lesson.date") %></th>
+            <th><%= t("activerecord.attributes.lesson.status") %></th>
             <th><%= t("activerecord.attributes.lesson.rolls_status") %></th>
             <th></th>
           </tr>
@@ -32,6 +33,7 @@
           <% @lessons.each do |lesson| %>
             <tr>
               <td><%= lesson.date %></td>
+              <td><%= lesson.status %></td>
               <td><%= lesson.rolls_status %></td>
               <td><%= link_to_show lesson_rolls_path(lesson) %></td>
             </tr>
