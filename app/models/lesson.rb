@@ -15,6 +15,7 @@
 class Lesson < ActiveRecord::Base
 
   STATUS = {
+    UNFIXED: "0",
     ON_SCHEDULE: "1",
     CANCEL_BY_INSTRUCTOR: "2",
     CANCEL_BY_OTHERS: "3",
@@ -45,7 +46,7 @@ class Lesson < ActiveRecord::Base
   }
 
   def edit?
-    self.rolls_status != ROLLS_STATUS[:FINISHED] && self.date <= Date.today && self.status == "1"
+    self.rolls_status != ROLLS_STATUS[:FINISHED] && self.date <= Date.today && (self.status == STATUS[:UNFIXED] || self.status == STATUS[:ON_SCHEDULE])
   end
 
   def in_process?
@@ -53,6 +54,7 @@ class Lesson < ActiveRecord::Base
   end
 
   def fix?
+    return false if self.rolls.size == 0 && self.course.members_courses.active(self.date).size > 0
     return false if self.rolls.select { |roll| roll.status == "0" }.size > 0
     return false if self.rolls_status == ROLLS_STATUS[:FINISHED]
     true

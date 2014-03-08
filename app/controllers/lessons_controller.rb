@@ -15,7 +15,7 @@ class LessonsController < ApplicationController
     @courses = @courses.unscope(:order).reorder('"time_slots"."start_time"', '"schools"."open_date"', '"studios"."open_date"')
     @courses.each do |course|
       lesson = Lesson.find_or_initialize_by(date: @date, course_id: course.id) do |l|
-        l.status = "1"
+        l.status = Lesson::STATUS[:UNFIXED]
         l.rolls_status = Lesson::ROLLS_STATUS[:NONE]
       end
       @lessons << lesson.decorate

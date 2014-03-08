@@ -28,7 +28,7 @@
               <input type="radio" name="status" value="3">自然災害などその他の理由
             </label>
           </div>
-          <% unless lesson.status == "1" %>
+          <% if lesson.status == "2" || lesson.status == "3" %>
             <div class="radio">
               <label>
                 <input type="radio" name="status" value="1">取り消し

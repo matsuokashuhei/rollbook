@@ -76,7 +76,7 @@ class RollsController < ApplicationController
   # POST /lesson/:lesson_id/rolls
   def create_or_update
     ActiveRecord::Base.transaction do
-      @lesson.update_attributes(rolls_status: Lesson::ROLLS_STATUS[:IN_PROCESS])
+      @lesson.update_attributes(status: Lesson::STATUS[:ON_SCHEDULE], rolls_status: Lesson::ROLLS_STATUS[:IN_PROCESS])
       params[:rolls].each do |roll_params|
         # 出欠情報を取得（または作成）する。
         roll = Roll.find_or_initialize_by(lesson_id: @lesson.id, member_id: roll_params[:member_id])

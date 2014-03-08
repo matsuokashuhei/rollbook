@@ -38,7 +38,9 @@
             <th class="col-md-1"><%= t("activerecord.attributes.lesson.rolls_status") %></th>
             <th class="col-md-1">出席</th>
             <th class="col-md-1">欠席</th>
+            <% if false %>
             <th class="col-md-1">振替</th>
+            <% end %>
             <th class="col-md-1">休会</th>
             <th class="col-md-1"></th>
           </tr>
@@ -58,10 +60,12 @@
               <td><%= lesson.number_of_members %></td>
               <td><%= lesson.status %></td>
               <td><%= lesson.rolls_status %></td>
-              <td><%= lesson.present_rolls %></div></td>
-              <td><%= lesson.absent_rolls %></td>
+              <td><%= lesson.present_rolls if lesson.model.status == "1" %></td>
+              <td><%= lesson.absent_rolls if lesson.model.status == "1" %></td>
+              <% if false %>
               <td><%= lesson.substitute_rolls %></td>
-              <td><%= lesson.recess_rolls %></td>
+              <% end %>
+              <td><%= lesson.recess_rolls if lesson.model.status == "1" %></td>
               <td>
                 <% if lesson.new_record? %>
                   <%= form_for(lesson) do |f| %>

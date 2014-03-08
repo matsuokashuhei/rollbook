@@ -11,9 +11,7 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <%= link_to '#', class: "btn btn-default pull-right disabled" do %>
-      <%= fa_icon "ban", text: "休　　講" %>
-    <% end %>
+    <%= button_to_absences absences_path(@lesson), pull: "right" %>
   </div>
 </div>
 <div class="row">
@@ -34,13 +32,6 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-8">
-    <%= button_to_back lesson_rolls_path(@lesson), pull: "left" %>
-  </div>
-  <div class="col-md-2">
-    <%= button_to_absences absences_path(@lesson), pull: "right" %>
-  </div>
-  <div class="col-md-2">
-    <%= button_to_save pull: "right" %>
-  </div>
+  <%= button_to_back lesson_rolls_path(@lesson), pull: "left" %>
+  <%= button_to_save pull: "right" %>
 </div>
