@@ -11,8 +11,8 @@ class RollDecorator < ApplicationDecorator
         h.content_tag(:span, "出席", class: "label label-success")
       when "2"
         h.content_tag(:span, "欠席", class: "label label-danger")
-      when "3"
-        h.content_tag(:span, "欠席", class: "label label-warning")
+      #when "3"
+      #  h.content_tag(:span, "欠席", class: "label label-warning")
       when "4"
         h.content_tag(:span, "振替", class: "label label-warning")
       when "5"

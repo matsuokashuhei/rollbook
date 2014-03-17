@@ -17,7 +17,7 @@ class Roll < ActiveRecord::Base
     "0" => "未定",
     "1" => "出席",
     "2" => "欠席",
-    "3" => "欠席",
+    #"3" => "欠席",
     "4" => "振替",
     "5" => "休会",
     "6" => "休講",
@@ -26,7 +26,7 @@ class Roll < ActiveRecord::Base
     NONE: "0",
     PRESENT: "1",
     ABSENT: "2",
-    ABSENT_SUB: "3",
+    #ABSENT_SUB: "3",
     SUBSTITUTE: "4",
     RECESS: "5",
     CANCEL: "6",
@@ -46,7 +46,8 @@ class Roll < ActiveRecord::Base
   }
 
   scope :absences, -> {
-    where status: ["2", "3"]
+    #where status: ["2", "3", "6"]
+    where(status: ["2", "6"]).where(substitute_roll_id: nil)
   }
 
   scope :substitutes, -> {
@@ -81,13 +82,13 @@ class Roll < ActiveRecord::Base
                                   status: "4",
                                   substitute_roll_id: self.id)
     # 欠席したレッスンの更新
-    self.update_attributes(status: "3",
-                           substitute_roll_id: substitute_roll.id)
+    #self.update_attributes(status: "3", substitute_roll_id: substitute_roll.id)
+    self.update_attributes(substitute_roll_id: substitute_roll.id)
   end
 
   def cancel_substitute
     absent_roll = Roll.find(substitute_roll_id)
-    absent_roll.update_attributes(status: "2", substitute_roll_id: nil)
+    absent_roll.update_attributes(substitute_roll_id: nil)
     destroy
   end
 
@@ -97,7 +98,7 @@ class Roll < ActiveRecord::Base
 
   def cancel_lesson
     case self.status.to_i
-    when 0,1,2,3
+    when 0,1,2
       self.status = "6"
       self.save
     when 4

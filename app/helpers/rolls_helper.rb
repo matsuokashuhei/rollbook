@@ -4,7 +4,7 @@ module RollsHelper
     [["未定", "0"],
      ["出席", "1"],
      ["欠席", "2"],
-     ["欠席", "3"],
+     #["欠席", "3"],
      ["振替", "4"],
      ["休会", "5"],
      ["休講", "6"],]
@@ -22,7 +22,7 @@ module RollsHelper
     "0" => { "name" => "未定", "label" => "label-default", "button" => "btn-default" },
     "1" => { "name" => "出席", "label" => "label-success", "button" => "btn-success" },
     "2" => { "name" => "欠席", "label" => "label-danger", "button" => "btn-danger" },
-    "3" => { "name" => "欠席", "label" => "label-warning", "button" => "btn-warning" },
+    #"3" => { "name" => "欠席", "label" => "label-warning", "button" => "btn-warning" },
     "4" => { "name" => "振替", "label" => "label-info", "button" => "btn-info" },
     "5" => { "name" => "休会", "label" => "label-default", "button" => "btn-default" },
     "6" => { "name" => "休講", "label" => "label-default", "button" => "btn-default" },

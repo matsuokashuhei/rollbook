@@ -77,16 +77,16 @@
               </td>
             </tr>
           <% end %>
-          <% cancel_lessons = Lesson.where(course_id: course.id, date: @beginning_of_month..@end_of_month, status: Lesson::STATUS[:CANCEL_BY_INSTRUCTOR]) %>
+          <% cancel_lessons = Lesson.where(course_id: course.id, date: @beginning_of_month..@end_of_month, status: Lesson::STATUS[:CANCEL_BY_INSTRUCTOR]).decorate %>
           <% cancel_lessons.each do |cancel_lesson| %>
             <% penalty = (course.monthly_fee * 0.25) * (members_courses.count - recesses.count) * -1 %>
             <% total_of_members_course += penalty %>
             <tr>
+              <td style="height: 37px"></td>
               <td></td>
-              <td></td>
-              <td><%= "#{cancel_lesson.date.day}日休講分" %></td>
+              <td><%= cancel_lesson.status %></td>
               <td><div class="pull-right"><%= number_to_currency(penalty) %></div></td>
-              <td></td>
+              <td><%= "#{cancel_lesson.date.month}月#{cancel_lesson.date.day}日分" %></td>
             </tr>
           <% end %>
           <tr>
@@ -102,6 +102,11 @@
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <hr />
     </div>
   </div>
   <% total_of_courses += total_of_members_course %>
