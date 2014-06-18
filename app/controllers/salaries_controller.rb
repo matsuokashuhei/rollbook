@@ -1,4 +1,5 @@
 class SalariesController < ApplicationController
+  before_action :admin_user!
   before_action :set_month
 
   def index
