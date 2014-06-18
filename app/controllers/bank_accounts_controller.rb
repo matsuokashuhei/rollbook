@@ -31,7 +31,7 @@ class BankAccountsController < ApplicationController
     if params[:member_id]
       @member = Member.find(params[:member_id])
       @bank_account.holder_name = "#{@member.last_name}#{@member.first_name}"
-      @bank_account.holder_name_kana = "#{@member.last_name_kana}#{@member.first_name_kana}"
+      @bank_account.holder_name_kana = "#{@member.last_name_kana}#{@member.first_name_kana}".tr('ぁ-ん','ァ-ン')
     end
   end
 
