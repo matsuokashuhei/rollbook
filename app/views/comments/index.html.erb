@@ -16,7 +16,7 @@
             <p><%= simple_format(comment.content) %></p>
           </dd>
           <dt>
-            <h6><%= comment.user.name %> <small><%= comment.created_at.strftime("%m月%d日 %H:%M") %></small></h5>
+            <h6><%= comment.user.try(:name) || "-" %> <small><%= comment.created_at.strftime("%m月%d日 %H:%M") %></small></h5>
           </dt>
         </dl>
       <% end %>
