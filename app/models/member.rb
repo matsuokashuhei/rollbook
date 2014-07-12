@@ -28,16 +28,26 @@
 
 class Member < ActiveRecord::Base
 
+  before_validation do
+    self.status = STATUSES[:SECESSION] if leave_date.present?
+  end
+
   STATUSES = {
     ADMISSION: "1",
     SECESSION: "2",
   }
 
+  # -------------------------
+  # 関連
+  # -------------------------
   has_many :members_courses
   has_many :courses, through: :members_courses, source: :course
   has_many :rolls
   belongs_to :bank_account
 
+  # -------------------------
+  # バリデーター
+  # -------------------------
   validates :first_name,
             :last_name,
             :first_name_kana,
@@ -52,6 +62,28 @@ class Member < ActiveRecord::Base
   validate :leave_date, :leaved_all_courses, if: Proc.new { self.leave_date.present? }
   validate :check_withdraw
 
+  def leaved_all_courses
+    self.members_courses.each do |members_course|
+      if members_course.end_date.blank?
+        errors.add(:base, "スクールを退会する場合はその前に受講クラスを退会してください。")
+        return
+      end
+      if leave_date < members_course.end_date
+        errors.add(:base, "受講クラスの終了日より前には退会できません。")
+      end
+    end
+  end
+
+  def check_withdraw
+    if leave_date.present? && status != '2'
+      errors.add(:base, "退会する場合は、状態を退会をにしてください。")
+    end
+  end
+
+
+  # -------------------------
+  # スコープ
+  # -------------------------
   default_scope -> { order(:last_name_kana, :first_name_kana) }
 
   # 受講中の会員（当月の入会、退会含む）
@@ -112,24 +144,6 @@ class Member < ActiveRecord::Base
       where(status: status)
     end
   }
-
-  def leaved_all_courses
-    self.members_courses.each do |members_course|
-      if members_course.end_date.blank?
-        errors.add(:base, "スクールを退会する場合はその前に受講クラスを退会してください。")
-        return
-      end
-      if leave_date < members_course.end_date
-        errors.add(:base, "受講クラスの終了日より前には退会できません。")
-      end
-    end
-  end
-
-  def check_withdraw
-    if leave_date.present? && status != '2'
-      errors.add(:base, "退会する場合は、状態を退会をにしてください。")
-    end
-  end
 
   def destroy?
     if members_courses.count == 0
