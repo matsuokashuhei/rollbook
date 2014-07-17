@@ -51,7 +51,7 @@
         <tbody>
           <% members_courses.each_with_index do |members_course, i| %>
             <tr>
-              <td><%= link_to members_course.member.decorate.name, member_course_path(members_course.member, members_course) %></td>
+              <td><%= link_to members_course.member.decorate.name, member_members_course_path(members_course.member, members_course) %></td>
               <td><%= members_course.introduction %></td>
               <td>
                 <% if members_course.recesses.find_by(month: @month) %>
@@ -183,7 +183,7 @@
                     <div class="pull-right"><h3 style="margin-top: 23px; margin-bottom: 0px;"><%= "#{members_courses.count}人" %></h3></div>
                   </td>
                 <% end %>
-                <td><%= link_to members_course.member.decorate.name, member_course_path(members_course.member, members_course) %></td>
+                <td><%= link_to members_course.member.decorate.name, member_members_course_path(members_course.member, members_course) %></td>
                 <td><%= members_course.introduction %></td>
                 <td>
                   <% if members_course.recesses.find_by(month: @month) %>

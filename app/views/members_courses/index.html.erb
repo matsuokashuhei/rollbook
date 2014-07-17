@@ -19,7 +19,7 @@
 <br />
 <div class="row">
   <div class="col-md-12">
-    <%= button_to_new new_member_course_path(@member), pull: "right" %>
+    <%= button_to_new new_member_members_course_path(@member), pull: "right" %>
   </div>
 </div>
 <div class="row">
@@ -58,9 +58,9 @@
               <td><%= members_course.begin_date %></td>
               <td><%= members_course.end_date %></td>
               <td>
-                <%= link_to_show member_course_path(@member, members_course) %>
-                <%= link_to_edit edit_member_course_path(@member, members_course) %>
-                <%= link_to_destroy members_course.id, member_course_path(@member, members_course), destroy: members_course.destroy? %>
+                <%= link_to_show member_members_course_path(@member, members_course) %>
+                <%= link_to_edit edit_member_members_course_path(@member, members_course) %>
+                <%= link_to_destroy members_course.id, member_members_course_path(@member, members_course), destroy: members_course.destroy? %>
               </td>
             </tr>
           <% end %>

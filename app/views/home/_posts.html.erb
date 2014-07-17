@@ -1,0 +1,29 @@
+<% if Post.active.exists? %>
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <%= t "activerecord.models.post" %>
+      </div>
+      <table class="table">
+        <tbody>
+          <% Post.active.order("open_date desc, updated_at desc").all.each do |post| %>
+            <tr>
+              <td class="col-md-2">
+                <%= post.open_date.strftime("%Y年%m月%d日") %>
+              </td>
+              <td class="col-md-3">
+                <%= link_to post.title, post_comments_path(post), class: "btn btn-link" %>
+              </td>
+              <td class="col-md-1">
+                <%= post.user.name %>
+              </td>
+              <td class="col-md-2">
+                <div class="pull-right"><%= "#{post.comments.count} コメント" %></div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>

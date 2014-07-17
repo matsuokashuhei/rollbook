@@ -22,12 +22,13 @@ Rollbook::Application.routes.draw do
 
   # 会員
   resources :members do
-    resources :members_courses, as: :courses, path: :courses do
-    end
+    #resources :members_courses, as: :courses, path: :courses do
+    resources :members_courses
     resources :recesses
   end
   match "members/:id/rolls" => "members#rolls", via: :get, as: "member_rolls"
   match "members/:member_id/courses/:id/rolls" => "members_courses#rolls", via: :get, as: "member_course_rolls"
+  match "members/:member_id/members_courses/new/timetables" => "members_courses#timetables", via: :get, as: "timetables"
 
   # 口座
   resources :bank_accounts

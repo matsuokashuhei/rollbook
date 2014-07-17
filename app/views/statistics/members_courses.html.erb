@@ -14,7 +14,7 @@
           <% course = members_course.course %>
           <tr>
             <td><div class="pull-right"><%= i %></div></td>
-            <td><%= link_to course.name, member_course_path(member.id, members_course.id) %></td>
+            <td><%= link_to course.name, member_members_course_path(member.id, members_course.id) %></td>
             <td><%= link_to member.name, member_path(member) %></td>
           </tr>
         <% end %>

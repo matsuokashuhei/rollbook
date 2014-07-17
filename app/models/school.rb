@@ -23,6 +23,6 @@ class School < ActiveRecord::Base
   validates :name, :open_date, presence: true
   validates :name, uniqueness: true
 
-  default_scope ->{ order("schools.open_date") }
+  #default_scope ->{ order("schools.open_date") }
 
 end

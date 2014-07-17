@@ -38,7 +38,7 @@ GEM
       erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bootstrap-sass (3.0.3.0)
+    bootstrap-sass (3.2.0.0)
       sass (~> 3.2)
     builder (3.2.2)
     byebug (2.7.0)
@@ -141,7 +141,7 @@ GEM
     rdoc (4.1.1)
       json (~> 1.4)
     ref (1.0.5)
-    request_store (1.0.6)
+    request_store (1.0.7)
     rspec-core (3.0.2)
       rspec-support (~> 3.0.0)
     rspec-expectations (3.0.2)
@@ -205,7 +205,7 @@ DEPENDENCIES
   awesome_print
   better_errors
   binding_of_caller
-  bootstrap-sass (~> 3.0.3.0)
+  bootstrap-sass (= 3.2.0)
   coffee-rails (~> 4.0.0)
   devise
   draper (~> 1.0)
@@ -223,7 +223,7 @@ DEPENDENCIES
   quiet_assets
   rails (= 4.1.4)
   rspec-rails
-  sass-rails (~> 4.0.0)
+  sass-rails (>= 3.2)
   sdoc
   therubyracer
   turbolinks

@@ -20,6 +20,6 @@ class Studio < ActiveRecord::Base
   validates :school_id, :name, :open_date, presence: true
   validates :name, uniqueness: { scope: :school_id }
 
-  default_scope ->{ order("studios.open_date") }
+  #default_scope ->{ order("studios.open_date") }
 
 end
