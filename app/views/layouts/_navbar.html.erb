@@ -16,7 +16,7 @@
             <%= list_item_to_posts %>
           <% end %>
           <% if current_user.admin? %>
-            <li class="dropdown <%= 'active' if controller?(["users", "access_logs"]) %>">
+            <li class="dropdown <%= 'active' if params[:controller].presence_in(["users", "access_logs"]) %>">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 管理 <b class="caret"></b>
               </a>
