@@ -17,7 +17,7 @@
           <% @courses.to_a.uniq {|studio| studio['studio_id'] }.each.with_index(1) do |studio, i| %>
             <div class="tab-pane <%= 'active' if i == 1 %>" id="<%= studio['school_id'] + studio['studio_id'] %>">
               <div class="table-responsive">
-                <table class="table">
+                <table class="table table-bordered">
                   <thead>
                     <th style="width: 9%;"></th>
                     <% 1.step(7) do |cwday| %>

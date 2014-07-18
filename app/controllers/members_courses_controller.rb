@@ -78,7 +78,7 @@ class MembersCoursesController < ApplicationController
       end
     end
     respond_to do |format|
-      format.html { redirect_to member_members_courses_url(@member) }
+      format.html { redirect_to member_members_courses_url(@member), notice: '受講クラスを削除しました。' }
       format.json { head :no_content }
     end
   end

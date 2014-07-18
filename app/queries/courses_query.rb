@@ -34,20 +34,20 @@ class CoursesQuery
         ON instructors.id = courses.instructor_id
     EOS
     if studio.present?
-      query << <<-EOS.strip_heredoc
+      query += <<-EOS.strip_heredoc
         WHERE
           studios.id = \'#{studio.id}\'
           AND COALESCE(courses.open_date, \'#{formatted_date}\') <= \'#{formatted_date}\'
           AND COALESCE(courses.close_date, '9999-12-31') >= \'#{formatted_date}\'
       EOS
     else
-      query << <<-EOS.strip_heredoc
+      query += <<-EOS.strip_heredoc
         WHERE
           COALESCE(courses.open_date, \'#{formatted_date}\') <= \'#{formatted_date}\'
           AND COALESCE(courses.close_date, '9999-12-31') >= \'#{formatted_date}\'
       EOS
     end
-    query << <<-EOS.strip_heredoc
+    query += <<-EOS.strip_heredoc
       ORDER BY
         schools.open_date,
         studios.open_date,
