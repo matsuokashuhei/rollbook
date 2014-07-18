@@ -10,7 +10,9 @@
   <body>
     <div class="container">
       <% if user_signed_in? %>
-        <%= render "layouts/header" %>
+        <%# render "layouts/header" %>
+        <%= render "layouts/navbar" %>
+        <%= render "layouts/nav" %>
       <% end %>
       <%= yield %>
       <% if Rails.env.development? %>
