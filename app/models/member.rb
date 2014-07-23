@@ -52,7 +52,7 @@ class Member < ActiveRecord::Base
   validate :leave_date, :leaved_all_courses, if: Proc.new { self.leave_date.present? }
   validate :check_withdraw
 
-  default_scope -> { order(:last_name_kana, :first_name_kana) }
+  #default_scope -> { order(:last_name_kana, :first_name_kana) }
 
   # 受講中の会員（当月の入会、退会含む）
   scope :active, -> (month = Date.today.strftime("%Y%m")) {

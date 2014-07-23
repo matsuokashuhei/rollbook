@@ -4,7 +4,7 @@ class MembersController < ApplicationController
   # GET /members
   # GET /members.json
   def index
-    @members = Member.number(params[:number]).name_like(params[:last_name_kana], params[:first_name_kana]).status(params[:status]).page(params[:page]).decorate
+    @members = Member.number(params[:number]).name_like(params[:last_name_kana], params[:first_name_kana]).status(params[:status]).page(params[:page]).order(:last_name_kana, :first_name_kana).decorate
     #@members = Member.page(params[:page]).decorate
   end
 
