@@ -1,7 +1,7 @@
 class CoursesQuery
   
   # タイムテーブル
-  def self.timetables(studio = nil, date = Date.today)
+  def self.courses(studio = nil, date = Date.today)
     formatted_date = date.strftime('%Y-%m-%d')
     query = <<-EOS.strip_heredoc
       WITH

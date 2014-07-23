@@ -23,7 +23,7 @@ class MembersCoursesController < ApplicationController
       @members_course.course_id = params[:course_id]
       @course = CoursesQuery.course(params[:course_id])
     end
-    @courses = CoursesQuery.timetables
+    @courses = CoursesQuery.courses
   end
 
   # GET /members_courses/1/edit
@@ -41,7 +41,7 @@ class MembersCoursesController < ApplicationController
       else
         {}
       end
-    @courses = CoursesQuery.timetables
+    @courses = CoursesQuery.courses
 
     respond_to do |format|
       if @members_course.save
