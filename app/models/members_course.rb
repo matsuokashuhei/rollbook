@@ -15,30 +15,22 @@
 
 class MembersCourse < ActiveRecord::Base
 
+  #----------------
   # Relations
-  #belongs_to :member, class_name: "Member"
+  #----------------
   belongs_to :member
-  #belongs_to :course, class_name: "Course"
   belongs_to :course
   has_many :recesses
 
+  #----------------
   # Validates
+  #----------------
   validates :member_id, :course_id, :begin_date, presence: true
   validates_with MembersCourseValidator
 
-=begin
-  validate :begin_date, :after_enter_date
-  validate :begin_date, :after_open_date
-  validate :begin_date, :weekday_of_course
-  validate :end_date, :end_of_month
-  validate :end_date, :term_dates
-  validate :end_date, :no_recesses, if: Proc.new { self.end_date.present? }
-=end
-
-  default_scope -> {
-    order(:begin_date, :course_id)
-  }
-
+  #----------------
+  # Scopes
+  #----------------
   # 受講中のクラス
   scope :active, -> (date = Date.today) {
     where("members_courses.begin_date <= ? and ? <= coalesce(members_courses.end_date, '9999-12-31')", date, date)
