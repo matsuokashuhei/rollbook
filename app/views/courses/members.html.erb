@@ -20,7 +20,7 @@
   <div class="col-md-12">
     <%= form_tag course_members_path(@course), method: :get, class: "form-inline" do %>
       <div class="form-group">
-        <%= select_tag 'status', options_for_select([['在籍', '0'], ['退籍', '1']], params[:status]), class: "form-control", include_blank: true %>
+        <%= select_tag 'status', options_for_select([['在籍', '1'], ['退籍', '9']], params[:status]), class: "form-control", include_blank: true %>
       </div>
       <%= button_to_search %>
     <% end %>

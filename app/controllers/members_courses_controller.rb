@@ -6,7 +6,13 @@ class MembersCoursesController < ApplicationController
   # GET /members_courses
   # GET /members_courses.json
   def index
-    @members_courses = @member.members_courses.details
+    if params[:status] == '1'
+      @members_courses = @member.members_courses.active(Date.today).details
+    elsif params[:status] == '9'
+      @members_courses = @member.members_courses.deactive(Date.today).details
+    else
+      @members_courses = @member.members_courses.details
+    end
   end
 
   # GET /members_courses/1

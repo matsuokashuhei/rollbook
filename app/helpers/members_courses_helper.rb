@@ -25,7 +25,7 @@ module MembersCoursesHelper
   private
 
   def link_to_member_members_courses(member)
-    link_to t("activerecord.models.members_course"), member_members_courses_path(member)
+    link_to t("activerecord.models.members_course"), member_members_courses_path(member, status: '1')
   end
 
   def min_begin_date(enter_date, cwday)

@@ -87,9 +87,9 @@ class CoursesController < ApplicationController
 
   def members
     @studio = @course.timetable.studio
-    if params[:status] == '0'
+    if params[:status] == '1'
       @members_courses = MembersCourse.joins(:member).where(members_courses: { course_id: @course.id }).active(Date.today).order(:begin_date).decorate
-    elsif params[:status] == '1'
+    elsif params[:status] == '9'
       @members_courses = MembersCourse.joins(:member).where(members_courses: { course_id: @course.id }).deactive(Date.today).order(:begin_date).decorate
     else
       @members_courses = MembersCourse.joins(:member).where(members_courses: { course_id: @course.id }).order(:begin_date).decorate
