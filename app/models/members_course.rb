@@ -59,7 +59,7 @@ class MembersCourse < ActiveRecord::Base
   }
 
   scope :details, -> {
-    joins(course: [[timetable: [[studio: :school], :time_slot]], :dance_style, :level, :instructor]).unscope(:order).reorder("members_courses.begin_date DESC")
+    joins(course: [[timetable: [:studio, :time_slot]], :dance_style, :level, :instructor]).order(begin_date: :desc)
   }
 
 

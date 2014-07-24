@@ -34,13 +34,11 @@ class MembersCoursesController < ApplicationController
   # POST /members_courses
   # POST /members_courses.json
   def create
-    @member = Member.find(params[:member_id])
     @members_course = MembersCourse.new(members_course_params)
-    @course = if @members_course.course_id.present?
-        CoursesQuery.course(@members_course.course_id) if @members_course.course_id.present?
-      else
-        {}
-      end
+    @course = {}
+    if @members_course.course_id.present?
+      @course = CoursesQuery.course(@members_course.course_id)
+    end
     @courses = CoursesQuery.courses
 
     respond_to do |format|
@@ -80,13 +78,6 @@ class MembersCoursesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to member_members_courses_url(@member), notice: '受講クラスを削除しました。' }
       format.json { head :no_content }
-    end
-  end
-
-  def rolls
-    @rolls = @members_course.rolls
-    respond_to do |format|
-      format.html { render aciton: "rolls" }
     end
   end
 
