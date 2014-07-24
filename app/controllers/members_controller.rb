@@ -67,8 +67,7 @@ class MembersController < ApplicationController
     @rolls = Roll.member(@member.id).details.merge(Lesson.month(params[:month]))
     @rolls = @rolls.where(lessons: { course_id: params[:course_id] }) if params[:course_id].present?
     @rolls = @rolls.where(status: params[:status]) if params[:status].present?
-    @rolls = @rolls.unscope(:order).reorder('"lessons"."date" DESC').decorate
-    #@rolls = Roll.member(@member.id).details.unscope(:order).reorder('"lessons"."date" DESC').decorate
+    @rolls = @rolls.merge(Lesson.order(date: :desc)).page(params[:page]).decorate
     respond_to do |format|
       format.html { render action: "rolls" }
     end
