@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-md-12">
     <ol class="breadcrumb">
-      <%= list_item_to_courses(@current_studio) %>
+      <%= list_item_to_courses(@studio) %>
       <%= list_item_to_course(@course, active: true) %>
     </ol>
   </div>
@@ -21,7 +21,7 @@
   <div class="col-md-12">
     <%= render "shared/notice" %>
     <%= render "form" %>
-    <%= button_to_back courses_path(date: Date.today.strftime("%Y%m%d"), studio_id: @current_studio.id), pull: "left" %>
+    <%= button_to_back courses_path(date: Date.today.strftime("%Y%m%d"), studio_id: @studio.id), pull: "left" %>
     <%= button_to_destroy @course.id, course_path(@course), destroy: @course.destroy?, pull: "right" %>
     <%= button_to_edit edit_course_path(@course), pull: "right" %>
   </div>

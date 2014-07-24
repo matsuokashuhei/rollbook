@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col-md-12">
     <ol class="breadcrumb">
-      <%= list_item_to_courses(@current_studio) %>
+      <%= list_item_to_courses(@studio) %>
       <%= list_item_to_new %>
     </ol>
   </div>
@@ -19,6 +19,6 @@
   <div class="col-md-12">
     <%= render "form" %>
     <%= button_to_save pull: "right" %>
-    <%= button_to_back courses_path(studio_id: @current_studio.id, date: Date.today.strftime('%Y%m%d')), pull: "left" %>
+    <%= button_to_back courses_path(studio_id: @studio.id, date: Date.today.strftime('%Y%m%d')), pull: "left" %>
   </div>
 </div>

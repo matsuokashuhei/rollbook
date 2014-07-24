@@ -27,7 +27,7 @@ class CoursesController < ApplicationController
     @timetable = TimetablesQuery.timetable(@course.timetable_id)
     # スタジオのタブの情報を作る。
     #@studios = Studio.joins(:school).merge(School.order(:open_date)).order(:open_date)
-    @current_studio = Timetable.find(@timetable.id).studio
+    @studio = Timetable.find(@timetable.id).studio
   end
 
   # GET /courses/new
@@ -35,7 +35,7 @@ class CoursesController < ApplicationController
     redirect_to courses_path if params[:timetable_id].nil?
     # スタジオのタブの情報を作る。
     #@studios = Studio.joins(:school).merge(School.order(:open_date)).order(:open_date)
-    @current_studio = Timetable.find(params[:timetable_id]).studio
+    @studio = Timetable.find(params[:timetable_id]).studio
     # クラスの情報を作る。
     @course = Course.new(timetable_id: params[:timetable_id])
     @timetable = TimetablesQuery.timetable(params[:timetable_id])
@@ -47,7 +47,7 @@ class CoursesController < ApplicationController
     @timetable = TimetablesQuery.timetable(@course.timetable_id)
     # スタジオのタブの情報を作る。
     #@studios = Studio.joins(:school).merge(School.order(:open_date)).order(:open_date)
-    @current_studio = Timetable.find(@timetable.id).studio
+    @studio = Timetable.find(@timetable.id).studio
   end
 
   # POST /courses
