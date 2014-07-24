@@ -43,7 +43,7 @@ module CoursesHelper
       end
     else
       content_tag :li do
-        link_to text, course_members_path(course)
+        link_to text, course_members_path(course, status: '0')
       end
     end
   end

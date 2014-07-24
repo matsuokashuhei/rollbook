@@ -31,9 +31,14 @@ class MembersCourse < ActiveRecord::Base
   #----------------
   # Scopes
   #----------------
-  # 受講中のクラス
+  # 在籍しているクラス
   scope :active, -> (date = Date.today) {
     where("members_courses.begin_date <= ? and ? <= coalesce(members_courses.end_date, '9999-12-31')", date, date)
+  }
+
+  # 退籍したクラス
+  scope :deactive, -> (date = Date.today) {
+    where('end_date < ?', date)
   }
 
   # 入会したクラス

@@ -19,7 +19,7 @@
 <br />
 <div class="row">
   <div class="col-md-12">
-    <%= form_tag member_rolls_path, method: :get, class: "form-inline" do %>
+    <%= form_tag member_rolls_path(@member.id), method: :get, class: "form-inline" do %>
       <div class="form-group">
         <%= text_field_tag "month", params[:month], class: "form-control", placeholder: "月", data: { behaviour: "monthpicker" }  %>
       </div>

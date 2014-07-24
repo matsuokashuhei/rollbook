@@ -1,7 +1,6 @@
 class CoursesController < ApplicationController
 
   before_action :set_course, only: [:show, :edit, :update, :destroy, :members, :lessons]
-  #before_action :set_studio, :set_school, only: [:show, :edit, :update, :destroy, :members, :lessons]
 
   # GET /courses
   # GET /courses.json
@@ -26,15 +25,12 @@ class CoursesController < ApplicationController
     redirect_to courses_path if params[:id].nil? || Course.exists?(params[:id]).!
     @timetable = TimetablesQuery.timetable(@course.timetable_id)
     # スタジオのタブの情報を作る。
-    #@studios = Studio.joins(:school).merge(School.order(:open_date)).order(:open_date)
     @studio = Timetable.find(@timetable.id).studio
   end
 
   # GET /courses/new
   def new
     redirect_to courses_path if params[:timetable_id].nil?
-    # スタジオのタブの情報を作る。
-    #@studios = Studio.joins(:school).merge(School.order(:open_date)).order(:open_date)
     @studio = Timetable.find(params[:timetable_id]).studio
     # クラスの情報を作る。
     @course = Course.new(timetable_id: params[:timetable_id])
@@ -45,8 +41,6 @@ class CoursesController < ApplicationController
   def edit
     redirect_to courses_path if params[:id].nil? || Course.exists?(params[:id]).!
     @timetable = TimetablesQuery.timetable(@course.timetable_id)
-    # スタジオのタブの情報を作る。
-    #@studios = Studio.joins(:school).merge(School.order(:open_date)).order(:open_date)
     @studio = Timetable.find(@timetable.id).studio
   end
 
@@ -93,7 +87,14 @@ class CoursesController < ApplicationController
 
   def members
     @studio = @course.timetable.studio
-    @members_courses = MembersCourse.joins(:member).where(members_courses: { course_id: @course.id }).order(:begin_date).decorate
+    if params[:status] == '0'
+      @members_courses = MembersCourse.joins(:member).where(members_courses: { course_id: @course.id }).active(Date.today).order(:begin_date).decorate
+    elsif params[:status] == '1'
+      @members_courses = MembersCourse.joins(:member).where(members_courses: { course_id: @course.id }).deactive(Date.today).order(:begin_date).decorate
+    else
+      @members_courses = MembersCourse.joins(:member).where(members_courses: { course_id: @course.id }).order(:begin_date).decorate
+    end
+
     respond_to do |format|
       format.html { render action: "members" }
     end
