@@ -47,6 +47,7 @@
         <thead>
           <tr>
             <th><%= t("activerecord.attributes.lesson.date") %></th>
+            <th><%= t("activerecord.models.studio") %></th>
             <th><%= t("activerecord.models.course") %></th>
             <th><%= t("activerecord.attributes.roll.status") %></th>
             <th></th>
@@ -57,8 +58,10 @@
           <% @rolls.each do |roll| %>
             <% lesson = roll.lesson %>
             <% course = lesson.course %>
+            <% studio = course.timetable.studio %>
             <tr>
               <td><%= lesson.date %></td>
+              <td><%= studio.name %></td>
               <td><%= course.name %></td>
               <td><%= roll.status %></td>
               <td>
