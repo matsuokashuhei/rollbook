@@ -5,7 +5,13 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    #@comments = @post.comments
+    read_log = ReadLog.find_or_create_by(post_id: @post.id, user_id: current_user.id) do |read_log|
+      read_log.read_comments_count = @post.comments.count
+    end
+    if read_log.read_comments_count < @post.comments.count
+      read_log.update(read_comments_count: @post.comments.count)
+    end
+    @comments = @post.comments.order(:created_at)
     @comment = @post.comments.build user_id: current_user.id
   end
 
