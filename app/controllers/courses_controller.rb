@@ -1,26 +1,21 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: [:show, :edit, :update, :destroy, :members, :lessons]
-  before_action :set_studio, :set_school, only: [:show, :edit, :update, :destroy, :members, :lessons]
 
-  def schools
-    @schools = School.all
-    respond_to do |format|
-      format.html { render action: "schools" }
-    end
-  end
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :members, :lessons]
+  #before_action :set_studio, :set_school, only: [:show, :edit, :update, :destroy, :members, :lessons]
 
   # GET /courses
   # GET /courses.json
   def index
-    if params[:date].blank? || params[:studio_id].blank?
-      redirect_to schools_path
-      return
+    # スタジオのタブの情報を作る。
+    @studios = Studio.joins(:school).merge(School.order(:open_date)).order(:open_date)
+    @current_date = params[:date].try(:to_date) || Date.today
+    if params[:studio_id].blank? || params[:date].blank?
+      studio = @studios.find {|studio| studio.school_id == current_user.school_id } || @studios.first
+      redirect_to courses_path(studio_id: studio.id, date: @current_date.strftime('%Y%m%d'))
     end
-    @current_date = params[:date].to_date
-    @studio = Studio.find(params[:studio_id])
-    @time_slots = TimeSlot.joins(:timetables).where(timetables: { studio_id: @studio.id }).uniq
-    @timetables = @studio.timetables.joins(:time_slot)
-    @courses = Course.joins(:instructor, :dance_style, :level).active(@current_date).decorate
+    @current_studio = @studios.find {|studio| studio.id == params[:studio_id].to_i }
+    # スタジオのタイムテーブルの情報を作る。
+    @courses = CoursesQuery.courses(@current_studio, @current_date)
     @before_month = (@current_date - 1.month).beginning_of_month
     @next_month = (@current_date + 1.month).beginning_of_month
   end
@@ -28,19 +23,31 @@ class CoursesController < ApplicationController
   # GET /courses/1
   # GET /courses/1.json
   def show
-    @course = Course.joins([timetable: [[studio: :school], :time_slot]], :instructor, :dance_style, :level).find(params[:id])
-    #@studio = @course.timetable.studio
+    redirect_to courses_path if params[:id].nil? || Course.exists?(params[:id]).!
+    @timetable = TimetablesQuery.timetable(@course.timetable_id)
+    # スタジオのタブの情報を作る。
+    #@studios = Studio.joins(:school).merge(School.order(:open_date)).order(:open_date)
+    @current_studio = Timetable.find(@timetable.id).studio
   end
 
   # GET /courses/new
   def new
+    redirect_to courses_path if params[:timetable_id].nil?
+    # スタジオのタブの情報を作る。
+    #@studios = Studio.joins(:school).merge(School.order(:open_date)).order(:open_date)
+    @current_studio = Timetable.find(params[:timetable_id]).studio
+    # クラスの情報を作る。
     @course = Course.new(timetable_id: params[:timetable_id])
-    @studio = Timetable.find(params[:timetable_id]).studio
+    @timetable = TimetablesQuery.timetable(params[:timetable_id])
   end
 
   # GET /courses/1/edit
   def edit
-    #@studio = @course.timetable.studio
+    redirect_to courses_path if params[:id].nil? || Course.exists?(params[:id]).!
+    @timetable = TimetablesQuery.timetable(@course.timetable_id)
+    # スタジオのタブの情報を作る。
+    #@studios = Studio.joins(:school).merge(School.order(:open_date)).order(:open_date)
+    @current_studio = Timetable.find(@timetable.id).studio
   end
 
   # POST /courses
@@ -86,7 +93,7 @@ class CoursesController < ApplicationController
 
   def members
     @studio = @course.timetable.studio
-    @members_courses = MembersCourse.joins(:member).where(members_courses: { course_id: @course.id }).unscope(:order).reorder('"members_courses"."begin_date"', '"members"."id"').decorate
+    @members_courses = MembersCourse.joins(:member).where(members_courses: { course_id: @course.id }).order(:begin_date).decorate
     respond_to do |format|
       format.html { render action: "members" }
     end
@@ -94,7 +101,7 @@ class CoursesController < ApplicationController
 
   def lessons
     @studio = @course.timetable.studio
-    @lessons = @course.lessons.decorate
+    @lessons = @course.lessons.merge(Lesson.order(date: :desc)).page(params[:page]).decorate
     respond_to do |format|
       format.html { render action: "lessons" }
     end

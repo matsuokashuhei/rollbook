@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-tabs" role="tablist">
+      <% @studios.each do |studio| %>
+        <li class="<%= 'active' if studio.id == @current_studio.id %>">
+          <%= link_to courses_path(date: Date.today.strftime('%Y%m%d'), studio_id: studio.id) do %>
+            <%= studio.name %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

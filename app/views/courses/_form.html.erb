@@ -6,6 +6,7 @@
     <fieldset disabled>
   <% end %>
 
+  <% if false %>
   <div class="form-group">
     <label class="col-md-1 control-label"><%= t("activerecord.models.school") %></label>
     <div class="col-md-3">
@@ -16,6 +17,7 @@
       <%= text_field_tag nil, @course.timetable.studio.name,  class: "form-control", disabled: "disabled" %>
     </div>
   </div>
+  <% end %>
   <div class="form-group">
     <label class="col-md-1 control-label"><%= t("activerecord.attributes.timetable.weekday") %></label>
     <div class="col-md-2">

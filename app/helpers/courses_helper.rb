@@ -1,23 +1,12 @@
 module CoursesHelper
 
   # パン屑用
-  def list_item_to_schools(active: false)
-    text = t("activerecord.models.course")
-    if active
-      content_tag :li, text, class: "active"
-    else
-      content_tag :li, link_to_schools
-    end
-
-  end
-
   def list_item_to_courses(studio, date: Date.today, active: false)
-    text = "#{studio.school.name}#{studio.name}"
     if active
-      content_tag :li, text, class: "active"
+      content_tag :li, studio.name, class: "active"
     else
       content_tag :li do
-        link_to text, courses_path(studio_id: studio.id, date: date.strftime("%Y%m%d"))
+        link_to studio.name, courses_path(studio_id: studio.id, date: date.strftime("%Y%m%d"))
       end
     end
   end
