@@ -9,8 +9,10 @@
         </button>
         <%# link_to t("views.title"), root_path, class: "navbar-brand" %>
         <%= link_to root_path, class: "navbar-brand" do %>
-          <% if Rails.env.development? %>
-            <span class="label label-danger">TEST</span>
+          <% if Rails.env.production? %>
+            <span class="label label-danger">Landin</span>
+          <% else %>
+            <span class="label label-success">TEST</span>
           <% end %>
           <%= t("views.title") %>
         <% end %>
