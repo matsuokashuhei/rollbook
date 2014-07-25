@@ -1,5 +1,4 @@
 class InstructorsController < ApplicationController
-  #before_action :admin_user!
   before_action :set_instructor, only: [:show, :edit, :update, :destroy, :courses]
 
   # GET /instructors
@@ -67,7 +66,28 @@ class InstructorsController < ApplicationController
   end
 
   def courses
-    @courses = Course.where(instructor_id: @instructor.id).details
+    if params[:status] == '1'
+      @courses = Course.where(instructor_id: @instructor.id).active
+        .details
+        .order(open_date: :desc)
+        .merge(School.order(:open_date))
+        .merge(Studio.order(:open_date))
+        .merge(Timetable.order(:weekday))
+    elsif params[:status] == '9'
+      @courses = Course.where(instructor_id: @instructor.id).deactive
+        .details
+        .order(open_date: :desc)
+        .merge(School.order(:open_date))
+        .merge(Studio.order(:open_date))
+        .merge(Timetable.order(:weekday))
+    else
+      @courses = Course.where(instructor_id: @instructor.id)
+        .details
+        .order(open_date: :desc)
+        .merge(School.order(:open_date))
+        .merge(Studio.order(:open_date))
+        .merge(Timetable.order(:weekday))
+    end
     respond_to do |format|
       format.html { render action: "courses" }
     end

@@ -34,8 +34,17 @@ class Course < ActiveRecord::Base
     joins([timetable: [[studio: :school], :time_slot]], :instructor, :dance_style, :level)
   }
 
+  # 開講中のクラス
   scope :active, -> (date = Date.today) {
-    where("courses.open_date <= ? and ? <= coalesce(courses.close_date, '9999-12-31')", date, date)
+    #where("courses.open_date <= ? and ? <= coalesce(courses.close_date, '9999-12-31')", date, date)
+    close_date = Course.arel_table[:close_date]
+    where(close_date.eq(nil).or(close_date.gteq(date)))
+  }
+
+  # 閉講したクラス
+  scope :deactive, -> (date = Date.today) {
+    close_date = Course.arel_table[:close_date]
+    where(close_date.lteq(date))
   }
 
   # Validation
