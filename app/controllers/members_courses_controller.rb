@@ -61,6 +61,7 @@ class MembersCoursesController < ApplicationController
   # PATCH/PUT /members_courses/1
   # PATCH/PUT /members_courses/1.json
   def update
+    @course = CoursesQuery.course(@members_course.course_id)
     respond_to do |format|
       if @members_course.update(members_course_params)
         format.html { redirect_to member_members_course_url(@member, @members_course), notice: '受講クラスを変更しました。' }
