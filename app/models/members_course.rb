@@ -33,12 +33,16 @@ class MembersCourse < ActiveRecord::Base
   #----------------
   # 在籍しているクラス
   scope :active, -> (date = Date.today) {
-    where("members_courses.begin_date <= ? and ? <= coalesce(members_courses.end_date, '9999-12-31')", date, date)
+    #where("members_courses.begin_date <= ? and ? <= coalesce(members_courses.end_date, '9999-12-31')", date, date)
+    end_date = MembersCourse.arel_table[:end_date]
+    where(end_date.eq(nil).or(end_date.gteq(date)))
   }
 
   # 退籍したクラス
   scope :deactive, -> (date = Date.today) {
-    where('end_date < ?', date)
+    #where('end_date < ?', date)
+    end_date = MembersCourse.arel_table[:end_date]
+    where(end_date.lteq(date))
   }
 
   # 入会したクラス

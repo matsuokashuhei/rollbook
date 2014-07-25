@@ -27,10 +27,11 @@ class Course < ActiveRecord::Base
   has_many :members, through: :members_courses, source: :member
 
   # Scope
-  default_scope -> { order(:open_date) }
+  #default_scope -> { order(:open_date) }
 
   scope :details, ->{
-    joins([timetable: [[studio: :school], :time_slot]], :instructor, :dance_style, :level).order("schools.open_date, studios.open_date, timetables.weekday, time_slots.start_time, courses.open_date").order("schools.open_date, studios.open_date, timetables.weekday, time_slots.start_time")
+    #joins([timetable: [[studio: :school], :time_slot]], :instructor, :dance_style, :level).order("schools.open_date, studios.open_date, timetables.weekday, time_slots.start_time, courses.open_date").order("schools.open_date, studios.open_date, timetables.weekday, time_slots.start_time")
+    joins([timetable: [[studio: :school], :time_slot]], :instructor, :dance_style, :level)
   }
 
   scope :active, -> (date = Date.today) {
