@@ -25,7 +25,6 @@
       <table class="table table-striped table-condensed table-hover">
         <thead>
           <tr>
-            <th class="col-md-1"><%= t("activerecord.models.school") %></th>
             <th class="col-md-1"><%= t("activerecord.models.studio") %></th>
             <th class="col-md-1"><%= t("activerecord.models.time_slot") %></th>
             <th class="col-md-3"><%= t("activerecord.attributes.lesson.course_id") %></th>
@@ -49,7 +48,6 @@
           <% @lessons.each do |lesson| %>
             <% course = @courses.find {|course| course.id == lesson.course_id } %>
             <tr>
-              <td><%= course.timetable.studio.school.name %></td>
               <td><%= course.timetable.studio.name %></td>
               <td><%= course.timetable.time_slot.start_time %></td>
               <td><%= course.name %></td>
