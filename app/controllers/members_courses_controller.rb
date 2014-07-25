@@ -2,41 +2,54 @@ class MembersCoursesController < ApplicationController
 
   before_action :set_member
   before_action :set_members_course, only: [:show, :edit, :update, :destroy, :rolls]
-  before_action :set_courses, only: [:new, :create]
 
   # GET /members_courses
   # GET /members_courses.json
   def index
-    @members_courses = @member.members_courses.details
+    if params[:status] == '1'
+      @members_courses = @member.members_courses.active(Date.today).details
+    elsif params[:status] == '9'
+      @members_courses = @member.members_courses.deactive(Date.today).details
+    else
+      @members_courses = @member.members_courses.details
+    end
   end
 
   # GET /members_courses/1
   # GET /members_courses/1.json
   def show
+    @course = CoursesQuery.course(@members_course.course_id)
   end
 
   # GET /members_courses/new
   def new
-    if @member.members_courses.count == 0
-      @members_course = @member.members_courses.build(course_id: params[:course_id], begin_date: @member.enter_date )
-    else
-      @members_course = @member.members_courses.build(course_id: params[:course_id])
+    @members_course = @member.members_courses.build
+    @course = {}
+    if params[:course_id].present?
+      @members_course.course_id = params[:course_id]
+      @course = CoursesQuery.course(params[:course_id])
     end
+    @courses = CoursesQuery.courses
   end
 
   # GET /members_courses/1/edit
   def edit
+    @course = CoursesQuery.course(@members_course.course_id)
   end
 
   # POST /members_courses
   # POST /members_courses.json
   def create
-    @member = Member.find(params[:member_id])
     @members_course = MembersCourse.new(members_course_params)
+    @course = {}
+    if @members_course.course_id.present?
+      @course = CoursesQuery.course(@members_course.course_id)
+    end
+    @courses = CoursesQuery.courses
 
     respond_to do |format|
       if @members_course.save
-        format.html { redirect_to member_course_url(@member, @members_course), notice: '受講クラスを登録しました。' }
+        format.html { redirect_to member_members_course_url(@member, @members_course), notice: '受講クラスを登録しました。' }
         format.json { render action: 'show', status: :created, location: @members_course }
       else
         format.html { render action: 'new' }
@@ -48,9 +61,10 @@ class MembersCoursesController < ApplicationController
   # PATCH/PUT /members_courses/1
   # PATCH/PUT /members_courses/1.json
   def update
+    @course = CoursesQuery.course(@members_course.course_id)
     respond_to do |format|
       if @members_course.update(members_course_params)
-        format.html { redirect_to member_course_url(@member, @members_course), notice: '受講クラスを変更しました。' }
+        format.html { redirect_to member_members_course_url(@member, @members_course), notice: '受講クラスを変更しました。' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -69,15 +83,8 @@ class MembersCoursesController < ApplicationController
       end
     end
     respond_to do |format|
-      format.html { redirect_to member_courses_url(@member) }
+      format.html { redirect_to member_members_courses_url(@member), notice: '受講クラスを削除しました。' }
       format.json { head :no_content }
-    end
-  end
-
-  def rolls
-    @rolls = @members_course.rolls
-    respond_to do |format|
-      format.html { render aciton: "rolls" }
     end
   end
 
@@ -88,11 +95,6 @@ class MembersCoursesController < ApplicationController
     end
     def set_members_course
       @members_course = MembersCourse.find(params[:id])
-    end
-
-    def set_courses
-      @schools = School.includes(studios: [timetables: [:courses, :time_slot]]).order("schools.open_date, studios.open_date, time_slots.start_time, timetables.weekday")
-      @courses = Course.joins(:instructor, :dance_style, :level).active(Date.today)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

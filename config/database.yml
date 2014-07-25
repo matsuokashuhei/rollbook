@@ -3,21 +3,21 @@ development:
   encoding: unicode
   database: rollbook_development
   pool: 5
-  username: postgres
-  password: postgres
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
 
 test:
   adapter: postgresql
   encoding: unicode
   database: rollbook_test
   pool: 5
-  username: postgres
-  password: postgres
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
 
 production:
   adapter: postgresql
   encoding: unicode
   database: rollbook_production
   pool: 5
-  username: rollbook
-  password:
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>

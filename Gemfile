@@ -1,14 +1,14 @@
 source 'https://rubygems.org'
-ruby '2.1.0'
+ruby '2.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.2'
+gem 'rails', '4.1.4'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
 
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.0'
+gem 'sass-rails', '>= 3.2'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -53,7 +53,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '2.13.1'
+  gem 'rspec-rails'
   #gem 'debugger'
 end
 
@@ -71,10 +71,9 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem "bootstrap-sass", '~> 3.0.3.0'
-#gem "font-awesome-sass"
-gem "font-awesome-rails", "4.0.1.0"
+gem "bootstrap-sass", '3.2.0'
+gem "font-awesome-rails"
 
 gem "devise"
 
-gem "newrelic_rpm"
+#gem "newrelic_rpm"

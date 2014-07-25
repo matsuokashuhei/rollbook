@@ -41,7 +41,7 @@ module InstructorsHelper
       end
     else
       content_tag :li do
-        link_to text, instructor_courses_path(instructor)
+        link_to text, instructor_courses_path(instructor, status: '1')
       end
     end
   end

@@ -43,7 +43,7 @@ module MembersHelper
   end
 
   def link_to_members
-    link_to t("activerecord.models.member"), members_path
+    link_to t("activerecord.models.member"), members_path(status: '1')
   end
 
   def link_to_member(member, text: t("activerecord.models.member"), active: false)

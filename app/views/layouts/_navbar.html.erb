@@ -1,43 +1,27 @@
 <div class="row">
   <div class="col-md-12">
-    <!--<nav class="navbar navbar-default navbar-fixed-top" role="navigation">-->
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default" role="navigation" style="margin-bottom: 5px;">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <%= link_to t("views.title"), root_path, class: "navbar-brand" %>
+        <%# link_to t("views.title"), root_path, class: "navbar-brand" %>
+        <%= link_to root_path, class: "navbar-brand" do %>
+          <% if Rails.env.development? %>
+            <span class="label label-danger">TEST</span>
+          <% end %>
+          <%= t("views.title") %>
+        <% end %>
       </div>
       <div class="collapse navbar-collapse navbar-ex1-collapse">
-        <ul class="nav navbar-nav">
-          <li class="dropdown <%= 'active' if controller?(["courses", "instructors"]) %>">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <%= t("activerecord.models.school") %> <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-              <%= list_item_to_schools %>
-              <%= list_item_to_instructors %>
-            </ul>
-          </li>
-          <li class="<%= 'active' if controller?(["lessons", "rolls"]) %>"><%= link_to_lessons %></li>
-          <li class="dropdown <%= 'active' if controller?(["members", "members_courses", "recesses", "bank_accounts"]) %>">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <%= t("activerecord.models.member") %> <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-              <li><%= link_to_members %></li>
-              <%= list_item_to_bank_accounts %>
-            </ul>
-          </li>
-        </ul>
         <ul class="nav navbar-nav navbar-right">
           <% if current_user.admin? || current_user.manager? %>
             <%= list_item_to_posts %>
           <% end %>
           <% if current_user.admin? %>
-            <li class="dropdown <%= 'active' if controller?(["users", "access_logs"]) %>">
+            <li class="dropdown <%= 'active' if params[:controller].presence_in(["users", "access_logs"]) %>">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 管理 <b class="caret"></b>
               </a>

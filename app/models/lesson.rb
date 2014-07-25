@@ -33,7 +33,7 @@ class Lesson < ActiveRecord::Base
   validates :course_id, :date, :rolls_status, presence: true
   validates :date, uniqueness: { scope: :course_id }
 
-  default_scope -> { order(:date, :course_id) }
+  #default_scope -> { order(:date, :course_id) }
 
   scope :fixed, -> {
     where(rolls_status: "2")

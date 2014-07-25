@@ -165,13 +165,6 @@ module ApplicationHelper
     end
   end
 
-  def controller?(controllers)
-    controllers.each do |controller|
-      return true if params[:controller] == controller
-    end
-    return false
-  end
-
   private
 
   def modal_to_destroy(id, path)

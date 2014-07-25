@@ -29,6 +29,8 @@
       <%= f.number_field :transportation, class: "form-control" %>
     </div>
   </div>
+  <% if false %>
+  <!-- 電話番号とEメールは個人情報のため消す。-->
   <div class="form-group <%= 'has-error' if @instructor.errors[:phone].present? %>">
     <%= f.label :phone, class: "col-md-1 control-label" %>
     <div class="col-md-2">
@@ -44,6 +46,7 @@
       <%= f.email_field :email_mobile, class: "form-control", "placeholder" => "モバイル" %>
     </div>
   </div>
+  <% end %>
   <div class="form-group <%= 'has-error' if @instructor.errors[:note].present? %>">
     <%= f.label :note, class: "col-md-1 control-label" %>
     <div class="col-md-6">

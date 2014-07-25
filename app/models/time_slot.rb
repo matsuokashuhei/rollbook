@@ -15,6 +15,6 @@ class TimeSlot < ActiveRecord::Base
 
   validates :start_time, :end_time, presence: true
 
-  default_scope -> { order(:start_time) }
+  #default_scope -> { order(:start_time) }
 
 end

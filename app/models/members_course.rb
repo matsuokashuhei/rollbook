@@ -15,25 +15,32 @@
 
 class MembersCourse < ActiveRecord::Base
 
-  belongs_to :member, class_name: "Member"
-  belongs_to :course, class_name: "Course"
+  #----------------
+  # Relations
+  #----------------
+  belongs_to :member
+  belongs_to :course
   has_many :recesses
 
+  #----------------
+  # Validates
+  #----------------
   validates :member_id, :course_id, :begin_date, presence: true
-  validate :begin_date, :after_enter_date
-  validate :begin_date, :after_open_date
-  validate :begin_date, :weekday_of_course
-  validate :end_date, :end_of_month
-  validate :end_date, :term_dates
-  validate :end_date, :no_recesses, if: Proc.new { self.end_date.present? }
+  validates_with MembersCourseValidator
 
-  default_scope -> {
-    order(:begin_date, :course_id)
+  #----------------
+  # Scopes
+  #----------------
+  # 在籍しているクラス
+  scope :active, -> (date = Date.today) {
+    end_date = MembersCourse.arel_table[:end_date]
+    where(end_date.eq(nil).or(end_date.gteq(date)))
   }
 
-  # 受講中のクラス
-  scope :active, -> (date = Date.today) {
-    where("members_courses.begin_date <= ? and ? <= coalesce(members_courses.end_date, '9999-12-31')", date, date)
+  # 退籍したクラス
+  scope :deactive, -> (date = Date.today) {
+    end_date = MembersCourse.arel_table[:end_date]
+    where(end_date.lteq(date))
   }
 
   # 入会したクラス
@@ -59,47 +66,9 @@ class MembersCourse < ActiveRecord::Base
   }
 
   scope :details, -> {
-    joins(course: [[timetable: [[studio: :school], :time_slot]], :dance_style, :level, :instructor]).unscope(:order).reorder("members_courses.begin_date DESC")
+    joins(course: [[timetable: [:studio, :time_slot]], :dance_style, :level, :instructor]).order(begin_date: :desc)
   }
 
-  def after_enter_date
-    unless member.enter_date <= begin_date
-      errors.add(:begin_date, "は入会日より未来の日にしてください。")
-    end
-  end
-
-  def after_open_date
-    unless course.open_date <= begin_date
-      errors.add(:begin_date, "はクラスが始まった日より未来の日にしてください。")
-    end
-  end
-
-  def weekday_of_course
-    unless begin_date.cwday == course.timetable.weekday
-      errors.add(:begin_date, "はクラスと同じ曜日の日にしてください。")
-    end
-  end
-
-  def end_of_month
-    unless end_date == end_date.try(:end_of_month)
-      errors.add(:end_date, "は月の終わりの日にしてください。")
-    end
-  end
-
-  def term_dates
-    return if end_date.blank?
-    unless begin_date < end_date
-      errors.add(:end_date, "は開始日より未来の日にしてください。")
-    end
-  end
-
-  def no_recesses
-    self.recesses.each do |recess|
-      if recess.month > self.end_date.strftime("%Y/%m")
-        errors.add(:base, "クラスを退会する場合は%sの休会を取り消ししてください。" % recess.decorate.month)
-      end
-    end
-  end
 
   def rolls
     @rolls = Roll.member(member_id).course(course_id).details

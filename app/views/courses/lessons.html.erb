@@ -1,7 +1,6 @@
 <div class="row">
   <div class="col-md-12">
     <ol class="breadcrumb">
-      <%= list_item_to_schools %>
       <%= list_item_to_courses(@studio) %>
       <%= list_item_to_course(@course, active: true) %>
     </ol>
@@ -11,7 +10,7 @@
   <div class="col-md-12">
     <ul class="nav nav-tabs">
       <li><%= link_to t("activerecord.models.course"), course_path(@course), class: "btn btn-link" %></li>
-      <li><%= link_to t("activerecord.models.member"), course_members_path(@course), class: "btn btn-link" %></li>
+      <li><%= link_to t("activerecord.models.member"), course_members_path(@course, status: '1'), class: "btn btn-link" %></li>
       <li class="active"><a href="#lesson" data-toggle="tab"><%= t("activerecord.models.lesson") %></a></li>
     </ul>
 </div>
@@ -40,6 +39,7 @@
           <% end %>
         </tbody>
       </table>
+      <%= paginate @lessons %>
     </div>
   </div>
 </div>

@@ -19,16 +19,23 @@
 <br />
 <div class="row">
   <div class="col-md-12">
-    <%= button_to_new new_member_course_path(@member), pull: "right" %>
+    <%= form_tag member_members_courses_path(@member), method: :get, class: "form-inline" do %>
+      <div class="form-group">
+        <%= select_tag 'status', options_for_select([['在籍', '1'], ['退籍', '9']], params[:status]), class: "form-control", include_blank: true %>
+      </div>
+      <%= button_to_search %>
+      <%= button_to_new new_member_members_course_path(@member), pull: "right" %>
+    <% end %>
   </div>
 </div>
+<br />
 <div class="row">
   <div class="col-md-12">
+    <%= render "shared/notice" %>
     <div class="table-responsive">
       <table class="table table-striped table-hover">
         <thead>
           <tr>
-            <th><%= t("activerecord.models.school") %></th>
             <th><%= t("activerecord.models.studio") %></th>
             <th><%= t("activerecord.attributes.timetable.weekday") %></th>
             <th><%= t("activerecord.models.time_slot") %></th>
@@ -44,13 +51,11 @@
             <% timetable = course.timetable %>
             <% time_slot = timetable.time_slot %>
             <% studio = timetable.studio %>
-            <% school = studio.school %>
             <% if members_course.end_date.present? %>
               <tr class="active">
             <% else %>
               <tr>
             <% end %>
-              <td><%= school.name %></td>
               <td><%= studio.name %></td>
               <td><%= timetable.weekday_ja %></td>
               <td><%= time_slot.start_time %></td>
@@ -58,9 +63,9 @@
               <td><%= members_course.begin_date %></td>
               <td><%= members_course.end_date %></td>
               <td>
-                <%= link_to_show member_course_path(@member, members_course) %>
-                <%= link_to_edit edit_member_course_path(@member, members_course) %>
-                <%= link_to_destroy members_course.id, member_course_path(@member, members_course), destroy: members_course.destroy? %>
+                <%= link_to_show member_members_course_path(@member, members_course) %>
+                <%= link_to_edit edit_member_members_course_path(@member, members_course) %>
+                <%= link_to_destroy members_course.id, member_members_course_path(@member, members_course), destroy: members_course.destroy? %>
               </td>
             </tr>
           <% end %>

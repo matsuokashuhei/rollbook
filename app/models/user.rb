@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
   has_many :access_logs
   has_many :posts
   has_many :comments
+  has_many :read_logs
   belongs_to :school
 
   ROLES = {

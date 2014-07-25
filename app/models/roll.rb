@@ -67,8 +67,7 @@ class Roll < ActiveRecord::Base
   }
 
   scope :details, -> {
-    order_columns = ["lessons.date", "schools.open_date", "studios.open_date", "time_slots.start_time"]
-    joins(lesson: [course: [[timetable: [[studio: :school], :time_slot]], :dance_style, :level, :instructor]]).order("lessons.date, time_slots.start_time").order(order_columns)
+    joins(lesson: [course: [[timetable: [[studio: :school], :time_slot]], :dance_style, :level, :instructor]])
   }
 
   def status_name

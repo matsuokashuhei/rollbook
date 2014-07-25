@@ -84,7 +84,7 @@ class Member < ActiveRecord::Base
   # -------------------------
   # スコープ
   # -------------------------
-  default_scope -> { order(:last_name_kana, :first_name_kana) }
+  #default_scope -> { order(:last_name_kana, :first_name_kana) }
 
   # 受講中の会員（当月の入会、退会含む）
   scope :active, -> (month = Date.today.strftime("%Y%m")) {

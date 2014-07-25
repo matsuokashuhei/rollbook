@@ -1,7 +1,6 @@
 <div class="row">
   <div class="col-md-12">
     <ol class="breadcrumb">
-      <%= list_item_to_schools %>
       <%= list_item_to_courses(@studio) %>
       <%= list_item_to_course(@course, active: true) %>
     </ol>
@@ -14,6 +13,17 @@
       <%= tab_to_courses_members @course, active: true %>
       <%= tab_to_courses_lessons @course %>
     </ul>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <%= form_tag course_members_path(@course), method: :get, class: "form-inline" do %>
+      <div class="form-group">
+        <%= select_tag 'status', options_for_select([['在籍', '1'], ['退籍', '9']], params[:status]), class: "form-control", include_blank: true %>
+      </div>
+      <%= button_to_search %>
+    <% end %>
   </div>
 </div>
 <br />
@@ -41,7 +51,7 @@
               <td><%= members_course.introduction %></td>
               <td><%= members_course.begin_date %></td>
               <td><%= members_course.end_date %></td>
-              <td><%= link_to_show member_course_path(members_course.member, members_course) %></td>
+              <td><%= link_to_show member_members_course_path(members_course.member, members_course) %></td>
             </tr>
           <% end %>
         </tbody>
