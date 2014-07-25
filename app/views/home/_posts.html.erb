@@ -1,4 +1,4 @@
-<% if Post.active.exists? %>
+<% if @posts.present? %>
   <br />
   <div class="row">
     <div class="col-md-6">
@@ -9,7 +9,7 @@
               <tr>
                 <td><%= post.open_date.strftime('%Y年%m月%d日') %></td>
                 <td><%= link_to post.title, post_comments_path(post), class: 'btn btn-link' %></td>
-                <td><small><%= post.user.name %></small></td>
+                <td><%= post.user.name %></td>
                 <td><%= unread_badge(post, @current_user) %></td>
               </tr>
             <% end %>
