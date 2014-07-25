@@ -25,7 +25,7 @@ class Instructor < ActiveRecord::Base
   validates :name, uniqueness: { scope: :team }
 
   #default_scope -> { order(:kana) }
-  default_scope -> { order(:name) }
+  #default_scope -> { order(:name) }
 
   def destroy?
     courses.count == 0
