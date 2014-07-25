@@ -24,12 +24,14 @@
 </div>
 <div class="row">
   <div class="col-md-12">
+    <%= render "shared/notice" %>
     <div class="table-responsive">
       <table class="table table-striped table-hover">
         <thead>
           <tr>
             <th><%= t("activerecord.attributes.recess.month") %></th>
-            <th><%= t("activerecord.attributes.recess.members_course_id") %></th>
+            <th><%= t("activerecord.models.studio") %></th>
+            <th><%= t("activerecord.models.members_course") %></th>
             <th><%= t("activerecord.attributes.recess.status") %></th>
             <th></th>
             <th></th>
@@ -40,6 +42,7 @@
           <% @recesses.each do |recess| %>
             <tr>
               <td><%= recess.month %></td>
+              <td><%= recess.members_course.course.timetable.studio.name %></td>
               <td><%= recess.members_course.course.name %></td>
               <td><%= recess.status %></td>
               <td>
