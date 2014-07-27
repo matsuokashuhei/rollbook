@@ -15,8 +15,8 @@
   </div>
   <div class="form-group <%= 'has-error' if @post.errors[:content].present? %>">
     <%= f.label :content, class: "col-md-1 control-label" %>
-    <div class="col-md-8">
-      <%= f.text_area :content, class: "form-control", rows: 10 %>
+    <div class="col-md-10">
+      <%= f.text_area :content, class: "form-control", rows: 20 %>
     </div>
   </div>
   <div class="form-group">
