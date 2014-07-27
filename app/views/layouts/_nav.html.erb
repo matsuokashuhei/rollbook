@@ -9,7 +9,7 @@
         <%= link_to fa_icon('list-alt', text: '出席簿'), lessons_path %>
       </li>
       <li class="<%= 'active' if params[:controller].presence_in(['members', 'members_courses', 'recesses',]) %>">
-        <%= link_to fa_icon('users', text: t("activerecord.models.member")), members_path(status: '1') %>
+        <%= link_to fa_icon('users', text: t("activerecord.models.member")), members_path("q[status_eq]" => '1') %>
       </li>
       <li class="<%= 'active' if params[:controller] == 'bank_accounts' %>">
         <%= link_to fa_icon('credit-card', text: t("activerecord.models.bank_account")), bank_accounts_path %>

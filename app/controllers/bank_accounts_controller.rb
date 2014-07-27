@@ -16,8 +16,11 @@ class BankAccountsController < ApplicationController
     end
     @bank_accounts = @bank_accounts.where(imperfect: params[:imperfect].present?)
     @bank_accounts = @bank_accounts.where(change_bank: params[:change_bank].present?)
-    @bank_accounts = @bank_accounts.page(params[:page]).decorate
-    #@bank_accounts = BankAccount.name_like(params[:holder_name_kana]).page(params[:page]).decorate
+    @bank_accounts = @bank_accounts.order(:holder_name_kana).page(params[:page]).decorate
+=begin
+    @q = BankAccount.search(params[:q])
+    @bank_accounts = @q.result.order(:holder_name_kana).page(params[:page]).decorate
+=end
   end
 
   # GET /bank_accounts/1
