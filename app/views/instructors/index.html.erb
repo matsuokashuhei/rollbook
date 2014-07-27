@@ -7,16 +7,13 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <%= form_tag instructors_path, method: :get, class: "form-inline" do %>
-      <% if false %>
+    <%= search_form_for @q, html: { class: "form-inline" } do |f| %>
       <div class="form-group">
-        <%= text_field_tag "kana", params[:kana], class: "form-control", placeholder: "カナ", autofocus: true %>
+        <%= f.text_field :name_start, class: "form-control", placeholder: t("activerecord.attributes.instructor.name"), autofocus: true %>
       </div>
+      <%= f.button class: "btn btn-success" do %>
+        <%= fa_icon("search lg", text: t("views.buttons.search")) %>
       <% end %>
-      <div class="form-group">
-        <%= text_field_tag "name", params[:name], class: "form-control", placeholder: t("activerecord.attributes.instructor.name"), autofocus: true %>
-      </div>
-      <%= button_to_search %>
       <%= button_to_new new_instructor_path, pull: "right" %>
     <% end %>
   </div>
