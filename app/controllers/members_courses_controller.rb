@@ -7,11 +7,11 @@ class MembersCoursesController < ApplicationController
   # GET /members_courses.json
   def index
     if params[:status] == '1'
-      @members_courses = @member.members_courses.active(Date.today).details
+      @members_courses = @member.members_courses.active(Date.today).details.order(:begin_date)
     elsif params[:status] == '9'
-      @members_courses = @member.members_courses.deactive(Date.today).details
+      @members_courses = @member.members_courses.deactive(Date.today).details.order(:begin_date)
     else
-      @members_courses = @member.members_courses.details
+      @members_courses = @member.members_courses.details.order(:begin_date)
     end
   end
 
