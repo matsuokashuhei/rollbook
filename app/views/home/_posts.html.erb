@@ -1,21 +1,25 @@
-<% if @posts.present? %>
-  <br />
-  <div class="row">
-    <div class="col-md-6">
-      <div class="table-responsive">
-        <table class="table table-hover">
-          <tbody>
-            <% @posts.each do |post| %>
-              <tr>
-                <td><%= post.open_date.strftime('%Y年%m月%d日') %></td>
-                <td><%= link_to post.title, post_comments_path(post), class: 'btn btn-link' %></td>
-                <td><%= post.user.name %></td>
-                <td><%= unread_badge(post, @current_user) %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <li class="active">お知らせ</li>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <tbody>
+          <% @posts.each do |post| %>
+            <tr>
+              <td><%= post.open_date.strftime('%Y年%m月%d日') %></td>
+              <td><%= link_to post.title, post_comments_path(post), class: 'btn btn-link' %></td>
+              <td><%= post.user.name %></td>
+              <td><%= unread_badge(post, @current_user) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
-<% end %>
+</div>
