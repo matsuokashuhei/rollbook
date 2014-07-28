@@ -39,9 +39,11 @@ class Lesson < ActiveRecord::Base
     where(rolls_status: "2")
   }
 
-  scope :month, -> (month) {
+  scope :for_month, -> (month) {
     if month.present?
-      where('"date" between ? and ?', month.to_date, month.to_date.end_of_month)
+      beginning_of_month = "#{month}01".to_date
+      end_of_month = beginning_of_month.end_of_month
+      where(date: [beginning_of_month..end_of_month])
     end
   }
 

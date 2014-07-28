@@ -64,7 +64,7 @@ class MembersController < ApplicationController
 
   # GET /members/1/rolls
   def rolls
-    @rolls = Roll.member(@member.id).details.merge(Lesson.month(params[:month]))
+    @rolls = Roll.member(@member.id).details.merge(Lesson.for_month(params[:month].try(:gsub, '/', '')))
     @rolls = @rolls.where(lessons: { course_id: params[:course_id] }) if params[:course_id].present?
     @rolls = @rolls.where(status: params[:status]) if params[:status].present?
     @rolls = @rolls.merge(Lesson.order(date: :desc)).page(params[:page]).decorate
