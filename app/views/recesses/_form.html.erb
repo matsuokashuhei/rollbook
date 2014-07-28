@@ -9,20 +9,20 @@
   <div class="form-group <%= 'has-error' if @recess.errors[:members_course_id].present? %>">
     <%= f.label :members_course_id, class: "col-md-1 control-label" %>
     <div class="col-md-4">
-      <% if params[:action] == "edit" %>
-        <%= f.select :members_course_id, courses_options_for_select(@member), {}, { class: "form-control", disabled: "disabled" } %>
-      <% else %>
+      <% if params[:action].presence_in(['new', 'create',]) %>
         <%= f.select :members_course_id, courses_options_for_select(@member), {}, { class: "form-control", prompt: t("activerecord.models.members_course") } %>
+      <% else %>
+        <%= f.select :members_course_id, courses_options_for_select(@member), {}, { class: "form-control", disabled: "disabled" } %>
       <% end %>
     </div>
   </div>
   <div class="form-group <%= 'has-error' if @recess.errors[:month].present? %>">
     <%= f.label :month, class: "col-md-1 control-label" %>
     <div class="col-md-2">
-      <% if params[:action] == "edit" %>
-        <%= f.text_field :month, class: "form-control", data: { behaviour: "monthpicker" }, disabled: "disabled" %>
-      <% else %>
+      <% if params[:action].presence_in(['new', 'create',]) %>
         <%= f.text_field :month, class: "form-control", data: { behaviour: "monthpicker" } %>
+      <% else %>
+        <%= f.text_field :month, class: "form-control", data: { behaviour: "monthpicker" }, disabled: "disabled" %>
       <% end %>
     </div>
   </div>
