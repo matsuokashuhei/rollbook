@@ -6,7 +6,7 @@ class RecessesController < ApplicationController
   # GET /recesses
   # GET /recesses.json
   def index
-    @recesses = Recess.joins(:members_course).where(members_courses: { member_id: @member.id }).decorate
+    @recesses = Recess.joins(:members_course).where(members_courses: { member_id: @member.id }).order(month: :desc).decorate
   end
 
   # GET /recesses/1
@@ -61,16 +61,18 @@ class RecessesController < ApplicationController
   def destroy
     ActiveRecord::Base.transaction do
       members_course = @recess.members_course
-      @recess.destroy if @recess.delete?
-      Roll.member(members_course.member_id).each do |roll|
-        lesson = roll.lesson
-        if lesson.course_id == members_course.course_id && @recess.month == lesson.date.strftime("%Y%m")
-          roll.destroy
+      if @recess.delete?
+        Rolls.joins(:lesson)
+          .merge(Lesson.for_month(@recess.month))
+          .merge(Lesson.where(course_id: members_course.course_id))
+          .where(member_id: members_course.member_id).each do |roll|
+            roll.destroy
         end
+        @recess.destroy
       end
     end
     respond_to do |format|
-      format.html { redirect_to member_recesses_path(@member) }
+      format.html { redirect_to member_recesses_path(@member), notice: '休会を削除しました。' }
       format.json { head :no_content }
     end
   end

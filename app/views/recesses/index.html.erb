@@ -48,7 +48,7 @@
               <td>
                 <%= link_to_show member_recess_path(@member, recess) %>
                 <%= link_to_edit edit_member_recess_path(@member, recess) %>
-                <%= link_to_destroy recess.id, member_recess_path(@member, recess), destroy: recess.delete? %>
+                <%= link_to_destroy recess.id, member_recess_path(@member, recess), destroy: recess.deletable %>
               </td>
             </tr>
           <% end %>
