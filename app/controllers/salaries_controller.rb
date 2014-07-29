@@ -4,7 +4,9 @@ class SalariesController < ApplicationController
 
   def index
     @beginning_of_month = (@month + "01").to_date
-    @instructors = Instructor.search(params[:name]).joins(:courses).merge(Course.active(@beginning_of_month)).unscope(:order).uniq.page(params[:page]).decorate
+    @q = Instructor.search(params[:q])
+    @instructors = @q.result.joins(:courses).merge(Course.active(@beginning_of_month)).order(:name).uniq.page(params[:page]).decorate
+    #@instructors = Instructor.search(params[:name]).joins(:courses).merge(Course.active(@beginning_of_month)).unscope(:order).uniq.page(params[:page]).decorate
   end
 
   def show

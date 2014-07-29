@@ -8,11 +8,21 @@
 </div>
 <div class="row">
   <div class="col-md-12">
+<% if false %>
     <%= form_tag salaries_path(@month), method: :get, class: "form-inline" do %>
       <div class="form-group">
         <%= text_field_tag "name", params[:name], class: "form-control", placeholder: t("activerecord.attributes.instructor.name"), autofocus: true %>
       </div>
       <%= button_to_search %>
+    <% end %>
+<% end %>
+    <%= search_form_for @q, html: { class: "form-inline" } do |f| %>
+      <div class="form-group">
+        <%= f.text_field :name_start, class: "form-control", placeholder: t("activerecord.attributes.instructor.name"), autofocus: true %>
+      </div>
+      <%= f.button class: "btn btn-success" do %>
+        <%= fa_icon("search lg", text: t("views.buttons.search")) %>
+      <% end %>
     <% end %>
   </div>
 </div>
