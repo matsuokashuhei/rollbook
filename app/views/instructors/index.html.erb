@@ -6,7 +6,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-4">
     <%= search_form_for @q, html: { class: "form-inline" } do |f| %>
       <div class="form-group">
         <%= f.text_field :name_start, class: "form-control", placeholder: t("activerecord.attributes.instructor.name"), autofocus: true %>
@@ -20,19 +20,19 @@
 </div>
 <br />
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-4">
     <%= render "shared/notice" %>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-4">
     <div class="table-responsive">
       <table class="table table-striped table-hover">
         <thead>
           <tr>
             <th class="col-md-2"><%= t("activerecord.attributes.instructor.name") %></th>
             <th class="col-md-1">クラス数</th>
-            <th class="col-md-2"></th>
+            <th class="col-md-1"></th>
           </tr>
         </thead>
         <tbody>
@@ -40,7 +40,7 @@
             <tr>
               <td><%= instructor.name %></td>
               <td><div class="pull-right"><%= instructor.courses.active.count %></div></td>
-              <td>
+              <td class="text-center">
                 <%= link_to_show instructor_path(instructor) %>
                 <%= link_to_edit edit_instructor_path(instructor) %>
                 <%= link_to_destroy instructor.id, instructor_path(instructor), destroy: instructor.destroy? %>

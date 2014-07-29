@@ -26,19 +26,19 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-10">
     <div class="table-responsive">
-      <table class="table table-striped table-hover">
+      <table class="table table-bordered table-striped table-hover">
         <thead>
           <tr>
-            <th><%= t("activerecord.models.studio") %></th>
-            <th><%= t("activerecord.attributes.timetable.weekday") %></th>
-            <th><%= t("activerecord.models.time_slot") %></th>
-            <th><%= t("activerecord.models.course") %></th>
-            <th><%= t("activerecord.attributes.course.open_date") %></th>
-            <th><%= t("activerecord.attributes.course.close_date") %></th>
-            <th><%= t("activerecord.models.member") %></th>
-            <th></th>
+            <th class="col-md-2"><%= t("activerecord.models.studio") %></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.timetable.weekday") %></th>
+            <th class="col-md-1"><%= t("activerecord.models.time_slot") %></th>
+            <th class="col-md-2"><%= t("activerecord.models.course") %></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.course.open_date") %></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.course.close_date") %></th>
+            <th class="col-md-1"><%= t("activerecord.models.member") %></th>
+            <th class="col-md-1"></th>
           </tr>
         </thead>
         <tbody>
@@ -51,7 +51,7 @@
               <td><%= course.open_date %></td>
               <td><%= course.close_date %></td>
               <td><div class="pull-right"><%= course.members_courses.active.count %></div></td>
-              <td><%= link_to_show course_path(course) %></td>
+              <td class="text-center"><%= link_to_show course_path(course) %></td>
             </tr>
           <% end %>
         </tbody>

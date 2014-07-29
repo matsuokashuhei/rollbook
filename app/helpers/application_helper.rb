@@ -49,7 +49,7 @@ module ApplicationHelper
   def link_to_show(path, disabled: false)
     class_value = "btn btn-link"
     class_value += " disabled" if disabled
-    link_to path, class: class_value, data: { toggle: "tooltip", "original-title" => t("views.buttons.show") } do
+    link_to path, class: class_value, style: 'padding: 2px', data: { toggle: "tooltip", "original-title" => t("views.buttons.show") } do
       icon_to_show
     end
   end
@@ -57,7 +57,7 @@ module ApplicationHelper
   def link_to_edit(path, edit: true)
     class_value = "btn btn-link"
     class_value += " disabled" unless edit
-    link_to path, class: class_value, data: { toggle: "tooltip", "original-title" => t("views.buttons.edit") } do
+    link_to path, class: class_value, style: 'padding: 2px', data: { toggle: "tooltip", "original-title" => t("views.buttons.edit") } do
       icon_to_edit
     end
   end
@@ -72,12 +72,12 @@ module ApplicationHelper
 
   def link_to_destroy(id, path, destroy: true)
     if destroy
-      text = link_to "##{id}", class: "btn btn-link", data: { toggle: "modal", "original-title" => t("views.buttons.delete")} do
+      text = link_to "##{id}", class: "btn btn-link", style: 'padding: 2px', data: { toggle: "modal", "original-title" => t("views.buttons.delete")} do
         icon_to_destroy
       end
       text += modal_to_destroy(id, path)
     else
-      link_to path, class: "btn btn-link disabled" do
+      link_to path, class: "btn btn-link disabled", style: 'padding: 2px' do
         icon_to_destroy
       end
     end

@@ -2,7 +2,7 @@ class RecessDecorator < ApplicationDecorator
   delegate_all
 
   def status
-    h.content_tag(:h3, style: "margin: 0px; line-height: 0:") do
+    h.content_tag(:h4, style: "margin: 0px; line-height: 0:") do
       case model.status
       when Recess::STATUSES[:UNPAID]
         h.content_tag(:span, "未", class: "label label-default")

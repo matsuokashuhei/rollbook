@@ -16,21 +16,21 @@
 </div>
 <br />
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-5">
     <%= button_to_new new_bank_account_member_path(@bank_account), pull: "right" %>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-5">
     <%= render "shared/notice" %>
     <div class="table-responsive">
-      <table class="table table-striped table-hover">
+      <table class="table table-bordered table-striped table-hover">
         <thead>
           <tr>
-            <th><%= t("activerecord.attributes.member.number") %></th>
-            <th><%= t("activerecord.attributes.member.name") %></th>
-            <th>受講クラス数</th>
-            <th></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.member.number") %></th>
+            <th class="col-md-2"><%= t("activerecord.attributes.member.name") %></th>
+            <th class="col-md-1">受講クラス数</th>
+            <th class="col-md-1"></th>
           </tr>
         </thead>
         <tbody>
@@ -39,7 +39,7 @@
               <td><%= member.number %></td>
               <td><%= member.name %></td>
               <td><div class="pull-right"><%= member.members_courses.active.count %></div></td>
-              <td>
+              <td class="text-center">
                 <%= link_to_show member_path(member) %>
                 <%= link_to_destroy member.id, destroy_bank_account_member_path(@bank_account, member) %>
                 <%# link_to t("views.buttons.delete"), destroy_bank_account_member_path(@bank_account, member), method: :delete, class: "btn btn-default" %>

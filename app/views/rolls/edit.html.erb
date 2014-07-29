@@ -10,17 +10,18 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <%= button_to_absences absences_path(@lesson), pull: "right" %>
   </div>
 </div>
+<br />
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <%= render "form" %>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <ul class="pager">
       <li class="previous">
         <%= link_to_prev_lesson @lesson.prev_lesson %>

@@ -6,7 +6,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-8">
     <%= search_form_for @q, html: { class: "form-inline" } do |f| %>
       <div class="form-group">
         <%= f.text_field :number_start, class: "form-control", placeholder: t("activerecord.attributes.member.number"), autofocus: true %>
@@ -29,34 +29,30 @@
 </div>
 <br />
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-8">
     <div class="table-responsive">
-      <table class="table table-striped table-hover">
+      <table class="table table-bordered table-striped table-hover">
         <thead>
           <tr>
             <th class="col-md-1"><%= t("activerecord.attributes.member.number") %></th>
             <th class="col-md-2"><%= t("activerecord.attributes.member.name") %></th>
-            <th class="col-md-1"><%= t("activerecord.attributes.member.age") %></th>
-            <th class="col-md-1"><%= t("activerecord.attributes.member.gender") %></th>
-            <th class="col-md-1"><%= t("activerecord.attributes.member.status") %></th>
             <th class="col-md-1"></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.member.status") %></th>
             <th class="col-md-1"><%= t("activerecord.models.members_course") %></th>
             <th class="col-md-1">未消化振替</th>
-            <th class="col-md-2"></th>
+            <th class="col-md-1"></th>
           </tr>
         </thead>
         <tbody>
           <% @members.each do |member| %>
             <tr>
-              <td><%= member.number %></td>
+              <td class="text-center"><%= member.number %></td>
               <td><%= member.name %></td>
-              <td><%= member.age %></td>
-              <td><%= member.gender %></td>
-              <td><%= member.status %></td>
-              <td><%= member.imperfect %></td>
-              <td><%= "#{member.members_courses.active.count} クラス" %></td>
-              <td><div class="pull-right"><%= "#{member.rolls.absences.count}回" if member.rolls.absences.count > 0 %></div></td>
-              <td>
+              <td class="text-center"><%= member.imperfect %></td>
+              <td class="text-center"><%= member.status %></td>
+              <td class="text-center"><%= "#{member.members_courses.active.count} クラス" %></td>
+              <td class="text-center"><%= "#{member.rolls.absences.count}回" if member.rolls.absences.count > 0 %></td>
+              <td class="text-center">
                 <%= link_to_show member_path(member) %>
                 <%= link_to_edit edit_member_path(member) %>
                 <%= link_to_destroy member.id, member_path(member), destroy: member.destroy? %>

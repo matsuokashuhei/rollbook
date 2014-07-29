@@ -4,12 +4,14 @@ class MemberDecorator < ApplicationDecorator
   def name
     text =  "<ul class='list-unstyled' style='margin-top: 1px; margin-bottom: 1px;'>"
     text += "<li>"
-    text += h.content_tag :h6, style: "margin-top: 0px; margin-bottom: 0px;" do
-      "#{model.last_name_kana}　#{model.first_name_kana}"
+    text += h.content_tag :h5, style: "margin-top: 0px; margin-bottom: 0px;" do
+      h.content_tag :small do
+        "#{model.last_name_kana}　#{model.first_name_kana}"
+      end
     end
     text += "</li>"
     text += "<li>"
-    text += h.content_tag :h4, style: "margin-top: 0px; margin-bottom: 0px;" do
+    text += h.content_tag :h5, style: "margin-top: 0px; margin-bottom: 0px;" do
       "#{model.last_name}　#{model.first_name}"
     end
     text += "</li>"

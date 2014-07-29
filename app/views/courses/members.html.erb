@@ -28,18 +28,18 @@
 </div>
 <br />
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-8">
     <div class="table-responsive">
-      <table class="table table-striped table-hover">
+      <table class="table table-bordered table-striped table-hover">
         <thead>
           <tr>
-            <th><%= t("activerecord.attributes.member.number") %></th>
-            <th><%= t("activerecord.attributes.member.name") %></th>
-            <th></th>
-            <th></th>
-            <th><%= t("activerecord.attributes.members_course.begin_date") %></th>
-            <th><%= t("activerecord.attributes.members_course.end_date") %></th>
-            <th></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.member.number") %></th>
+            <th class="col-md-2"><%= t("activerecord.attributes.member.name") %></th>
+            <th class="col-md-1"></th>
+            <th class="col-md-1"></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.members_course.begin_date") %></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.members_course.end_date") %></th>
+            <th class="col-md-1"></th>
           </tr>
         </thead>
         <tbody>
@@ -47,11 +47,11 @@
             <tr>
               <td><%= members_course.member.number %></td>
               <td><%= members_course.member.decorate.name_with_link %></td>
-              <td><%= members_course.member.decorate.imperfect %></td>
-              <td><%= members_course.introduction %></td>
+              <td class="text-center"><%= members_course.member.decorate.imperfect %></td>
+              <td class="text-center"><%= members_course.introduction %></td>
               <td><%= members_course.begin_date %></td>
               <td><%= members_course.end_date %></td>
-              <td><%= link_to_show member_members_course_path(members_course.member, members_course) %></td>
+              <td class="text-center"><%= link_to_show member_members_course_path(members_course.member, members_course) %></td>
             </tr>
           <% end %>
         </tbody>

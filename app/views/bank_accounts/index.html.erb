@@ -6,7 +6,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-10">
     <% if true %>
       <%= form_tag bank_accounts_path, method: :get, class: "form-inline" do %>
         <div class="form-group">
@@ -52,19 +52,19 @@
 </div>
 <br />
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-9">
     <div class="table-responsive">
-      <table class="table table-striped table-hover">
+      <table class="table table-bordered table-striped table-hover">
         <thead>
           <tr>
-            <th><%= t("activerecord.attributes.bank_account.id") %></th>
-            <th><%= t("activerecord.attributes.bank_account.holder_name") %></th>
-            <th><%= t("activerecord.attributes.bank_account.status") %></th>
-            <th><%= t("activerecord.attributes.bank_account.receipt_date") %></th>
-            <th><%= t("activerecord.attributes.bank_account.ship_date") %></th>
-            <th><%= t("activerecord.attributes.bank_account.begin_date") %></th>
-            <th><%= t("activerecord.models.member") %></th>
-            <th></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.bank_account.id") %></th>
+            <th class="col-md-2"><%= t("activerecord.attributes.bank_account.holder_name") %></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.bank_account.status") %></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.bank_account.receipt_date") %></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.bank_account.ship_date") %></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.bank_account.begin_date") %></th>
+            <th class="col-md-1"><%= t("activerecord.models.member") %></th>
+            <th class="col-md-1"></th>
           </tr>
         </thead>
         <tbody>
@@ -72,12 +72,12 @@
             <tr>
               <td><%= bank_account.id %></td>
               <td><%= bank_account.holder_name %></td>
-              <td><%= bank_account.status %></td>
+              <td class="text-center"><%= bank_account.status %></td>
               <td><%= bank_account.receipt_date %></td>
               <td><%= bank_account.ship_date %></td>
               <td><%= bank_account.begin_date %></td>
               <td><div class="pull-right"><%= bank_account.members.active.count %></div></td>
-              <td>
+              <td class="text-center">
                 <%= link_to_show bank_account_path(bank_account) %>
                 <%= link_to_edit edit_bank_account_path(bank_account) %>
                 <%= link_to_destroy bank_account.id, bank_account_path(bank_account), destroy: bank_account.destroy? %>

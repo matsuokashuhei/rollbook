@@ -22,17 +22,15 @@
 <div class="row">
   <div class="col-md-12">
     <div class="table-responsive">
-      <table class="table table-striped table-condensed table-hover">
+      <table class="table table-bordered table-striped table-condensed table-hover">
         <thead>
           <tr>
             <th class="col-md-2"><%= t("activerecord.models.studio") %></th>
             <th class="col-md-1"><%= t("activerecord.models.time_slot") %></th>
             <th class="col-md-3"><%= t("activerecord.attributes.lesson.course_id") %></th>
             <% if false %>
-            <th><%= t("activerecord.models.course") %></th>
-            <th><%= t("activerecord.models.instructor") %></th>
-            <% end %>
             <th class="col-md-1"><%= t("activerecord.models.member") %></th>
+            <% end %>
             <th class="col-md-1"><%= t("activerecord.attributes.lesson.status") %></th>
             <th class="col-md-1"><%= t("activerecord.attributes.lesson.rolls_status") %></th>
             <th class="col-md-1">出席</th>
@@ -54,17 +52,17 @@
             <% if false %>
               <td><%= course.decorate.name %></td>
               <td><%= course.instructor.decorate.name %></td>
-            <% end %>
               <td><%= lesson.number_of_members %></td>
-              <td><%= lesson.status %></td>
-              <td><%= lesson.rolls_status %></td>
+            <% end %>
+              <td class="text-center"><%= lesson.status %></td>
+              <td class="text-center"><%= lesson.rolls_status %></td>
               <td><%= lesson.present_rolls if lesson.model.status == "1" %></td>
               <td><%= lesson.absent_rolls if lesson.model.status == "1" %></td>
               <% if false %>
               <td><%= lesson.substitute_rolls %></td>
               <% end %>
               <td><%= lesson.recess_rolls if lesson.model.status == "1" %></td>
-              <td>
+              <td class="text-center">
                 <% if lesson.new_record? %>
                   <%= form_for(lesson) do |f| %>
                     <%= f.hidden_field :course_id %>

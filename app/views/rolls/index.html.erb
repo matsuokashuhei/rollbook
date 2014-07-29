@@ -14,17 +14,18 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <%= render "cancel_button", lesson: @lesson %>
   </div>
 </div>
+<br />
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <%= render "form" %>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-6">
     <ul class="pager">
       <li class="previous">
         <%= link_to_prev_lesson @lesson.prev_lesson %>
@@ -36,16 +37,12 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-6">
     <%= button_to_back lessons_path(date: @lesson.date.strftime("%Y%m%d")), pull: "left" %>
-  </div>
-  <div class="col-md-2">
-    <%= button_to_edit edit_lesson_rolls_path(@lesson), pull: "right", edit: @lesson.edit? %>
-  </div>
-  <div class="col-md-2">
     <%= button_to_fix @lesson %>
     <% if @lesson.fix? %>
       <%= render "shared/modal_to_fix", id: "lesson", path: fix_lesson_path(@lesson) %>
     <% end %>
+    <%= button_to_edit edit_lesson_rolls_path(@lesson), pull: "right", edit: @lesson.edit? %>
   </div>
 </div>

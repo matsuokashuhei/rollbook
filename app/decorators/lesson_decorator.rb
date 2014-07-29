@@ -2,7 +2,7 @@ class LessonDecorator < ApplicationDecorator
   delegate_all
 
   def status
-    h.content_tag(:h3, style: "margin: 0px; line-height: 0;") do
+    h.content_tag(:h4, style: "margin: 0px; line-height: 0;") do
       case model.status
       when Lesson::STATUS[:UNFIXED]
         h.content_tag(:span, "", class: "label label-default")
@@ -21,7 +21,7 @@ class LessonDecorator < ApplicationDecorator
   end
 
   def rolls_status
-    h.content_tag(:h3, style: "margin: 0px; line-height: 0;") do
+    h.content_tag(:h4, style: "margin: 0px; line-height: 0;") do
       case model.rolls_status
       when Lesson::ROLLS_STATUS[:NONE]
         h.content_tag(:span, "未登録", class: "label label-default")
