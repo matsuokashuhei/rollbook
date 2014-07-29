@@ -10,7 +10,7 @@ class CoursesController < ApplicationController
     @current_date = params[:date].try(:to_date) || Date.today
     if params[:studio_id].blank? || params[:date].blank?
       studio = @studios.find {|studio| studio.school_id == current_user.school_id } || @studios.first
-      redirect_to courses_path(studio_id: studio.id, date: @current_date.strftime('%Y%m%d'))
+      redirect_to courses_path(studio_id: studio.id, date: @current_date.strftime('%Y%m%d')) and return
     end
     @current_studio = @studios.find {|studio| studio.id == params[:studio_id].to_i }
     # スタジオのタイムテーブルの情報を作る。
