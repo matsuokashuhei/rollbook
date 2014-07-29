@@ -62,8 +62,11 @@ Rollbook::Application.routes.draw do
   match "instructors/:id/courses" => "instructors#courses", via: :get, as: "instructor_courses"
 
   # インストラクターの給与計算
-  match "salaries/:month/instructors" => "salaries#index", via: :get, as: "salaries"
-  match "salaries/:month/instructors/:instructor_id" => "salaries#show", via: :get, as: "salary"
+  match 'salaries' => 'salaries#index', via: :get, as: 'salaries'
+  match 'salary' => 'salaries#show', via: :get, as: 'salary'
+  
+  #match "salaries/:month/instructors" => "salaries#index", via: :get, as: "salaries"
+  #match "salaries/:month/instructors/:instructor_id" => "salaries#show", via: :get, as: "salary"
 
   #resources :schools do
   #  resources :studios

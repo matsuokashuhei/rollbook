@@ -2,8 +2,9 @@ module SalariesHelper
 
   def list_item_to_salaries active: false
     text = "給料"
+    month = (Date.today - 1.month).strftime('%Y%m')
     content_tag :li do
-      link_to text, salaries_path(Date.today.strftime("%Y%m"))
+      link_to text, salaries_path(month: month)
     end
   end
 
@@ -40,7 +41,7 @@ module SalariesHelper
       content_tag :li, text, class: "active"
     else
       content_tag :li do
-        link_to text, salary_path(month, instructor)
+        link_to text, salary_path(month: month, instructor_id: instructor.id)
       end
     end
   end
@@ -68,7 +69,7 @@ module SalariesHelper
     end_of_prev_month = beginning_of_month - 1.day
     text = end_of_prev_month.strftime("%Y年%m月")
     if instructor.courses.active(end_of_prev_month).count > 0
-      link_to salary_path(end_of_prev_month.strftime("%Y%m"), instructor), class: "btn btn-link pull-left" do
+      link_to salary_path(month: end_of_prev_month.strftime("%Y%m"), instructor_id: instructor.id), class: "btn btn-link pull-left" do
         fa_icon "caret-left", text: text
       end
     else
@@ -83,7 +84,7 @@ module SalariesHelper
     begining_of_next_month = end_of_month + 1.day
     text = begining_of_next_month.strftime("%Y年%m月 ")
     if instructor.courses.active(begining_of_next_month).count > 0
-      link_to salary_path(begining_of_next_month.strftime("%Y%m"), instructor), class: "btn btn-link pull-right" do
+      link_to salary_path(month: begining_of_next_month.strftime("%Y%m"), instructor_id: instructor.id), class: "btn btn-link pull-right" do
         text.concat(fa_icon("caret-right")).html_safe
       end
     else
