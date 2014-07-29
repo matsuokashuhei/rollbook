@@ -6,7 +6,7 @@ class RecessesController < ApplicationController
   # GET /recesses
   # GET /recesses.json
   def index
-    @recesses = Recess.joins(:members_course).where(members_courses: { member_id: @member.id }).order(month: :desc).decorate
+    @recesses = Recess.joins(members_course: :course).where(members_courses: { member_id: @member.id }).order(month: :desc).decorate
   end
 
   # GET /recesses/1

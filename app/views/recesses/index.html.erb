@@ -43,7 +43,7 @@
             <tr>
               <td><%= recess.month %></td>
               <td><%= recess.members_course.course.timetable.studio.name %></td>
-              <td><%= recess.members_course.course.name %></td>
+              <td><%= link_to recess.members_course.course.name, course_path(recess.members_course.course), class: 'btn btn-link' %></td>
               <td><%= recess.status %></td>
               <td>
                 <%= link_to_show member_recess_path(@member, recess) %>
