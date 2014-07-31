@@ -1,11 +1,18 @@
 class PostsController < ApplicationController
-  before_action :special_user!
+  #before_action :special_user!
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all.order("open_date desc, updated_at desc")
+    if current_user.admin?
+      @users = User.all.order(:name)
+      @q = Post.search(params[:q])
+      @posts = @q.result.order(open_date: :desc, updated_at: :desc)
+    else
+      @q = Post.search(params[:q])
+      @posts = @q.result.where(user_id: current_user.id).order(open_date: :desc, updated_at: :desc)
+    end
   end
 
   # GET /posts/1
@@ -20,13 +27,14 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
-    redirect_to @post unless @post.user_id == current_user.id
+    redirect_to @post unless @post.editable?(current_user)
   end
 
   # POST /posts
   # POST /posts.json
   def create
     @post = Post.new(post_params)
+    current_user.read_logs.build(post_id: @post.id, read_comments_count: 0)
 
     respond_to do |format|
       if @post.save
@@ -56,6 +64,7 @@ class PostsController < ApplicationController
   # DELETE /posts/1
   # DELETE /posts/1.json
   def destroy
+    redirect_to @post unless @post.editable?(current_user)
     @post.destroy
     respond_to do |format|
       format.html { redirect_to posts_url }

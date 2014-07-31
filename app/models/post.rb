@@ -21,5 +21,13 @@ class Post < ActiveRecord::Base
   scope :active, -> (date = Date.today) {
     where("open_date <= ? and ? <= coalesce(close_date, '9999-12-31')", date, date)
   }
+  
+  def editable?(user)
+    [user.admin?, user_id == user.id].any?
+  end
+  
+  def deletable?(user)
+    [comments.empty?, [user.admin?, user_id == user.id].any?].all?
+  end
 
 end

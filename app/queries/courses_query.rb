@@ -1,5 +1,8 @@
 class CoursesQuery
   
+  def self.find_courses(studio = nil, month = nil, day = nil)
+  end  
+
   # タイムテーブル
   def self.courses(studio = nil, date = Date.today)
     formatted_date = date.strftime('%Y-%m-%d')
