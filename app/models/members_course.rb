@@ -33,8 +33,9 @@ class MembersCourse < ActiveRecord::Base
   #----------------
   # 在籍しているクラス
   scope :active, -> (date = Date.today) {
+    begin_date = MembersCourse.arel_table[:begin_date]
     end_date = MembersCourse.arel_table[:end_date]
-    where(end_date.eq(nil).or(end_date.gteq(date)))
+    where(begin_date.lteq(date)).where(end_date.eq(nil).or(end_date.gteq(date)))
   }
 
   # 退籍したクラス

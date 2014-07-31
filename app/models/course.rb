@@ -27,18 +27,15 @@ class Course < ActiveRecord::Base
   has_many :members, through: :members_courses, source: :member
 
   # Scope
-  #default_scope -> { order(:open_date) }
-
   scope :details, ->{
-    #joins([timetable: [[studio: :school], :time_slot]], :instructor, :dance_style, :level).order("schools.open_date, studios.open_date, timetables.weekday, time_slots.start_time, courses.open_date").order("schools.open_date, studios.open_date, timetables.weekday, time_slots.start_time")
     joins([timetable: [[studio: :school], :time_slot]], :instructor, :dance_style, :level)
   }
 
   # 開講中のクラス
   scope :active, -> (date = Date.today) {
-    #where("courses.open_date <= ? and ? <= coalesce(courses.close_date, '9999-12-31')", date, date)
+    open_date = Course.arel_table[:open_date]
     close_date = Course.arel_table[:close_date]
-    where(close_date.eq(nil).or(close_date.gteq(date)))
+    where(open_date.lteq(date)).where(close_date.eq(nil).or(close_date.gteq(date)))
   }
 
   # 閉講したクラス
