@@ -32,4 +32,12 @@ module UsersHelper
     link_to user.name, user_path(user)
   end
 
+  def link_to_sign_out
+    #link_to destroy_user_session_path, method: :delete, rel: 'tooltip', data: { toggle: 'tooltip', 'original-title' => 'ログアウト' } do
+    link_to destroy_user_session_path, method: :delete, rel: 'tooltip', data: { toggle: 'tooltip', 'original-title' => 'ログアウト' } do
+      #fa_icon 'sign-out'
+      fa_icon 'power-off', text: 'ログアウト'
+    end
+  end
+
 end
