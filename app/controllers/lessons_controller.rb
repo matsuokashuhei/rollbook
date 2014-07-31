@@ -9,7 +9,7 @@ class LessonsController < ApplicationController
     @lessons = []
     @date = params[:date].to_date
     return if Holiday.exists? date: @date
-    @courses = LessonsQuery.lessons(params[:school_id], @date)
+    @courses = LessonsQuery.find_lessons(params[:school_id], @date)
     @courses.each do |course|
       lesson = Lesson.find_or_initialize_by(date: @date, course_id: course.id) do |l|
         l.status = Lesson::STATUS[:UNFIXED]

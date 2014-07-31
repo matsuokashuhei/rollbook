@@ -1,6 +1,7 @@
 class LessonsQuery
 
-  def self.lessons(school_id = nil, date)
+  # レッスン
+  def self.find_lessons(school_id = nil, date)
     if school_id.present?
       courses = Course.active(date).details
         .merge(Timetable.weekday(date.cwday))
