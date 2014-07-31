@@ -6,7 +6,7 @@ class RecessesController < ApplicationController
   # GET /recesses
   # GET /recesses.json
   def index
-    @recesses = Recess.joins(members_course: :course).where(members_courses: { member_id: @member.id }).order(month: :desc).decorate
+    @recesses = @members_query.find_resecces.order(month: :desc).decorate
   end
 
   # GET /recesses/1
@@ -81,6 +81,7 @@ class RecessesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_member
       @member = Member.find(params[:member_id])
+      @members_query = MembersQuery.new(@member)
     end
 
     def set_members_course
