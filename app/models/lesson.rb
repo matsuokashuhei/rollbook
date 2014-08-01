@@ -47,8 +47,15 @@ class Lesson < ActiveRecord::Base
     end
   }
 
-  def edit?
-    self.rolls_status != ROLLS_STATUS[:FINISHED] && self.date <= Date.today && (self.status == STATUS[:UNFIXED] || self.status == STATUS[:ON_SCHEDULE])
+  def editable?
+    [
+      # 今日以前である。
+      date <= Date.today,
+      # レッスンの状態
+      status.presence_in([STATUS[:UNFIXED], STATUS[:ON_SCHEDULE],]),
+      # 出欠の状態
+      rolls_status.presence_in([ROLLS_STATUS[:NONE], ROLLS_STATUS[:IN_PROCESS],]),
+    ].all?
   end
 
   def in_process?
