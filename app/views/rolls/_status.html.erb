@@ -1,6 +1,6 @@
   <%= hidden_field_tag "rolls[][status]", object.status %>
   <% unsubstituted_statuses = ["0", "1", "2",] %>
-  <div class="btn-group" data-toggle="buttons">
+  <div class="btn-group btn-group-sm btn-group-justified" data-toggle="buttons">
     <% if unsubstituted_statuses.include?(object.status) %>
       <% unsubstituted_statuses.each do |status| %>
         <label class="btn <%= object.status == status ? roll_status_button(status) : "btn-default" %> <%= "active" if object.status == status %>">
