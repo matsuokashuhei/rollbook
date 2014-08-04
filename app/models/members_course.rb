@@ -43,6 +43,11 @@ class MembersCourse < ActiveRecord::Base
     end_date = MembersCourse.arel_table[:end_date]
     where(end_date.lteq(date))
   }
+  
+  scope :will_active, -> (date = Date.today) {
+    begin_date = MembersCourse.arel_table[:begin_date]
+    where(begin_date.gt(date))
+  }
 
   # 入会したクラス
   scope :registered, -> (month = Date.today.strftime("%Y%m")) {
