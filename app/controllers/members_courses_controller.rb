@@ -7,11 +7,12 @@ class MembersCoursesController < ApplicationController
   # GET /members_courses.json
   def index
     if params[:status] == '1'
-      @members_courses = @member.members_courses.active(Date.today).details.order(:begin_date)
+      @members_courses = @member.members_courses.will_active(Date.today).details.order(begin_date: :desc)
+      @members_courses += @member.members_courses.active(Date.today).details.order(begin_date: :desc)
     elsif params[:status] == '9'
-      @members_courses = @member.members_courses.deactive(Date.today).details.order(:begin_date)
+      @members_courses = @member.members_courses.deactive(Date.today).details.order(begin_date: :desc)
     else
-      @members_courses = @member.members_courses.details.order(:begin_date)
+      @members_courses = @member.members_courses.details.order(begin_date: :desc)
     end
   end
 
@@ -76,15 +77,23 @@ class MembersCoursesController < ApplicationController
   # DELETE /members_courses/1
   # DELETE /members_courses/1.json
   def destroy
-    ActiveRecord::Base.transaction do
-      @members_course.destroy! if @members_course.destroy?
-      Roll.member(@members_course.member_id).each do |roll|
-        roll.destroy! if roll.lesson.course_id == @members_course.course_id
+    if @members_course.deletable?
+      ActiveRecord::Base.transaction do
+        rolls = MembersQuery.new(@member).find_rolls(@members_course)
+        rolls.each do |roll|
+          roll.destroy!
+        end
+        @members_course.destroy!
       end
-    end
-    respond_to do |format|
-      format.html { redirect_to member_members_courses_url(@member), notice: '受講クラスを削除しました。' }
-      format.json { head :no_content }
+      respond_to do |format|
+        format.html { redirect_to member_members_courses_url(@member), notice: '受講クラスを削除しました。' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to member_members_courses_url(@member) }
+        format.json { head :no_content }
+      end
     end
   end
 

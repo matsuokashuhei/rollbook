@@ -61,7 +61,7 @@
               <td class="text-center">
                 <%= link_to_show member_members_course_path(@member, members_course) %>
                 <%= link_to_edit edit_member_members_course_path(@member, members_course) %>
-                <%= link_to_destroy members_course.id, member_members_course_path(@member, members_course), destroy: members_course.destroy? %>
+                <%= link_to_destroy members_course.id, member_members_course_path(@member, members_course), destroy: members_course.deletable? %>
               </td>
             </tr>
           <% end %>

@@ -46,6 +46,11 @@ class Lesson < ActiveRecord::Base
       where(date: [beginning_of_month..end_of_month])
     end
   }
+  
+  scope :after_date, -> (_date = Date.today) {
+    date = Lesson.arel_table[:date]
+    where(date.gteq(_date))
+  }
 
   def editable?
     [
