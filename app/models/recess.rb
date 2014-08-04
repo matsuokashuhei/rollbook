@@ -51,8 +51,7 @@ class Recess < ActiveRecord::Base
     self.month = self.month[0..3] + "/" + self.month[4..5]
   end
 
-  def deletable 
-    logger.debug("month: #{month}")
+  def deletable?
     # レッスンが確定していない場合は休会を取り消せる。
     Lesson.for_month(month.gsub('/', ''))
       .where(course_id: members_course.course_id)

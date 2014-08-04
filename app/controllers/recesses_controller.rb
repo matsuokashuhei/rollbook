@@ -59,20 +59,29 @@ class RecessesController < ApplicationController
   # DELETE /recesses/1
   # DELETE /recesses/1.json
   def destroy
-    ActiveRecord::Base.transaction do
-      members_course = @recess.members_course
-      if @recess.delete?
-        Rolls.joins(:lesson)
-          .merge(Lesson.for_month(@recess.month))
-          .merge(Lesson.where(course_id: members_course.course_id))
-          .where(member_id: members_course.member_id).each do |roll|
-            roll.destroy
+    notice = nil
+    if @recess.deletable?
+      ActiveRecord::Base.transaction do
+        members_course = @recess.members_course
+        rolls = MembersQuery.new(@member).find_rolls(@members_course).merge(Lesson.for_month(@recess.month.gsub('/', '')))
+        rolls.each do |roll|
+          roll.update!(status: '0')
         end
-        @recess.destroy
+        @recess.destroy!
+        notice = '休会を削除しました。'
+        #if @recess.deletable?
+        #  Rolls.joins(:lesson)
+        #    .merge(Lesson.for_month(@recess.month))
+        #    .merge(Lesson.where(course_id: members_course.course_id))
+        #    .where(member_id: members_course.member_id).each do |roll|
+        #      roll.destroy
+        #  end
+        #  @recess.destroy
+        #end
       end
     end
     respond_to do |format|
-      format.html { redirect_to member_recesses_path(@member), notice: '休会を削除しました。' }
+      format.html { redirect_to member_recesses_path(@member), notice: notice }
       format.json { head :no_content }
     end
   end
