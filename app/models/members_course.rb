@@ -69,19 +69,34 @@ class MembersCourse < ActiveRecord::Base
   scope :details, -> {
     joins(course: [[timetable: [:studio, :time_slot]], :dance_style, :level, :instructor])
   }
+  
+  #def rolls
+  #  @rolls = Roll.member(member_id).course(course_id).details
+  #end
 
-
-  def rolls
-    @rolls = Roll.member(member_id).course(course_id).details
-  end
-
-  def destroy?
-    if self.recesses.count == 0
-      if Roll.member(member_id).where("rolls.status > ?", "0").course(course_id).count == 0
-        return true
-      end
+  #def destroy?
+  #  if self.recesses.count == 0
+  #    if Roll.member(member_id).where("rolls.status > ?", "0").course(course_id).count == 0
+  #      return true
+  #    end
+  #  end
+  #  return false
+  #end
+  
+  def deletable?
+    #----------------------------
+    # 休会している場合は消せない。
+    #----------------------------
+    if recesses.after_month(begin_date.strftime('%Y%m')).present?
+      return false
     end
-    return false
+    #--------------------------------------
+    # 出席簿に記録されている場合は消せない。
+    #--------------------------------------
+    # 受講クラスの出席簿を検索する。
+    rolls = MembersQuery.new(member).find_rolls(self)
+    # 未定以外があれば消せない。
+    return rolls.select {|roll| roll.status.presence_in(['1', '2', '5', '6', ]) }.blank?
   end
 
   # インストラクター紹介であるかどうかを判定する。

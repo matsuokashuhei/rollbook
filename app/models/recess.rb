@@ -33,6 +33,14 @@ class Recess < ActiveRecord::Base
   validates_with RecessValidator
 
   #----------------
+  # Scopes
+  #----------------
+  scope :after_month, -> (_month) {
+    month = Recess.arel_table[:month]
+    where(month.gteq(_month))
+  }
+  
+  #----------------
   # Callbacks
   #----------------
   before_validation do
