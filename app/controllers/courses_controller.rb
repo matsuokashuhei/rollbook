@@ -113,12 +113,6 @@ class CoursesController < ApplicationController
     def set_course
       @course = Course.find(params[:id])
     end
-    def set_studio
-      @studio = @course.timetable.studio if @course.present?
-    end
-    def set_school
-      @school = @studio.school if @studio.present?
-    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def course_params
