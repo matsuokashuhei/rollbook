@@ -79,7 +79,7 @@
           <% end %>
           <% cancel_lessons = Lesson.where(course_id: course.id, date: @beginning_of_month..@end_of_month, status: Lesson::STATUS[:CANCEL_BY_INSTRUCTOR]).decorate %>
           <% cancel_lessons.each do |cancel_lesson| %>
-            <% penalty = (course.monthly_fee * 0.25) * (members_courses.count - recesses.count) * -1 %>
+            <% penalty = (course.monthly_fee * 0.25 * 1.08) * (members_courses.count - recesses.count) * -1 %>
             <% total_of_members_course += penalty %>
             <tr>
               <td style="height: 37px"></td>

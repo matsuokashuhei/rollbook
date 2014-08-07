@@ -47,19 +47,19 @@ module SalariesHelper
   end
 
   def label_for_recess
-    content_tag(:h3, style: "margin: 0px; line-height: 0;") do
+    content_tag(:h4, style: "margin: 0px; line-height: 0;") do
       content_tag :span, "休　会", class: "label label-default"
     end
   end
 
   def label_for_attend
-    content_tag(:h3, style: "margin: 0px; line-height: 0;") do
+    content_tag(:h4, style: "margin: 0px; line-height: 0;") do
       content_tag :span, "受　講", class: "label label-info"
     end
   end
 
   def label_for_new start_week_of_month
-    content_tag(:h3, style: "margin: 0px; line-height: 0;") do
+    content_tag(:h4, style: "margin: 0px; line-height: 0;") do
       content_tag :span, "#{start_week_of_month}週入会", class: "label label-success"
     end
   end
