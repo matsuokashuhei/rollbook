@@ -6,17 +6,12 @@ class LessonsController < ApplicationController
   # GET /lessons.json
   def index
     return calendar if params[:month].present?
-    @lessons = []
     @date = params[:date].to_date
-    return if Holiday.exists? date: @date
-    @courses = LessonsQuery.find_lessons(params[:school_id], @date)
-    @courses.each do |course|
-      lesson = Lesson.find_or_initialize_by(date: @date, course_id: course.id) do |l|
-        l.status = Lesson::STATUS[:UNFIXED]
-        l.rolls_status = Lesson::ROLLS_STATUS[:NONE]
+    return Lesson.none.decorate if Holiday.exists?(date: @date)
+    @courses = LessonsQuery.find_courses(params[:school_id], @date)
+    @lessons = @courses.map do |course|
+        Lesson.find_or_initialize_by(date: @date, course_id: course.id).decorate
       end
-      @lessons << lesson.decorate
-    end
     @lessons
   end
 
@@ -40,13 +35,7 @@ class LessonsController < ApplicationController
   # POST /lessons
   # POST /lessons.json
   def create
-    @lesson = Lesson.find_or_initialize_by(course_id: params[:lesson][:course_id], date: params[:lesson][:date]) do |lesson|
-      lesson.status = params[:lesson][:status]
-      lesson.rolls_status = params[:lesson][:rolls_status]
-    end
-    if @lesson.new_record?
-      @lesson.save!
-    end
+    @lesson = LessonsRepository.create(params[:lesson])
     redirect_to lesson_rolls_path(@lesson)
   end
 
