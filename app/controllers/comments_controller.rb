@@ -32,6 +32,7 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
+    @comments = @post.comments.order(:created_at)
     @comment = Comment.new(comment_params)
 
     respond_to do |format|
