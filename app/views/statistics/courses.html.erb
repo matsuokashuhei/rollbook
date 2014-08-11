@@ -17,7 +17,6 @@
           </tr>
         </thead>
         <tbody>
-          <%= @courses.to_sql %>
           <% @courses.each do |course| %>
             <tr>
               <th><%= "#{course.timetable.studio.name}" %></th>
