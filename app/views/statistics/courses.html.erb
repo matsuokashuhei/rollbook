@@ -17,9 +17,10 @@
           </tr>
         </thead>
         <tbody>
-          <% @courses.find_each do |course| %>
+          <%= @courses.to_sql %>
+          <% @courses.each do |course| %>
             <tr>
-              <th><%= "#{course.timetable.studio.school.name}#{course.timetable.studio.name}" %></th>
+              <th><%= "#{course.timetable.studio.name}" %></th>
               <th><%= "#{course.timetable.weekday_ja}" %></th>
               <th><%= course.name %></th>
               <% @months.each do |month| %>

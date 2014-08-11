@@ -47,7 +47,7 @@ class StatisticsController < ApplicationController
     @start_date = Date.new(params[:year].to_i, 4, 1)
     @end_date = (@start_date + 12.month).end_of_month
     # 開始日がTOより過去で、終了日がFROMより未来のクラスを検索する。
-    @courses = Course.where('"courses"."open_date" < ? and coalesce("courses"."close_date", \'9999-12-31\') > ?', @end_date, @start_date).details
+    @courses = Course.where('"courses"."open_date" < ? and coalesce("courses"."close_date", \'9999-12-31\') > ?', @end_date, @start_date).details.merge(School.order(:open_date)).merge(Studio.order(:open_date)).merge(Timetable.order(:weekday)).merge(TimeSlot.order(:start_time)).order(:open_date)
     @months = [*0..11].map {|i| @start_date + i.month }
   end
 
