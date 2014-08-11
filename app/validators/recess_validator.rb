@@ -2,8 +2,19 @@ class RecessValidator < ActiveModel::Validator
 
   def validate(recess)
     if recess.new_record?
+      members_course_is_active(recess)
       within_six_month(recess)
       has_no_rolls(recess)
+    end
+  end
+
+  def members_course_is_active(recess)
+    return if recess.month.blank?
+    members_course = recess.members_course
+    if recess.month < members_course.begin_date.strftime('%Y%m')
+      recess.errors.add(:month, 'は受講クラスに在籍している月にしてください。')
+    elsif recess.month > (members_course.end_date.try(:strftime, '%Y%m') || '999912')
+      recess.errors.add(:month, 'は受講クラスに在籍している月にしてください。')
     end
   end
 
