@@ -41,15 +41,15 @@ end
 
 group :development do
   gem 'pry-rails'
-  gem 'pry-stack_explorer'
-  gem 'pry-byebug'
-  gem 'hirb'
-  gem 'hirb-unicode'
-  gem 'awesome_print'
-  gem 'quiet_assets'
-  gem 'better_errors'
-  gem 'binding_of_caller'
-  gem 'meta_request'
+  #gem 'pry-stack_explorer'
+  #gem 'pry-byebug'
+  #gem 'hirb'
+  #gem 'hirb-unicode'
+  #gem 'awesome_print'
+  #gem 'quiet_assets'
+  #gem 'better_errors'
+  #gem 'binding_of_caller'
+  #gem 'meta_request'
 end
 
 group :development, :test do
