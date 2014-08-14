@@ -18,7 +18,7 @@
       <ul class="list-unstyled">
         <li>
           <h6 style="margin-bottom: 0px">
-            <%= "#{course.timetable.studio.school.name}#{course.timetable.studio.name}　#{course.timetable.decorate.weekday}曜#{course.timetable.time_slot.start_time}〜" %>
+            <%= "#{course.timetable.studio.name}　#{course.timetable.decorate.weekday}曜#{course.timetable.time_slot.start_time}〜" %>
           </h6>
         </li>
         <li>
@@ -134,7 +134,7 @@
       </tr>
       <tr>
         <th class="col-md-2">総計</th>
-        <td class="col-md-1"><div class="pull-right"><h3 style="margin-top: 0px;"><%= number_to_currency(total_of_courses + transportation - tax) %></h3></div></td>
+        <td class="col-md-1"><div class="pull-right"><h3 style="margin-top: 0px;"><%= number_to_currency(total_of_courses + transportation - tax.truncate) %></h3></div></td>
         <td class="col-md-1"></td>
       </tr>
     </table>
