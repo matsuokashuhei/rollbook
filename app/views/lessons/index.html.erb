@@ -28,16 +28,11 @@
             <th class="col-md-2"><%= t("activerecord.models.studio") %></th>
             <th class="col-md-1"><%= t("activerecord.models.time_slot") %></th>
             <th class="col-md-3"><%= t("activerecord.attributes.lesson.course_id") %></th>
-            <% if false %>
-            <th class="col-md-1"><%= t("activerecord.models.member") %></th>
-            <% end %>
             <th class="col-md-1"><%= t("activerecord.attributes.lesson.status") %></th>
             <th class="col-md-1"><%= t("activerecord.attributes.lesson.rolls_status") %></th>
             <th class="col-md-1">出席</th>
-            <th class="col-md-1">欠席</th>
-            <% if false %>
             <th class="col-md-1">振替</th>
-            <% end %>
+            <th class="col-md-1">欠席</th>
             <th class="col-md-1">休会</th>
             <th class="col-md-1"></th>
           </tr>
@@ -49,18 +44,11 @@
               <td><%= course.timetable.studio.name %></td>
               <td><%= course.timetable.time_slot.start_time %></td>
               <td><%= course.name %></td>
-            <% if false %>
-              <td><%= course.decorate.name %></td>
-              <td><%= course.instructor.decorate.name %></td>
-              <td><%= lesson.number_of_members %></td>
-            <% end %>
               <td class="text-center"><%= lesson.status %></td>
               <td class="text-center"><%= lesson.rolls_status %></td>
               <td><%= lesson.present_rolls if lesson.model.status == "1" %></td>
+              <td><%= lesson.substitute_rolls if lesson.model.status == "1" %></td>
               <td><%= lesson.absent_rolls if lesson.model.status == "1" %></td>
-              <% if false %>
-              <td><%= lesson.substitute_rolls %></td>
-              <% end %>
               <td><%= lesson.recess_rolls if lesson.model.status == "1" %></td>
               <td class="text-center">
                 <% if lesson.new_record? %>
