@@ -50,8 +50,22 @@
               <td><%= member.name %></td>
               <td class="text-center"><%= member.imperfect %></td>
               <td class="text-center"><%= member.status %></td>
-              <td class="text-center"><%= "#{member.members_courses.active.count} クラス" %></td>
-              <td class="text-center"><%= "#{member.rolls.absences.count}回" if member.rolls.absences.count > 0 %></td>
+              <td class="text-center">
+                <% if member.members_courses.active.count > 0 %>
+                  <%= link_to member_members_courses_path(member, status: '1') do %>
+                    <%= "#{member.members_courses.active.count} クラス" %>
+                  <% end %>
+                <% else %>
+                  <%= "#{member.members_courses.active.count} クラス" %>
+                <% end %>
+              </td>
+              <td class="text-center">
+                <% if member.rolls.absences.count > 0 %>
+                  <%= link_to member_rolls_path(member, status: '2') do %>
+                    <%= "#{member.rolls.absences.count} 回" %>
+                  <% end %>
+                <% end %>
+              </td>
               <td class="text-center">
                 <%= link_to_show member_path(member) %>
                 <%= link_to_edit edit_member_path(member) %>
