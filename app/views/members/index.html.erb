@@ -6,7 +6,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-10">
     <%= search_form_for @q, html: { class: "form-inline" } do |f| %>
       <div class="form-group">
         <%= f.text_field :number_start, class: "form-control", placeholder: t("activerecord.attributes.member.number"), autofocus: true %>
@@ -29,13 +29,14 @@
 </div>
 <br />
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-10">
     <div class="table-responsive">
       <table class="table table-bordered table-striped table-hover">
         <thead>
           <tr>
             <th class="col-md-1"><%= t("activerecord.attributes.member.number") %></th>
             <th class="col-md-2"><%= t("activerecord.attributes.member.name") %></th>
+            <th class="col-md-2"><%= t("activerecord.attributes.bank_account.holder_name") %></th>
             <th class="col-md-1"></th>
             <th class="col-md-1"><%= t("activerecord.attributes.member.status") %></th>
             <th class="col-md-1"><%= t("activerecord.models.members_course") %></th>
@@ -48,6 +49,11 @@
             <tr>
               <td class="text-center"><%= member.number %></td>
               <td><%= member.name %></td>
+              <td>
+                <% if member.bank_account.present? %>
+                  <%= link_to member.bank_account.holder_name_kana, bank_account_path(member.bank_account) %>
+                <% end %>
+              </td>
               <td class="text-center"><%= member.imperfect %></td>
               <td class="text-center"><%= member.status %></td>
               <td class="text-center">
