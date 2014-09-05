@@ -58,7 +58,10 @@
                   <%= link_to member.bank_account.holder_name_kana, bank_account_path(member.bank_account) %>
                 <% end %>
               </td>
-              <td class="text-center"><%= member.imperfect %></td>
+              <td class="text-center">
+                <%= member.bank_status %>
+                <%= member.imperfect %>
+                </td>
               <td class="text-center"><%= member.status %></td>
               <td class="text-center">
                 <% if member.members_courses.active.count > 0 %>

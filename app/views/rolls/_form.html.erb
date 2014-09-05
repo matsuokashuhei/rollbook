@@ -22,7 +22,10 @@
           <tr>
             <td><%= roll.member.number %></td>
             <td><%= roll.member.name_with_link %></td>
-            <td class="text-center"><%= roll.member.imperfect %></td>
+            <td class="text-center">
+              <%= roll.member.bank_status %>
+              <%= roll.member.imperfect %>
+              </td>
             <td class="text-center">
               <% if params[:action] == "index" %>
                 <%= roll.status %>
