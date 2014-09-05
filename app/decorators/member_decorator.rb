@@ -26,6 +26,23 @@ class MemberDecorator < ApplicationDecorator
     end
   end
 
+  def bank_status
+    if model.bank_account.blank?
+      tooltip_options = { toggle: "tooltip", "original-title" => "引落の手続きをしてください。" }
+      return h.content_tag :span, class: "badge", style: "background-color: red; font-size: 18px; font-weight: normal;", data: tooltip_options  do
+          h.fa_icon "credit-card"
+        end
+    end
+    if model.bank_account.present? && model.bank_account.begin_date.blank?
+      tooltip_options = { toggle: "tooltip", "original-title" => "引落の手続きをしてください。" }
+      return h.link_to h.bank_account_path(model.bank_account) do
+          h.content_tag :span, class: "badge", style: "background-color: red; font-size: 18px; font-weight: normal;", data: tooltip_options  do
+            h.fa_icon "credit-card"
+          end
+        end
+    end
+  end
+
   def imperfect
     if model.bank_account.try(:imperfect)
       tooltip_options = { toggle: "tooltip", "original-title" => "口座書類不備" }

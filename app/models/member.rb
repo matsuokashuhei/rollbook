@@ -58,33 +58,11 @@ class Member < ActiveRecord::Base
   validates :number, uniqueness: true, if: Proc.new { number.present? }
   validates :number, numericality: { greater_than: 0, less_than_or_equal_to: 999999 }, if: Proc.new { number.present? }
   validates :last_name_kana, :first_name_kana, format: { with: /\A[\p{hiragana}ー－]+\Z/, message: "はひらがなで入力してください。" }
-  validates :leave_date, presence: true, if: Proc.new { self.status == "2" }
-  validate :leave_date, :leaved_all_courses, if: Proc.new { self.leave_date.present? }
-  validate :check_withdraw
-
-  def leaved_all_courses
-    self.members_courses.each do |members_course|
-      if members_course.end_date.blank?
-        errors.add(:base, "スクールを退会する場合はその前に受講クラスを退会してください。")
-        return
-      end
-      if leave_date < members_course.end_date
-        errors.add(:base, "受講クラスの終了日より前には退会できません。")
-      end
-    end
-  end
-
-  def check_withdraw
-    if leave_date.present? && status != '2'
-      errors.add(:base, "退会する場合は、状態を退会をにしてください。")
-    end
-  end
-
+  validates_with MemberValidator
 
   # -------------------------
   # スコープ
   # -------------------------
-  #default_scope -> { order(:last_name_kana, :first_name_kana) }
 
   # 受講中の会員（当月の入会、退会含む）
   scope :active, -> (month = Date.today.strftime("%Y%m")) {
