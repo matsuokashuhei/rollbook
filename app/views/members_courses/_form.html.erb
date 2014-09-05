@@ -52,11 +52,14 @@
   <div class="form-group">
     <%= f.label t("activerecord.attributes.members_course.begin_date"), class: "col-md-1 control-label" %>
     <div class="col-md-2 <%= 'has-error' if @members_course.errors[:begin_date].present? %>">
-      <% if params[:action] == 'new' %>
-        <%= f.date_field :begin_date, class: "form-control", min: min_begin_date(@member.enter_date, @course['weekday'].try(:to_i)), step: 7 %>
-      <% else %>
-        <%= f.date_field :begin_date, class: "form-control", disabled: true %>
+      <% if false %>
+        <% if params[:action] == 'new' %>
+          <%= f.date_field :begin_date, class: "form-control", min: min_begin_date(@member.enter_date, @course['weekday'].try(:to_i)), step: 7 %>
+        <% else %>
+          <%= f.date_field :begin_date, class: "form-control", disabled: true %>
+        <% end %>
       <% end %>
+      <%= f.date_field :begin_date, class: "form-control", min: min_begin_date(@member.enter_date, @course['weekday'].try(:to_i)), step: 7 %>
     </div>
     <% if params[:action] != 'new' %>
       <%= f.label t("activerecord.attributes.members_course.end_date"), class: "col-md-1 col-md-offset-1 control-label" %>
