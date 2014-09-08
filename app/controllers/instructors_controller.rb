@@ -4,7 +4,7 @@ class InstructorsController < ApplicationController
   # GET /instructors
   # GET /instructors.json
   def index
-    @q = Instructor.search(params[:q])
+    @q = Instructor.joins(:courses).merge(Course.active).distinct.search(params[:q])
     @instructors = @q.result.order(:name).page(params[:page]).decorate
   end
 
