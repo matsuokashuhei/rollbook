@@ -8,9 +8,11 @@ class MembersCourseValidator < ActiveModel::Validator
     # 終了日
     end_date_is_end_of_month(members_course)
     end_date_is_future_than_begin_date(members_course)
-    have_no_recesses(members_course)
+    has_no_rolls(members_course)
+    has_no_recesses(members_course)
   end
   
+  # 開始日は会員の入会日以降であること。
   def begin_date_is_future_than_enter_date(members_course)
     return if members_course.begin_date.blank?
     return if members_course.course_id.blank?
@@ -19,6 +21,7 @@ class MembersCourseValidator < ActiveModel::Validator
     end
   end
 
+  # 開始日はクラスの開始日以降であること。
   def begin_date_is_future_than_open_date(members_course)
     return if members_course.begin_date.blank?
     return if members_course.course_id.blank?
@@ -27,6 +30,7 @@ class MembersCourseValidator < ActiveModel::Validator
     end
   end
 
+  # 開始日はクラスの曜日であること。
   def begin_date_is_courses_day_of_week(members_course)
     return if members_course.begin_date.blank?
     return if members_course.course_id.blank?
@@ -35,6 +39,7 @@ class MembersCourseValidator < ActiveModel::Validator
     end
   end
 
+  # 終了日が月末であること。
   def end_date_is_end_of_month(members_course)
     return if members_course.end_date.blank?
     unless members_course.end_date == members_course.end_date.end_of_month
@@ -42,6 +47,7 @@ class MembersCourseValidator < ActiveModel::Validator
     end
   end
 
+  # 終了日が開始日以降であること。
   def end_date_is_future_than_begin_date(members_course)
     return if members_course.end_date.blank?
     unless members_course.end_date > members_course.begin_date
@@ -49,7 +55,18 @@ class MembersCourseValidator < ActiveModel::Validator
     end
   end
 
-  def have_no_recesses(members_course)
+  # 終了日以降の出席簿がないこと。
+  def has_no_rolls(members_course)
+    return if members_course.end_date.blank?
+    return if members_course.course_id.blank?
+    rolls = Roll.joins(:member, :lesson).where(member_id: members_course.member_id).merge(Lesson.where(course_id: members_course.course_id).date_range(from: members_course.end_date + 1.day).fixed)
+    if rolls.present?
+      members_course.errors.add(:base, "%s以降にレッスンを受けているのでそれ以前の月には退会できません。" % (members_course.end_date + 1.day).strftime('%Y年%m月'))
+    end
+  end
+
+  # 終了日以降の休会がないこと。
+  def has_no_recesses(members_course)
     return if members_course.end_date.blank?
     return if members_course.course_id.blank?
     members_course.recesses.each do |recess|
