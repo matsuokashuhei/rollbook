@@ -13,10 +13,11 @@ class MembersQuery
     Recess.joins(members_course: :course).where(members_courses: { member_id: @member.id })
   end
 
+  # 会員の出欠情報
   def find_rolls(members_course = nil)
     rolls = Roll.joins(:member, :lesson).where(member_id: @member.id)
     if members_course.present?
-      rolls = rolls.merge(Lesson.where(course_id: members_course.course_id).after_date(members_course.begin_date))
+      rolls = rolls.merge(Lesson.where(course_id: members_course.course_id).date_range(from: members_course.begin_date))
     end
     rolls
   end

@@ -47,9 +47,8 @@ class Lesson < ActiveRecord::Base
     end
   }
   
-  scope :after_date, -> (_date = Date.today) {
-    date = Lesson.arel_table[:date]
-    where(date.gteq(_date))
+  scope :date_range, -> (from: from, to: Date.new(9999, 12, 31)) {
+    where(date: [from..to])
   }
 
   def editable?
