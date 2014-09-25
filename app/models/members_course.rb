@@ -74,7 +74,12 @@ class MembersCourse < ActiveRecord::Base
   scope :details, -> {
     joins(course: [[timetable: [:studio, :time_slot]], :dance_style, :level, :instructor])
   }
-  
+
+  #----------------
+  # Callbacks
+  #----------------
+  after_update MembersCourseCallbacks
+
   #def rolls
   #  @rolls = Roll.member(member_id).course(course_id).details
   #end
