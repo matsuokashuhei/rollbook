@@ -46,6 +46,10 @@ module ApplicationHelper
     fa_icon "search lg", text: t("views.buttons.search")
   end
 
+  def icon_to_pdf
+    fa_icon "file-pdf-o"
+  end
+
   def link_to_show(path, disabled: false)
     class_value = "btn btn-link"
     class_value += " disabled" if disabled
@@ -80,6 +84,14 @@ module ApplicationHelper
       link_to path, class: "btn btn-link disabled", style: 'padding: 2px' do
         icon_to_destroy
       end
+    end
+  end
+
+  def link_to_pdf(path, disabled: false)
+    class_value = "btn btn-link"
+    class_value += " disabled" if disabled
+    link_to path, class: class_value, style: 'padding: 2px', target: '_blank', data: { toggle: "tooltip", "original-title" => t("views.buttons.pdf") } do
+      icon_to_pdf
     end
   end
 

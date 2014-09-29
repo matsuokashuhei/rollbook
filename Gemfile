@@ -28,8 +28,6 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
-#gem 'will_paginate'
-#gem 'will_paginate-bootstrap'
 gem 'kaminari'
 gem 'annotate', ">=2.5.0"
 gem 'draper', '~> 1.0'
@@ -41,35 +39,12 @@ end
 
 group :development do
   gem 'pry-rails'
-  #gem 'pry-stack_explorer'
-  #gem 'pry-byebug'
-  #gem 'hirb'
-  #gem 'hirb-unicode'
-  #gem 'awesome_print'
-  #gem 'quiet_assets'
-  #gem 'better_errors'
-  #gem 'binding_of_caller'
-  #gem 'meta_request'
 end
 
 group :development, :test do
   gem 'rspec-rails'
-  #gem 'debugger'
 end
 
-#gem 'rails_12factor', '0.0.2', group: :production
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
 
 gem "bootstrap-sass", '3.2.0'
 gem "font-awesome-rails"
@@ -77,5 +52,5 @@ gem "font-awesome-rails"
 gem "devise"
 gem "ransack"
 
-
-#gem "newrelic_rpm"
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'

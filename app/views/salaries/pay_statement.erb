@@ -1,0 +1,109 @@
+<div class="row">
+  <div class="col-md-12">
+    <h2 class="text-center">給料明細書</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <h4><%= @instructor.name %>先生 <%= @end_of_month.strftime("%Y年%m月") %>分</h4>
+  </div>
+</div>
+<% total_of_courses = 0 %>
+<% @courses.each do |course| %>
+  <% members_courses = course.members_courses.active(@end_of_month).decorate %>
+  <% recesses = Recess.joins(members_course: :course).where('"members_courses"."course_id" = ?', course.id).where(month: @month) %>
+  <% total_of_members_course = 0 %>
+  <div class="row">
+    <div class="col-md-8">
+      <table class="table col-md-7">
+        <thead>
+          <tr>
+            <th class="col-md-2">
+              <h5>
+              <%= "#{course.timetable.studio.name}　#{course.timetable.decorate.weekday}曜#{course.timetable.time_slot.start_time}〜" %>
+              <%= "#{course.dance_style.name}#{course.level.name}" %>
+              </h5>
+            </th>
+            <th class="col-md-1">
+              <h5 style="margin-top: 0px; margin-bottom: 0px;"><%= "#{members_courses.count}人" %></h5>
+            </th>
+            <th class="col-md-2"></th>
+            <th class="col-md-1"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% members_courses.each_with_index do |members_course, i| %>
+            <tr>
+              <td><%= link_to members_course.member.decorate.name, member_members_course_path(members_course.member, members_course) %></td>
+              <td><%= members_course.introduction %></td>
+              <td>
+                <% if members_course.recesses.find_by(month: @month) %>
+                  <%= label_for_recess %>
+                <% elsif members_course.begin_date < Date.new(@month[0, 4].to_i, @month[4, 6].to_i, 1) %>
+                  <%= label_for_attend %>
+                <% else %>
+                  <%= label_for_new members_course.start_week_of_month %>
+                <% end %>
+              </td>
+              <td>
+                <div class="pull-right">
+                  <% salary = members_course.salary_for_instructor(@month) %>
+                  <%= number_to_currency salary %>
+                  <% total_of_members_course += salary %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+          <% cancel_lessons = Lesson.where(course_id: course.id, date: @beginning_of_month..@end_of_month, status: Lesson::STATUS[:CANCEL_BY_INSTRUCTOR]).decorate %>
+          <% cancel_lessons.each do |cancel_lesson| %>
+            <% penalty = (course.monthly_fee * 0.25 * 1.08) * (members_courses.count - recesses.count) * -1 %>
+            <% total_of_members_course += penalty %>
+            <tr>
+              <td style="height: 37px"></td>
+              <td></td>
+              <td><%= cancel_lesson.status %></td>
+              <td><div class="pull-right"><%= number_to_currency(penalty) %></div></td>
+            </tr>
+          <% end %>
+          <tr>
+            <td></td>
+            <td></td>
+            <th>合計</th>
+            <td>
+              <div class="pull-right">
+                <h4 style="margin-top: 0px;"><%= number_to_currency total_of_members_course %></h4>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <% total_of_courses += total_of_members_course %>
+<% end %>
+<div class="row">
+  <div class="col-md-8">
+    <table class="table col-md-7">
+      <tr>
+        <td class="col-md-4 pull-right">講　師　代</th>
+        <td class="col-md-3"><div class="pull-right"><%= number_to_currency total_of_courses %></div></td>
+      </tr>
+      <% transportation = @instructor.transportation || 0 %>
+      <% if transportation > 0 %> 
+      <tr>
+        <td class="col-md-4 pull-right">交　通　費</th>
+        <td class="col-md-3"><div class="pull-right"><%= number_to_currency(transportation) %></div></td>
+      </tr>
+      <% end %>
+      <tr>
+        <% tax = total_of_courses * 0.1021 %>
+        <td class="col-md-4 pull-right">源泉徴収税</td>
+        <td class="col-md-3"><div class="pull-right"><%= number_to_currency(tax.truncate) %></div></td>
+      </tr>
+      <tr>
+        <th class="col-md-4 pull-right">総　　　計</th>
+        <td class="col-md-3"><div class="pull-right"><h3 style="margin-top: 0px;"><%= number_to_currency(total_of_courses + transportation - tax.truncate) %></h3></div></td>
+      </tr>
+    </table>
+  </div>
+</div>
