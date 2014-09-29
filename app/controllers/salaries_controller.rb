@@ -3,15 +3,8 @@ class SalariesController < ApplicationController
   before_action :admin_user!
 
   def index
-    if params[:month].present?
-      params[:q] = { month: params[:month] }
-    end
-    if params[:q].blank? || params[:q][:month].blank?
-      @month = (Date.today - 1.month).strftime('%Y%m')
-      redirect_to salaries_path('q[month]' => @month) and return
-    end
-    @month = params[:q][:month]
     @q = Instructor.search(params[:q])
+    @month = params[:month]
     @instructors = @q.result.joins(:courses).merge(Course.active("#{@month}01".to_date)).order(:name).uniq.page(params[:page]).decorate
   end
 
@@ -24,6 +17,16 @@ class SalariesController < ApplicationController
     @beginning_of_month = (@month + "01").to_date
     @end_of_month = @beginning_of_month.end_of_month
     @courses = @instructor.courses.active(@end_of_month).details
+    respond_to do |f|
+      f.html
+      f.pdf do
+        filename = "#{@beginning_of_month.strftime('%Y年%m月')}_#{@instructor.name}"
+        render pdf: filename,
+               encoding: 'UTF-8',
+               #layout: 'pdf.html.erb',
+               template: 'salaries/pay_statement'
+      end
+    end
   end
 
   private

@@ -10,11 +10,11 @@ class LessonDecorator < ApplicationDecorator
         h.content_tag(:span, "", class: "label label-success")
       when Lesson::STATUS[:CANCEL_BY_INSTRUCTOR]
         h.link_to '#', data: { toggle: "tooltip", "original-title" => "インストラクターの欠勤" } do
-          h.content_tag(:span, "休講", class: "label label-danger")
+          h.content_tag(:span, "休　講", class: "label label-danger")
         end
       when Lesson::STATUS[:CANCEL_BY_OTHERS]
         h.link_to '#', data: { toggle: "tooltip", "original-title" => "自然災害などその他の理由" } do
-          h.content_tag(:span, "休講", class: "label label-warning")
+          h.content_tag(:span, "休　講", class: "label label-warning")
         end
       end
     end

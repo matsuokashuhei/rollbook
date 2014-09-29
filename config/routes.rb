@@ -1,5 +1,8 @@
 Rollbook::Application.routes.draw do
 
+  root 'home#index'
+
+  # お知らせ
   resources :posts do
     resources :comments
   end
@@ -22,7 +25,6 @@ Rollbook::Application.routes.draw do
 
   # 会員
   resources :members do
-    #resources :members_courses, as: :courses, path: :courses do
     resources :members_courses
     resources :recesses
   end
@@ -48,9 +50,6 @@ Rollbook::Application.routes.draw do
   match "lessons/:lesson_id/rolls" => "rolls#create_or_update", via: :post
   match "lessons/:lesson_id/absences" => "rolls#absences", via: :get, as: "absences"
   match "lessons/:lesson_id/substitutes" => "rolls#substitute", via: :post
-  # 体験は設計ミスのため削除する。
-  #match "lessons/:lesson_id/nonmembers" => "rolls#nonmembers", via: :get, as: "nonmembers"
-  #match "lessons/:lesson_id/trials" => "rolls#trial", via: :post
 
   # クラス
   resources :courses
@@ -61,12 +60,12 @@ Rollbook::Application.routes.draw do
   resources :instructors
   match "instructors/:id/courses" => "instructors#courses", via: :get, as: "instructor_courses"
 
-  # インストラクターの給与計算
-  match 'salaries' => 'salaries#index', via: :get, as: 'salaries'
-  match 'salary' => 'salaries#show', via: :get, as: 'salary'
-  
-  #match "salaries/:month/instructors" => "salaries#index", via: :get, as: "salaries"
-  #match "salaries/:month/instructors/:instructor_id" => "salaries#show", via: :get, as: "salary"
+  # インストラクターの給料
+  last_month = (Date.today - 1.month).strftime('%Y%m')
+  match 'salaries(/)' => redirect("/salaries/#{last_month}/instructors"), via: :get
+  match 'salaries/instructors(/)' => redirect("/salaries/#{last_month}/instructors"), via: :get
+  match 'salaries/:month/instructors' => 'salaries#index', defaults: { month: last_month, }, via: :get, as: 'salaries'
+  match 'salaries/:month/instructors/:instructor_id' => 'salaries#show', defaults: { month: last_month, }, via: :get, as: 'salary'
 
   #resources :schools do
   #  resources :studios
@@ -79,9 +78,9 @@ Rollbook::Application.routes.draw do
 
   # ログ
   resources :access_logs, only: [:index]
-  get "statistics/data"
 
   # 統計
+  get "statistics/data"
   match "statistics" => "statistics#index", via: :get, as: "statistics"
   match "statistics/members" => "statistics#members", via: :get, as: "statistics_members"
   match "statistics/members_courses" => "statistics#members_courses", via: :get, as: "statistics_members_courses"
@@ -92,7 +91,6 @@ Rollbook::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'home#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

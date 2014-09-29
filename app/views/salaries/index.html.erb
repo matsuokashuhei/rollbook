@@ -7,12 +7,11 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-12">
-    <%= search_form_for(@q, url: salaries_path, class: 'form-inline') do |f| %>
+  <div class="col-md-5">
+    <%= search_form_for(@q, url: salaries_path(month: @month), class: 'form-inline') do |f| %>
       <div class="form-group">
         <%= f.text_field :name_start, class: "form-control", placeholder: t("activerecord.attributes.instructor.name"), autofocus: true %>
       </div>
-      <%= f.hidden_field :month, value: params[:q][:month] %>
       <%= f.button class: "btn btn-success" do %>
         <%= fa_icon("search lg", text: t("views.buttons.search")) %>
       <% end %>
@@ -21,22 +20,25 @@
 </div>
 <br />
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-5">
     <div class="table-responsive">
-      <table class="table table-striped table-condensed">
+      <table class="table table-bordered table-striped table-hover">
         <thead>
           <tr>
             <th class="col-md-3"><%= t("activerecord.attributes.instructor.name") %></th>
+            <th class="col-md-1">クラス数</th>
             <th class="col-md-1"></th>
-            <th class="col-md-8"></th>
           </tr>
         </thead>
         <tbody>
           <% @instructors.each do |instructor| %>
-          <tr>
-            <td><%= instructor.name %></td>
-            <td><%= link_to_show salary_path(month: @month, instructor_id: instructor.id) %></td>
-            <td></td>
+            <tr>
+              <td><%= instructor.name %></td>
+              <td><div class="pull-right"><%= instructor.courses.active.count %></div></td>
+              <td class="text-center">
+                <%= link_to_show salary_path(month: @month, instructor_id: instructor.id) %>
+                <%= link_to_pdf salary_path(month: @month, instructor_id: instructor.id, format: :pdf) %>
+              </td>
           </tr>
           <% end %>
         </tbody>
@@ -46,7 +48,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-5">
     <ul class="pager">
       <li class="previous">
         <%= link_to_prev_months_salaries @month %>
@@ -57,4 +59,3 @@
     </ul>
   </div>
 </div>
-
