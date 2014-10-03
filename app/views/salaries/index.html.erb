@@ -37,7 +37,7 @@
               <td><div class="pull-right"><%= instructor.courses.active.count %></div></td>
               <td class="text-center">
                 <%= link_to_show salary_path(month: @month, instructor_id: instructor.id) %>
-                <%= link_to_pdf salary_path(month: @month, instructor_id: instructor.id, format: :pdf) %>
+                <%# link_to_pdf salary_path(month: @month, instructor_id: instructor.id, format: :pdf) %>
               </td>
           </tr>
           <% end %>
