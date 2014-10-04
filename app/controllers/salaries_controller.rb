@@ -16,7 +16,7 @@ class SalariesController < ApplicationController
     @instructor = Instructor.find params[:instructor_id]
     @beginning_of_month = (@month + "01").to_date
     @end_of_month = @beginning_of_month.end_of_month
-    @courses = @instructor.courses.active(@end_of_month).details
+    @courses = @instructor.courses.active(@end_of_month).details.merge(Studio.order(:open_date)).merge(Timetable.order(:weekday)).merge(TimeSlot.order(:start_time))
     respond_to do |f|
       f.html
       f.pdf do
