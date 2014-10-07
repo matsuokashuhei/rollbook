@@ -15,7 +15,7 @@
   <% recesses = Recess.joins(members_course: :course).where(members_courses: { course_id:  course.id }).where(month: @month) %>
   <% total_of_members_course = 0 %>
   <div class="row">
-    <div class="col-xs-8" style="page-break-inside:avoid;">
+    <div class="col-xs-9" style="page-break-inside:avoid;">
       <h4>
         <%# "#{course.timetable.studio.name}　#{course.timetable.decorate.weekday}曜#{course.timetable.time_slot.start_time}〜　#{course.dance_style.name}#{course.level.name}" %>
         <%= "#{course.timetable.studio.name}　#{course.timetable.decorate.weekday}曜　#{course.dance_style.name}#{course.level.name}クラス" %>
@@ -27,7 +27,7 @@
             <th class="col-xs-2">会員番号</th>
             <th class="col-xs-2">受講</th>
             <th class="col-xs-2">金額</th>
-            <th class="col-xs-1">備考</th>
+            <th class="col-xs-2">備考</th>
           </tr>
         </thead>
         <tbody>
@@ -43,11 +43,14 @@
               </td>
               <td>
                 <% if members_course.recesses.find_by(month: @month) %>
-                  <%= label_for_recess %>
+                  <%= "休会" %>
+                  <%# label_for_recess %>
                 <% elsif members_course.begin_date < Date.new(@month[0, 4].to_i, @month[4, 6].to_i, 1) %>
-                  <%= label_for_attend %>
+                  <%= "受講" %>
+                  <%# label_for_attend %>
                 <% else %>
-                  <%= label_for_new members_course.start_week_of_month %>
+                  <%= "#{members_course.start_week_of_month}週入会" %>
+                  <%# label_for_new members_course.start_week_of_month %>
                 <% end %>
               </td>
               <td>
@@ -57,7 +60,12 @@
                   <% total_of_members_course += salary %>
                 </div>
               </td>
-              <td><%= members_course.introduction %></td>
+              <td>
+                <%# members_course.introduction %>
+                <% if members_course.introduction.present? %>
+                  紹介
+                <% end %>
+              </td>
             </tr>
           <% end %>
           <% cancel_lessons = Lesson.where(course_id: course.id, date: @beginning_of_month..@end_of_month, status: Lesson::STATUS[:CANCEL_BY_INSTRUCTOR]).order(:date).decorate %>
@@ -67,7 +75,10 @@
             <tr>
               <td></td>
               <td></td>
-              <td><%= cancel_lesson.status %></td>
+              <td>
+                <%= "休講" %>
+                <%# cancel_lesson.status %>
+              </td>
               <td><div class="pull-right"><%= number_to_currency(penalty) %></div></td>
               <td><%= "#{cancel_lesson.date.month}/#{cancel_lesson.date.day}分" %></td>
             </tr>
@@ -75,9 +86,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <td></td>
-            <td></td>
-            <th>合計</th>
+            <th colspan="3"><div class="pull-right">合計　</div></th>
             <td>
               <div class="pull-right">
                 <%= number_to_currency(total_of_members_course) %>
@@ -92,8 +101,8 @@
   <% total_of_courses += total_of_members_course %>
 <% end %>
 <div class="row">
-  <div class="col-xs-8" style="page-break-inside:avoid;">
-    <table class="table col-xs-5">
+  <div class="col-xs-9" style="page-break-inside:avoid;">
+    <table class="table col-xs-9">
       <tr>
         <td class="col-xs-2">講師代</th>
         <td class="col-xs-3">
