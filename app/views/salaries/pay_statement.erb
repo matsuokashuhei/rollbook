@@ -15,25 +15,31 @@
   <% recesses = Recess.joins(members_course: :course).where(members_courses: { course_id:  course.id }).where(month: @month) %>
   <% total_of_members_course = 0 %>
   <div class="row">
-    <div class="col-xs-8">
+    <div class="col-xs-8" style="page-break-inside:avoid;">
+      <h4>
+        <%= "#{course.timetable.studio.name}　#{course.timetable.decorate.weekday}曜#{course.timetable.time_slot.start_time}〜　#{course.dance_style.name}#{course.level.name}" %>
+      </h4>
       <table class="table table-bordered table-condensed">
-        <caption style="text-align: left; margin: 5px;">
-          <h4><%= "#{course.timetable.studio.name}　#{course.timetable.decorate.weekday}曜#{course.timetable.time_slot.start_time}〜　#{course.dance_style.name}#{course.level.name}" %></h4>
-        </caption>
         <thead>
           <tr>
             <th class="col-xs-1">#</th>
             <th class="col-xs-2">会員番号</th>
-            <th class="col-xs-2"></th>
+            <th class="col-xs-2">受講</th>
             <th class="col-xs-2">金額</th>
-            <th class="col-xs-1"></th>
+            <th class="col-xs-1">備考</th>
           </tr>
         </thead>
         <tbody>
           <% members_courses.each.with_index(1) do |members_course, i| %>
             <tr>
               <td><div class="text-center"><%= i %></div></td>
-              <td><%= members_course.member.number %></td>
+              <td>
+                <% if members_course.member.number.present? %>
+                  <%= members_course.member.number %>
+                <% else %>
+                  <%= "-----" %>
+                <% end %>
+              </td>
               <td>
                 <% if members_course.recesses.find_by(month: @month) %>
                   <%= label_for_recess %>
@@ -85,7 +91,7 @@
   <% total_of_courses += total_of_members_course %>
 <% end %>
 <div class="row">
-  <div class="col-xs-8">
+  <div class="col-xs-8" style="page-break-inside:avoid;">
     <table class="table col-xs-5">
       <tr>
         <td class="col-xs-2">講師代</th>
