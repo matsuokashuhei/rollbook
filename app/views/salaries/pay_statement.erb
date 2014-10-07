@@ -17,7 +17,8 @@
   <div class="row">
     <div class="col-xs-8" style="page-break-inside:avoid;">
       <h4>
-        <%= "#{course.timetable.studio.name}　#{course.timetable.decorate.weekday}曜#{course.timetable.time_slot.start_time}〜　#{course.dance_style.name}#{course.level.name}" %>
+        <%# "#{course.timetable.studio.name}　#{course.timetable.decorate.weekday}曜#{course.timetable.time_slot.start_time}〜　#{course.dance_style.name}#{course.level.name}" %>
+        <%= "#{course.timetable.studio.name}　#{course.timetable.decorate.weekday}曜　#{course.dance_style.name}#{course.level.name}クラス" %>
       </h4>
       <table class="table table-bordered table-condensed">
         <thead>
@@ -59,7 +60,7 @@
               <td><%= members_course.introduction %></td>
             </tr>
           <% end %>
-          <% cancel_lessons = Lesson.where(course_id: course.id, date: @beginning_of_month..@end_of_month, status: Lesson::STATUS[:CANCEL_BY_INSTRUCTOR]).decorate %>
+          <% cancel_lessons = Lesson.where(course_id: course.id, date: @beginning_of_month..@end_of_month, status: Lesson::STATUS[:CANCEL_BY_INSTRUCTOR]).order(:date).decorate %>
           <% cancel_lessons.each do |cancel_lesson| %>
             <% penalty = (course.monthly_fee * 0.25 * 1.08) * (members_courses.count - recesses.count) * -1 %>
             <% total_of_members_course += penalty %>
@@ -68,7 +69,7 @@
               <td></td>
               <td><%= cancel_lesson.status %></td>
               <td><div class="pull-right"><%= number_to_currency(penalty) %></div></td>
-              <td></td>
+              <td><%= "#{cancel_lesson.date.month}/#{cancel_lesson.date.day}分" %></td>
             </tr>
           <% end %>
         </tbody>
