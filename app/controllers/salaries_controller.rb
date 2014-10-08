@@ -20,7 +20,7 @@ class SalariesController < ApplicationController
     respond_to do |f|
       f.html
       f.pdf do
-        filename = "#{@beginning_of_month.strftime('%Y年%m月')}_#{@instructor.name}"
+        filename = "#{@beginning_of_month.strftime('%Y年%m月')}_#{@instructor.name}先生"
         render pdf: filename,
                encoding: 'UTF-8',
                #layout: 'pdf.html.erb',
