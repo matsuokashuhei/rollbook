@@ -127,7 +127,7 @@
         <td class="col-md-1"></td>
       </tr>
       <tr>
-        <% tax = total_of_courses * 0.1021 %>
+        <% tax = total_of_courses > 0 ? total_of_courses * 0.1021 : 0 %>
         <td class="col-md-2">源泉徴収税</td>
         <td class="col-md-1"><div class="pull-right"><%= number_to_currency(tax.truncate) %></div></td>
         <td class="col-md-1"></td>
