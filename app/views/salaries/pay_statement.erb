@@ -116,11 +116,13 @@
         <td class="col-xs-3"><div class="pull-right"><%= number_to_currency(transportation) %></div></td>
       </tr>
       <% end %>
+      <% tax = total_of_courses > 0 ? total_of_courses * 0.1021 : 0 %>
+      <% if tax > 0 %>
       <tr>
-        <% tax = total_of_courses * 0.1021 %>
         <td class="col-xs-2">源泉徴収税</td>
         <td class="col-xs-3"><div class="pull-right"><%= number_to_currency(tax.truncate) %></div></td>
       </tr>
+      <% end %>
       <tr>
         <th class="col-xs-2">総計</th>
         <td class="col-xs-3"><div class="pull-right"><h3 style="margin-top: 0px;"><%= number_to_currency(total_of_courses + transportation - tax.truncate) %></h3></div></td>
