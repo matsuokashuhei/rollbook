@@ -34,7 +34,7 @@
           <% @instructors.each do |instructor| %>
             <tr>
               <td><%= instructor.name %></td>
-              <td><div class="pull-right"><%= instructor.courses.active.count %></div></td>
+              <td class="text-right"><%= instructor.courses.active((@month + '01').to_date).count %></td>
               <td class="text-center">
                 <%= link_to_show salary_path(month: @month, instructor_id: instructor.id) %>
                 <%= link_to_pdf salary_path(month: @month, instructor_id: instructor.id, format: :pdf) %>
