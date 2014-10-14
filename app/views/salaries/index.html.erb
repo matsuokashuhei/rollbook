@@ -33,7 +33,7 @@
         <tbody>
           <% @instructors.each do |instructor| %>
             <tr>
-              <td><%= instructor.name %></td>
+              <td><%= link_to instructor.name, instructor_path(instructor), class: 'btn btn-link' %></td>
               <td class="text-right"><%= instructor.courses.active((@month + '01').to_date).count %></td>
               <td class="text-center">
                 <%= link_to_show salary_path(month: @month, instructor_id: instructor.id) %>
