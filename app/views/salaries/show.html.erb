@@ -117,24 +117,25 @@
     <table class="table col-md-4">
       <tr>
         <td class="col-md-2">講師代</th>
-        <td class="col-md-1"><div class="pull-right"><%= number_to_currency total_of_courses %></div></td>
+        <td class="col-md-1 text-right"><%= number_to_currency total_of_courses %></td>
         <td class="col-md-1"></td>
       </tr>
       <tr>
         <% transportation = @instructor.transportation || 0 %>
         <td class="col-md-2">交通費</th>
-        <td class="col-md-1"><div class="pull-right"><%= number_to_currency(transportation) %></div></td>
+        <td class="col-md-1 text-right"><%= number_to_currency(transportation) %></td>
         <td class="col-md-1"></td>
       </tr>
       <tr>
         <% tax = total_of_courses > 0 ? total_of_courses * 0.1021 : 0 %>
+        <% tax = 0 unless @instructor.taxable? %>
         <td class="col-md-2">源泉徴収税</td>
-        <td class="col-md-1"><div class="pull-right"><%= number_to_currency(tax.truncate) %></div></td>
+        <td class="col-md-1 text-right"><%= number_to_currency(tax.truncate) %></td>
         <td class="col-md-1"></td>
       </tr>
       <tr>
         <th class="col-md-2">総計</th>
-        <td class="col-md-1"><div class="pull-right"><h3 style="margin-top: 0px;"><%= number_to_currency(total_of_courses + transportation - tax.truncate) %></h3></div></td>
+        <td class="col-md-1 text-right"><h3 style="margin-top: 0px;"><%= number_to_currency(total_of_courses + transportation - tax.truncate) %></h3></td>
         <td class="col-md-1"></td>
       </tr>
     </table>

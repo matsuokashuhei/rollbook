@@ -23,29 +23,38 @@
       <%= f.text_field :team, class: "form-control" %>
     </div>
   </div>
-  <div class="form-group <%= 'has-error' if @instructor.errors[:transportation].present? %>">
-    <%= f.label :transportation, class: "col-md-1 control-label" %>
-    <div class="col-md-2">
-      <%= f.number_field :transportation, class: "form-control" %>
+  <% if current_user.admin? %>
+    <div class="form-group <%= 'has-error' if @instructor.errors[:transportation].present? %>">
+      <%= f.label :transportation, class: "col-md-1 control-label" %>
+      <div class="col-md-2">
+        <%= f.number_field :transportation, class: "form-control" %>
+      </div>
+      <div class="col-md-2 col-md-offset-1">
+        <div class="checkbox">
+          <label>
+            <%= f.check_box :taxable %><%= "課税する" %>
+          </label>
+        </div>
+      </div>
     </div>
-  </div>
+  <% end %>
   <% if false %>
-  <!-- 電話番号とEメールは個人情報のため消す。-->
-  <div class="form-group <%= 'has-error' if @instructor.errors[:phone].present? %>">
-    <%= f.label :phone, class: "col-md-1 control-label" %>
-    <div class="col-md-2">
-      <%= f.phone_field :phone, class: "form-control" %>
+    <!-- 電話番号とEメールは個人情報のため消す。-->
+    <div class="form-group <%= 'has-error' if @instructor.errors[:phone].present? %>">
+      <%= f.label :phone, class: "col-md-1 control-label" %>
+      <div class="col-md-2">
+        <%= f.phone_field :phone, class: "form-control" %>
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label class="col-md-1 control-label"><%= t("activerecord.attributes.instructor.email") %></label>
-    <div class="col-md-5 <%= 'has-error' if @instructor.errors[:email_pc].present? %>">
-      <%= f.email_field :email_pc, class: "form-control", "placeholder" => "PC" %>
+    <div class="form-group">
+      <label class="col-md-1 control-label"><%= t("activerecord.attributes.instructor.email") %></label>
+      <div class="col-md-5 <%= 'has-error' if @instructor.errors[:email_pc].present? %>">
+        <%= f.email_field :email_pc, class: "form-control", "placeholder" => "PC" %>
+      </div>
+      <div class="col-md-5 <%= 'has-error' if @instructor.errors[:email_mobile].present? %>">
+        <%= f.email_field :email_mobile, class: "form-control", "placeholder" => "モバイル" %>
+      </div>
     </div>
-    <div class="col-md-5 <%= 'has-error' if @instructor.errors[:email_mobile].present? %>">
-      <%= f.email_field :email_mobile, class: "form-control", "placeholder" => "モバイル" %>
-    </div>
-  </div>
   <% end %>
   <div class="form-group <%= 'has-error' if @instructor.errors[:note].present? %>">
     <%= f.label :note, class: "col-md-1 control-label" %>
