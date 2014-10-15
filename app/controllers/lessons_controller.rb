@@ -68,7 +68,7 @@ class LessonsController < ApplicationController
 
   # POST /lessons/1/fix
   def fix
-    if @lesson.fix?
+    if @lesson.fixable?
       @lesson.fix
       notice = "レッスンを確定しました。"
     end

@@ -66,13 +66,6 @@ class Lesson < ActiveRecord::Base
     self.rolls_status == ROLLS_STATUS[:NONE] || self.rolls_status == ROLLS_STATUS[:IN_PROCESS]
   end
 
-  def fix?
-    return false if self.rolls.size == 0 && self.course.members_courses.active(self.date).size > 0
-    return false if self.rolls.select { |roll| roll.status == "0" }.size > 0
-    return false if self.rolls_status == ROLLS_STATUS[:FINISHED]
-    true
-  end
-  
   def fixable?
     return false if self.rolls.select { |roll| roll.status == "0" }.size > 0
     return false if self.rolls.size == 0 && self.course.members_courses.active(self.date).size > 0
