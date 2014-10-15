@@ -2,7 +2,7 @@ class UserDecorator < ApplicationDecorator
   delegate_all
 
   def role
-    h.content_tag(:h3, style: "margin: 0px; line-height: 0;") do
+    h.content_tag(:h4, style: "margin: 0px; line-height: 0;") do
       case model.role
       when User::ROLES[:SYSTEM]
         h.content_tag(:span, "SYSTEM", class: "label label-default")
@@ -17,7 +17,7 @@ class UserDecorator < ApplicationDecorator
   end
 
   def status
-    h.content_tag(:h3, style: "margin: 0px; line-height: 0;") do
+    h.content_tag(:h4, style: "margin: 0px; line-height: 0;") do
       case model.status
       when User::STATUSES[:ACTIVE]
         h.content_tag(:span, "有効", class: "label label-success")

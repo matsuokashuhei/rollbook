@@ -1,5 +1,4 @@
 class PostsController < ApplicationController
-  #before_action :special_user!
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   # GET /posts
@@ -83,8 +82,4 @@ class PostsController < ApplicationController
       params.require(:post).permit(:title, :content, :user_id, :open_date, :close_date)
     end
 
-
-    def special_user!
-      redirect_to root_path unless current_user.admin? || current_user.manager?
-    end
 end
