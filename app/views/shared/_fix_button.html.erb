@@ -1,0 +1,31 @@
+<% if object.fixable? && object.fixed?.! %>
+  <% link_id = "#{object.class.name.downcase}_#{object.id}" %>
+  <%= link_to "##{link_id}", class: "btn btn-primary pull-right", data: { toggle: "modal" } do %>
+    <%= fa_icon "lock", text: t("views.buttons.fix") %>
+  <% end %>
+  <div class="modal fade" id="<%= link_id %>">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          <h4 class="modal-title">確認</h4>
+        </div>
+        <div class="modal-body">
+          確定してよいですか？
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">
+            <%= t("views.buttons.close") %>
+          </button>
+          <%= button_to t("views.buttons.fix"), path, method: "post", class: "btn btn-default pull-right" %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <%= link_to nil, class: "btn btn-primary pull-right disabled" do %>
+    <%= fa_icon "lock", text: t("views.buttons.fix") %>
+  <% end %>
+<% end %>

@@ -162,20 +162,6 @@ module ApplicationHelper
     end
   end
 
-  def button_to_fix object
-    href = "##{object.class.name.downcase}"
-    text = t "views.buttons.fix"
-    if object.fix?
-      link_to href, class: "btn btn-primary pull-right", data: { toggle: "modal" } do
-        fa_icon "lock", text: text
-      end
-    else
-      link_to nil, class: "btn btn-primary pull-right disabled" do
-        fa_icon "lock", text: text
-      end
-    end
-  end
-
   private
 
   def modal_to_destroy(id, path)
