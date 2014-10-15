@@ -1,5 +1,5 @@
 class LessonsController < ApplicationController
-  before_action :set_lesson, only: [:show, :edit, :update, :destroy, :fix, :cancel]
+  before_action :set_lesson, only: [:show, :edit, :update, :destroy, :fix, :unfix, :cancel]
   before_action :require_month_or_date, only: [:index]
 
   # GET /lessons
@@ -72,6 +72,14 @@ class LessonsController < ApplicationController
       @lesson.fix
       notice = "レッスンを確定しました。"
     end
+    respond_to do |format|
+      format.html { redirect_to lesson_rolls_url(@lesson), notice: notice }
+    end
+  end
+  
+  def unfix
+    @lesson.unfix
+    notice = "確定を解除しました。"
     respond_to do |format|
       format.html { redirect_to lesson_rolls_url(@lesson), notice: notice }
     end
