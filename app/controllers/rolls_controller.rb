@@ -1,6 +1,5 @@
 class RollsController < ApplicationController
   # 体験は設計ミスのため削除する。
-  #before_action :set_lesson, only: [:index, :new, :create, :edit, :create_or_update, :absences, :substitute, :nonmembers, :trial]
   before_action :set_lesson, only: [:index, :new, :create, :edit, :create_or_update, :absences, :substitute]
 
   # GET /lessons/:lesson_id/rolls
@@ -146,13 +145,6 @@ class RollsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def roll_params
       params.require(:roll).permit(:lesson_id, :member_id, :status, :substitute_roll_id)
-    end
-
-    def search?
-      return true if params[:number].present?
-      return true if params[:last_name_kana].present?
-      return true if params[:first_name_kana].present?
-      false
     end
 
 end
