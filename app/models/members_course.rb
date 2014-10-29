@@ -155,10 +155,4 @@ class MembersCourse < ActiveRecord::Base
     end
   end
 
-  private
-
-  def begin_and_end_of_month month
-    beginning_of_month = (month + "01").to_date
-    [beginning_of_month, beginning_of_month.end_of_month]
-  end
 end
