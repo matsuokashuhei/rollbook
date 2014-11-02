@@ -34,8 +34,8 @@
   </div>
   <div class="form-group <%= 'has-error' if @recess.errors[:note].present? %>">
     <%= f.label :note, class: "col-md-1 control-label" %>
-    <div class="col-md-5">
-      <%= f.text_area :note, class: "form-control" %>
+    <div class="col-md-9">
+      <%= f.text_area :note, class: "form-control", rows: 6 %>
     </div>
   </div>
 
