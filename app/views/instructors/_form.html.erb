@@ -23,7 +23,7 @@
       <%= f.text_field :team, class: "form-control" %>
     </div>
   </div>
-  <% if current_user.admin? %>
+  <% if current_user.manager? %>
     <div class="form-group <%= 'has-error' if @instructor.errors[:transportation].present? %>">
       <%= f.label :transportation, class: "col-md-1 control-label" %>
       <div class="col-md-2">
@@ -62,8 +62,8 @@
   <% end %>
   <div class="form-group <%= 'has-error' if @instructor.errors[:note].present? %>">
     <%= f.label :note, class: "col-md-1 control-label" %>
-    <div class="col-md-6">
-      <%= f.text_area :note, class: "form-control", rows: 5 %>
+    <div class="col-md-9">
+      <%= f.text_area :note, class: "form-control", rows: 6 %>
     </div>
   </div>
 

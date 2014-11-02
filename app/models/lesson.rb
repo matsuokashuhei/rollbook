@@ -35,7 +35,7 @@ class Lesson < ActiveRecord::Base
 
   # 出欠が確定しているレッスン
   scope :fixed, -> {
-    where(rolls_status: ROLL_STATUS[:FINISHED])
+    where(rolls_status: ROLLS_STATUS[:FINISHED])
   }
 
   # 特定の月のレッスン

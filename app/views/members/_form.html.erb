@@ -112,8 +112,8 @@
 
   <div class="form-group <%= 'has-error' if @member.errors[:note].present? %>">
     <%= f.label :note, class: "col-md-1 control-label" %>
-    <div class="col-md-6">
-      <%= f.text_area :note, class: "form-control", rows: 3 %>
+    <div class="col-md-9">
+      <%= f.text_area :note, class: "form-control", rows: 6 %>
     </div>
   </div>
 
