@@ -1,0 +1,56 @@
+<%
+  beginning_of_month = Date.new(month[0, 4].to_i, month[4, 2].to_i, 1)
+  end_of_month = beginning_of_month.end_of_month
+  canceled_lessons = course.lessons.for_month(month).canceled_by_instructor.order(:date)
+%>
+<div class="row">
+  <div class="col-xs-12" style="page-break-inside:avoid;">
+    <div class="row">
+      <div class="col-xs-11 col-xs-offset-1">
+        <%= "#{course.timetable.studio.name}#{course.timetable.decorate.weekday}曜#{course.dance_style.name}#{course.level.name}クラス" %>
+        <table class="table table-bordered">
+          <thead>
+            <tr class="info">
+              <th class="col-xs-1">#</th>
+              <th class="col-xs-4">内容</th>
+              <th class="col-xs-2">金額</th>
+              <th class="col-xs-4">備考</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% members_courses = course.members_courses.active(end_of_month).decorate %>
+            <% members_courses.each.with_index(1) do |members_course, i| %>
+              <tr>
+                <td class="text-center"><%= i %></td>
+                <td>
+                  <%= members_course.member.number.present? ? members_course.member.number : '*****' %>
+                  <%= members_course.monthly_status(month) %>
+                </td>
+                <td class="text-right"><%= number_to_currency(members_course.fee_for(month: month)) %></td>
+                <td><%= "紹介" if members_course.introduction.present? %></td>
+              </tr>
+            <% end %>
+            <% if canceled_lessons.present? %>
+              <% canceled_lessons.each.with_index(1) do |lesson, i| %>
+                <tr>
+                  <td class="text-center"><%#i %></td>
+                  <td><%= "#{lesson.date.month}月#{lesson.date.day}日休講分" %></td>
+                  <td class="text-right"><%= number_to_currency(lesson.penalty * -1) %></td>
+                  <td><%= lesson.penalty_description %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td></td>
+              <th class="info">合計</th>
+              <td class="text-right"><%= number_to_currency(course.fee_for(month: month) - course.penalty_for(month: month)) %></td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

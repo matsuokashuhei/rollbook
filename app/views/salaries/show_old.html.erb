@@ -1,0 +1,161 @@
+<div class="row">
+  <div class="col-md-12">
+    <ol class="breadcrumb">
+      <%= list_item_to_salaries %>
+      <%= list_item_to_salaries_of_month @month %>
+      <%= list_item_to_salary @month, @instructor, active: true %>
+    </ol>
+  </div>
+</div>
+<% total_of_courses = 0 %>
+<% @courses.each do |course| %>
+  <% members_courses = course.members_courses.active(@end_of_month).decorate %>
+  <% recesses = Recess.joins(members_course: :course).where('"members_courses"."course_id" = ?', course.id).where(month: @month) %>
+  <% total_of_members_course = 0 %>
+  <div class="row">
+    <div class="col-md-3">
+      <!-- クラス名 -->
+      <ul class="list-unstyled">
+        <li>
+          <h6 style="margin-bottom: 0px">
+            <%= "#{course.timetable.studio.name}　#{course.timetable.decorate.weekday}曜#{course.timetable.time_slot.start_time}〜" %>
+          </h6>
+        </li>
+        <li>
+          <h3 style="margin-top: 0px">
+            <%= "#{course.dance_style.name}#{course.level.name}" %>
+          </h3>
+        </li>
+      </ul>
+    </div>
+    <!-- 会員数 -->
+    <div class="col-md-1">
+      <div class="pull-right"><h3 style="margin-top: 23px; margin-bottom: 0px;"><%= "#{members_courses.count}人" %></h3></div>
+    </div>
+    <!-- 会員 -->
+    <div class="col-md-8">
+      <table class="table col-md-7">
+        <thead>
+          <tr>
+            <!-- 名前 -->
+            <th class="col-md-2"><%= t("activerecord.models.member") %></th>
+            <!-- 紹介の有無 -->
+            <th class="col-md-1"></td>
+            <!-- 状態 -->
+            <th class="col-md-2"><%= t "activerecord.attributes.member.status" %></td>
+            <!-- 金額 -->
+            <th class="col-md-1">金額</td>
+            <!-- 備考 -->
+            <th class="col-md-1">備考</td>
+        </thead>
+        <tbody>
+          <% members_courses.each_with_index do |members_course, i| %>
+            <tr>
+              <td><%= link_to members_course.member.decorate.name, member_members_course_path(members_course.member, members_course) %></td>
+              <td><%= members_course.introduction %></td>
+              <td>
+                <% if members_course.recesses.find_by(month: @month) %>
+                  <%= label_for_recess %>
+                <% elsif members_course.begin_date < Date.new(@month[0, 4].to_i, @month[4, 6].to_i, 1) %>
+                  <%= label_for_attend %>
+                <% else %>
+                  <%= label_for_new members_course.start_week_of_month %>
+                <% end %>
+              </td>
+              <td>
+                <div class="pull-right">
+                  <% salary = members_course.fee_for(month: @month) %>
+                  <%= number_to_currency salary %>
+                  <% total_of_members_course += salary %>
+                </div>
+              </td>
+              <td>
+                <%= @end_of_date %>
+                <% if members_course.end_date == @end_of_month %>
+                  当月で退会
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+          <% cancel_lessons = Lesson.where(course_id: course.id, date: @beginning_of_month..@end_of_month, status: Lesson::STATUS[:CANCEL_BY_INSTRUCTOR]).decorate %>
+          <% cancel_lessons.each do |cancel_lesson| %>
+            <% penalty = (course.monthly_fee * 0.25 * 1.08) * (members_courses.count - recesses.count) * -1 %>
+            <% total_of_members_course += penalty %>
+            <tr>
+              <td style="height: 37px"></td>
+              <td></td>
+              <td><%= cancel_lesson.status %></td>
+              <td><div class="pull-right"><%= number_to_currency(penalty) %></div></td>
+              <td><%= "#{cancel_lesson.date.month}月#{cancel_lesson.date.day}日分" %></td>
+            </tr>
+          <% end %>
+          <tr>
+            <td></td>
+            <td></td>
+            <th>合計</th>
+            <td>
+              <div class="pull-right">
+                <h4 style="margin-top: 0px;"><%= number_to_currency total_of_members_course %></h4>
+              </div>
+            </td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <hr />
+    </div>
+  </div>
+  <% total_of_courses += total_of_members_course %>
+<% end %>
+<div class="row">
+  <div class="col-md-7"></div>
+  <div class="col-md-5">
+    <table class="table col-md-4">
+      <tr>
+        <td class="col-md-2">講師代</th>
+        <td class="col-md-1 text-right"><%= number_to_currency total_of_courses %></td>
+        <td class="col-md-1"></td>
+      </tr>
+      <tr>
+        <% transportation = @instructor.transportation || 0 %>
+        <td class="col-md-2">交通費</th>
+        <td class="col-md-1 text-right"><%= number_to_currency(transportation) %></td>
+        <td class="col-md-1"></td>
+      </tr>
+      <tr>
+        <% tax = total_of_courses > 0 ? total_of_courses * 0.1021 : 0 %>
+        <% tax = 0 unless @instructor.taxable? %>
+        <td class="col-md-2">源泉徴収税</td>
+        <td class="col-md-1 text-right"><%= number_to_currency(tax.truncate) %></td>
+        <td class="col-md-1"></td>
+      </tr>
+      <tr>
+        <th class="col-md-2">総計</th>
+        <td class="col-md-1 text-right"><h3 style="margin-top: 0px;"><%= number_to_currency(total_of_courses + transportation - tax.truncate) %></h3></td>
+        <td class="col-md-1"></td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="pager">
+      <li class="previous">
+        <%= link_to_prev_months_salary @month, @instructor %>
+      </li>
+      <li class="next">
+        <%= link_to_next_months_salary @month, @instructor %>
+      </li>
+    </ul>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <%= button_to_back salaries_path(@month), pull: "left" %>
+  </div>
+</div>

@@ -20,13 +20,15 @@
 </div>
 <br />
 <div class="row">
-  <div class="col-md-5">
+  <div class="col-md-7">
     <div class="table-responsive">
       <table class="table table-bordered table-striped table-hover">
         <thead>
           <tr>
             <th class="col-md-3"><%= t("activerecord.attributes.instructor.name") %></th>
             <th class="col-md-1">クラス数</th>
+            <th class="col-md-1">交通費</th>
+            <th class="col-md-1">最低保証</th>
             <th class="col-md-1"></th>
           </tr>
         </thead>
@@ -35,6 +37,8 @@
             <tr>
               <td><%= link_to instructor.name, instructor_path(instructor), class: 'btn btn-link' %></td>
               <td class="text-right"><%= instructor.courses.active((@month + '01').to_date).count %></td>
+              <td class="text-right"><%= number_to_currency(instructor.transportation) if instructor.transportation.present? %></td>
+              <td class="text-right"><%= number_to_currency(instructor.guaranteed_min) if instructor.guaranteed_min.present? %></td>
               <td class="text-center">
                 <%= link_to_show salary_path(month: @month, instructor_id: instructor.id) %>
                 <%= link_to_pdf salary_path(month: @month, instructor_id: instructor.id, format: :pdf) %>

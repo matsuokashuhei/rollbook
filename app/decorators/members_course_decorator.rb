@@ -10,6 +10,13 @@ class MembersCourseDecorator < ApplicationDecorator
       end
     end
   end
+  
+  def monthly_status(month)
+    return '退会' if model.end_date.present? && model.end_date.strftime('%Y%m') < month
+    return '休会' if model.in_recess?(month)
+    return '受講' if model.begin_date.strftime('%Y%m') < month
+    return "#{model.start_week_of_month}週入会"
+  end
 
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:

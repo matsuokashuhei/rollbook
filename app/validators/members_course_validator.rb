@@ -1,6 +1,8 @@
 class MembersCourseValidator < ActiveModel::Validator
   
   def validate(members_course)
+    # 会員
+    #member_is_enrolled(members_course)
     # 開始日
     begin_date_is_future_than_enter_date(members_course)
     begin_date_is_future_than_open_date(members_course)
@@ -12,6 +14,13 @@ class MembersCourseValidator < ActiveModel::Validator
     has_no_recesses(members_course)
   end
   
+  # 使っていない。
+  def member_has_withdrawn(members_course)
+    unless members_course.member.status == Member::STATUSES[:ADMISSION]
+      members_course.errors.add(:base, "退会しているので登録や変更はできません。")
+    end
+  end
+
   # 開始日は会員の入会日以降であること。
   def begin_date_is_future_than_enter_date(members_course)
     return if members_course.begin_date.blank?
