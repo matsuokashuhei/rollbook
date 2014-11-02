@@ -64,7 +64,7 @@
               </td>
               <td>
                 <div class="pull-right">
-                  <% salary = members_course.salary_for_instructor(@month) %>
+                  <% salary = members_course.fee_for(month: @month) %>
                   <%= number_to_currency salary %>
                   <% total_of_members_course += salary %>
                 </div>

@@ -140,10 +140,6 @@ class Member < ActiveRecord::Base
     self.status == STATUSES[:SECESSION]
   end
 
-  def total_monthly_fee(date)
-    members_courses.active(date).joins(:course).sum("courses.monthly_fee")
-  end
-
   def full_name
     #"%s　%s" % [last_name, first_name]
     "#{last_name}　#{first_name}"

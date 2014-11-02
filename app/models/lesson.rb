@@ -33,12 +33,12 @@ class Lesson < ActiveRecord::Base
   validates :course_id, :date, :rolls_status, presence: true
   validates :date, uniqueness: { scope: :course_id }
 
-  #default_scope -> { order(:date, :course_id) }
-
+  # 出欠が確定しているレッスン
   scope :fixed, -> {
-    where(rolls_status: "2")
+    where(rolls_status: ROLL_STATUS[:FINISHED])
   }
 
+  # 特定の月のレッスン
   scope :for_month, -> (month) {
     if month.present?
       beginning_of_month = "#{month}01".to_date
@@ -47,8 +47,14 @@ class Lesson < ActiveRecord::Base
     end
   }
   
+  # 特定の期間内のレッスン
   scope :date_range, -> (from: from, to: Date.new(9999, 12, 31)) {
     where(date: [from..to])
+  }
+  
+  # インストラクターが欠勤したレッスン
+  scope :canceled_by_instructor, -> {
+    where(status: STATUS[:CANCEL_BY_INSTRUCTOR])
   }
 
   def editable?
@@ -66,13 +72,6 @@ class Lesson < ActiveRecord::Base
     self.rolls_status == ROLLS_STATUS[:NONE] || self.rolls_status == ROLLS_STATUS[:IN_PROCESS]
   end
 
-  def fix?
-    return false if self.rolls.size == 0 && self.course.members_courses.active(self.date).size > 0
-    return false if self.rolls.select { |roll| roll.status == "0" }.size > 0
-    return false if self.rolls_status == ROLLS_STATUS[:FINISHED]
-    true
-  end
-  
   def fixable?
     return false if self.rolls.select { |roll| roll.status == "0" }.size > 0
     return false if self.rolls.size == 0 && self.course.members_courses.active(self.date).size > 0
@@ -96,13 +95,11 @@ class Lesson < ActiveRecord::Base
   def prev_lesson
     one_week_before = date - 7.day
     Lesson.find_by(course_id: course_id, date: one_week_before)
-    #Lesson.find_or_initialize_by(course_id: course_id, date: one_week_before)
   end
 
   def next_lesson
     one_week_after = date + 7.day
     Lesson.find_by(course_id: course_id, date: one_week_after)
-    #Lesson.find_or_initialize_by(course_id: course_id, date: one_week_after)
   end
 
   def find_or_initialize_rolls
@@ -130,5 +127,23 @@ class Lesson < ActiveRecord::Base
     end
     find_or_initialize_rolls
   end
+
+  # 罰金を計算する。
+  def penalty
+    # インストラクターの欠勤による休講以外は罰金はない。
+    return 0 unless status == STATUS[:CANCEL_BY_INSTRUCTOR]
+    # 休講の場合は、レッスンの日に在籍している会員数×週割の月謝
+    members_courses = course.members_courses.active(date).select {|members_course| members_course.in_recess?(date.strftime("%Y%m")) == false }
+    (course.monthly_fee * members_courses.count * 0.25).to_i
+  end
+
+  def penalty_description
+    # デコレーターに移動する。
+    return '' unless status == STATUS[:CANCEL_BY_INSTRUCTOR]
+    members_courses = course.members_courses.active(date).select {|members_course| members_course.in_recess?(date.strftime("%Y%m")) == false }
+    weekly_fee = (course.monthly_fee * 0.25).to_i
+    "#{weekly_fee}円 X #{members_courses.count}人"
+  end
+
 
 end

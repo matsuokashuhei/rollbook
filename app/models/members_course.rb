@@ -80,19 +80,6 @@ class MembersCourse < ActiveRecord::Base
   #----------------
   after_update MembersCourseCallbacks
 
-  #def rolls
-  #  @rolls = Roll.member(member_id).course(course_id).details
-  #end
-
-  #def destroy?
-  #  if self.recesses.count == 0
-  #    if Roll.member(member_id).where("rolls.status > ?", "0").course(course_id).count == 0
-  #      return true
-  #    end
-  #  end
-  #  return false
-  #end
-  
   def deletable?
     #----------------------------
     # 休会している場合は消せない。
@@ -114,12 +101,53 @@ class MembersCourse < ActiveRecord::Base
     return introduction
   end
 
-  # 第何週入会かを計算する。
+  # 第何週入会かを調べる。
   def start_week_of_month
-    # 開始日が1〜7日の場合は第１週入会
-    # 開始日が8〜14日の場合は第２週入会
-    # 開始日が15〜21日の場合は第３週入会
-    # 開始日が22〜28日の場合は第４週入会
+    week_of_month(begin_date.day)
+  end
+
+  # 会員が休会中か判定する。
+  # === Args :: 月
+  def in_recess?(month)
+    recesses.exists?(month: month)
+  end
+  
+  # 会員が支払う受講料を計算する。
+  # === Args :: 月
+  # === Retrurn :: 受講料
+  def tuition(month)
+    fee = course.monthly_fee
+    # 退会している場合は0円
+    return 0 if end_date.present? && end_date.strftime("%Y%m") < month
+    # 休会中は0円
+    return 0 if in_recess?(month)
+    # 次月以降に入会する場合は0円    
+    return 0 if begin_date.strftime("%Y%m") > month
+    # 当月より過去に入会した場合は、１カ月分の月謝
+    return fee if begin_date.strftime("%Y%m") < month
+    # 当月に入会した場合は週割の月謝
+    unit_price = fee / 4
+    return unit_price + unit_price * (4 - start_week_of_month)
+  end
+  
+  # インストラクターに支払う講師代を計算する。
+  # === Args :: 月
+  # === Retrurn :: 講師料
+  def fee_for(month: month)
+    fee = tuition(month)
+    if introduction?
+      (fee * 0.6).to_i
+    else
+      (fee * 0.4).to_i
+    end      
+  end
+
+  private
+  
+  # 月の中で第何週か調べる。
+  # === Args :: 日
+  # === Retrurn :: 週
+  def week_of_month(date)
     case begin_date.day
     when 1..7
       1
@@ -127,38 +155,11 @@ class MembersCourse < ActiveRecord::Base
       2
     when 15..21
       3
-    else
+    when 22..28
       4
-    end
-  end
-
-  # 月謝を計算する。
-  # === Args
-  # month :: 月
-  def fee(month)
-    fee = course.monthly_fee
-    return fee if begin_date.strftime("%Y%m") < month
-    return 0 if begin_date.strftime("%Y%m") > month
-    unit_price = fee / 4
-    return unit_price + unit_price * (4 - start_week_of_month)
-  end
-
-  # インストラクターの給料を計算する。
-  # === Args :: 月
-  def salary_for_instructor(month)
-    return 0 if self.recesses.find_by(month: month)
-    fee = fee(month)
-    if introduction?
-      (fee * 0.6).to_i
     else
-      (fee * 0.4).to_i
+      5
     end
   end
 
-  private
-
-  def begin_and_end_of_month month
-    beginning_of_month = (month + "01").to_date
-    [beginning_of_month, beginning_of_month.end_of_month]
-  end
 end

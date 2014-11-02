@@ -100,4 +100,21 @@ class Course < ActiveRecord::Base
     members_courses.count == 0
   end
 
+  # インストラクターに支払う講師料を計算する。
+  # === Args :: 月
+  # === Return :: 講師料
+  def fee_for(month: month)
+    end_of_month = Date.new(month[0, 4].to_i, month[4, 2].to_i, 1).end_of_month
+    members_courses.active(end_of_month).map {|members_course| members_course.fee_for(month: month) }.inject(:+) || 0
+  end
+
+  # インストラクターが休講した場合の罰金を計算する。
+  # === Args :: 月
+  # === Return :: 罰金
+  def penalty_for(month: month)
+    canceled_lessons = lessons.for_month(month).canceled_by_instructor
+    return 0 if canceled_lessons.blank?
+    canceled_lessons.map {|lesson| lesson.penalty }.inject(:+)
+  end
+
 end

@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-xs-4">
+      <h2><%= "#{@month[0, 4]}年#{@month[4, 2]}月" %></h3>
+    </div>
+    <div class="col-xs-8">
+      <h2>給料明細書</h3>
+    </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h3><%= "#{@instructor.name}殿" %></h4>
+    <hr/>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h4>支給</h4>
+  </div>
+</div>
+<% @courses.each do |course| %>
+  <%= render partial: 'course', locals: { course: course, month: @month } %>
+<% end %>
+<%= render partial: 'total_amount_paid', locals: { instructor: @instructor, month: @month } %>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h4>控除</h4>
+  </div>
+</div>
+<%= render partial: 'deductions', locals: { instructor: @instructor, courses: @courses, month: @month } %>
+
+<div class="row">
+  <div class="col-xs-12">
+    <h4>合計</h4>
+  </div>
+</div>
+<%= render partial: 'net_amount_paid', locals: { instructor: @instructor, month: @month } %>

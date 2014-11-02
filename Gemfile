@@ -54,3 +54,6 @@ gem "ransack"
 
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
+
+
+gem 'newrelic_rpm'
