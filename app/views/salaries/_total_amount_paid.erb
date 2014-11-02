@@ -26,7 +26,7 @@
             <% if (instructor.transportation || 0) > 0 %>
               <tr>
                 <td class="text-center">2</td>
-                <td>交通費</td>
+                <td><%= t("activerecord.attributes.instructor.transportation") %></td>
                 <td class="text-right"><%= number_to_currency(instructor.transportation) %></td>
                 <td></td>
               </tr>
