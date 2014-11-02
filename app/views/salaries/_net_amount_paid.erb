@@ -5,6 +5,7 @@
     else
       0
     end
+  deduction = 0 unless instructor.taxable?
   net_amount_paid = total_amount_paid - deduction
 %>
 <div class="row">

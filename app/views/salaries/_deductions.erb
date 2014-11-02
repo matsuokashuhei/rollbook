@@ -6,6 +6,7 @@
       0
     end
   #tax = (fee * 0.1021).truncate if fee > 0
+  tax = 0 unless instructor.taxable?
 %>
 <div class="row">
   <div class="col-xs-12" style="page-break-inside: avoid;">
@@ -25,7 +26,7 @@
               <td class="text-center">1</td>
               <td>源泉徴収税</td>
               <td class="text-right"><%= number_to_currency(tax) %></td>
-              <td><%= "課税対象額　#{number_to_currency(fee)}"%></td>
+              <td><%# "課税対象額　#{number_to_currency(fee)}"%></td>
             </tr>
           </tbody>
         </table>
