@@ -18,16 +18,18 @@
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
-          <% if current_user.admin? %>
+          <% if current_user.manager? %>
             <li class="dropdown <%= 'active' if params[:controller].presence_in(["users", "access_logs"]) %>">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 管理 <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-                <li><%= users_link %></li>
-                <li><%= link_to t("activerecord.models.access_log"), access_logs_path %></li>
+                <% if current_user.admin? %>
+                  <li><%= users_link %></li>
+                  <li><%= link_to "統計", statistics_path %></li>
+                  <li><%= link_to t("activerecord.models.access_log"), access_logs_path %></li>
+                <% end %>
                 <%= list_item_to_salaries %>
-                <li><%= link_to "統計", statistics_path %></li>
               </ul>
             </li>
           <% end %>

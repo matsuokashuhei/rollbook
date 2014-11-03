@@ -29,6 +29,10 @@ class ApplicationController < ActionController::Base
     redirect_to root_path unless current_user.admin?
   end
 
+  def manager!
+    redirect_to root_path unless current_user.manager?
+  end
+
   def log!
     return if params[:controller] == "access_logs"
     access_log = AccessLog.new(ip: request.ip,

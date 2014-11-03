@@ -1,6 +1,7 @@
 class SalariesController < ApplicationController
 
-  before_action :admin_user!
+  #before_action :admin_user!
+  before_action :manager!
 
   def index
     @q = Instructor.search(params[:q])
