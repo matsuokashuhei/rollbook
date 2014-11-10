@@ -132,7 +132,7 @@ class Lesson < ActiveRecord::Base
   def penalty
     # インストラクターの欠勤による休講以外は罰金はない。
     return 0 unless status == STATUS[:CANCEL_BY_INSTRUCTOR]
-    # 休講の場合は、レッスンの日に在籍している会員数×週割の月謝
+    # 休講の場合は、レッスンの日に在籍している会員数×週割の月謝※税込
     members_courses = course.members_courses.active(date).select {|members_course| members_course.in_recess?(date.strftime("%Y%m")) == false }
     (((course.monthly_fee * (1 + TAX_RATE)) * members_courses.count) * 0.25).to_i
   end
