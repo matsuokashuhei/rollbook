@@ -49,7 +49,7 @@ Rollbook::Application.routes.draw do
 
   match "lessons/:lesson_id/rolls/edit" => "rolls#edit", via: :get, as: "edit_lesson_rolls"
   match "lessons/:lesson_id/rolls" => "rolls#create_or_update", via: :post
-  match "lessons/:lesson_id/absences" => "rolls#absences", via: :get, as: "absences"
+  match "lessons/:lesson_id/absentees" => "rolls#absentees", via: :get, as: "absentees"
   match "lessons/:lesson_id/substitutes" => "rolls#substitute", via: :post
 
   # クラス

@@ -12,6 +12,21 @@
 <%= render "shared/notice" %>
 <div class="row">
   <div class="col-md-12">
+    <%= search_form_for @q, url: absentees_path(@lesson), html: { class: "form-inline" } do |f| %>
+      <div class="form-group">
+        <%= f.text_field :member_number_start, class: "form-control", placeholder: t("activerecord.attributes.member.number"), autofocus: true %>
+      </div>
+      <div class="form-group">
+        <%= f.text_field :member_last_name_kana_start, class: "form-control", placeholder: t("activerecord.attributes.member.last_name_kana") %>
+      </div>
+      <div class="form-group">
+        <%= f.text_field :member_first_name_kana_start, class: "form-control", placeholder: t("activerecord.attributes.member.first_name_kana") %>
+      </div>
+      <%= f.button class: "btn btn-success" do %>
+        <%= fa_icon("search lg", text: t("views.buttons.search")) %>
+      <% end %>
+    <% end %>
+    <% if false %>
     <%= form_tag absences_path(@lesson), method: :get, class: "form-inline" do %>
       <div class="form-group">
         <%= text_field_tag "number", params[:number], class: "form-control", placeholder: t("activerecord.attributes.member.number"), autofocus: true %>
@@ -23,6 +38,7 @@
         <%= text_field_tag "first_name_kana", params[:first_name_kana], class: "form-control", placeholder: t("activerecord.attributes.member.first_name_kana")  %>
       </div>
       <%= button_to_search %>
+    <% end %>
     <% end %>
   </div>
 </div>

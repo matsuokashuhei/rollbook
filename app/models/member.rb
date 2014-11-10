@@ -92,34 +92,6 @@ class Member < ActiveRecord::Base
   }
 =end
 
-  scope :number, -> (number = nil) {
-    if number.present?
-      where("number like ?", "%#{number}")
-    end
-  }
-
-  scope :last_name, -> (last_name_kana = nil) {
-    if last_name_kana.present?
-      where("last_name_kana like ?", "#{last_name_kana}%")
-    end
-  }
-
-  scope :first_name, -> (first_name_kana = nil) {
-    if first_name_kana.present?
-      where("first_name_kana like ?", "#{first_name_kana}%")
-    end
-  }
-
-  scope :name_like, -> (last_name_kana = nil, first_name_kana = nil) {
-    if last_name_kana.present? && first_name_kana.present?
-      last_name(last_name_kana).first_name(first_name_kana)
-    elsif last_name_kana.present?
-      last_name(last_name_kana)
-    elsif first_name_kana.present?
-      first_name(first_name_kana)
-    end
-  }
-
   scope :status, -> (status = nil) {
     if status.present?
       where(status: status)
