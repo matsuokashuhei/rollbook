@@ -59,6 +59,7 @@ GEM
     execjs (2.2.1)
     font-awesome-rails (4.1.0.0)
       railties (>= 3.2, < 5.0)
+    hash-deep-merge (0.1.1)
     hike (1.2.3)
     i18n (0.6.11)
     jbuilder (1.5.3)
@@ -71,6 +72,9 @@ GEM
     kaminari (0.16.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    lazy_high_charts (1.5.4)
+      bundler (>= 1.0)
+      hash-deep-merge
     libv8 (3.16.14.3)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -190,6 +194,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   kaminari
+  lazy_high_charts
   newrelic_rpm
   pg
   pry-rails

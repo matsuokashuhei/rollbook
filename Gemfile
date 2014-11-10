@@ -57,3 +57,6 @@ gem 'wicked_pdf'
 
 
 gem 'newrelic_rpm'
+
+gem 'lazy_high_charts'
+

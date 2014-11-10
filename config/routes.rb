@@ -81,7 +81,7 @@ Rollbook::Application.routes.draw do
   resources :access_logs, only: [:index]
 
   # 統計
-  get "statistics/data"
+  match "dashboards" => "dashboards#index", via: :get, as: "dashboards"
   match "statistics" => "statistics#index", via: :get, as: "statistics"
   match "statistics/members" => "statistics#members", via: :get, as: "statistics_members"
   match "statistics/members_courses" => "statistics#members_courses", via: :get, as: "statistics_members_courses"
