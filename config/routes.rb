@@ -41,11 +41,16 @@ Rollbook::Application.routes.draw do
 
   # レッスン
   resources :lessons do
+    member do
+      post 'fix'
+      post 'unfix'
+      post 'cancel'
+    end
     resources :rolls, only: :index
   end
-  match "lessons/:id/fix" => "lessons#fix", via: :post, as: "fix_lesson"
-  match "lessons/:id/unfix" => "lessons#unfix", via: :post, as: "unfix_lesson"
-  match "lessons/:id/cancel" => "lessons#cancel", via: :post, as: "cancel_lesson"
+  #match "lessons/:id/fix" => "lessons#fix", via: :post, as: "fix_lesson"
+  #match "lessons/:id/unfix" => "lessons#unfix", via: :post, as: "unfix_lesson"
+  #match "lessons/:id/cancel" => "lessons#cancel", via: :post, as: "cancel_lesson"
 
   match "lessons/:lesson_id/rolls/edit" => "rolls#edit", via: :get, as: "edit_lesson_rolls"
   match "lessons/:lesson_id/rolls" => "rolls#create_or_update", via: :post
