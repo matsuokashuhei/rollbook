@@ -100,7 +100,7 @@ class RollsController < ApplicationController
   def absentees
     exclude_members = @lesson.rolls.joins(:member)
     @q = Roll.absences.joins(:lesson, :member).merge(Lesson.fixed).where.not(member_id: exclude_members.pluck(:member_id)).search(params[:q])
-    if params[:q].present?
+    if params[:q].present? || params[:utf8].present?
       @rolls = @q.result
       @members = Member.where(id: @rolls.pluck(:member_id).uniq).page(params[:page]).decorate
     else
