@@ -1,11 +1,10 @@
 <%
   total_amount_paid = instructor.fee_for(month: month) + (instructor.transportation || 0)
-  deduction = if total_amount_paid > 0
-      (total_amount_paid * 0.1021).truncate
+  deduction = if instructor.taxable?
+      Rollbook::Money.calculate_withholding_tax(total_amount_paid)
     else
       0
     end
-  deduction = 0 unless instructor.taxable?
   net_amount_paid = total_amount_paid - deduction
 %>
 <div class="row">

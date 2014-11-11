@@ -134,16 +134,16 @@ class Lesson < ActiveRecord::Base
     return 0 unless status == STATUS[:CANCEL_BY_INSTRUCTOR]
     # 休講の場合は、レッスンの日に在籍している会員数×週割の月謝※税込
     members_courses = course.members_courses.active(date).select {|members_course| members_course.in_recess?(date.strftime("%Y%m")) == false }
-    (((course.monthly_fee * (1 + TAX_RATE)) * members_courses.count) * 0.25).to_i
+    #(((course.monthly_fee * (1 + TAX_RATE)) * members_courses.count) * 0.25).to_i
+    (Rollbook::Money.include_consumption_tax(course.monthly_fee) * members_courses.count * 0.25).to_i
   end
 
   def penalty_description
     # デコレーターに移動する。
     return '' unless status == STATUS[:CANCEL_BY_INSTRUCTOR]
     members_courses = course.members_courses.active(date).select {|members_course| members_course.in_recess?(date.strftime("%Y%m")) == false }
-    weekly_fee = ((course.monthly_fee * (1 + TAX_RATE)) * 0.25).to_i
+    weekly_fee = (Rollbook::Money.include_consumption_tax(course.monthly_fee) * 0.25).to_i
     "#{weekly_fee}円 X #{members_courses.count}人"
   end
-
 
 end
