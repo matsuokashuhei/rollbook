@@ -31,6 +31,11 @@ class Roll < ActiveRecord::Base
     RECESS: "5",
     CANCEL: "6",
   }
+  
+  # attend 出席する
+  # attendance 出席
+  # absent from 欠席する
+  # absence 欠席
 
 
   belongs_to :lesson

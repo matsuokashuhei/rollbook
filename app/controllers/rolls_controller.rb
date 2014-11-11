@@ -1,6 +1,6 @@
 class RollsController < ApplicationController
   # 体験は設計ミスのため削除する。
-  before_action :set_lesson, only: [:index, :new, :create, :edit, :create_or_update, :absences, :substitute]
+  before_action :set_lesson, only: [:index, :new, :create, :edit, :create_or_update, :absentees, :substitute]
 
   # GET /lessons/:lesson_id/rolls
   # GET /lessons/:lesson_id/rolls.json
@@ -97,20 +97,14 @@ class RollsController < ApplicationController
     end
   end
 
-  def absences
-    @members = []
-    if params.values_at(:number, :last_name_kana, :first_name_kana).any?
-      # 振替の対象にならない（レッスンを受けている）会員
-      exclude_member_ids = @lesson.rolls.joins(:member).pluck(:member_id)
-      #member_ids = Roll.absences.joins(:lesson, :member).merge(Lesson.fixed).merge(Member.number(params[:number])).merge(Member.name_like(params[:last_name_kana], params[:first_name_kana])).where.not(member_id: exclude_member_ids).pluck(:member_id).uniq
-      # 振替の対象になる会員
-      rolls = Roll.absences.joins(:lesson, :member)
-      rolls = rolls.merge(Lesson.fixed)
-      rolls = rolls.merge(Member.number(params[:number]))
-      rolls = rolls.merge(Member.name_like(params[:last_name_kana], params[:first_name_kana]))
-      rolls = rolls.where.not(member_id: exclude_member_ids)
-      include_member_ids = rolls.pluck(:member_id).uniq
-      @members = Member.where(id: include_member_ids).page(params[:page]).decorate
+  def absentees
+    exclude_members = @lesson.rolls.joins(:member)
+    @q = Roll.absences.joins(:lesson, :member).merge(Lesson.fixed).where.not(member_id: exclude_members.pluck(:member_id)).search(params[:q])
+    if params[:q].present? || params[:utf8].present?
+      @rolls = @q.result
+      @members = Member.where(id: @rolls.pluck(:member_id).uniq).page(params[:page]).decorate
+    else
+      @members = Member.none
     end
   end
 

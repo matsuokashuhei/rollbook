@@ -15,6 +15,9 @@
 //= require turbolinks
 //= require bootstrap
 //= require bootstrap-datepicker
+//= require highcharts/highcharts
+//= require highcharts/highcharts-more
+//= require highcharts/highstock
 //= require_tree .
 
 $(document).on("focus", "[data-behaviour~='datepicker']", function(e) {

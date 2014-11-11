@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-md-6">
+    <%= render partial: "chart", locals: { id: "xxx", name: "#{t('activerecord.models.member')}数", chart: @members_chart } %>
+  </div>
+  <div class="col-md-6">
+    <%=render partial: "chart", locals: { id: "yyy", name: "#{t('activerecord.models.members_course')}数", chart: @members_courses_chart } %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <%= render partial: "chart", locals: { id: "zzz", name: "#{t('activerecord.models.recess')}率", chart: @recesses_chart } %>
+  </div>
+  <div class="col-md-6">
+  </div>
+</div>

@@ -43,5 +43,8 @@ module Rollbook
 
     #config.assets.initialize_on_precompile = false
     I18n.enforce_available_locales = false
+    
+    # libを自動で読み込む。
+    config.autoload_paths += %W(#{config.root}/lib)
   end
 end

@@ -73,6 +73,8 @@ class Member < ActiveRecord::Base
     query = query.where('coalesce("members"."leave_date", \'9999-12-31\') >= ?', end_of_month)
   }
 
+=begin
+  統計情報を作り直したら消す。
   # 入会した会員
   scope :registered, -> (month = Date.today.strftime("%Y%m")) {
     beginning_of_month = (month + "01").to_date.beginning_of_month
@@ -88,34 +90,7 @@ class Member < ActiveRecord::Base
     query = where(status: [STATUSES[:ADMISSION], STATUSES[:SECESSION]])
     query = query.where(leave_date: end_of_month)
   }
-
-  scope :number, -> (number = nil) {
-    if number.present?
-      where("number like ?", "%#{number}")
-    end
-  }
-
-  scope :last_name, -> (last_name_kana = nil) {
-    if last_name_kana.present?
-      where("last_name_kana like ?", "#{last_name_kana}%")
-    end
-  }
-
-  scope :first_name, -> (first_name_kana = nil) {
-    if first_name_kana.present?
-      where("first_name_kana like ?", "#{first_name_kana}%")
-    end
-  }
-
-  scope :name_like, -> (last_name_kana = nil, first_name_kana = nil) {
-    if last_name_kana.present? && first_name_kana.present?
-      last_name(last_name_kana).first_name(first_name_kana)
-    elsif last_name_kana.present?
-      last_name(last_name_kana)
-    elsif first_name_kana.present?
-      first_name(first_name_kana)
-    end
-  }
+=end
 
   scope :status, -> (status = nil) {
     if status.present?

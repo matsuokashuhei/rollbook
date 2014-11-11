@@ -49,6 +49,8 @@ class MembersCourse < ActiveRecord::Base
     where(begin_date.gt(date))
   }
 
+=begin  
+  統計情報を作り直したら消す。
   # 入会したクラス
   scope :registered, -> (month = Date.today.strftime("%Y%m")) {
     beginning_of_month = (month + "01").to_date.beginning_of_month
@@ -70,6 +72,7 @@ class MembersCourse < ActiveRecord::Base
     query = where('"members_courses"."begin_date" between ? and ?', beginning_of_month, end_of_month)
     query = query.where('"members_courses"."end_date" = ?', end_of_month)
   }
+=end
 
   scope :details, -> {
     joins(course: [[timetable: [:studio, :time_slot]], :dance_style, :level, :instructor])
