@@ -62,7 +62,7 @@
                 <td class="text-center"><%= radio_button_tag "member_id", member.id %></td>
                 <td><%= member.number %></td>
                 <td><%= member.name %></td>
-                <td class="text-right"><%= link_to Roll.where(member_id: member.id).absences.count, rolls_member_path(member.id, status: 2) %></td>
+                <td class="text-right"><%= link_to Roll.where(member_id: member.id).absences.count, member_rolls_path(member.id, status: 2) %></td>
               </tr>
             <% end %>
           </tbody>

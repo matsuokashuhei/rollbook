@@ -12,7 +12,7 @@ module RollsHelper
 
   def member_rolls_link(member, disabled: false)
     unless disabled
-      link_to t("activerecord.models.lesson"), rolls_member_path(member)
+      link_to t("activerecord.models.lesson"), member_rolls_path(member.id)
     else
       link_to t("activerecord.models.lesson"), nil, class: "disabled"
     end

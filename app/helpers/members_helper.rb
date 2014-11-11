@@ -52,7 +52,7 @@ module MembersHelper
   end
 
   def link_to_members_rolls(member)
-    link_to t("activerecord.models.roll"), rolls_member_path(member)
+    link_to t("activerecord.models.roll"), member_rolls_path(member)
   end
 
   def course_members_link(course, disable: false)

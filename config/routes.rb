@@ -25,7 +25,7 @@ Rollbook::Application.routes.draw do
 
   # 会員
   resources :members do
-    get 'rolls', on: :member
+    resources :rolls, only: :index, controller: :members, action: :rolls
     resources :members_courses
     resources :recesses
   end
@@ -48,9 +48,6 @@ Rollbook::Application.routes.draw do
     end
     resources :rolls, only: :index
   end
-  #match "lessons/:id/fix" => "lessons#fix", via: :post, as: "fix_lesson"
-  #match "lessons/:id/unfix" => "lessons#unfix", via: :post, as: "unfix_lesson"
-  #match "lessons/:id/cancel" => "lessons#cancel", via: :post, as: "cancel_lesson"
 
   match "lessons/:lesson_id/rolls/edit" => "rolls#edit", via: :get, as: "edit_lesson_rolls"
   match "lessons/:lesson_id/rolls" => "rolls#create_or_update", via: :post
@@ -63,8 +60,9 @@ Rollbook::Application.routes.draw do
   match "courses/:id/lessons" => "courses#lessons", via: :get, as: "course_lessons"
 
   # インストラクター
-  resources :instructors
-  match "instructors/:id/courses" => "instructors#courses", via: :get, as: "instructor_courses"
+  resources :instructors do
+    resources :courses, only: :index, controller: :instructors, action: :courses
+  end
 
   # インストラクターの給料
   last_month = (Date.today - 1.month).strftime('%Y%m')
