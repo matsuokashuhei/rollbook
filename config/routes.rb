@@ -25,10 +25,10 @@ Rollbook::Application.routes.draw do
 
   # 会員
   resources :members do
+    get 'rolls', on: :member
     resources :members_courses
     resources :recesses
   end
-  match "members/:id/rolls" => "members#rolls", via: :get, as: "member_rolls"
   match "members/:member_id/courses/:id/rolls" => "members_courses#rolls", via: :get, as: "member_course_rolls"
   match "members/:member_id/members_courses/new/timetables" => "members_courses#timetables", via: :get, as: "timetables"
 
