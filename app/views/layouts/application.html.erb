@@ -9,18 +9,24 @@
   </head>
   <body>
     <div class="container-fluid">
+  
       <% if user_signed_in? %>
         <%= render "layouts/navbar" %>
         <%= render "layouts/nav" %>
+        <%= breadcrumbs style: :bootstrap %>
       <% end %>
+
       <%= yield %>
+
       <% if Rails.env.development? %>
         <div class="row">
           <div class="col-md-12">
             <%= debug(params) %>
+            <%# debug(request) %>
           </div>
         </div>
       <% end %>
+
     </div>
     <script>
       $("[data-toggle~='tooltip']").tooltip()

@@ -1,24 +1,5 @@
 module InstructorsHelper
 
-  # パン屑
-  def list_item_to_instructors(active: false)
-    text = t("activerecord.models.instructor")
-    if active
-      content_tag :li, text, class: "active"
-    else
-      content_tag :li, link_to_instructors
-    end
-  end
-
-  def list_item_to_instructor(instructor, active: false)
-    text = instructor.name
-    if active
-      content_tag :li, text, class: "active"
-    else
-      content_tag :li, link_to_instructor(instructor)
-    end
-  end
-
   # タブリンク
   def tab_to_instructor instructor, active: false
     text = t "activerecord.models.instructor"
