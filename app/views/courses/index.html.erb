@@ -1,10 +1,4 @@
-<div class="row">
-  <div class="col-md-12">
-    <ol class="breadcrumb">
-      <%= list_item_to_courses(@current_studio, active: true) %>
-    </ol>
-  </div>
-</div>
+<% breadcrumb :courses, @current_date, @current_studio %>
 <%= render 'nav' %>
 <br />
 <div class="row">

@@ -1,15 +1,5 @@
 module MembersCoursesHelper
 
-  # パン屑用
-  def list_item_to_members_courses(member, active: false)
-    text = t("activerecord.models.members_course")
-    if active
-      content_tag :li, text, class: "active"
-    else
-      content_tag :li, link_to_members_courses(member)
-    end
-  end
-
   # タブ用
   def tab_to_members_courses(member, active: false)
     text = t("activerecord.models.members_course")

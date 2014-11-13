@@ -1,24 +1,5 @@
 module MembersHelper
 
-  # パン屑用
-  def list_item_to_members(active: false)
-    text = t("activerecord.models.member")
-    if active
-      content_tag :li, text, class: "active"
-    else
-      content_tag :li, link_to_members
-    end
-  end
-
-  def list_item_to_member(member, active: false)
-    text = member.full_name
-    if active
-      content_tag :li, text, class: "active"
-    else
-      content_tag :li, link_to_member(member, text: text)
-    end
-  end
-
   # タブ用
   def tab_to_member(member, active: false)
     text = t("activerecord.models.member")

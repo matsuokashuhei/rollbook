@@ -1,10 +1,4 @@
-<div class="row">
-  <div class="col-md-12">
-    <ol class="breadcrumb">
-      <%= list_item_to_posts %>
-    </ol>
-  </div>
-</div>
+<% breadcrumb :posts %>
 <div class="row">
   <div class="col-md-11">
     <%= search_form_for @q, url: posts_path, class: 'form-inline' do |f| %>

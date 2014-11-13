@@ -1,13 +1,4 @@
-<%# render 'nav' %>
-<div class="row">
-  <div class="col-md-12">
-    <ol class="breadcrumb">
-      <%= list_item_to_courses(@studio) %>
-      <%= list_item_to_course(@course) %>
-      <%= list_item_to_edit %>
-    </ol>
-  </div>
-</div>
+<% breadcrumb :edit_course, @course %>
 <div class="row">
   <div class="col-md-12">
     <ul class="nav nav-tabs">

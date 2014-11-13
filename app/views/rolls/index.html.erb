@@ -1,13 +1,4 @@
-<div class="row">
-  <div class="col-md-12">
-    <ol class="breadcrumb">
-      <%= list_item_to_lessons %>
-      <%= list_item_to_lessons_of_month @lesson.date.strftime("%Y%m") %>
-      <%= list_item_to_lessons_of_day @lesson.date %>
-      <%= list_item_to_lesson @lesson, active: true %>
-    </ol>
-  </div>
-</div>
+<% breadcrumb :lesson, @lesson %>
 <div class="row">
   <div class="col-md-12">
     <%= render "shared/notice" %>

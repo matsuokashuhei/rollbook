@@ -1,24 +1,5 @@
 module BankAccountsHelper
 
-  # パン屑用
-  def list_item_to_bank_accounts active: false
-    text = t "activerecord.models.bank_account"
-    if active
-      content_tag :li, text, class: "active"
-    else
-      content_tag :li, link_to_bank_accounts
-    end
-  end
-
-  def list_item_to_bank_account bank_account, active: false
-    text = bank_account.holder_name
-    if active
-      content_tag :li, text, class: "active"
-    else
-      content_tag :li, link_to_bank_account(bank_account)
-    end
-  end
-
   # タブ用
   def tab_to_bank_account bank_account, active: false
     text = t "activerecord.models.bank_account"

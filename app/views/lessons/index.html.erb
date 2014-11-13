@@ -1,12 +1,4 @@
-<div class="row">
-  <div class="col-md-12">
-    <ol class="breadcrumb">
-      <%= list_item_to_lessons %>
-      <%= list_item_to_lessons_of_month @date.strftime("%Y%m") %>
-      <%= list_item_to_lessons_of_day @date, active: true %>
-    </ol>
-  </div>
-</div>
+<% breadcrumb :lessons_for_day, @date %>
 <div class="row">
   <div class="col-md-12">
     <%= form_tag lessons_path, method: :get, class: "form-inline" do %>

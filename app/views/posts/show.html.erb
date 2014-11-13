@@ -1,11 +1,4 @@
-<div class="row">
-  <div class="col-md-12">
-    <ol class="breadcrumb">
-      <%= list_item_to_posts %>
-      <%= list_item_to_post(@post, active: true) %>
-    </ol>
-  </div>
-</div>
+<% breadcrumb :post, @post %>
 <div class="row">
   <div class="col-md-12">
     <%= render "shared/notice" %>

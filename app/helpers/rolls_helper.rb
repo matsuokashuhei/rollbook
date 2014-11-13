@@ -10,14 +10,6 @@ module RollsHelper
      ["休講", "6"],]
   end
 
-  def member_rolls_link(member, disabled: false)
-    unless disabled
-      link_to t("activerecord.models.lesson"), member_rolls_path(member.id)
-    else
-      link_to t("activerecord.models.lesson"), nil, class: "disabled"
-    end
-  end
-
   ROLL_STATUS = {
     "0" => { "name" => "未定", "label" => "label-default", "button" => "btn-default" },
     "1" => { "name" => "出席", "label" => "label-success", "button" => "btn-success" },
@@ -38,17 +30,6 @@ module RollsHelper
 
   def roll_status_button(status)
     ROLL_STATUS[status]["button"]
-  end
-
-  def list_item_to_lesson lesson, active: false
-    text = lesson.course.name
-    if active
-      content_tag :li, text, class: "active"
-    else
-      content_tag :li do
-        link_to text, lesson_rolls_path(lesson)
-      end
-    end
   end
 
   def button_to_absences path, pull:nil

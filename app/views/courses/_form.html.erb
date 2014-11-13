@@ -31,13 +31,13 @@
   <%= f.hidden_field :timetable_id %>
   <div class="form-group">
     <label class="col-md-1 control-label"><%= t("activerecord.models.course") %></label>
-    <div class="col-md-3 <%= 'has-error' if @course.errors[:dance_style_id].present? %>">
+    <div class="col-md-2 <%= 'has-error' if @course.errors[:dance_style_id].present? %>">
       <%= f.collection_select :dance_style_id, DanceStyle.all, :id, :name, { prompt: "" }, { class: "form-control" } %>
     </div>
-    <div class="col-md-3 <%= 'has-error' if @course.errors[:level_id].present? %>">
+    <div class="col-md-2 <%= 'has-error' if @course.errors[:level_id].present? %>">
       <%= f.collection_select :level_id, Level.all, :id, :name, { prompt: "" }, { class: "form-control" } %>
     </div>
-    <div class="col-md-3 <%= 'has-error' if @course.errors[:instructor_id].present? %>">
+    <div class="col-md-2 <%= 'has-error' if @course.errors[:instructor_id].present? %>">
       <%= f.collection_select :instructor_id, Instructor.all, :id, :name, { prompt: "" }, { class: "form-control" } %>
     </div>
   </div>

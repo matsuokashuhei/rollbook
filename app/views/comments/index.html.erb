@@ -1,11 +1,4 @@
-<div class="row">
-  <div class="col-md-12">
-    <ol class="breadcrumb">
-      <li><%= link_to t("activerecord.models.post"), root_path %></li>
-      <li class="active"><%= @post.title %></li>
-    </ol>
-  </div>
-</div>
+<% breadcrumb :comments, @post %>
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
     <h3>

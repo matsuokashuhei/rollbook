@@ -1,10 +1,4 @@
-<div class="row">
-  <div class="col-md-12">
-    <ol class="breadcrumb">
-      <%= list_item_to_members(active: true) %>
-    </ol>
-  </div>
-</div>
+<% breadcrumb :members %>
 <div class="row">
   <div class="col-md-10">
     <%= search_form_for @q, html: { class: "form-inline" } do |f| %>

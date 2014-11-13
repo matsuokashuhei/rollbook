@@ -1,24 +1,5 @@
 module SalariesHelper
 
-  def list_item_to_salaries active: false
-    text = "給料"
-    month = (Date.today - 1.month).strftime('%Y%m')
-    content_tag :li do
-      link_to text, salaries_path(month: month)
-    end
-  end
-
-  def list_item_to_salaries_of_month month, active: false
-    text = (month + "01").to_date.strftime("%Y年%m月")
-    if active
-      content_tag :li, text, class: "active"
-    else
-      content_tag :li do
-        link_to text, salaries_path(month: month)
-      end
-    end
-  end
-
   def link_to_prev_months_salaries month
     prev_month = ((month + "01").to_date - 1.day).strftime("%Y%m")
     text = prev_month[0..3].concat("年").concat(prev_month[4..5]).concat("月")

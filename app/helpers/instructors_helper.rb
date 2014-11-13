@@ -27,14 +27,4 @@ module InstructorsHelper
     end
   end
 
-  private
-
-  def link_to_instructors
-    link_to t("activerecord.models.instructor"), instructors_path
-  end
-
-  def link_to_instructor instructor
-    link_to instructor.name, instructor_path(instructor)
-  end
-
 end

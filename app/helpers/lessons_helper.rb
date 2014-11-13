@@ -1,43 +1,5 @@
 module LessonsHelper
 
-  def list_item_to_lessons active: false
-    text = t("activerecord.models.lesson")
-    content_tag :li do
-      link_to text, lessons_path
-    end
-  end
-
-  def list_item_to_lessons_of_month month, active: false
-    text = month.concat("01").to_date.strftime("%Y年%m月")
-    if active
-      content_tag :li, text, class: "active"
-    else
-      content_tag :li do
-        link_to text, lessons_path(month: month)
-      end
-    end
-  end
-
-  def list_item_to_lessons_of_day date, active: false
-    text = date.strftime("%d日")
-    if active
-      content_tag :li, text, class: "active"
-    else
-      content_tag :li do
-        link_to text, lessons_path(date: date.strftime("%Y%m%d"))
-      end
-    end
-  end
-
-  def link_to_lessons month: nil
-    if month.nil?
-      link_to t("activerecord.models.lesson"), lessons_path
-    else
-      text = month.concat("01").to_date.strftime("%Y年%m月")
-      link_to text, lessons_path(month: month)
-    end
-  end
-
   def link_to_prev_months_lessons month
     prev_month = (month.concat("01").to_date - 1.day).strftime("%Y%m")
     text = prev_month[0..3].concat("年").concat(prev_month[4..5]).concat("月")
@@ -79,17 +41,6 @@ module LessonsHelper
         fa_icon "caret-left", text: text
       end
     end
-=begin
-    text = "先週"
-    if lesson.new_record?
-      form_for(lesson) do |f|
-      end
-    else
-      link_to lesson_rolls_path(lesson), class: "btn btn-link pull-left" do
-        fa_icon "caret-left", text: text
-      end
-    end
-=end
   end
 
   def link_to_next_lesson lesson
@@ -100,7 +51,5 @@ module LessonsHelper
       end
     end
   end
-
-  private
 
 end

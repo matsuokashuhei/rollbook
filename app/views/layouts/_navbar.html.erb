@@ -29,7 +29,7 @@
                   <li><%= link_to "統計",dashboards_path %></li>
                   <li><%= link_to t("activerecord.models.access_log"), access_logs_path %></li>
                 <% end %>
-                <%= list_item_to_salaries %>
+                <li><%= link_to "給料明細書", salaries_path(month: Date.today.strftime("%Y%m")) %></li>
               </ul>
             </li>
           <% end %>
@@ -38,7 +38,7 @@
               <%= current_user.try(:name) %> <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <%= list_item_to_posts %>
+              <li><%= link_to posts_path do %>お知らせ<% end %></li>
               <li><%= link_to edit_user_path(current_user) do %>設定変更<% end %></li>
               <li><%= link_to edit_user_registration_path do %>パスワード変更<% end %></li>
               <li><%= link_to destroy_user_session_path, method: :delete do %>ログアウト<% end %></li>

@@ -1,12 +1,4 @@
-<div class="row">
-  <div class="col-md-12">
-    <ol class="breadcrumb">
-      <%= list_item_to_members %>
-      <%= list_item_to_member(@member) %>
-      <%= list_item_to_edit %>
-    </ol>
-  </div>
-</div>
+<% breadcrumb :edit_member, @member %>
 <div class="row">
   <div class="col-md-12">
     <ul class="nav nav-tabs">

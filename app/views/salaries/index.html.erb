@@ -1,11 +1,4 @@
-<div class="row">
-  <div class="col-md-12">
-    <ol class="breadcrumb">
-      <%= list_item_to_salaries %>
-      <%= list_item_to_salaries_of_month @month, active: true %>
-    </ol>
-  </div>
-</div>
+<% breadcrumb :salaries, @month %>
 <div class="row">
   <div class="col-md-5">
     <%= search_form_for(@q, url: salaries_path(month: @month), class: 'form-inline') do |f| %>
