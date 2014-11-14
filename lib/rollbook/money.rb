@@ -1,6 +1,6 @@
 module Rollbook
 
-  class Money
+  module Money
   
     # 消費税の税率  
     @@consumption_tax_rate = 0.08
