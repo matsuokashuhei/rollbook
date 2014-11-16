@@ -64,6 +64,12 @@ class Member < ActiveRecord::Base
   # スコープ
   # -------------------------
 
+  scope :active, -> (date = Date.today.end_of_month) {
+    enter_date = Member.arel_table[:enter_date]
+    leave_date = Member.arel_table[:leave_date]
+    where(enter_date.lteq(date)).where(leave_date.eq(nil).or(leave_date.gteq(date)))
+  }
+=begin
   # 受講中の会員（当月の入会、退会含む）
   scope :active, -> (month = Date.today.strftime("%Y%m")) {
     beginning_of_month = (month + "01").to_date.beginning_of_month
@@ -73,7 +79,6 @@ class Member < ActiveRecord::Base
     query = query.where('coalesce("members"."leave_date", \'9999-12-31\') >= ?', end_of_month)
   }
 
-=begin
   統計情報を作り直したら消す。
   # 入会した会員
   scope :registered, -> (month = Date.today.strftime("%Y%m")) {

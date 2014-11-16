@@ -99,7 +99,13 @@ class RollsController < ApplicationController
 
   def absentees
     exclude_members = @lesson.rolls.joins(:member)
-    @q = Roll.absences.joins(:lesson, :member).merge(Lesson.fixed).where.not(member_id: exclude_members.pluck(:member_id)).search(params[:q])
+    @q = Roll.joins([lesson: :course], :member)
+      .absences
+      .merge(Lesson.fixed)
+      .merge(Member.active)
+      .where(Course.arel_table[:monthly_fee].gteq(@lesson.course.monthly_fee))
+      .where.not(member_id: exclude_members.pluck(:member_id))
+      .search(params[:q])
     if params[:q].present? || params[:utf8].present?
       @rolls = @q.result
       @members = Member.where(id: @rolls.pluck(:member_id).uniq).page(params[:page]).decorate
@@ -118,7 +124,15 @@ class RollsController < ApplicationController
       @lesson.find_or_initialize_rolls.each do |roll|
         roll.save if roll.new_record?
       end
-      roll = Roll.where(member_id: params[:member_id]).absences.joins(:lesson).readonly(false).order('"lessons"."date"').first
+      #roll = Roll.where(member_id: params[:member_id]).absences.joins(:lesson).readonly(false).merge(Lesson.order(:date)).first
+      roll = Roll.joins([lesson: :course], :member)
+        .where(member_id: params[:member_id])
+        .absences
+        .merge(Member.active)
+        .where(Course.arel_table[:monthly_fee].gteq(@lesson.course.monthly_fee))
+        .readonly(false)
+        .merge(Lesson.order(:date))
+        .first
       roll.substitute(@lesson)
     end
     respond_to do |format|
