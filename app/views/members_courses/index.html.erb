@@ -46,7 +46,7 @@
             <% studio = timetable.studio %>
             <tr>
               <td><%= studio.name %></td>
-              <td><%= timetable.weekday_ja %></td>
+              <td><%= t('date.cwday_names')[timetable.weekday] %></td>
               <td><%= time_slot.start_time %></td>
               <td><%= course.name %></td>
               <td><%= members_course.begin_date %></td>

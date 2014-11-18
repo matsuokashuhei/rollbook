@@ -26,20 +26,28 @@ class Course < ActiveRecord::Base
   has_many :members_courses
   has_many :members, through: :members_courses, source: :member
 
+  def self.lesson_of_day(date)
+    Course.opened(date).details
+      .merge(Timetable.weekday(date.cwday))
+      .merge(TimeSlot.order(:start_time))
+      .merge(School.order(:open_date))
+      .merge(Studio.order(:open_date))
+  end
+
   # Scope
   scope :details, ->{
     joins([timetable: [[studio: :school], :time_slot]], :instructor, :dance_style, :level)
   }
 
   # 開講中のクラス
-  scope :active, -> (date = Date.today) {
+  scope :opened, -> (date = Date.today) {
     open_date = Course.arel_table[:open_date]
     close_date = Course.arel_table[:close_date]
     where(open_date.lteq(date)).where(close_date.eq(nil).or(close_date.gteq(date)))
   }
 
   # 閉講したクラス
-  scope :deactive, -> (date = Date.today) {
+  scope :closed, -> (date = Date.today) {
     close_date = Course.arel_table[:close_date]
     where(close_date.lteq(date))
   }

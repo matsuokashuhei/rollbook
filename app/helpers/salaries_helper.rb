@@ -49,7 +49,7 @@ module SalariesHelper
     beginning_of_month = (month + "01").to_date
     end_of_prev_month = beginning_of_month - 1.day
     text = end_of_prev_month.strftime("%Y年%m月")
-    if instructor.courses.active(end_of_prev_month).count > 0
+    if instructor.courses.opened(end_of_prev_month).count > 0
       link_to salary_path(month: end_of_prev_month.strftime("%Y%m"), instructor_id: instructor.id), class: "btn btn-link pull-left" do
         fa_icon "caret-left", text: text
       end
@@ -64,7 +64,7 @@ module SalariesHelper
     end_of_month = (month + "01").to_date.end_of_month
     begining_of_next_month = end_of_month + 1.day
     text = begining_of_next_month.strftime("%Y年%m月 ")
-    if instructor.courses.active(begining_of_next_month).count > 0
+    if instructor.courses.opened(begining_of_next_month).count > 0
       link_to salary_path(month: begining_of_next_month.strftime("%Y%m"), instructor_id: instructor.id), class: "btn btn-link pull-right" do
         text.concat(fa_icon("caret-right")).html_safe
       end

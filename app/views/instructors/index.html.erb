@@ -33,7 +33,7 @@
           <% @instructors.each do |instructor| %>
             <tr>
               <td><%= instructor.name %></td>
-              <td><div class="pull-right"><%= instructor.courses.active.count %></div></td>
+              <td><div class="pull-right"><%= instructor.courses.opened.count %></div></td>
               <td class="text-center">
                 <%= link_to_show instructor_path(instructor) %>
                 <%= link_to_edit edit_instructor_path(instructor) %>

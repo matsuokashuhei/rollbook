@@ -21,7 +21,7 @@
   <div class="form-group">
     <label class="col-md-1 control-label"><%= t("activerecord.attributes.timetable.weekday") %></label>
     <div class="col-md-2">
-      <%= text_field_tag nil, weekday_ja(@course.timetable.weekday),  class: "form-control", disabled: "disabled" %>
+      <%= text_field_tag nil, t('date.cwday_names')[@course.timetable.weekday],  class: "form-control", disabled: "disabled" %>
     </div>
     <label class="col-md-1 col-md-offset-1 control-label"><%= t("activerecord.models.time_slot") %></label>
     <div class="col-md-2">

@@ -43,7 +43,7 @@ class Instructor < ActiveRecord::Base
   # 罰金は含まない。
   def courses_fee_for(month: month)
     end_of_month = Date.new(month[0, 4].to_i, month[4, 2].to_i, 1).end_of_month
-    courses.active(end_of_month).map {|course| course.fee_for(month: month) }.inject(:+)
+    courses.opened(end_of_month).map {|course| course.fee_for(month: month) }.inject(:+)
   end
 
   # 罰金を計算する。

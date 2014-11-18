@@ -38,7 +38,7 @@
           <% @courses.each do |course| %>
             <tr>
               <td><%= course.timetable.studio.name %></td>
-              <td><%= weekday_ja(course.timetable.weekday) %></td>
+              <td><%= t('date.cwday_names')[course.timetable.weekday] %></td>
               <td><%= course.timetable.time_slot.start_time %></td>
               <td><%= "#{course.dance_style.name}#{course.level.name}" %></td>
               <td><%= course.open_date %></td>

@@ -6,7 +6,7 @@ class SalariesController < ApplicationController
   def index
     @q = Instructor.search(params[:q])
     @month = params[:month]
-    @instructors = @q.result.joins(:courses).merge(Course.active("#{@month}01".to_date)).order(:name).uniq.page(params[:page]).decorate
+    @instructors = @q.result.joins(:courses).merge(Course.opened("#{@month}01".to_date)).order(:name).uniq.page(params[:page]).decorate
   end
 
   def show
@@ -16,7 +16,7 @@ class SalariesController < ApplicationController
     @month = params[:month]
     @instructor = Instructor.find params[:instructor_id]
     end_of_month = Date.new(@month[0, 4].to_i, @month[4, 2].to_i, 1).end_of_month
-    @courses = @instructor.courses.active(end_of_month).details.merge(Studio.order(:open_date)).merge(Timetable.order(:weekday)).merge(TimeSlot.order(:start_time))
+    @courses = @instructor.courses.opened(end_of_month).details.merge(Studio.order(:open_date)).merge(Timetable.order(:weekday)).merge(TimeSlot.order(:start_time))
     respond_to do |f|
       f.html
       f.pdf do

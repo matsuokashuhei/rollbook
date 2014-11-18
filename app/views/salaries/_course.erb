@@ -7,7 +7,7 @@
   <div class="col-xs-12" style="page-break-inside:avoid;">
     <div class="row">
       <div class="col-xs-11 col-xs-offset-1">
-        <%= "#{course.timetable.studio.name}#{course.timetable.decorate.weekday}曜#{course.dance_style.name}#{course.level.name}クラス" %>
+        <%= "#{course.timetable.studio.name}#{t('date.cwday_names')[course.timetable.weekday]}曜#{course.dance_style.name}#{course.level.name}クラス" %>
         <table class="table table-bordered">
           <thead>
             <tr class="info">

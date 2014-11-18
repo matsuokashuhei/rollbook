@@ -4,7 +4,7 @@ class InstructorsController < ApplicationController
   # GET /instructors
   # GET /instructors.json
   def index
-    @q = Instructor.joins(:courses).merge(Course.active).distinct.search(params[:q])
+    @q = Instructor.joins(:courses).merge(Course.opened).distinct.search(params[:q])
     @instructors = @q.result.order(:name).page(params[:page]).decorate
   end
 
@@ -68,14 +68,14 @@ class InstructorsController < ApplicationController
 
   def courses
     if params[:status] == '1'
-      @courses = Course.where(instructor_id: @instructor.id).active
+      @courses = Course.where(instructor_id: @instructor.id).opened
         .details
         .order(open_date: :desc)
         .merge(School.order(:open_date))
         .merge(Studio.order(:open_date))
         .merge(Timetable.order(:weekday))
     elsif params[:status] == '9'
-      @courses = Course.where(instructor_id: @instructor.id).deactive
+      @courses = Course.where(instructor_id: @instructor.id).closed
         .details
         .order(open_date: :desc)
         .merge(School.order(:open_date))
