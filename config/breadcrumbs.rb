@@ -62,7 +62,7 @@ crumb :lessons_for_month do |month|
   parent :lessons
 end
 crumb :lessons_for_day do |date|
-  link "#{date.strftime('%d')}日", lessons_path(date: date)
+  link "#{date.strftime('%d')}日 (#{I18n.t('date.abbr_day_names')[date.wday]})", lessons_path(date: date)
   parent :lessons_for_month, date.strftime('%Y%m')
 end
 crumb :lesson do |lesson|
@@ -132,8 +132,8 @@ end
 crumb :posts_on_home do
   link t("activerecord.models.post"), root_path
 end
-crumb :comments do |post|
-  link t("activerecord.models.comment"), post_comments_path(post)
+crumb :post_on_home do |post|
+  link post.title, root_path
   parent :posts_on_home
 end
 
