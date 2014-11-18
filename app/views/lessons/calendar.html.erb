@@ -5,23 +5,25 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <% 1.step(7) do |cwday| %>
-              <th><%= weekday_ja(cwday) %></th>
+            <% [1, 2, 3, 4, 5, 6, 0,].each do |wday| %>
+              <th><%= t("date.abbr_day_names")[wday] %></th>
             <% end %>
           </tr>
           <tbody>
             <% @weeks.each do |week| %>
               <tr>
                 <% week.each do |date| %>
-                  <td class="<%= "active" if date == Date.today %>" style="text-align: center;">
-                    <% if date.present? %>
-                      <% unless @holidays.include? date %>
+                  <% if date.blank? %>
+                    <td></td>
+                  <% else %>
+                    <td class="<%= 'success' if date.today? %> text-center">
+                      <% if Rollbook::Calendar.workday?(date) %>
                         <%= link_to date.day, lessons_path(date: date.strftime("%Y%m%d"), school_id: current_user.school_id), class: "btn btn-link" %>
                       <% else %>
                         <%= link_to date.day, "#", class: "btn btn-link", disabled: "disabled" %>
                       <% end %>
-                    <% end %>
-                  </td>
+                    </td>
+                  <% end %>
                 <% end %>
               </tr>
             <% end %>

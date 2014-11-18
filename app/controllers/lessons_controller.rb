@@ -8,7 +8,12 @@ class LessonsController < ApplicationController
     return calendar if params[:month].present?
     @date = params[:date].to_date
     return Lesson.none.decorate if Holiday.exists?(date: @date)
-    @courses = LessonsQuery.find_courses(params[:school_id], @date)
+    
+    @courses = if params[:school_id].present?
+        Course.lesson_of_day(@date).where(schools: { id: params[:school_id] })
+      else
+        Course.lesson_of_day(@date)
+      end
     @lessons = @courses.map do |course|
         Lesson.find_or_initialize_by(date: @date, course_id: course.id).decorate
       end
@@ -115,27 +120,19 @@ class LessonsController < ApplicationController
     end
 
     def calendar
-      year = params[:month].slice(0, 4).to_i
-      month = params[:month].slice(4, 2).to_i
-      @begin_date = Date.new(year, month, 1)
-      @end_date = @begin_date.end_of_month
-      dates = (@begin_date..@end_date).map {|date| date }
-      cwday = 1
-      while cwday < @begin_date.cwday
-        dates.unshift(nil)
-        cwday += 1
-      end
-      cwday = @end_date.cwday
-      while cwday < 7
-        dates.push(nil)
-        cwday += 1
-      end
-      @weeks = dates.each_slice(7).map {|week| week }
-      @holidays = Holiday.where('"date" between ? and ?', @begin_date, @end_date).pluck(:date)
       @month = params[:month]
+      dates = days_of_month(params[:month])
+      (1...dates.first.cwday).map { dates.unshift(nil) }
+      (dates.last.cwday...7).map { dates.push(nil) }
+      @weeks = dates.each_slice(7).map {|week| week }
       respond_to do |format|
         format.html { render action: "calendar" }
       end
+    end
+
+    def days_of_month(month)
+       beginning_of_month = Date.new(month[0, 4].to_i, month[4, 2].to_i, 1)
+      (beginning_of_month..beginning_of_month.end_of_month).map {|date| date }
     end
 
 end
