@@ -1,11 +1,11 @@
 class LessonsController < ApplicationController
   before_action :set_date_or_month, only: [:index,]
-  before_action :set_lesson, only: [:show, :edit, :update, :destroy, :fix, :unfix, :cancel]
+  before_action :set_lesson, only: [:show, :fix, :unfix, :cancel,]
 
   # GET /lessons
   # GET /lessons.json
   def index
-    if Rollbook::Calendar.holiday?(@date)
+    if Holiday.holiday?(@date)
       @lessons = Lesson.none.decorate
       return
     end
@@ -25,49 +25,11 @@ class LessonsController < ApplicationController
     redirect_to lesson_rolls_path(@lesson)
   end
 
-  # GET /lessons/new
-  def new
-    # TODO 使っていないから削除する。
-    @lesson = Lesson.new
-  end
-
-  # GET /lessons/1/edit
-  def edit
-    # TODO 使っていないから削除する。
-  end
-
   # POST /lessons
   # POST /lessons.json
   def create
     @lesson = LessonsRepository.create(params[:lesson])
     redirect_to lesson_rolls_path(@lesson)
-  end
-
-  # PATCH/PUT /lessons/1
-  # PATCH/PUT /lessons/1.json
-  def update
-    # TODO 使っていないから削除する。
-    respond_to do |format|
-      if @lesson.update(lesson_params)
-        #format.html { redirect_to @lesson, notice: 'Lesson was successfully updated.' }
-        format.html { redirect_to lessons_path(date: @lesson.date.to_s(:number)) }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @lesson.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /lessons/1
-  # DELETE /lessons/1.json
-  def destroy
-    # TODO 使っていないから削除する。
-    @lesson.destroy
-    respond_to do |format|
-      format.html { redirect_to lessons_url }
-      format.json { head :no_content }
-    end
   end
 
   # POST /lessons/1/fix

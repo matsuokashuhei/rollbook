@@ -18,7 +18,7 @@
                     <td></td>
                   <% else %>
                     <td class="<%= 'success' if date.today? %> text-center">
-                      <% if Rollbook::Calendar.workday?(date) %>
+                      <% if Holiday.workday?(date) %>
                         <%= link_to date.day, lessons_path(date: date.to_s(:number), school_id: current_user.school_id), class: "btn btn-link" %>
                       <% else %>
                         <%= link_to date.day, "#", class: "btn btn-link", disabled: "disabled" %>
