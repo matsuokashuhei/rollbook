@@ -1,14 +1,14 @@
 class LessonsController < ApplicationController
+  before_action :set_date_or_month, only: [:index,]
   before_action :set_lesson, only: [:show, :edit, :update, :destroy, :fix, :unfix, :cancel]
-  before_action :require_month_or_date, only: [:index]
 
   # GET /lessons
   # GET /lessons.json
   def index
-    return calendar if params[:month].present?
-    @date = params[:date].to_date
-    return Lesson.none.decorate if Holiday.exists?(date: @date)
-    
+    if Rollbook::Calendar.holiday?(@date)
+      @lessons = Lesson.none.decorate
+      return
+    end
     @courses = if params[:school_id].present?
         Course.lesson_of_day(@date).where(schools: { id: params[:school_id] })
       else
@@ -17,7 +17,6 @@ class LessonsController < ApplicationController
     @lessons = @courses.map do |course|
         Lesson.find_or_initialize_by(date: @date, course_id: course.id).decorate
       end
-    @lessons
   end
 
   # GET /lessons/1
@@ -106,6 +105,23 @@ class LessonsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_date_or_month
+      #@month = Date.today.strftime('%Y%m') unless params.has_key?(:month)
+      #@date = Date.today unless params.has_key?(:date)
+      if [params[:month].blank?, params[:date].blank?].all?
+        return redirect_to lessons_path(month: Date.today.strftime('%Y%m'))
+      end
+      begin
+        if params.has_key?(:month)
+          "#{params[:month]}01".to_date
+          return calendar
+        end
+        @date = params[:date].to_date
+      rescue
+        return redirect_to lessons_path(month: Date.today.strftime('%Y%m'))
+      end
+    end
+  
     def set_lesson
       @lesson = Lesson.find(params[:id])
     end
@@ -115,12 +131,7 @@ class LessonsController < ApplicationController
       params.require(:lesson).permit(:course_id, :date, :rolls_status, :status, :note)
     end
 
-    def require_month_or_date
-      return redirect_to lessons_path(month: Date.today.strftime("%Y%m")) if params[:month].blank? && params[:date].blank?
-    end
-
     def calendar
-      @month = params[:month]
       dates = days_of_month(params[:month])
       (1...dates.first.cwday).map { dates.unshift(nil) }
       (dates.last.cwday...7).map { dates.push(nil) }

@@ -1,4 +1,5 @@
-<% breadcrumb :lessons_for_month, @month %>
+<% month = params[:month] %>
+<% breadcrumb :lessons_for_month, month %>
 <div class="row">
   <div class="col-md-12">
     <div class="table-responsive">
@@ -18,7 +19,7 @@
                   <% else %>
                     <td class="<%= 'success' if date.today? %> text-center">
                       <% if Rollbook::Calendar.workday?(date) %>
-                        <%= link_to date.day, lessons_path(date: date.strftime("%Y%m%d"), school_id: current_user.school_id), class: "btn btn-link" %>
+                        <%= link_to date.day, lessons_path(date: date.to_s(:number), school_id: current_user.school_id), class: "btn btn-link" %>
                       <% else %>
                         <%= link_to date.day, "#", class: "btn btn-link", disabled: "disabled" %>
                       <% end %>
@@ -33,10 +34,10 @@
     </div>
     <ul class="pager">
       <li class="previous">
-        <%= link_to_prev_months_lessons @month %>
+        <%= link_to_prev_months_lessons month %>
       </li>
       <li class="next">
-        <%= link_to_next_months_lessons @month %>
+        <%= link_to_next_months_lessons month %>
       </li>
     </ul>
   </div>
