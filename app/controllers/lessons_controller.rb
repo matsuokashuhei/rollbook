@@ -1,5 +1,5 @@
 class LessonsController < ApplicationController
-  before_action :set_date_or_month, only: [:index,]
+  before_action :set_date, only: [:index,]
   before_action :set_lesson, only: [:show, :fix, :unfix, :cancel,]
 
   # GET /lessons
@@ -67,7 +67,7 @@ class LessonsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_date_or_month
+    def set_date
       #@month = Date.today.strftime('%Y%m') unless params.has_key?(:month)
       #@date = Date.today unless params.has_key?(:date)
       if [params[:month].blank?, params[:date].blank?].all?
@@ -94,18 +94,13 @@ class LessonsController < ApplicationController
     end
 
     def calendar
-      dates = days_of_month(params[:month])
+      dates = Rollbook::Util::Month.days_of_month(params[:month])
       (1...dates.first.cwday).map { dates.unshift(nil) }
       (dates.last.cwday...7).map { dates.push(nil) }
       @weeks = dates.each_slice(7).map {|week| week }
       respond_to do |format|
         format.html { render action: "calendar" }
       end
-    end
-
-    def days_of_month(month)
-       beginning_of_month = Date.new(month[0, 4].to_i, month[4, 2].to_i, 1)
-      (beginning_of_month..beginning_of_month.end_of_month).map {|date| date }
     end
 
 end
