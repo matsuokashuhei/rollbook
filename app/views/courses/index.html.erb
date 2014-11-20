@@ -50,10 +50,10 @@
   <div class="col-md-12">
     <ul class="pager">
       <li class="previous">
-        <%= link_to fa_icon('caret-left', text: @before_month.strftime("%Y年%m月")), courses_path(date: @before_month.strftime("%Y%m%d"), studio_id: @current_studio.id) %>
+        <%= link_to fa_icon('caret-left', text: @before_month.strftime("%Y年%m月")), courses_path(date: @before_month.to_s(:number), studio_id: @current_studio.id) %>
       </li>
       <li class="next">
-        <%= link_to fa_icon('caret-right', text: @next_month.strftime("%Y年%m月"), right: true), courses_path(date: @next_month.strftime("%Y%m%d"), studio_id: @current_studio.id) %>
+        <%= link_to fa_icon('caret-right', text: @next_month.strftime("%Y年%m月"), right: true), courses_path(date: @next_month.to_s(:number), studio_id: @current_studio.id) %>
       </li>
     </ul>
   </div>

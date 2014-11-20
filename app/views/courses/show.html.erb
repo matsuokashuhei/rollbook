@@ -13,7 +13,7 @@
   <div class="col-md-12">
     <%= render "shared/notice" %>
     <%= render "form" %>
-    <%= button_to_back courses_path(date: Date.today.strftime("%Y%m%d"), studio_id: @studio.id), pull: "left" %>
+    <%= button_to_back courses_path(date: Date.today.to_s(:number), studio_id: @studio.id), pull: "left" %>
     <%= button_to_destroy @course.id, course_path(@course), destroy: @course.destroy?, pull: "right" %>
     <%= button_to_edit edit_course_path(@course), pull: "right" %>
   </div>

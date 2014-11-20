@@ -61,8 +61,8 @@ class MemberDecorator < ApplicationDecorator
 
   def age
     return if birth_date.nil?
-    today = Date.today.strftime("%Y%m%d").to_i
-    age = (today - birth_date.strftime("%Y%m%d").to_i) / 10000
+    today = Date.today.to_s(:number).to_i
+    age = (today - birth_date.to_s(:number).to_i) / 10000
     "#{age}才"
   end
 

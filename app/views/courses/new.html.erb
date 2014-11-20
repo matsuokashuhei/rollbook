@@ -11,6 +11,6 @@
   <div class="col-md-12">
     <%= render "form" %>
     <%= button_to_save pull: "right" %>
-    <%= button_to_back courses_path(studio_id: @studio.id, date: Date.today.strftime('%Y%m%d')), pull: "left" %>
+    <%= button_to_back courses_path(studio_id: @studio.id, date: Date.today.to_s(:number)), pull: "left" %>
   </div>
 </div>

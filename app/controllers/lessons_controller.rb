@@ -50,7 +50,7 @@ class LessonsController < ApplicationController
     respond_to do |format|
       if @lesson.update(lesson_params)
         #format.html { redirect_to @lesson, notice: 'Lesson was successfully updated.' }
-        format.html { redirect_to lessons_path(date: @lesson.date.strftime("%Y%m%d")) }
+        format.html { redirect_to lessons_path(date: @lesson.date.to_s(:number)) }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

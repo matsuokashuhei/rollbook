@@ -29,7 +29,7 @@
 </div>
 <div class="row">
   <div class="col-md-6">
-    <%= button_to_back lessons_path(date: @lesson.date.strftime("%Y%m%d")), pull: "left" %>
+    <%= button_to_back lessons_path(date: @lesson.date.to_s(:number)), pull: "left" %>
     <% if current_user.manager? && @lesson.fixed? %>
       <%= render "shared/unfix_button", path: unfix_lesson_path(@lesson), object: @lesson %>
     <% else %>

@@ -19,7 +19,7 @@ module LessonsHelper
   def link_to_yesterdays_lessons date, school_id
     yesterday = date - 1.day
     unless Holiday.exists? date: yesterday
-      link_to lessons_path(date: yesterday.strftime("%Y%m%d"), school_id: school_id), class: "btn btn-link pull-left" do
+      link_to lessons_path(date: yesterday.to_s(:number), school_id: school_id), class: "btn btn-link pull-left" do
         fa_icon "caret-left", text: yesterday.strftime("%m月%d日")
       end
     end
@@ -28,7 +28,7 @@ module LessonsHelper
   def link_to_tomorrows_lessons date, school_id
     tomorrow = date + 1.day
     unless Holiday.exists? date: tomorrow
-      link_to lessons_path(date: tomorrow.strftime("%Y%m%d"), school_id: school_id), class: "btn btn-link pull-right" do
+      link_to lessons_path(date: tomorrow.to_s(:number), school_id: school_id), class: "btn btn-link pull-right" do
         tomorrow.strftime("%m月%d日 ").concat(fa_icon("caret-right")).html_safe
       end
     end
