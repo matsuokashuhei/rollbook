@@ -15,7 +15,10 @@ class LessonsController < ApplicationController
         Course.lesson_of_day(@date)
       end
     @lessons = @courses.map do |course|
-        Lesson.find_or_initialize_by(date: @date, course_id: course.id).decorate
+        Lesson.find_or_initialize_by(date: @date, course_id: course.id) do |lesson|
+          lesson.status = Lesson::STATUS[:UNFIXED]
+          lesson.rolls_status = Lesson::ROLLS_STATUS[:NONE]
+        end.decorate
       end
   end
 
@@ -28,7 +31,10 @@ class LessonsController < ApplicationController
   # POST /lessons
   # POST /lessons.json
   def create
-    @lesson = LessonsRepository.create(params[:lesson])
+    @lesson = Lesson.find_or_create_by(course_id: lesson_params[:course_id], date: lesson_params[:date].to_date) do |lesson|
+        lesson_params[:date] = lesson_params[:date].to_date
+        lesson.update(lesson_params)
+      end
     redirect_to lesson_rolls_path(@lesson)
   end
 

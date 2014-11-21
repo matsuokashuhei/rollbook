@@ -38,21 +38,13 @@
               <td><%= course.name %></td>
               <td class="text-center"><%= lesson.status %></td>
               <td class="text-center"><%= lesson.rolls_status %></td>
-              <td><%= lesson.present_rolls if lesson.model.status == "1" %></td>
-              <td><%= lesson.substitute_rolls if lesson.model.status == "1" %></td>
-              <td><%= lesson.absent_rolls if lesson.model.status == "1" %></td>
-              <td><%= lesson.recess_rolls if lesson.model.status == "1" %></td>
+              <td class="text-right"><%= lesson.attendances_count %></td>
+              <td class="text-right"><%= lesson.substitutes_count %></td>
+              <td class="text-right"><%= lesson.absentees_count %></td>
+              <td class="text-right"><%= lesson.recesses_count %></td>
               <td class="text-center">
                 <% if lesson.new_record? %>
-                  <%= form_for(lesson) do |f| %>
-                    <%= f.hidden_field :course_id %>
-                    <%= f.hidden_field :date %>
-                    <%# f.hidden_field :status %>
-                    <%# f.hidden_field :rolls_status %>
-                    <%= button_tag class: "btn btn-link" do %>
-                      <%= icon_to_show %>
-                    <% end %>
-                  <% end %>
+                  <%= render partial: 'form', locals: { lesson: lesson } %>
                 <% else %>
                   <%= link_to_show lesson_rolls_path(lesson) %>
                 <% end %>

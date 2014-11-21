@@ -2,6 +2,7 @@ class LessonDecorator < ApplicationDecorator
   delegate_all
 
   def status
+    return if model.new_record?
     h.content_tag(:h4, style: "margin: 0px; line-height: 0;") do
       case model.status
       when Lesson::STATUS[:UNFIXED]
@@ -21,6 +22,7 @@ class LessonDecorator < ApplicationDecorator
   end
 
   def rolls_status
+    return if model.new_record?
     h.content_tag(:h4, style: "margin: 0px; line-height: 0;") do
       case model.rolls_status
       when Lesson::ROLLS_STATUS[:NONE]
@@ -33,38 +35,24 @@ class LessonDecorator < ApplicationDecorator
     end
   end
 
-  def number_of_members
-    h.content_tag(:div, class: "pull-right") do
-      "#{model.course.members_courses.active(model.date).count}人"
-    end
+  def attendances_count
+    return if model.rolls_status == Lesson::ROLLS_STATUS[:NONE]
+    number_of_people(model.rolls.presences.count)
   end
 
-  def present_rolls
+  def absentees_count
     return if model.rolls_status == Lesson::ROLLS_STATUS[:NONE]
-    h.content_tag(:div, class: "pull-right") do
-      "#{model.rolls.presences.count}人"
-    end
+    number_of_people(model.rolls.absences.count)
   end
 
-  def absent_rolls
+  def substitutes_count
     return if model.rolls_status == Lesson::ROLLS_STATUS[:NONE]
-    h.content_tag(:div, class: "pull-right") do
-      "#{model.rolls.absences.count}人"
-    end
+    number_of_people(model.rolls.substitutes.count)
   end
 
-  def substitute_rolls
+  def recesses_count
     return if model.rolls_status == Lesson::ROLLS_STATUS[:NONE]
-    h.content_tag(:div, class: "pull-right") do
-      "#{model.rolls.substitutes.count}人"
-    end
-  end
-
-  def recess_rolls
-    return if model.rolls_status == Lesson::ROLLS_STATUS[:NONE]
-    h.content_tag(:div, class: "pull-right") do
-      "#{model.rolls.recesses.count}人"
-    end
+    number_of_people(model.rolls.recesses.count)
   end
 
   def other_rolls
