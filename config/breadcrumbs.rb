@@ -62,7 +62,7 @@ crumb :lessons_for_month do |month|
   parent :lessons
 end
 crumb :lessons_for_day do |date|
-  link "#{date.strftime('%d')}日 (#{I18n.t('date.abbr_day_names')[date.wday]})", lessons_path(date: date)
+  link "#{date.strftime('%d')}日 (#{I18n.t('date.abbr_day_names')[date.wday]})", lessons_path(date: date.to_s(:number))
   parent :lessons_for_month, date.strftime('%Y%m')
 end
 crumb :lesson do |lesson|
@@ -81,7 +81,7 @@ end
 
 # クラス
 crumb :courses do |date, studio|
-  link studio.name, courses_path(date: date.strftime('%Y%m%d'), studio_id: studio.id)
+  link studio.name, courses_path(date: date.to_s(:number), studio_id: studio.id)
 end
 crumb :course do |course|
   link "#{course.dance_style.name}#{course.level.name} #{course.instructor.name}", course_path(course)
