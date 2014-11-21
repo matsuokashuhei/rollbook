@@ -14,6 +14,15 @@ module Rollbook::Util
        beginning_of_month = beginning_of_month(month)
       (beginning_of_month..beginning_of_month.end_of_month).map {|date| date }
     end
+    def self.total_worked_months(last_day = Date.today)
+      current_day = Date.new(2013, 6, 1).end_of_month
+      months = [current_day,]
+      while current_day < last_day do
+        months << current_day += 1.month
+      end
+      months.map {|month| month.strftime('%Y%m') }
+    end
+
   end
 
 end

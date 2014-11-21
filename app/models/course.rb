@@ -108,11 +108,19 @@ class Course < ActiveRecord::Base
     members_courses.count == 0
   end
 
+  # 売上を計算する。
+  # === Args :: 月
+  # === Return :: 売上
+  def sales_for(month: month)
+    end_of_month = Rollbook::Util::Month.end_of_month(month)
+    members_courses.active(end_of_month).map {|members_course| members_course.tuition_for(month: month) }.inject(:+) || 0
+  end
+
   # インストラクターに支払う講師料を計算する。
   # === Args :: 月
   # === Return :: 講師料
   def fee_for(month: month)
-    end_of_month = Date.new(month[0, 4].to_i, month[4, 2].to_i, 1).end_of_month
+    end_of_month = Rollbook::Util::Month.end_of_month(month)
     members_courses.active(end_of_month).map {|members_course| members_course.fee_for(month: month) }.inject(:+) || 0
   end
 
