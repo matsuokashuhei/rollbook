@@ -130,7 +130,7 @@ class Course < ActiveRecord::Base
   def penalty_for(month: month)
     canceled_lessons = lessons.for_month(month).canceled_by_instructor
     return 0 if canceled_lessons.blank?
-    canceled_lessons.map {|lesson| lesson.penalty }.inject(:+)
+    canceled_lessons.map {|lesson| lesson.cancellation_penalty }.inject(:+)
   end
 
 end

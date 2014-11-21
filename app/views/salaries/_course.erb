@@ -35,7 +35,7 @@
                 <tr>
                   <td class="text-center"><%#i %></td>
                   <td><%= "#{lesson.date.month}月#{lesson.date.day}日休講分" %></td>
-                  <td class="text-right"><%= number_to_currency(lesson.penalty * -1) %></td>
+                  <td class="text-right"><%= number_to_currency(lesson.cancellation_penalty * -1) %></td>
                   <td><%= lesson.penalty_description %></td>
                 </tr>
               <% end %>
