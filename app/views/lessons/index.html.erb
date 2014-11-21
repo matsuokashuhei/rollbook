@@ -64,10 +64,10 @@
     </div>
     <ul class="pager">
       <li class="previous">
-        <%= link_to_yesterdays_lessons @date, params[:school_id] %>
+        <%= link_to_day_before_lessons @date, params[:school_id] %>
       </li>
       <li class="next">
-        <%= link_to_tomorrows_lessons @date, params[:school_id] %>
+        <%= link_to_day_after_lessons @date, params[:school_id] %>
       </li>
     </ul>
   </div>
