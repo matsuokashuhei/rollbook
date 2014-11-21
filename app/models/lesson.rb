@@ -138,12 +138,4 @@ class Lesson < ActiveRecord::Base
     (Rollbook::Money.include_consumption_tax(course.monthly_fee) * members_courses.count * 0.25).to_i
   end
 
-  def penalty_description
-    # デコレーターに移動する。
-    return '' unless status == STATUS[:CANCEL_BY_INSTRUCTOR]
-    members_courses = course.members_courses.active(date).select {|members_course| members_course.in_recess?(date.strftime("%Y%m")) == false }
-    weekly_fee = (Rollbook::Money.include_consumption_tax(course.monthly_fee) * 0.25).to_i
-    "#{weekly_fee}円 X #{members_courses.count}人"
-  end
-
 end

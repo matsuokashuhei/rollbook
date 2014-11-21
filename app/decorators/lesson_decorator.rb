@@ -75,6 +75,13 @@ class LessonDecorator < ApplicationDecorator
     end
   end
 
+  def cancellation_penalty_detail
+    return '' unless model.status == Lesson::STATUS[:CANCEL_BY_INSTRUCTOR]
+    members_courses = model.course.members_courses.active(date).select {|members_course| members_course.in_recess?(date.strftime("%Y%m")) == false }
+    weekly_fee = (Rollbook::Money.include_consumption_tax(course.monthly_fee) * 0.25).to_i
+    "#{weekly_fee}円 X #{members_courses.count}人"
+  end
+
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:
   #
