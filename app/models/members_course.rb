@@ -49,31 +49,6 @@ class MembersCourse < ActiveRecord::Base
     where(begin_date.gt(date))
   }
 
-=begin  
-  統計情報を作り直したら消す。
-  # 入会したクラス
-  scope :registered, -> (month = Date.today.strftime("%Y%m")) {
-    beginning_of_month = (month + "01").to_date.beginning_of_month
-    end_of_month = beginning_of_month.end_of_month
-    where('"members_courses"."begin_date" between ? and ?', beginning_of_month, end_of_month)
-  }
-
-  # 退会したクラス
-  scope :canceled, -> (month = Date.today.strftime("%Y%m")) {
-    beginning_of_month = (month + "01").to_date.beginning_of_month
-    end_of_month = beginning_of_month.end_of_month
-    where('"members_courses"."end_date" = ?', end_of_month)
-  }
-
-  # 入会して退会したクラス
-  scope :registered_and_canceled, -> (month = Date.today.strftime("%Y%m")) {
-    beginning_of_month = (month + "01").to_date.beginning_of_month
-    end_of_month = beginning_of_month.end_of_month
-    query = where('"members_courses"."begin_date" between ? and ?', beginning_of_month, end_of_month)
-    query = query.where('"members_courses"."end_date" = ?', end_of_month)
-  }
-=end
-
   scope :details, -> {
     joins(course: [[timetable: [:studio, :time_slot]], :dance_style, :level, :instructor])
   }
@@ -118,7 +93,7 @@ class MembersCourse < ActiveRecord::Base
   # 会員が支払う受講料を計算する。
   # === Args :: 月
   # === Retrurn :: 受講料
-  def tuition(month)
+  def tuition_for(month: month)
     fee = course.monthly_fee
     # 退会している場合は0円
     return 0 if end_date.present? && end_date.strftime("%Y%m") < month
@@ -137,7 +112,7 @@ class MembersCourse < ActiveRecord::Base
   # === Args :: 月
   # === Retrurn :: 講師料
   def fee_for(month: month)
-    fee = tuition(month)
+    fee = tuition_for(month: month)
     if introduction?
       (fee * 0.6).to_i
     else
