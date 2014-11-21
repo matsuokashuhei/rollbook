@@ -92,16 +92,6 @@ class Lesson < ActiveRecord::Base
     self.save
   end
 
-  def prev_lesson
-    one_week_before = date - 7.day
-    Lesson.find_by(course_id: course_id, date: one_week_before)
-  end
-
-  def next_lesson
-    one_week_after = date + 7.day
-    Lesson.find_by(course_id: course_id, date: one_week_after)
-  end
-
   def find_or_initialize_rolls
     # クラスを受講中の会員と、休会中の会員の出欠情報を作る。
     rolls = []

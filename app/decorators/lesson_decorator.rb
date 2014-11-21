@@ -75,6 +75,7 @@ class LessonDecorator < ApplicationDecorator
     end
   end
 
+  # レッスンのキャンセル料の内訳を出す。
   def cancellation_penalty_detail
     return '' unless model.status == Lesson::STATUS[:CANCEL_BY_INSTRUCTOR]
     members_courses = model.course.members_courses.active(date).select {|members_course| members_course.in_recess?(date.strftime("%Y%m")) == false }
@@ -82,6 +83,30 @@ class LessonDecorator < ApplicationDecorator
     "#{weekly_fee}円 X #{members_courses.count}人"
   end
 
+  # 先週のレッスンのリンクを返す。
+  def prev_lesson
+    one_week_before = date - 7.day
+    lesson = other_day_lesson(date: one_week_before)
+    h.link_to(h.lesson_rolls_path(lesson), class: 'btn btn-link pull-left') do
+      h.fa_icon('caret-left', text: '先週')
+    end if lesson.present?
+  end
+  
+  # 翌週のレッスンのリンクを返す。
+  def next_lesson
+    one_week_after = date + 7.day
+    lesson = other_day_lesson(date: one_week_after)
+    h.link_to(h.lesson_rolls_path(lesson), class: 'btn btn-link pull-right') do
+      h.fa_icon('caret-right', text: '翌週', right: true)
+    end if lesson.present?
+  end
+
+  private
+  
+    def other_day_lesson(date: date)
+      Lesson.find_by(course_id: model.course_id, date: date)
+    end
+  
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:
   #

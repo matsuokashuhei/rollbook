@@ -34,22 +34,4 @@ module LessonsHelper
     end
   end
 
-  def link_to_prev_lesson lesson
-    if lesson
-      text = "先週"
-      link_to lesson_rolls_path(lesson), class: "btn btn-link pull-left" do
-        fa_icon "caret-left", text: text
-      end
-    end
-  end
-
-  def link_to_next_lesson lesson
-    if lesson
-      text = "翌週 "
-      link_to lesson_rolls_path(lesson), class: "btn btn-link pull-right" do
-        (text.concat(fa_icon("caret-right"))).html_safe
-      end
-    end
-  end
-
 end

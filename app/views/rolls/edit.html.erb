@@ -12,14 +12,7 @@
 </div>
 <div class="row">
   <div class="col-md-6">
-    <ul class="pager">
-      <li class="previous">
-        <%= link_to_prev_lesson @lesson.prev_lesson %>
-      </li>
-      <li class="next">
-        <%= link_to_next_lesson @lesson.next_lesson %>
-      </li>
-    </ul>
+    <%= render partial: 'lessons/prev_and_next_lesson', locals: { lesson: @lesson.decorate } %>
   </div>
 </div>
 <div class="row">
