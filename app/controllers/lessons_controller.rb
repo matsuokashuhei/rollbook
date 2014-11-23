@@ -35,8 +35,8 @@ class LessonsController < ApplicationController
   # POST /lessons.json
   def create
     @lesson = Lesson.find_or_create_by(course_id: lesson_params[:course_id], date: lesson_params[:date].to_date) do |lesson|
-        lesson_params[:date] = lesson_params[:date].to_date
-        lesson.update(lesson_params)
+        lesson.status = lesson_params[:status]
+        lesson.rolls_status = lesson_params[:rolls_status]
       end
     redirect_to lesson_rolls_path(@lesson)
   end
@@ -46,18 +46,16 @@ class LessonsController < ApplicationController
     if @lesson.fixable?
       @lesson.fix
       notice = "レッスンを確定しました。"
+    else
+      notice = "レッスンを確定できませんでした。理由がわからない場合はお問い合わせしてください。"
     end
-    respond_to do |format|
-      format.html { redirect_to lesson_rolls_url(@lesson), notice: notice }
-    end
+    redirect_to lesson_rolls_url(@lesson), notice: notice
   end
   
   def unfix
     @lesson.unfix
     notice = "確定を解除しました。"
-    respond_to do |format|
-      format.html { redirect_to lesson_rolls_url(@lesson), notice: notice }
-    end
+    redirect_to lesson_rolls_url(@lesson), notice: notice
   end
 
   def cancel
@@ -77,8 +75,6 @@ class LessonsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_date
-      #@month = Date.today.strftime('%Y%m') unless params.has_key?(:month)
-      #@date = Date.today unless params.has_key?(:date)
       if [params[:month].blank?, params[:date].blank?].all?
         return redirect_to lessons_path(month: Date.today.strftime('%Y%m'))
       end
