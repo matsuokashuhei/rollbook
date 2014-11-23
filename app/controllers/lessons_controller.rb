@@ -5,15 +5,18 @@ class LessonsController < ApplicationController
   # GET /lessons
   # GET /lessons.json
   def index
+    # 営業日であるか判定する。
     if Holiday.holiday?(@date)
       @lessons = Lesson.none.decorate
       return
     end
+    # @dateのクラスを検索する。
     @courses = if params[:school_id].present?
         Course.lesson_of_day(@date).where(schools: { id: params[:school_id] })
       else
         Course.lesson_of_day(@date)
       end
+    # クラスのレッスンを検索または作成する。
     @lessons = @courses.map do |course|
         Lesson.find_or_initialize_by(date: @date, course_id: course.id) do |lesson|
           lesson.status = Lesson::STATUS[:UNFIXED]
