@@ -4,8 +4,7 @@
       <thead>
         <tr>
           <th class="col-md-1"><%= t("activerecord.attributes.member.number") %></th>
-          <th class="col-md-2"><%= t("activerecord.attributes.roll.member_id") %></th>
-          <th class="col-md-1"></th>
+          <th class="col-md-3" colspan="2"><%= t("activerecord.attributes.roll.member_id") %></th>
           <% if params[:action] == "index" %>
             <th class="col-md-1"><%= t("activerecord.attributes.roll.status") %></th>
           <% else %>
@@ -21,11 +20,11 @@
           <%= hidden_field_tag "rolls[][member_id]", roll.member_id %>
           <tr>
             <td><%= roll.member.number %></td>
-            <td><%= roll.member.name_with_link %></td>
-            <td class="text-center">
+            <td class="col-md-2"><%= roll.member.name_with_link %></td>
+            <td class="col-md-1 text-center">
               <%= roll.member.bank_status %>
               <%= roll.member.imperfect %>
-              </td>
+            </td>
             <td class="text-center">
               <% if params[:action] == "index" %>
                 <%= roll.status %>

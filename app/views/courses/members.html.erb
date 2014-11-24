@@ -27,9 +27,7 @@
         <thead>
           <tr>
             <th class="col-md-1"><%= t("activerecord.attributes.member.number") %></th>
-            <th class="col-md-2"><%= t("activerecord.attributes.member.name") %></th>
-            <th class="col-md-1"></th>
-            <th class="col-md-1"></th>
+            <th class="col-md-4" colspan="3"><%= t("activerecord.attributes.member.name") %></th>
             <th class="col-md-1"><%= t("activerecord.attributes.members_course.begin_date") %></th>
             <th class="col-md-1"><%= t("activerecord.attributes.members_course.end_date") %></th>
             <th class="col-md-1"></th>
@@ -39,9 +37,9 @@
           <% @members_courses.each do |members_course| %>
             <tr>
               <td><%= members_course.member.number %></td>
-              <td><%= members_course.member.decorate.name_with_link %></td>
-              <td class="text-center"><%= members_course.member.decorate.imperfect %></td>
-              <td class="text-center"><%= members_course.introduction %></td>
+              <td class="col-md-2"><%= members_course.member.decorate.name_with_link %></td>
+              <td class="col-md-1 text-center"><%= members_course.member.decorate.imperfect %></td>
+              <td class="col-md-1 text-center"><%= members_course.introduction %></td>
               <td><%= members_course.begin_date %></td>
               <td><%= members_course.end_date %></td>
               <td class="text-center"><%= link_to_show member_members_course_path(members_course.member, members_course) %></td>
