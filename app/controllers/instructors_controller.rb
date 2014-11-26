@@ -1,22 +1,22 @@
 class InstructorsController < ApplicationController
-  before_action :set_instructor, only: [:show, :edit, :update, :destroy, :courses]
+
+  before_action :set_instructor, except: [:index, :new,]
+
+  respond_to :html
 
   # GET /instructors
-  # GET /instructors.json
   def index
     @q = Instructor.joins(:courses).merge(Course.opened).distinct.search(params[:q])
     @instructors = @q.result.order(:name).page(params[:page]).decorate
   end
 
   # GET /instructors/1
-  # GET /instructors/1.json
   def show
   end
 
   # GET /instructors/new
   def new
-    @instructor = Instructor.new
-    @instructor.taxable = true
+    @instructor = Instructor.new(taxable: true)
   end
 
   # GET /instructors/1/edit
@@ -24,74 +24,46 @@ class InstructorsController < ApplicationController
   end
 
   # POST /instructors
-  # POST /instructors.json
   def create
     @instructor = Instructor.new(instructor_params)
-
-    respond_to do |format|
-      if @instructor.save
-        notice = "#{@instructor.name}先生を登録しました。"
-        format.html { redirect_to @instructor, notice: notice }
-        format.json { render action: 'show', status: :created, location: @instructor }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @instructor.errors, status: :unprocessable_entity }
-      end
+    if @instructor.save
+      notice = "#{I18n.t('activerecord.models.instructor')}を登録しました。"
+      redirect_to @instructor, notice: notice
+    else
+      render action: 'new'
     end
   end
 
   # PATCH/PUT /instructors/1
-  # PATCH/PUT /instructors/1.json
   def update
-    respond_to do |format|
-      if @instructor.update(instructor_params)
-        notice = "#{@instructor.name}先生を変更しました。"
-        format.html { redirect_to @instructor, notice: notice }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @instructor.errors, status: :unprocessable_entity }
-      end
+    if @instructor.update(instructor_params)
+      notice = "#{I18n.t('activerecord.models.instructor')}を変更しました。"
+      redirect_to @instructor, notice: notice
+    else
+      render action: 'edit'
     end
   end
 
   # DELETE /instructors/1
-  # DELETE /instructors/1.json
   def destroy
-    notice = "#{@instructor.name}先生を削除しました。" if @instructor.destroy?
-    @instructor.destroy if @instructor.destroy?
-    respond_to do |format|
-      format.html { redirect_to instructors_url, notice: notice }
-      format.json { head :no_content }
+    if @instructor.destroy?
+      @instructor.destroy
+      notice = "#{I18n.t('activerecord.models.instructor')}を削除しました。"
     end
+    redirect_to instructors_url, notice: notice
   end
 
+  # GET /instructors/1/courses
   def courses
-    if params[:status] == '1'
-      @courses = Course.where(instructor_id: @instructor.id).opened
-        .details
-        .order(open_date: :desc)
-        .merge(School.order(:open_date))
-        .merge(Studio.order(:open_date))
-        .merge(Timetable.order(:weekday))
-    elsif params[:status] == '9'
-      @courses = Course.where(instructor_id: @instructor.id).closed
-        .details
-        .order(open_date: :desc)
-        .merge(School.order(:open_date))
-        .merge(Studio.order(:open_date))
-        .merge(Timetable.order(:weekday))
-    else
-      @courses = Course.where(instructor_id: @instructor.id)
-        .details
-        .order(open_date: :desc)
-        .merge(School.order(:open_date))
-        .merge(Studio.order(:open_date))
-        .merge(Timetable.order(:weekday))
-    end
-    respond_to do |format|
-      format.html { render action: "courses" }
-    end
+    @courses = Course.where(instructor_id: @instructor.id)
+    @courses = @courses.opened if params[:status] == '1'
+    @courses = @courses.closed if params[:status] == '9'
+    @courses = @courses.details
+      .order(open_date: :desc)
+      .merge(School.order(:open_date))
+      .merge(Studio.order(:open_date))
+      .merge(Timetable.order(:weekday))
+    render action: "courses"
   end
 
   private
