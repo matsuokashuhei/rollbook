@@ -1,59 +1,79 @@
 class MemberDecorator < ApplicationDecorator
   delegate_all
-
-  def name
-    text =  "<ul class='list-unstyled' style='margin-top: 1px; margin-bottom: 1px;'>"
-    text += "<li>"
-    text += h.content_tag :h5, style: "margin-top: 0px; margin-bottom: 0px;" do
-      h.content_tag :small do
-        "#{model.last_name_kana}　#{model.first_name_kana}"
-      end
-    end
-    text += "</li>"
-    text += "<li>"
-    text += h.content_tag :h5, style: "margin-top: 0px; margin-bottom: 0px;" do
-      "#{model.last_name}　#{model.first_name}"
-    end
-    text += "</li>"
-    text += "</ul>"
-    text.html_safe
-    #h.content_tag(:small, "#{model.last_name_kana}　#{model.first_name_kana}") + h.tag(:br) + "#{model.last_name}　#{model.first_name}"
+  
+  # 会員の名前を「姓 名」という書式で返す。
+  def name(delimiter=" ")
+    [model.last_name, model.first_name].join(delimiter)
   end
 
-  def name_with_link
+  # 会員の名前を「姓（かな）名（かな）」という書式で返す。
+  def kana(delimiter=" ")
+    [model.last_name_kana, model.first_name_kana].join(delimiter)
+  end
+
+  # 会員の名前を次のような書式で返す。
+  # すずき　いちろおう
+  # 鈴木　一朗
+  def name_and_kana
+    h.content_tag(:ul, class: "list-unstyled", style: ["margin-top: 1px;", "margin-bottom: 1px;"].join(" ")) do
+      h.concat(
+        h.content_tag(:li) do
+          h.content_tag(:h5, style: ["margin-top: 0px;", "margin-bottom: 0px;"].join(" ")) do
+            h.content_tag(:small, kana)
+          end
+        end
+      )
+      h.concat(
+        h.content_tag(:li) do
+          h.content_tag(:h5, style: ["margin-top: 0px;", "margin-bottom: 0px;"].join(" ")) do
+            name
+          end
+        end
+      )
+    end
+  end
+
+  # name_and_kanaにリンクをつけて返す。
+  def linked_name
     h.link_to h.member_path model do
-      self.name
+      name_and_kana
     end
   end
 
   def bank_status
+    tooltip = { toggle: "tooltip", }
+    style = ["background-color: red", "font-size: 18px", "font-weight: normal"].join("; ")
     if model.bank_account.blank?
-      tooltip_options = { toggle: "tooltip", "original-title" => "引落の手続きをしてください。" }
-      return h.content_tag :span, class: "badge", style: "background-color: red; font-size: 18px; font-weight: normal;", data: tooltip_options  do
+      h.content_tag(:span, class: "badge", style: style, data: tooltip.merge("original-title" => "引落の手続きをしてください。")) do
+        h.fa_icon "credit-card"
+      end
+    elsif model.bank_account.imperfect
+      style = ["background-color: orange", "font-size: 18px", "font-weight: normal"].join("; ")
+      h.link_to h.bank_account_path(model.bank_account) do
+        h.content_tag(:span, class: "badge", style: style, data: tooltip.merge("original-title" => "書類不備です。")) do
           h.fa_icon "credit-card"
         end
-    end
-    if model.bank_account.present? && model.bank_account.begin_date.blank?
-      tooltip_options = { toggle: "tooltip", "original-title" => "引落の手続きをしてください。" }
-      return h.link_to h.bank_account_path(model.bank_account) do
-          h.content_tag :span, class: "badge", style: "background-color: red; font-size: 18px; font-weight: normal;", data: tooltip_options  do
-            h.fa_icon "credit-card"
-          end
-        end
-    end
-  end
-
-  def imperfect
-    if model.bank_account.try(:imperfect)
-      tooltip_options = { toggle: "tooltip", "original-title" => "口座書類不備" }
-      #tooltip_options = { toggle: "tooltip", "original-title" => h.t("activerecord.attributes.bank_account.imperfect") }
+      end
+    elsif model.bank_account.begin_date.blank?
       h.link_to h.bank_account_path(model.bank_account) do
-        h.content_tag :span, class: "badge", style: "background-color: orange; font-size: 18px; font-weight: normal;", data: tooltip_options  do
-          h.fa_icon "warning"
+        h.content_tag(:span, class: "badge", style: style, data: tooltip.merge("original-title" => "引落の手続きをしてください。")) do
+          h.fa_icon "credit-card"
         end
       end
     end
   end
+
+  # def imperfect
+  #   if model.bank_account.try(:imperfect)
+  #     tooltip_options = { toggle: "tooltip", "original-title" => "口座書類不備" }
+  #     #tooltip_options = { toggle: "tooltip", "original-title" => h.t("activerecord.attributes.bank_account.imperfect") }
+  #     h.link_to h.bank_account_path(model.bank_account) do
+  #       h.content_tag :span, class: "badge", style: "background-color: orange; font-size: 18px; font-weight: normal;", data: tooltip_options  do
+  #         h.fa_icon "warning"
+  #       end
+  #     end
+  #   end
+  # end
 
   def gender
     model.gender == "M" ? "男" : "女"

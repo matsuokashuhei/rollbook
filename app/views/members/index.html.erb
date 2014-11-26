@@ -44,26 +44,17 @@
               <td class="text-center"><%= member.number %></td>
               <td>
                 <%= link_to member_path(member) do %>
-                  <%= member.name %>
+                  <%= member.name_and_kana %>
                 <% end %>
               </td>
-              <td>
-                <% if member.bank_account.present? %>
-                  <%= link_to member.bank_account.holder_name_kana, bank_account_path(member.bank_account) %>
-                <% end %>
-              </td>
-              <td class="text-center">
-                <%= member.bank_status %>
-                <%= member.imperfect %>
-                </td>
+              <td><%= link_to(member.bank_account.holder_name_kana, bank_account_path(member.bank_account)) if member.bank_account.present?  %></td>
+              <td class="text-center"><%= member.bank_status %></td>
               <td class="text-center"><%= member.status %></td>
               <td class="text-center">
                 <% if member.members_courses.active.count > 0 %>
                   <%= link_to member_members_courses_path(member, status: '1') do %>
                     <%= "#{member.members_courses.active.count} クラス" %>
                   <% end %>
-                <% else %>
-                  <%= "#{member.members_courses.active.count} クラス" %>
                 <% end %>
               </td>
               <td class="text-center">

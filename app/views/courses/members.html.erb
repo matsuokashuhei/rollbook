@@ -37,8 +37,8 @@
           <% @members_courses.each do |members_course| %>
             <tr>
               <td><%= members_course.member.number %></td>
-              <td class="col-md-2"><%= members_course.member.decorate.name_with_link %></td>
-              <td class="col-md-1 text-center"><%= members_course.member.decorate.imperfect %></td>
+              <td class="col-md-2"><%= members_course.member.decorate.linked_name %></td>
+              <td class="col-md-1 text-center"><%= members_course.member.decorate.bank_status %></td>
               <td class="col-md-1 text-center"><%= members_course.introduction %></td>
               <td><%= members_course.begin_date %></td>
               <td><%= members_course.end_date %></td>

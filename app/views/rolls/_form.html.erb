@@ -20,10 +20,9 @@
           <%= hidden_field_tag "rolls[][member_id]", roll.member_id %>
           <tr>
             <td><%= roll.member.number %></td>
-            <td class="col-md-2"><%= roll.member.name_with_link %></td>
+            <td class="col-md-2"><%= roll.member.linked_name %></td>
             <td class="col-md-1 text-center">
               <%= roll.member.bank_status %>
-              <%= roll.member.imperfect %>
             </td>
             <td class="text-center">
               <% if params[:action] == "index" %>
