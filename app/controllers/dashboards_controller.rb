@@ -79,13 +79,13 @@ class DashboardsController < ApplicationController
         f.yAxis([{ title: { text: "" }, min: 0, }, { title: { text: "", }, min: 0, opposite: true }, ])
         f.tooltip(value_suffix: '千円')
         # 店舗の売り上げ
-        School.all.each_with_index do |school, i|
-          # result = StatisticsQuery.sales_report(school_id: school.id)
-          # f.series(name: school.name, yAxis: 0, type: 'column', data: result.map {|row| row["sales"].to_i / 1000 })
-          # sum_sales = [sum_sales, result.map {|row| row["sales"].to_i / 1000 }].transpose.map {|num| num.inject(&:+) }
-          tuition_fees = @months.map {|month| school.tuition_fee(month: month.delete('/')) }
-          f.series(name: school.name, yAxis: 0, type: 'column', data: tuition_fees)
-          sum_sales = [sum_sales, tuition_fees].transpose.map {|num| num.inject(&:+) }
+        School.order(:open_date).each_with_index do |school, i|
+          result = StatisticsQuery.sales_report(school_id: school.id)
+          f.series(name: school.name, yAxis: 0, type: 'column', data: result.map {|row| row["tuition_fee"].to_i / 1000 })
+          sum_sales = [sum_sales, result.map {|row| row["tuition_fee"].to_i / 1000 }].transpose.map {|num| num.inject(&:+) }
+          # tuition_fees = @months.map {|month| school.tuition_fee(month: month.delete('/')) }
+          # f.series(name: school.name, yAxis: 0, type: 'column', data: tuition_fees)
+          # sum_sales = [sum_sales, tuition_fees].transpose.map {|num| num.inject(&:+) }
         end
         f.series(name: '合計', yAxis: 1, type: "line", data: sum_sales)
       end

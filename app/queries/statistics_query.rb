@@ -80,10 +80,22 @@ class StatisticsQuery
         #{worked_months_query()},
         members_courses_abbr AS (
           SELECT
-             members_courses.id,
-             TO_CHAR(members_courses.begin_date, 'YYYYmm') AS begin_month,
-             TO_CHAR(members_courses.end_date, 'YYYYmm') AS end_month,
-             courses.monthly_fee
+            members_courses.id,
+            TO_CHAR(members_courses.begin_date, 'YYYYmm') AS begin_month,
+            TO_CHAR(members_courses.end_date, 'YYYYmm') AS end_month,
+            --courses.monthly_fee
+            CASE
+              WHEN to_char(members_courses.begin_date, 'dd') <= '07' THEN
+                courses.monthly_fee
+              WHEN to_char(members_courses.begin_date, 'dd') <= '14' THEN
+                round(courses.monthly_fee * 0.75, 0)
+              WHEN to_char(members_courses.begin_date, 'dd') <= '21' THEN
+                round(courses.monthly_fee * 0.50, 0)
+              WHEN to_char(members_courses.begin_date, 'dd') <= '28' THEN
+                round(courses.monthly_fee * 0.25, 0)
+              ELSE
+                0
+            END AS tuition_fee
           FROM
             members_courses
           INNER JOIN courses
@@ -100,13 +112,13 @@ class StatisticsQuery
       SELECT
         month,
         (SELECT
-           SUM(monthly_fee)
+           SUM(tuition_fee)
          FROM
            members_courses_abbr
          WHERE
            begin_month <= worked_months.month
            AND (end_month IS NULL OR end_month > worked_months.month)
-        ) AS sales
+        ) AS tuition_fee
       FROM
         worked_months
       ORDER BY
