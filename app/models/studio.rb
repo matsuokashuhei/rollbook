@@ -23,9 +23,9 @@ class Studio < ActiveRecord::Base
   # スタジオの全クラスの受講料の合計を計算する。
   # @param [String] %Y%mという書式の年月
   # @return [Integer] 受講料の合計
-  def sales_for(month: month)
+  def tuition_fee(month: month)
     courses = Course.joins(timetable: :studio).where(studios: { id: id }).opened(Rollbook::Util::Month.end_of_month(month))
-    courses.map {|course| course.sales_for(month: month) }.inject(:+) || 0
+    courses.map {|course| course.tuition_fee(month: month) }.inject(:+) || 0
   end
 
 end
