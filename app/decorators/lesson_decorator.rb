@@ -64,11 +64,11 @@ class LessonDecorator < ApplicationDecorator
   end
 
   # レッスンのキャンセル料の内訳を出す。
-  def cancellation_penalty_detail
+  def cancellation_fee_detail
     return '' unless model.status == Lesson::STATUS[:CANCEL_BY_INSTRUCTOR]
     members_courses = model.course.members_courses.active(date).select {|members_course| members_course.in_recess?(date.strftime("%Y%m")) == false }
-    weekly_fee = (Rollbook::Money.include_consumption_tax(course.monthly_fee) * 0.25).to_i
-    "#{weekly_fee}円 X #{members_courses.count}人"
+    cancellation_fee = (Rollbook::Money.include_consumption_tax(course.monthly_fee) * 0.25).to_i
+    "#{cancellation_fee}円 X #{members_courses.count}人"
   end
 
   # 先週のレッスンのリンクを返す。

@@ -108,29 +108,29 @@ class Course < ActiveRecord::Base
     members_courses.count == 0
   end
 
-  # 売上を計算する。
-  # === Args :: 月
-  # === Return :: 売上
-  def sales_for(month: month)
+  # 受講料の合計を計算する。
+  # @param [String] %Y%mという書式の年月
+  # @return [Integer] 受講料の合計
+  def tuition_fee(month: month)
     end_of_month = Rollbook::Util::Month.end_of_month(month)
-    members_courses.active(end_of_month).map {|members_course| members_course.tuition_for(month: month) }.inject(:+) || 0
+    members_courses.active(end_of_month).map {|members_course| members_course.tuition_fee(month: month) }.inject(:+) || 0
   end
 
-  # インストラクターに支払う講師料を計算する。
+  # 講師料の合計を計算する。
   # === Args :: 月
   # === Return :: 講師料
-  def fee_for(month: month)
+  def lecture_fee(month: month)
     end_of_month = Rollbook::Util::Month.end_of_month(month)
-    members_courses.active(end_of_month).map {|members_course| members_course.fee_for(month: month) }.inject(:+) || 0
+    members_courses.active(end_of_month).map {|members_course| members_course.lecture_fee(month: month) }.inject(:+) || 0
   end
 
   # インストラクターが休講した場合の罰金を計算する。
   # === Args :: 月
   # === Return :: 罰金
-  def penalty_for(month: month)
+  def cancellation_fee(month: month)
     canceled_lessons = lessons.for_month(month).canceled_by_instructor
     return 0 if canceled_lessons.blank?
-    canceled_lessons.map {|lesson| lesson.cancellation_penalty }.inject(:+)
+    canceled_lessons.map {|lesson| lesson.cancellation_fee }.inject(:+)
   end
 
 end

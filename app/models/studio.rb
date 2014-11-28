@@ -20,6 +20,12 @@ class Studio < ActiveRecord::Base
   validates :school_id, :name, :open_date, presence: true
   validates :name, uniqueness: { scope: :school_id }
 
-  #default_scope ->{ order("studios.open_date") }
+  # スタジオの全クラスの受講料の合計を計算する。
+  # @param [String] %Y%mという書式の年月
+  # @return [Integer] 受講料の合計
+  def sales_for(month: month)
+    courses = Course.joins(timetable: :studio).where(studios: { id: id }).opened(Rollbook::Util::Month.end_of_month(month))
+    courses.map {|course| course.sales_for(month: month) }.inject(:+) || 0
+  end
 
 end

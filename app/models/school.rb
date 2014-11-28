@@ -19,10 +19,14 @@ class School < ActiveRecord::Base
   has_many :studios
   has_many :users
 
-  #validates :name, :zip, :address, :phone, :open_date, presence: true
   validates :name, :open_date, presence: true
   validates :name, uniqueness: true
 
-  #default_scope ->{ order("schools.open_date") }
+  # スクールの全クラスの受講料の合計を計算する。
+  # @param [String] %Y%mという書式の年月
+  # @return [Integer] 受講料の合計
+  def sales_for(month: month)
+    studios.map {|studio| studio.sales_for(month: month) }.inject(:+) || 0
+  end
 
 end

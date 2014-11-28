@@ -119,7 +119,8 @@ class Lesson < ActiveRecord::Base
   end
 
   # 罰金を計算する。
-  def cancellation_penalty
+  #def cancellation_penalty
+  def cancellation_fee
     # インストラクターの欠勤による休講以外は罰金はない。
     return 0 unless status == STATUS[:CANCEL_BY_INSTRUCTOR]
     # 休講の場合は、レッスンの日に在籍している会員数×週割の月謝※税込

@@ -93,7 +93,7 @@ class MembersCourse < ActiveRecord::Base
   # 会員が支払う受講料を計算する。
   # === Args :: 月
   # === Retrurn :: 受講料
-  def tuition_for(month: month)
+  def tuition_fee(month: month)
     fee = course.monthly_fee
     # 退会している場合は0円
     return 0 if end_date.present? && end_date.strftime("%Y%m") < month
@@ -111,13 +111,13 @@ class MembersCourse < ActiveRecord::Base
   # インストラクターに支払う講師代を計算する。
   # === Args :: 月
   # === Retrurn :: 講師料
-  def fee_for(month: month)
-    fee = tuition_for(month: month)
+  def lecture_fee(month: month)
+    fee = tuition_fee(month: month)
     if introduction?
       (fee * 0.6).to_i
     else
       (fee * 0.4).to_i
-    end      
+    end
   end
 
   private

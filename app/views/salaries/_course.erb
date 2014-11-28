@@ -26,7 +26,7 @@
                   <%= members_course.member.number.present? ? members_course.member.number : '*****' %>
                   <%= members_course.monthly_status(month) %>
                 </td>
-                <td class="text-right"><%= number_to_currency(members_course.fee_for(month: month)) %></td>
+                <td class="text-right"><%= number_to_currency(members_course.lecture_fee(month: month)) %></td>
                 <td><%= "紹介" if members_course.introduction.present? %></td>
               </tr>
             <% end %>
@@ -35,8 +35,8 @@
                 <tr>
                   <td class="text-center"><%#i %></td>
                   <td><%= "#{lesson.date.month}月#{lesson.date.day}日休講分" %></td>
-                  <td class="text-right"><%= number_to_currency(lesson.cancellation_penalty * -1) %></td>
-                  <td><%= lesson.cancellation_penalty_detail %></td>
+                  <td class="text-right"><%= number_to_currency(lesson.cancellation_fee * -1) %></td>
+                  <td><%= lesson.cancellation_fee_detail %></td>
                 </tr>
               <% end %>
             <% end %>
@@ -45,7 +45,7 @@
             <tr>
               <td></td>
               <th class="info">合計</th>
-              <td class="text-right"><%= number_to_currency(course.fee_for(month: month) - course.penalty_for(month: month)) %></td>
+              <td class="text-right"><%= number_to_currency(course.lecture_fee(month: month) - course.cancellation_fee(month: month)) %></td>
               <td></td>
             </tr>
           </tfoot>

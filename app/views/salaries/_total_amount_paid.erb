@@ -18,7 +18,7 @@
               <td class="text-center">1</td>
               <td>講師代</td>
               <td class="text-right">
-                <% total_amount_paid = instructor.fee_for(month: month) %>
+                <% total_amount_paid = instructor.salary(month: month) %>
                 <%= number_to_currency(total_amount_paid) %>
               </td>
               <td></td>
