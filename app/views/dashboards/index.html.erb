@@ -12,5 +12,6 @@
     <%= render partial: "chart", locals: { id: "zzz", name: "#{t('activerecord.models.recess')}率", chart: @recesses_chart } %>
   </div>
   <div class="col-md-6">
+    <%= render partial: "chart", locals: { id: "sales", name: "月謝収入", chart: @sales_chart } %>
   </div>
 </div>
