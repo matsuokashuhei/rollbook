@@ -17,6 +17,8 @@ ja:
       access_log: ログ
       post: お知らせ
       comment: コメント
+      dashboard: 統計
+      salary: 給料明細書
     attributes:
       school:
         name: 名前

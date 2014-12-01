@@ -150,5 +150,5 @@ end
 
 # 統計
 crumb :dashboards do
-  link "ダッシュボード", dashboards_path
+  link t("activerecord.models.dashboard"), dashboards_path
 end

@@ -26,10 +26,10 @@
               <ul class="dropdown-menu">
                 <% if current_user.admin? %>
                   <li><%= users_link %></li>
-                  <li><%= link_to "統計",dashboards_path %></li>
+                  <li><%= link_to t("activerecord.models.dashboard"), dashboards_path %></li>
                   <li><%= link_to t("activerecord.models.access_log"), access_logs_path %></li>
                 <% end %>
-                <li><%= link_to "給料明細書", salaries_path(month: Date.today.strftime("%Y%m")) %></li>
+                <li><%= link_to t("activerecord.models.salary"), salaries_path(month: Date.today.strftime("%Y%m")) %></li>
               </ul>
             </li>
           <% end %>
