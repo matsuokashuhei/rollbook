@@ -14,7 +14,7 @@ class DashboardsController < ApplicationController
       dashboard = Dashboard.new
       LazyHighCharts::HighChart.new('graph') do |f|
         total_fees = dashboard.months.map {|month| 0 }
-        f.xAxis(categories: dashboard.months)
+        f.xAxis(categories: dashboard.months.map {|month| "#{month[0, 4]}/#{month[4, 2]}"})
         f.yAxis([{ title: { text: "" }, min: 0, }, { title: { text: "", }, min: 0, opposite: true }, ])
         f.tooltip(value_suffix: '千円')
         School.order(:open_date).each_with_index do |school, i|
