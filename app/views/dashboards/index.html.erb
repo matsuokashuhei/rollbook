@@ -1,4 +1,5 @@
 <% breadcrumb :dashboards %>
+<% if false %>
 <div class="row">
   <div class="col-md-6">
     <%= render partial: "chart", locals: { id: "xxx", name: "#{t('activerecord.models.member')}数", chart: @members_chart } %>
@@ -13,5 +14,11 @@
   </div>
   <div class="col-md-6">
     <%= render partial: "chart", locals: { id: "sales", name: "月謝", chart: @sales_chart } %>
+  </div>
+</div>
+<% end %>
+<div class="row">
+  <div class="col-md-12">
+    <%= render partial: "chart", locals: { id: "tuition_fees", name: "月謝", chart: @tuition_fees_chart } %>
   </div>
 </div>

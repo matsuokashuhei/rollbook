@@ -1,19 +1,33 @@
 class DashboardsController < ApplicationController
-  before_action :set_months, only: [:index]
 
   def index
-    @members_chart = members_chart
-    @members_courses_chart = members_courses_chart
-    @recesses_chart = recesses_chart
-    @sales_chart = sales_chart
+    # @members_chart = members_chart
+    # @members_courses_chart = members_courses_chart
+    # @recesses_chart = recesses_chart
+    # @sales_chart = sales_chart
+    @tuition_fees_chart = generate_tuition_fees_chart
   end
   
   private
   
-    def set_months
-      @months = Rollbook::Util::Month.total_worked_months(format: '%Y/%m')
+    def generate_tuition_fees_chart
+      dashboard = Dashboard.new
+      LazyHighCharts::HighChart.new('graph') do |f|
+        total_fees = dashboard.months.map {|month| 0 }
+        f.xAxis(categories: dashboard.months)
+        f.yAxis([{ title: { text: "" }, min: 0, }, { title: { text: "", }, min: 0, opposite: true }, ])
+        f.tooltip(value_suffix: '千円')
+        School.order(:open_date).each_with_index do |school, i|
+          result = dashboard.monthly_tuition_fees_report(school_id: school.id)
+          tuition_fees = result.map {|row| row["tuition_fee"].to_i / 1000 }
+          f.series(name: school.name, yAxis: 0, type: 'column', data: tuition_fees)
+          total_fees = [total_fees, tuition_fees].transpose.map {|fee| fee.inject(&:+) }
+        end
+        f.series(name: '合計', yAxis: 1, type: "line", data: total_fees)
+      end
     end
-  
+
+=begin
     def members_chart
       result = StatisticsQuery.monthly_active_members
       source = to_chart_source(result)
@@ -113,5 +127,6 @@ class DashboardsController < ApplicationController
         total_changes: total_changes
       }
     end
-  
+=end
+
 end
