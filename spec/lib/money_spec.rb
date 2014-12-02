@@ -3,21 +3,45 @@ require 'spec_helper'
 describe Rollbook::Money do
 
   describe ".calculate_consumption_tax" do
-    it "100円の場合は8円であること" do
-      amount = Rollbook::Money.calculate_consumption_tax(100)
-      expect(amount).to eq(8)
+
+    context "2014年3月31日以前の場合" do
+      date = Date.new(2014, 3, 31)
+      it "100円の場合は5円であること" do
+        amount = Rollbook::Money.calculate_consumption_tax(100, date)
+        expect(amount).to eq(5)
+      end
+      it "10円の場合は0円であること" do
+        amount = Rollbook::Money.calculate_consumption_tax(10, date)
+        expect(amount).to eq(0)
+      end
+      it "0円の場合は0円であること" do
+        amount = Rollbook::Money.calculate_consumption_tax(0, date)
+        expect(amount).to eq(0)
+      end
+      it "-100円の場合は0円であること" do
+        amount = Rollbook::Money.calculate_consumption_tax(-100, date)
+        expect(amount).to eq(0)
+      end
     end
-    it "10円の場合は0円であること" do
-      amount = Rollbook::Money.calculate_consumption_tax(10)
-      expect(amount).to eq(0)
-    end
-    it "0円の場合は0円であること" do
-      amount = Rollbook::Money.calculate_consumption_tax(0)
-      expect(amount).to eq(0)
-    end
-    it "-100円の場合は0円であること" do
-      amount = Rollbook::Money.calculate_consumption_tax(-100)
-      expect(amount).to eq(0)
+
+    context "2014年4月1日以降の場合" do
+      date = Date.new(2014, 4, 1)
+      it "100円の場合は8円であること" do
+        amount = Rollbook::Money.calculate_consumption_tax(100, date)
+        expect(amount).to eq(8)
+      end
+      it "10円の場合は0円であること" do
+        amount = Rollbook::Money.calculate_consumption_tax(10, date)
+        expect(amount).to eq(0)
+      end
+      it "0円の場合は0円であること" do
+        amount = Rollbook::Money.calculate_consumption_tax(0, date)
+        expect(amount).to eq(0)
+      end
+      it "-100円の場合は0円であること" do
+        amount = Rollbook::Money.calculate_consumption_tax(-100, date)
+        expect(amount).to eq(0)
+      end
     end
   end
 
