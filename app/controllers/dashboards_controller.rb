@@ -5,12 +5,12 @@ class DashboardsController < ApplicationController
     # @members_courses_chart = members_courses_chart
     # @recesses_chart = recesses_chart
     # @sales_chart = sales_chart
-    @tuition_fees_chart = generate_tuition_fees_chart
+    @monthly_sales_chart = generate_monthly_sales_chart
   end
   
   private
   
-    def generate_tuition_fees_chart
+    def generate_monthly_sales_chart
       dashboard = Dashboard.new
       LazyHighCharts::HighChart.new('graph') do |f|
         total_fees = dashboard.months.map {|month| 0 }
@@ -19,7 +19,11 @@ class DashboardsController < ApplicationController
         f.tooltip(value_suffix: '千円')
         School.order(:open_date).each_with_index do |school, i|
           result = dashboard.monthly_tuition_fees_report(school_id: school.id)
-          tuition_fees = result.map {|row| row["tuition_fee"].to_i / 1000 }
+          rows = result.map do |row|
+            beginning_of_month = Rollbook::Util::Month.beginning_of_month(row['month'])
+            row.merge('tuition_fee_include_tax' => Rollbook::Money.include_consumption_tax(row['tuition_fee'].to_i, beginning_of_month))
+          end
+          tuition_fees = rows.map {|row| row['tuition_fee_include_tax'].to_i / 1000 }
           f.series(name: school.name, yAxis: 0, type: 'column', data: tuition_fees)
           total_fees = [total_fees, tuition_fees].transpose.map {|fee| fee.inject(&:+) }
         end
