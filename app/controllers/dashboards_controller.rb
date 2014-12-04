@@ -16,14 +16,14 @@ class DashboardsController < ApplicationController
         total_fees = dashboard.months.map {|month| 0 }
         f.xAxis(categories: dashboard.months.map {|month| "#{month[0, 4]}/#{month[4, 2]}"})
         f.yAxis([{ title: { text: "" }, min: 0, }, { title: { text: "", }, min: 0, opposite: true }, ])
-        f.tooltip(value_suffix: '千円')
+        f.tooltip(value_suffix: '万円')
         School.order(:open_date).each_with_index do |school, i|
           result = dashboard.monthly_tuition_fees_report(school_id: school.id)
           rows = result.map do |row|
             beginning_of_month = Rollbook::Util::Month.beginning_of_month(row['month'])
             row.merge('tuition_fee_include_tax' => Rollbook::Money.include_consumption_tax(row['tuition_fee'].to_i, beginning_of_month))
           end
-          tuition_fees = rows.map {|row| row['tuition_fee_include_tax'].to_i / 1000 }
+          tuition_fees = rows.map {|row| row['tuition_fee_include_tax'].to_i / 10000 }
           f.series(name: school.name, yAxis: 0, type: 'column', data: tuition_fees)
           total_fees = [total_fees, tuition_fees].transpose.map {|fee| fee.inject(&:+) }
         end
