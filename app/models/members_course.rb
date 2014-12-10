@@ -23,7 +23,7 @@ class MembersCourse < ActiveRecord::Base
   has_many :recesses
 
   #----------------
-  # Validates
+  # Validations
   #----------------
   validates :member_id, :course_id, :begin_date, presence: true
   validates_with MembersCourseValidator
