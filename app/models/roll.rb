@@ -13,22 +13,28 @@
 
 class Roll < ActiveRecord::Base
 
+  # STATUS = {
+  #   "0" => "未定",
+  #   "1" => "出席",
+  #   "2" => "欠席",
+  #   #"3" => "欠席",
+  #   "4" => "振替",
+  #   "5" => "休会",
+  #   "6" => "休講",
+  # }
   STATUS = {
-    "0" => "未定",
-    "1" => "出席",
-    "2" => "欠席",
-    #"3" => "欠席",
-    "4" => "振替",
-    "5" => "休会",
-    "6" => "休講",
-  }
-  STATUS_ = {
+    # 未定
     NONE: "0",
-    PRESENT: "1",
-    ABSENT: "2",
+    # 出席
+    ATTENDANCE: "1",
+    # 欠席
+    ABSENCE: "2",
     #ABSENT_SUB: "3",
+    # 振替
     SUBSTITUTE: "4",
+    # 休会
     RECESS: "5",
+    # 休講
     CANCEL: "6",
   }
   
@@ -38,14 +44,21 @@ class Roll < ActiveRecord::Base
   # absence 欠席
 
 
+  #----------------
+  # Relations
+  #----------------
   belongs_to :lesson
   belongs_to :member
 
+  #----------------
+  # Validations
+  #----------------
   validates :lesson_id, :member_id, :status, presence: true
   validates :member_id, uniqueness: { scope: :lesson_id }
 
-  #default_scope -> { order(:lesson_id, :member_id) }
-
+  #----------------
+  # Scopes
+  #----------------
   scope :presences, -> {
     where status: "1"
   }
@@ -75,6 +88,9 @@ class Roll < ActiveRecord::Base
     joins(lesson: [course: [[timetable: [[studio: :school], :time_slot]], :dance_style, :level, :instructor]])
   }
 
+  #----------------
+  # Methods
+  #----------------
   def status_name
     STATUS[status]
   end
