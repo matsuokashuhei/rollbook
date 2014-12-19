@@ -50,7 +50,7 @@ class Roll < ActiveRecord::Base
   #----------------
   # Scopes
   #----------------
-  scope :presences, -> {
+  scope :attendances, -> {
     where status: STATUS[:ATTENDANCE]
   }
   scope :absences, -> {
