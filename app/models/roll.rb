@@ -13,15 +13,6 @@
 
 class Roll < ActiveRecord::Base
 
-  # STATUS = {
-  #   "0" => "未定",
-  #   "1" => "出席",
-  #   "2" => "欠席",
-  #   #"3" => "欠席",
-  #   "4" => "振替",
-  #   "5" => "休会",
-  #   "6" => "休講",
-  # }
   STATUS = {
     # 未定
     NONE: "0",
@@ -60,20 +51,16 @@ class Roll < ActiveRecord::Base
   # Scopes
   #----------------
   scope :presences, -> {
-    where status: "1"
+    where status: STATUS[:ATTENDANCE]
   }
-
   scope :absences, -> {
-    #where status: ["2", "3", "6"]
-    where(status: ["2", "6"]).where(substitute_roll_id: nil)
+    where(status: [STATUS[:ABSENCE], STATUS[:CANCEL],]).where(substitute_roll_id: nil)
   }
-
   scope :substitutes, -> {
-    where status: "4"
+    where status: STATUS[:SUBSTITUTE]
   }
-
   scope :recesses, -> {
-    where status: "5"
+    where status: STATUS[:RECESS]
   }
 
   scope :member, ->(member_id) {
