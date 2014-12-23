@@ -37,7 +37,7 @@ class LessonDecorator < ApplicationDecorator
 
   def attendances_count
     return if model.rolls_status == Lesson::ROLLS_STATUS[:NONE]
-    number_of_people(model.rolls.presences.count)
+    number_of_people(model.rolls.attendances.count)
   end
 
   def absentees_count

@@ -1,6 +1,6 @@
 class InstructorsController < ApplicationController
 
-  before_action :set_instructor, except: [:index, :new,]
+  before_action :set_instructor, only: [:show, :edit, :update, :courses]
 
   respond_to :html
 

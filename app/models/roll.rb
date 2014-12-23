@@ -14,21 +14,18 @@
 class Roll < ActiveRecord::Base
 
   STATUS = {
-    "0" => "未定",
-    "1" => "出席",
-    "2" => "欠席",
-    #"3" => "欠席",
-    "4" => "振替",
-    "5" => "休会",
-    "6" => "休講",
-  }
-  STATUS_ = {
+    # 未定
     NONE: "0",
-    PRESENT: "1",
-    ABSENT: "2",
+    # 出席
+    ATTENDANCE: "1",
+    # 欠席
+    ABSENCE: "2",
     #ABSENT_SUB: "3",
+    # 振替
     SUBSTITUTE: "4",
+    # 休会
     RECESS: "5",
+    # 休講
     CANCEL: "6",
   }
   
@@ -38,29 +35,32 @@ class Roll < ActiveRecord::Base
   # absence 欠席
 
 
+  #----------------
+  # Relations
+  #----------------
   belongs_to :lesson
   belongs_to :member
 
+  #----------------
+  # Validations
+  #----------------
   validates :lesson_id, :member_id, :status, presence: true
   validates :member_id, uniqueness: { scope: :lesson_id }
 
-  #default_scope -> { order(:lesson_id, :member_id) }
-
-  scope :presences, -> {
-    where status: "1"
+  #----------------
+  # Scopes
+  #----------------
+  scope :attendances, -> {
+    where status: STATUS[:ATTENDANCE]
   }
-
   scope :absences, -> {
-    #where status: ["2", "3", "6"]
-    where(status: ["2", "6"]).where(substitute_roll_id: nil)
+    where(status: [STATUS[:ABSENCE], STATUS[:CANCEL],]).where(substitute_roll_id: nil)
   }
-
   scope :substitutes, -> {
-    where status: "4"
+    where status: STATUS[:SUBSTITUTE]
   }
-
   scope :recesses, -> {
-    where status: "5"
+    where status: STATUS[:RECESS]
   }
 
   scope :member, ->(member_id) {
@@ -75,6 +75,9 @@ class Roll < ActiveRecord::Base
     joins(lesson: [course: [[timetable: [[studio: :school], :time_slot]], :dance_style, :level, :instructor]])
   }
 
+  #----------------
+  # Methods
+  #----------------
   def status_name
     STATUS[status]
   end

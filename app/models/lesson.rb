@@ -27,12 +27,21 @@ class Lesson < ActiveRecord::Base
     FINISHED: "2",
   }
 
+  #----------------
+  # Relations
+  #----------------
   belongs_to :course
   has_many :rolls
 
+  #----------------
+  # Validations
+  #----------------
   validates :course_id, :date, :rolls_status, presence: true
   validates :date, uniqueness: { scope: :course_id }
 
+  #----------------
+  # Scopes
+  #----------------
   # 出欠が確定しているレッスン
   scope :fixed, -> {
     where(rolls_status: ROLLS_STATUS[:FINISHED])
@@ -57,6 +66,9 @@ class Lesson < ActiveRecord::Base
     where(status: STATUS[:CANCEL_BY_INSTRUCTOR])
   }
 
+  #----------------
+  # Methods
+  #----------------
   def editable?
     [
       # 今日以前である。
@@ -92,19 +104,19 @@ class Lesson < ActiveRecord::Base
     self.save
   end
 
+  # 出席簿を検索する。出席簿がない場合は作る。
   def find_or_initialize_rolls
-    # クラスを受講中の会員と、休会中の会員の出欠情報を作る。
-    rolls = []
-    MembersCourse.where(course_id: self.course_id).active(self.date).each do |members_course|
-      roll = Roll.find_or_initialize_by(lesson_id: self.id,
-                                        member_id: members_course.member_id)
-      roll.status = "0" if roll.new_record?
-      # 休会中
-      roll.status = "5" if Recess.exists?(members_course_id: members_course.id,
-                                          month: self.date.strftime("%Y%m"))
-      rolls << roll
+    # 受講している会員の検索
+    course.members_courses.active(date).map do |members_course|
+      Roll.find_or_initialize_by(lesson_id: id, member_id: members_course.member_id) do |roll|
+        # 休会の確認
+        unless members_course.in_recess?(date.strftime('%Y%m'))
+          roll.status = Roll::STATUS[:NONE]
+        else
+          roll.status = Roll::STATUS[:RECESS]
+        end
+      end
     end
-    rolls
   end
 
   def reset_rolls
@@ -119,13 +131,11 @@ class Lesson < ActiveRecord::Base
   end
 
   # 罰金を計算する。
-  #def cancellation_penalty
   def cancellation_fee
     # インストラクターの欠勤による休講以外は罰金はない。
     return 0 unless status == STATUS[:CANCEL_BY_INSTRUCTOR]
     # 休講の場合は、レッスンの日に在籍している会員数×週割の月謝※税込
     members_courses = course.members_courses.active(date).select {|members_course| members_course.in_recess?(date.strftime("%Y%m")) == false }
-    #(((course.monthly_fee * (1 + TAX_RATE)) * members_courses.count) * 0.25).to_i
     (Rollbook::Money.include_consumption_tax(course.monthly_fee) * members_courses.count * 0.25).to_i
   end
 
