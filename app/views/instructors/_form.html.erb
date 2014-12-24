@@ -33,6 +33,7 @@
       <div class="col-md-2">
         <%= f.number_field :guaranteed_min, class: "form-control" %>
       </div>
+      <% if false #消す %>  
       <div class="col-md-2 col-md-offset-1">
         <div class="checkbox">
           <label>
@@ -40,6 +41,8 @@
           </label>
         </div>
       </div>
+      <% end %>
+      <%= f.hidden_field :taxable %>
     </div>
   <% end %>
   <% if false %>
