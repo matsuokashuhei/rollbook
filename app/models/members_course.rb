@@ -81,7 +81,8 @@ class MembersCourse < ActiveRecord::Base
 
   # 第何週入会かを調べる。
   def start_week_of_month
-    week_of_month(begin_date.day)
+    Rollbook::Calendar.week_of_month(date: begin_date)
+    #week_of_month(begin_date.day)
   end
 
   # 会員が休会中か判定する。
@@ -117,26 +118,6 @@ class MembersCourse < ActiveRecord::Base
       (fee * 0.6).to_i
     else
       (fee * 0.4).to_i
-    end
-  end
-
-  private
-  
-  # 月の中で第何週か調べる。
-  # === Args :: 日
-  # === Retrurn :: 週
-  def week_of_month(date)
-    case begin_date.day
-    when 1..7
-      1
-    when 8..14
-      2
-    when 15..21
-      3
-    when 22..28
-      4
-    else
-      5
     end
   end
 
