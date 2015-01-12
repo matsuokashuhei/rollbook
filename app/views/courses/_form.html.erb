@@ -29,14 +29,14 @@
       <%= f.collection_select :instructor_id, Instructor.all, :id, :name, { prompt: "" }, { class: "form-control" } %>
     </div>
   </div>
-  <% if current_user.manager? %>
+  <%# if current_user.manager? %>
     <div class="form-group <%= 'has-error' if @course.errors[:monthly_fee].present? %>">
       <%= f.label :monthly_fee, class: "col-md-1 control-label" %>
       <div class="col-md-2">
         <%= f.number_field :monthly_fee,  class: "form-control" %>
       </div>
     </div>
-  <% end %>
+  <%# end %>
   <div class="form-group">
     <%= f.label :open_date, class: "col-md-1 control-label" %>
     <div class="col-md-2 <%= 'has-error' if @course.errors[:open_date].present? %>">
