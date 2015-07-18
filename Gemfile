@@ -29,6 +29,8 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
+  gem 'faker'
+  gem 'gimei'
 end
 
 # CSS
