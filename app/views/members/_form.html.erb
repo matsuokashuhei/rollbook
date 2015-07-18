@@ -38,18 +38,9 @@
     <%= f.label t("activerecord.attributes.member.birth_date"), class: "col-md-1 control-label" %>
     <div class="col-md-2 <%= 'has-error' if @member.errors[:birth_date].present? %>">
       <%# f.text_field :birth_date, class: "form-control", data: { behaviour: "datepicker" } %>
-      <div id="birth_date_picker" class="input-group date">
+      <%= date_picker_field "birth_date" do %>
         <%= f.text_field :birth_date, class: "form-control" %>
-        <div class="input-group-addon"><%= fa_icon "calendar-o" %></div>
-        <script>
-          $('#birth_date_picker').datepicker({
-            format: "yyyy/mm/dd",
-            language: "ja",
-            clearBtn: true,
-            autoclose: true
-          })
-        </script>
-      </div>
+      <% end %>
     </div>
   </div>
   <%= "</fieldset>".html_safe if params[:action] == "show" %>
@@ -114,36 +105,17 @@
     <%= f.label t("activerecord.attributes.member.enter_date"), class: "col-md-1 col-md-offset-1 control-label" %>
     <div class="col-md-2 <%= 'has-error' if @member.errors[:enter_date].present? %>">
       <%# f.date_field :enter_date, class: "form-control" %>
-      <div id='enter_date_picker', class='input-group date'>
-        <%= f.text_field :enter_date, class: 'form-control' %>
-        <div class="input-group-addon"><%= fa_icon "calendar-o" %></div>
-        <script>
-          $('#enter_date_picker').datepicker({
-            format: "yyyy/mm/dd",
-            language: "ja",
-            clearBtn: true,
-            autoclose: true
-          })
-        </script>
-      </div>
+      <%= date_picker_field "enter_date" do %>
+        <%= f.text_field :enter_date, class: "form-control" %>
+      <% end %>
     </div>
     <!-- 退会日 -->
     <%= f.label t("activerecord.attributes.member.leave_date"), class: "col-md-1 control-label" %>
     <div class="col-md-2 <%= 'has-error' if @member.errors[:leave_date].present? %>">
       <%# f.date_field :leave_date, class: "form-control", min: @member.enter_date %>
-      <div id='leave_date_picker', class='input-group date'>
-        <%= f.text_field :leave_date, class: 'form-control' %>
-        <div class="input-group-addon"><%= fa_icon "calendar-o" %></div>
-        <script>
-          $('#leave_date_picker').datepicker({
-            format: "yyyy/mm/dd",
-            startDate: "<%= @member.enter_date.try(:tomorrow) %>",
-            language: "ja",
-            clearBtn: true,
-            autoclose: true
-          })
-        </script>
-      </div>
+      <%= date_picker_field "leave_date", start_date: @member.enter_date.try(:tomorrow) do %>
+        <%= f.text_field :leave_date, class: "form-control" %>
+      <% end %>
     </div>
   </div>
 

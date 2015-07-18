@@ -158,16 +158,24 @@ module ApplicationHelper
     end
   end
 
-  def date_picker_field(field_name)
+  def date_picker_field(field_name, start_date: nil, end_date: nil, day_of_week: nil)
     field_id = "#{field_name}_picker"
-    script_lines = <<-EOS.strip_heredoc
-      $(\"\##{field_id}\").datepicker({
-      format: \"yyyy/mm/dd\",
+    options = {
+      format: "yyyy/mm/dd",
+      weekStart: 1,
       clearBtn: true,
-      language: \"ja\",
-      autoClose: true
-      });
-    EOS
+      language: "ja",
+      autoclose: true,
+    }
+    options[:startDate] = start_date if start_date.present?
+    options[:endDate] = end_date if end_date.present?
+    if day_of_week.present?
+      options[:daysOfWeekDisabled] = [0,1,2,3,4,5,6].delete_if {|w|
+        w == day_of_week
+      }
+    end
+    #options[:daysOfWeekDisabled] = days_of_week if days_of_week_disabled.present?
+    script_lines = "$(\"\##{field_id}\").datepicker(" + options.to_json + ");"
     content_tag :div, id: field_id, class: "input-group date" do
       concat yield
       tag1 = content_tag :div, class: "input-group-addon" do
