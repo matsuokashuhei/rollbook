@@ -158,6 +158,29 @@ module ApplicationHelper
     end
   end
 
+  def date_picker_field(field_name)
+    field_id = "#{field_name}_picker"
+    script_lines = <<-EOS.strip_heredoc
+      $(\"\##{field_id}\").datepicker({
+      format: \"yyyy/mm/dd\",
+      clearBtn: true,
+      language: \"ja\",
+      autoClose: true
+      });
+    EOS
+    content_tag :div, id: field_id, class: "input-group date" do
+      concat yield
+      tag1 = content_tag :div, class: "input-group-addon" do
+          fa_icon "calendar-o"
+        end
+      concat tag1
+      tag2 = javascript_tag do
+          script_lines.html_safe
+        end
+      concat tag2
+    end
+  end
+
   private
 
   def modal_to_destroy(id, path)
