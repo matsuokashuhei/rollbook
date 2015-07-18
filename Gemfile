@@ -34,7 +34,8 @@ group :development, :test do
 end
 
 # CSS
-gem "bootstrap-sass", '3.2.0'
+gem "bootstrap-sass", '3.3.5'
+gem "bootstrap-datepicker-rails"
 gem "font-awesome-rails"
 # チャート
 gem 'lazy_high_charts'
