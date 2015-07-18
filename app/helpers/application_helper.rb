@@ -169,6 +169,7 @@ module ApplicationHelper
     }
     options[:startDate] = start_date if start_date.present?
     options[:endDate] = end_date if end_date.present?
+    day_of_week = 0 if day_of_week == 7
     if day_of_week.present?
       options[:daysOfWeekDisabled] = [0,1,2,3,4,5,6].delete_if {|w|
         w == day_of_week
