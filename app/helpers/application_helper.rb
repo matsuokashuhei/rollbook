@@ -158,7 +158,7 @@ module ApplicationHelper
     end
   end
 
-  def date_picker_field(field_name, start_date: nil, end_date: nil, day_of_week: nil)
+  def date_picker_field(field_name, start_date: nil, end_date: nil, day_of_week: nil, orientation: nil)
     field_id = "#{field_name}_picker"
     options = {
       format: "yyyy/mm/dd",
@@ -175,6 +175,7 @@ module ApplicationHelper
         w == day_of_week
       }
     end
+    options[:orientation] = orientation if orientation.present?
     #options[:daysOfWeekDisabled] = days_of_week if days_of_week_disabled.present?
     script_lines = "$(\"\##{field_id}\").datepicker(" + options.to_json + ");"
     content_tag :div, id: field_id, class: "input-group date" do
@@ -190,9 +191,9 @@ module ApplicationHelper
     end
   end
 
-  def month_picker_field(field_name)
+  def month_picker_field(field_name, orientation: nil)
     field_id = "#{field_name.to_s}_month_picker"
-    picker_options = {
+    options = {
       format: "yyyy/mm",
       startView: 1,
       minViewMode: 1,
@@ -200,6 +201,7 @@ module ApplicationHelper
       clearBtn: true,
       autoclose: true
     }
+    options[:orientation] = orientation if orientation.present?
     #script_lines = "$(\"\##{field_id}\").datepicker(" + options.to_json + ");"
     content_tag :div, id: field_id, class: "input-group date" do
       concat yield
@@ -208,7 +210,7 @@ module ApplicationHelper
       end
       concat tag1
       tag2 = javascript_tag do
-        ("$(\"\##{field_id}\").datepicker(" + picker_options.to_json + ");").html_safe
+        ("$(\"\##{field_id}\").datepicker(" + options.to_json + ");").html_safe
       end
       concat tag2
     end
