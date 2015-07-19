@@ -15,7 +15,6 @@
 //= require turbolinks
 //= require bootstrap
 //= require bootstrap-datepicker
-//= require rollbook
 //= require highcharts/highcharts
 //= require highcharts/highcharts-more
 //= require highcharts/highstock
