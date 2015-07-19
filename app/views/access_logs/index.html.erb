@@ -7,10 +7,16 @@
       <label>日時</label>
     </div>
     <div class="form-group">
-      <%= text_field_tag "date_from", params[:date_from], class: "form-control", placeholder: "から", data: { behaviour: "datepicker" } %>
+      <%# text_field_tag "date_from", params[:date_from], class: "form-control", placeholder: "から", data: { behaviour: "datepicker" } %>
+      <%= date_picker_field "date_from" do %>
+        <%= text_field_tag "date_from", params[:date_from], class: "form-control", placeholder: "から" %>
+      <% end %>
     </div>
     <div class="form-group">
-      <%= text_field_tag "date_to", params[:date_to], class: "form-control", placeholder: "まで", data: { behaviour: "datepicker" } %>
+      <%# text_field_tag "date_to", params[:date_to], class: "form-control", placeholder: "まで", data: { behaviour: "datepicker" } %>
+      <%= date_picker_field "date_to" do %>
+        <%= text_field_tag "date_to", params[:date_to], class: "form-control", placeholder: "まで" %>
+      <% end %>
     </div>
     <div class="form-group">
       <%= text_field_tag "url", params[:url], class: "form-control", placeholder: "URL" %>

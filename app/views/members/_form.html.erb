@@ -37,7 +37,10 @@
     <!-- 生年月日 -->
     <%= f.label t("activerecord.attributes.member.birth_date"), class: "col-md-1 control-label" %>
     <div class="col-md-2 <%= 'has-error' if @member.errors[:birth_date].present? %>">
-      <%= f.text_field :birth_date, class: "form-control", data: { behaviour: "datepicker" } %>
+      <%# f.text_field :birth_date, class: "form-control", data: { behaviour: "datepicker" } %>
+      <%= date_picker_field "birth_date" do %>
+        <%= f.text_field :birth_date, class: "form-control" %>
+      <% end %>
     </div>
   </div>
   <%= "</fieldset>".html_safe if params[:action] == "show" %>
@@ -101,12 +104,18 @@
     <!-- 入会日 -->
     <%= f.label t("activerecord.attributes.member.enter_date"), class: "col-md-1 col-md-offset-1 control-label" %>
     <div class="col-md-2 <%= 'has-error' if @member.errors[:enter_date].present? %>">
-      <%= f.date_field :enter_date, class: "form-control" %>
+      <%# f.date_field :enter_date, class: "form-control" %>
+      <%= date_picker_field "enter_date" do %>
+        <%= f.text_field :enter_date, class: "form-control" %>
+      <% end %>
     </div>
     <!-- 退会日 -->
     <%= f.label t("activerecord.attributes.member.leave_date"), class: "col-md-1 control-label" %>
     <div class="col-md-2 <%= 'has-error' if @member.errors[:leave_date].present? %>">
-      <%= f.date_field :leave_date, class: "form-control", min: @member.enter_date %>
+      <%# f.date_field :leave_date, class: "form-control", min: @member.enter_date %>
+      <%= date_picker_field "leave_date", start_date: @member.enter_date.try(:tomorrow) do %>
+        <%= f.text_field :leave_date, class: "form-control" %>
+      <% end %>
     </div>
   </div>
 

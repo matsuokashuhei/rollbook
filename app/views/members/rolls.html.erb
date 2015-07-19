@@ -14,7 +14,10 @@
   <div class="col-md-12">
     <%= form_tag member_rolls_path(@member.id), method: :get, class: "form-inline" do %>
       <div class="form-group">
-        <%= text_field_tag "month", params[:month], class: "form-control", placeholder: "月", data: { behaviour: "monthpicker" }  %>
+        <%# text_field_tag "month", params[:month], class: "form-control", placeholder: "月", data: { behaviour: "monthpicker" }  %>
+        <%= month_picker_field :month do %>
+          <%= text_field_tag :month, params[:month], class: "form-control", placeholder: "月" %>
+        <% end %>
       </div>
       <div class="form-group">
         <% members_courses = @member.members_courses.joins(:course) %>

@@ -158,6 +158,62 @@ module ApplicationHelper
     end
   end
 
+  def date_picker_field(field_name, start_date: nil, end_date: nil, day_of_week: nil)
+    field_id = "#{field_name}_picker"
+    options = {
+      format: "yyyy/mm/dd",
+      weekStart: 1,
+      clearBtn: true,
+      language: "ja",
+      autoclose: true,
+    }
+    options[:startDate] = start_date if start_date.present?
+    options[:endDate] = end_date if end_date.present?
+    day_of_week = 0 if day_of_week == 7
+    if day_of_week.present?
+      options[:daysOfWeekDisabled] = [0,1,2,3,4,5,6].delete_if {|w|
+        w == day_of_week
+      }
+    end
+    #options[:daysOfWeekDisabled] = days_of_week if days_of_week_disabled.present?
+    script_lines = "$(\"\##{field_id}\").datepicker(" + options.to_json + ");"
+    content_tag :div, id: field_id, class: "input-group date" do
+      concat yield
+      tag1 = content_tag :div, class: "input-group-addon" do
+          fa_icon "calendar-o"
+        end
+      concat tag1
+      tag2 = javascript_tag do
+          script_lines.html_safe
+        end
+      concat tag2
+    end
+  end
+
+  def month_picker_field(field_name)
+    field_id = "#{field_name.to_s}_month_picker"
+    picker_options = {
+      format: "yyyy/mm",
+      startView: 1,
+      minViewMode: 1,
+      language: "ja",
+      clearBtn: true,
+      autoclose: true
+    }
+    #script_lines = "$(\"\##{field_id}\").datepicker(" + options.to_json + ");"
+    content_tag :div, id: field_id, class: "input-group date" do
+      concat yield
+      tag1 = content_tag :div, class: "input-group-addon" do
+        fa_icon "calendar-o"
+      end
+      concat tag1
+      tag2 = javascript_tag do
+        ("$(\"\##{field_id}\").datepicker(" + picker_options.to_json + ");").html_safe
+      end
+      concat tag2
+    end
+  end
+
   private
 
   def modal_to_destroy(id, path)
