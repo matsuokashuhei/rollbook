@@ -190,6 +190,30 @@ module ApplicationHelper
     end
   end
 
+  def month_picker_field(field_name)
+    field_id = "#{field_name.to_s}_month_picker"
+    picker_options = {
+      format: "yyyy/mm",
+      startView: 1,
+      minViewMode: 1,
+      language: "ja",
+      clearBtn: true,
+      autoclose: true
+    }
+    #script_lines = "$(\"\##{field_id}\").datepicker(" + options.to_json + ");"
+    content_tag :div, id: field_id, class: "input-group date" do
+      concat yield
+      tag1 = content_tag :div, class: "input-group-addon" do
+        fa_icon "calendar-o"
+      end
+      concat tag1
+      tag2 = javascript_tag do
+        ("$(\"\##{field_id}\").datepicker(" + picker_options.to_json + ");").html_safe
+      end
+      concat tag2
+    end
+  end
+
   private
 
   def modal_to_destroy(id, path)

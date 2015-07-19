@@ -8,7 +8,10 @@
         </div>
       <% end %>
       <div class="form-group">
-        <%= f.text_field :open_date_gteq, class: "form-control", placeholder: '開始日', data: { behaviour: 'datepicker' } %>
+        <%# f.text_field :open_date_gteq, class: "form-control", placeholder: '開始日', data: { behaviour: 'datepicker' } %>
+        <%= date_picker_field "open_date_gteq" do %>
+          <%= f.text_field :open_date_gteq, class: "form-control", placeholder: '開始日' %>
+        <% end %>
       </div>
       <%= f.button class: "btn btn-success" do %>
         <%= fa_icon("search lg", text: t("views.buttons.search")) %>

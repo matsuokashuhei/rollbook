@@ -20,9 +20,12 @@
     <%= f.label :month, class: "col-md-1 control-label" %>
     <div class="col-md-2">
       <% if params[:action].presence_in(['new', 'create',]) %>
-        <%= f.text_field :month, class: "form-control", data: { behaviour: "monthpicker" } %>
+        <%# f.text_field :month, class: "form-control", data: { behaviour: "monthpicker" } %>
+        <%= month_picker_field "month" do %>
+          <%= f.text_field :month, class: "form-control" %>
+        <% end %>
       <% else %>
-        <%= f.text_field :month, class: "form-control", data: { behaviour: "monthpicker" }, disabled: "disabled" %>
+        <%= f.text_field :month, class: "form-control", disabled: "disabled" %>
       <% end %>
     </div>
   </div>

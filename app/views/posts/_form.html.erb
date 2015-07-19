@@ -22,11 +22,17 @@
   <div class="form-group">
     <%= f.label :open_date, class: "col-md-1 control-label" %>
     <div class="col-md-2 <%= 'has-error' if @post.errors[:open_date].present? %>">
-      <%= f.text_field :open_date, class: "form-control", data: { behaviour: "datepicker" } %>
+      <%# f.text_field :open_date, class: "form-control", data: { behaviour: "datepicker" } %>
+      <%= date_picker_field "open_date" do %>
+        <%= f.text_field :open_date, class: "form-control" %>
+      <% end %>
     </div>
     <%= f.label :close_date, class: "col-md-1 col-md-offset-1 control-label" %>
     <div class="col-md-2 <%= 'has-error' if @post.errors[:close_date].present? %>">
-      <%= f.text_field :close_date, class: "form-control", data: { behaviour: "datepicker" } %>
+      <%# f.text_field :close_date, class: "form-control", data: { behaviour: "datepicker" } %>
+      <%= date_picker_field "close_date" do %>
+        <%= f.text_field :close_date, class: "form-control" %>
+      <% end %>
     </div>
   </div>
 
