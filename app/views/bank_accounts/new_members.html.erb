@@ -9,24 +9,24 @@
 </div>
 <br />
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-5">
     <div class="table-responsive">
       <%= render "shared/notice" %>
       <%= form_tag({ action: "create_member" }, { method: "post", id: "form" }) do %>
         <%= hidden_field_tag "bank_account_id", @bank_account.id %>
-        <table class="table">
+        <table class="table table-bordered table-striped table-hover">
           <thead>
             <tr>
-              <th></th>
-              <th><%= t("activerecord.attributes.member.number") %></th>
-              <th><%= t("activerecord.attributes.member.name") %></th>
-              <th><%= t("activerecord.attributes.member.enter_date") %></th>
+              <th class="col-md-1"></th>
+              <th class="col-md-1"><%= t("activerecord.attributes.member.number") %></th>
+              <th class="col-md-2"><%= t("activerecord.attributes.member.name") %></th>
+              <th class="col-md-1"><%= t("activerecord.attributes.member.enter_date") %></th>
             </tr>
           </thead>
           <tbody>
             <% @members.each do |member| %>
               <tr>
-                <td><div class="radio"><%= radio_button_tag "member_id", member.id %></div></td>
+                <td class="text-center"><%= radio_button_tag "member_id", member.id %></td>
                 <td><%= member.number %></td>
                 <td><%= member.name %></td>
                 <td><%= member.enter_date %></td>
