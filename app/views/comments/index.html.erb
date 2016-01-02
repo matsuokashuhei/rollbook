@@ -7,7 +7,7 @@
     </h3>
     <div class="panel panel-default">
       <div class="panel-body">
-    <%= simple_format(@post.content) %>
+        <%= simple_format(@post.content) %>
       </div>
   </div>
   </div>
@@ -16,7 +16,11 @@
   <div class="col-md-10 col-md-offset-1">
     <% @comments.each.with_index(1) do |comment, i| %>
       <% if comment.persisted? %>
-        <h6><div class="pull-right"><a name="<%= "comment#{i}" %>"><small><%= i %></small></a></div></h6>
+        <h6 class="text-right">
+          <small>
+            <%= link_to "##{i}", "#{post_comments_path(@post)}#comment#{i}", name: "comment#{i}", class: 'btn-default btn-link' %>
+          </small>
+        </h6>
         <dl>
           <dd>
             <p><%= simple_format(comment.content) %></p>
