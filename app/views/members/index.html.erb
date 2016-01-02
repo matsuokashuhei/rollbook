@@ -30,8 +30,7 @@
           <tr>
             <th class="col-md-1"><%= t("activerecord.attributes.member.number") %></th>
             <th class="col-md-2"><%= t("activerecord.attributes.member.name") %></th>
-            <th class="col-md-2"><%= t("activerecord.attributes.bank_account.holder_name") %></th>
-            <th class="col-md-1"></th>
+            <th class="col-md-2"><%= t("activerecord.models.bank_account") %></th>
             <th class="col-md-1"><%= t("activerecord.attributes.member.status") %></th>
             <th class="col-md-1"><%= t("activerecord.models.members_course") %></th>
             <th class="col-md-1">未消化振替</th>
@@ -47,8 +46,14 @@
                   <%= member.name_and_kana %>
                 <% end %>
               </td>
-              <td><%= link_to(member.bank_account.holder_name_kana, bank_account_path(member.bank_account)) if member.bank_account.present?  %></td>
-              <td class="text-center"><%= member.bank_status %></td>
+              <td>
+                <%= member.bank_status  %>
+                <% bank_account = member.bank_account %>
+                <% if bank_account.present? %>
+                  <%= link_to(bank_account.holder_name_kana, bank_account_path(bank_account)) %>
+                  <%= bank_account.decorate.payment_courses  %>
+                <% end %>
+              </td>
               <td class="text-center"><%= member.status %></td>
               <td class="text-center">
                 <% if member.members_courses.active.count > 0 %>
@@ -75,5 +80,5 @@
       </table>
       <%= paginate @members %>
     </div>
-</div>
+  </div>
 </div>

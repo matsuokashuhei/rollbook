@@ -17,28 +17,27 @@ class BankAccountDecorator < ApplicationDecorator
     text += "</li>"
     text += "</ul>"
     text.html_safe
-    #h.content_tag(:small, "#{model.holder_name_kana}") + h.tag(:br) + "#{model.holder_name}"
   end
 
   def status
-    #h.content_tag(:h3, style: "margin: 8px; line-height: 0;") do
     h.content_tag :h4, style: "margin: 0px; line-height: 0;" do
       if model.active?
         h.content_tag(:span, "引落中", class: "label label-success")
       else
         h.content_tag(:span, "手続中", class: "label label-warning")
       end
-=begin
-      if model.active?
-        h.content_tag(:span, "引落中", class: "label label-success")
-      elsif model.begin_date.present?
-        h.content_tag(:span, "引落待ち", class: "label label-info")
-      elsif model.ship_date.present?
-        h.content_tag(:span, "発送", class: "label label-warning")
-      else
-        h.content_tag(:span, "受取", class: "label label-default")
+    end
+  end
+
+  def payment_courses
+    count = model.payment_courses.count
+    if count > 1
+      h.link_to h.bank_account_members_path(model) do
+        tooltip = { toggle: "tooltip", "original-title" => "#{count}クラス受講会員です。" }
+        h.content_tag :span, class: 'badge', style: 'background-color: orange', data: tooltip do
+          h.fa_icon 'calendar', text: count
+        end
       end
-=end
     end
   end
 

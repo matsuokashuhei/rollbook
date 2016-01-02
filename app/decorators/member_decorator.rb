@@ -41,39 +41,33 @@ class MemberDecorator < ApplicationDecorator
   end
 
   def bank_status
-    tooltip = { toggle: "tooltip", }
-    style = ["background-color: red", "font-size: 18px", "font-weight: normal"].join("; ")
-    if model.bank_account.blank?
-      h.content_tag(:span, class: "badge", style: style, data: tooltip.merge("original-title" => "引落の手続きをしてください。")) do
-        h.fa_icon "credit-card"
-      end
-    elsif model.bank_account.imperfect
+    bank_account = model.bank_account
+    if bank_account.blank?
+      style = ["background-color: red", "font-size: 18px", "font-weight: normal"].join("; ")
+      tooltip = { toggle: "tooltip", "original-title" => "引落の手続きをしてください。" }
+      return h.content_tag(:span, class: "badge", style: style, data: tooltip) do
+          h.fa_icon "credit-card"
+        end
+    end
+    if bank_account.imperfect
       style = ["background-color: orange", "font-size: 18px", "font-weight: normal"].join("; ")
-      h.link_to h.bank_account_path(model.bank_account) do
-        h.content_tag(:span, class: "badge", style: style, data: tooltip.merge("original-title" => "書類不備です。")) do
-          h.fa_icon "credit-card"
+      tooltip = { toggle: "tooltip", "original-title" => "書類不備です。" }
+      return h.link_to h.bank_account_path(model.bank_account) do
+          h.content_tag(:span, class: "badge", style: style, data: tooltip) do
+            h.fa_icon "credit-card"
+          end
         end
-      end
-    elsif model.bank_account.begin_date.blank?
-      h.link_to h.bank_account_path(model.bank_account) do
-        h.content_tag(:span, class: "badge", style: style, data: tooltip.merge("original-title" => "引落の手続きをしてください。")) do
-          h.fa_icon "credit-card"
+    end
+    if bank_account.begin_date.blank?
+      style = ["background-color: red", "font-size: 18px", "font-weight: normal"].join("; ")
+      tooltip = { toggle: "tooltip", "original-title" => "引落の手続きをしてください。" }
+      return h.link_to h.bank_account_path(model.bank_account) do
+          h.content_tag(:span, class: "badge", style: style, data: tooltip.merge("original-title" => "引落の手続きをしてください。")) do
+            h.fa_icon "credit-card"
+          end
         end
-      end
     end
   end
-
-  # def imperfect
-  #   if model.bank_account.try(:imperfect)
-  #     tooltip_options = { toggle: "tooltip", "original-title" => "口座書類不備" }
-  #     #tooltip_options = { toggle: "tooltip", "original-title" => h.t("activerecord.attributes.bank_account.imperfect") }
-  #     h.link_to h.bank_account_path(model.bank_account) do
-  #       h.content_tag :span, class: "badge", style: "background-color: orange; font-size: 18px; font-weight: normal;", data: tooltip_options  do
-  #         h.fa_icon "warning"
-  #       end
-  #     end
-  #   end
-  # end
 
   def gender
     model.gender == "M" ? "男" : "女"
@@ -99,14 +93,5 @@ class MemberDecorator < ApplicationDecorator
       end
     end
   end
-
-  # Define presentation-specific methods here. Helpers are accessed through
-  # `helpers` (aka `h`). You can override attributes, for example:
-  #
-  #   def created_at
-  #     helpers.content_tag :span, class: 'time' do
-  #       object.created_at.strftime("%a %m/%d/%y")
-  #     end
-  #   end
 
 end

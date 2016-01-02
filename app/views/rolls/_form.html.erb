@@ -19,10 +19,16 @@
           <%= hidden_field_tag "rolls[][lesson_id]", roll.lesson.id %>
           <%= hidden_field_tag "rolls[][member_id]", roll.member_id %>
           <tr>
-            <td><%= roll.member.number %></td>
-            <td class="col-md-2"><%= roll.member.linked_name %></td>
+            <% member = roll.member %>
+            <td class="text-center">
+              <%= member.number %>
+            </td>
+            <td class="col-md-2">
+              <%= member.linked_name %>
+            </td>
             <td class="col-md-1 text-center">
-              <%= roll.member.bank_status %>
+              <%= member.bank_account.decorate.payment_courses if member.bank_account.present? %>
+              <%= member.bank_status %>
             </td>
             <td class="text-center">
               <% if params[:action] == "index" %>

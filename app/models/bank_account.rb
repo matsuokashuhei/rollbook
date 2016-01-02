@@ -64,12 +64,9 @@ class BankAccount < ActiveRecord::Base
     end
   end
 
-  def payable_members(date)
-    payable_members = []
-    members.active.each do |member|
-      payable_members << member if member.members_courses.active(date).count > 0
-    end
-    payable_members
+  # 引き落とししているコースの数
+  def payment_courses(date = Date.today)
+    members.map {|member| member.members_courses.active }.flatten
   end
 
 end
