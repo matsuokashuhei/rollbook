@@ -14,7 +14,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-5">
+  <div class="col-md-7">
     <%= render "shared/notice" %>
     <div class="table-responsive">
       <table class="table table-bordered table-striped table-hover">
@@ -22,23 +22,35 @@
           <tr>
             <th class="col-md-1"><%= t("activerecord.attributes.member.number") %></th>
             <th class="col-md-2"><%= t("activerecord.attributes.member.name") %></th>
-            <th class="col-md-1">受講クラス数</th>
+            <th class="col-md-3"><%= t("activerecord.models.members_course") %></th>
             <th class="col-md-1"></th>
           </tr>
         </thead>
         <tbody>
           <% @members.each do |member| %>
-            <tr>
-              <td><%= member.number %></td>
-              <td><%= member.name %></td>
-              <td class="text-right">
-                <%= link_to member.members_courses.active.count, member_members_courses_path(member, status: '1') %>
-              </td>
-              <td class="text-center">
-                <%= link_to_show member_path(member) %>
-                <%= link_to_destroy member.id, destroy_bank_account_member_path(@bank_account, member) %>
-              </td>
-            </tr>
+            <% members_courses = member.members_courses.active %>
+            <% members_courses.each_with_index do |members_course, i| %>
+              <% if i == 0 %>
+                <tr>
+                  <td class="text-center" rowspan="<%= members_courses.count %>"><%= member.number %></td>
+                  <td rowspan="<%= members_courses.count %>"><%= link_to member.name, member_path(member), class: 'btn btn-link' %></td>
+                  <td>
+                    <%= link_to members_course.course.name, member_members_course_path(member, members_course) %><br/>
+                  </td>
+                  <td class="text-center" rowspan="<%= members_courses.count %>">
+                    <%= link_to_show member_path(member) %>
+                    <%= link_to_destroy member.id, destroy_bank_account_member_path(@bank_account, member) %>
+                  </td>
+                </tr>
+              <% end %>
+              <% if i > 0 %>
+                <tr>
+                  <td>
+                    <%= link_to members_course.course.name, member_members_course_path(member, members_course) %><br/>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
           <% end %>
         </tbody>
       </table>
