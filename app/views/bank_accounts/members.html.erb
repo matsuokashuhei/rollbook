@@ -38,7 +38,6 @@
                     <%= link_to members_course.course.name, member_members_course_path(member, members_course) %><br/>
                   </td>
                   <td class="text-center" rowspan="<%= members_courses.count %>">
-                    <%= link_to_show member_path(member) %>
                     <%= link_to_destroy member.id, destroy_bank_account_member_path(@bank_account, member) %>
                   </td>
                 </tr>
