@@ -14,7 +14,8 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap
-//= require bootstrap-datepicker
+//= require bootstrap-datepicker/core
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.ja.js
 //= require highcharts/highcharts
 //= require highcharts/highcharts-more
 //= require highcharts/highstock
