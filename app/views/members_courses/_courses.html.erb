@@ -1,11 +1,8 @@
-<% breadcrumb :courses, @current_date, @current_studio %>
-<%= render 'nav' %>
-<br />
-<div class="row">
-  <div class="col-md-12">
+<% courses.to_a.uniq {|studio| studio['studio_id'] }.each.with_index(1) do |studio, i| %>
+  <div class="tab-pane <%= 'active' if i == 1 %>" id="<%= studio['school_id'] + studio['studio_id'] %>">
     <div class="table-responsive">
       <table class="table table-bordered">
-        <caption><%= @current_date.strftime("%Y年%m月") %></caption>
+        <caption class="text-center"><%= date.strftime("%Y年%m月") %></caption>
         <thead>
           <th style="width: 9%;"></th>
           <% [1, 2, 3, 4, 5, 6, 0,].each do |wday| %>
@@ -13,27 +10,23 @@
           <% end %>
         </thead>
         <tbody>
-          <% @courses.each do |course| %>
+          <% courses.select {|course| course['school_id'] == studio['school_id'] }.select {|course| course['studio_id'] == studio['studio_id'] }.each do |course| %>
             <% if course['weekday'] == '1' %>
               <tr>
             <% end %>
             <% if course['weekday'] == '1' %>
-              <th><%= course['start_time'] %></th>
+                <th><%= course['start_time'] %></th>  
             <% end %>
             <td class="course">
               <% if course['course_id'].present? %>
-                <%= link_to course_path(course['course_id']) do %>
-                  <h6>
+                <%= link_to new_member_members_course_path(member.id, course_id: course['course_id']) do %>
+                  <h6 style="margin-top: 5px; margin-bottom: 5px;">
                     <%= course['dance_style_name'] %>
                     <br />
                     <%= course['level_name'] %>
                     <br />
                     <small><%= course['instructor_name'] %></small>
                   </h6>
-                <% end %>
-              <% elsif @current_date >= Date.today %>
-                <%= link_to new_course_path(timetable_id: course['timetable_id']), class: "btn btn-link", data: { toggle: "tooltip", "original-title" => t("views.buttons.new") } do %>
-                  <%= fa_icon "plus" %>
                 <% end %>
               <% end %>
             </td>
@@ -42,22 +35,26 @@
             <% end %>
           <% end %>
         </tbody>
-      </table> 
+      </table>
     </div>
   </div>
-</div>
+<% end %>
 <div class="row">
   <div class="col-md-12">
     <ul class="pager">
-      <li class="previous">
-        <%= link_to fa_icon('caret-left', text: @before_month.strftime("%Y年%m月")), courses_path(date: @before_month.to_s(:number), studio_id: @current_studio.id) %>
-      </li>
-      <li class="next">
-        <%= link_to fa_icon('caret-right', text: @next_month.strftime("%Y年%m月"), right: true), courses_path(date: @next_month.to_s(:number), studio_id: @current_studio.id) %>
-      </li>
+      <% if Date.today < date %>
+        <li class="previous">
+          <%= link_to fa_icon('caret-left', text: Date.today.strftime("%Y年%m月")), timetables_path(date: Date.today.strftime("%Y%m%d")), remote: true %>
+        </li>
+      <% else %>
+        <li class="next">
+          <%= link_to fa_icon('caret-right', text: Date.today.next_month.strftime("%Y年%m月"), right: true), timetables_path(date: Date.today.next_month.strftime("%Y%m%d")), remote: true %>
+        </li>
+      <% end %>
     </ul>
   </div>
 </div>
+
 <script>
 $(".course").hover(
     function() {

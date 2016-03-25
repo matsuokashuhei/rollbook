@@ -34,7 +34,7 @@
     <div class="col-md-1">
       <% if @courses.present? %>
         <%= link_to t("views.buttons.select"), "#courses", class: "btn btn-default", "data-toggle" => "modal" %>
-        <%= render "courses" %>
+        <%= render "modal" %>
       <% else %>
         <%= link_to t("views.buttons.select"), "#timetables", class: "btn btn-default", disabled: "disabled" %>
       <% end %>
@@ -52,7 +52,6 @@
   <div class="form-group">
     <%= f.label t("activerecord.attributes.members_course.begin_date"), class: "col-md-1 control-label" %>
     <div class="col-md-2 <%= 'has-error' if @members_course.errors[:begin_date].present? %>">
-      <%# f.date_field :begin_date, class: "form-control", min: min_begin_date(@member.enter_date, @course['weekday'].try(:to_i)), step: 7 %>
       <%= date_picker_field "begin_date", start_date: @member.enter_date, day_of_week: @course['weekday'].try(:to_i) do %>
         <%= f.text_field :begin_date, class: "form-control" %>
       <% end %>
@@ -60,7 +59,6 @@
     <% if params[:action] != 'new' %>
       <%= f.label t("activerecord.attributes.members_course.end_date"), class: "col-md-1 col-md-offset-1 control-label" %>
       <div class="col-md-2 <%= 'has-error' if @members_course.errors[:end_date].present? %>">
-        <%# f.date_field :end_date, class: "form-control", min: @members_course.begin_date %>
         <%= date_picker_field "end_date", start_date: @members_course.begin_date do %>
           <%= f.text_field :end_date, class: "form-control" %>
         <% end %>

@@ -97,6 +97,12 @@ class MembersCoursesController < ApplicationController
     end
   end
 
+  def timetables
+    @date = params[:date].try(:to_date) || Date.today
+    @courses = CoursesQuery.courses nil, @date
+    #@courses = CoursesQuery.courses
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_member
