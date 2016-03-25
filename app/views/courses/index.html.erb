@@ -20,7 +20,7 @@
             <% if course['weekday'] == '1' %>
               <th><%= course['start_time'] %></th>
             <% end %>
-            <td>
+            <td class="course">
               <% if course['course_id'].present? %>
                 <%= link_to course_path(course['course_id']) do %>
                   <h6>
@@ -58,3 +58,13 @@
     </ul>
   </div>
 </div>
+<script>
+$(".course").hover(
+    function() {
+        $(this).toggleClass("warning");
+    },
+    function() {
+        $(this).toggleClass("warning");
+    }
+);
+</script>
