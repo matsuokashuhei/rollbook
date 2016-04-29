@@ -111,7 +111,7 @@ class Course < ActiveRecord::Base
   # 受講料の合計を計算する。
   # @param [String] %Y%mという書式の年月
   # @return [Integer] 受講料の合計
-  def tuition_fee(month: month)
+  def tuition_fee(month: month = Date.today.strftime('%Y%m'))
     end_of_month = Rollbook::Util::Month.end_of_month(month)
     members_courses.active(end_of_month).map {|members_course| members_course.tuition_fee(month: month) }.inject(:+) || 0
   end
@@ -119,7 +119,7 @@ class Course < ActiveRecord::Base
   # 講師料の合計を計算する。
   # === Args :: 月
   # === Return :: 講師料
-  def lecture_fee(month: month)
+  def lecture_fee(month: month = Date.today.strftime('%Y%m'))
     end_of_month = Rollbook::Util::Month.end_of_month(month)
     members_courses.active(end_of_month).map {|members_course| members_course.lecture_fee(month: month) }.inject(:+) || 0
   end
@@ -127,7 +127,7 @@ class Course < ActiveRecord::Base
   # インストラクターが休講した場合の罰金を計算する。
   # === Args :: 月
   # === Return :: 罰金
-  def cancellation_fee(month: month)
+  def cancellation_fee(month: month = Date.today.strftime('%Y%m'))
     canceled_lessons = lessons.for_month(month).canceled_by_instructor
     return 0 if canceled_lessons.blank?
     canceled_lessons.map {|lesson| lesson.cancellation_fee }.inject(:+)
