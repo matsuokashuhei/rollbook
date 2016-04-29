@@ -15,6 +15,11 @@ class TimeSlot < ActiveRecord::Base
 
   validates :start_time, :end_time, presence: true
 
-  #default_scope -> { order(:start_time) }
+  scope :timing, -> (start_time) {
+    time = Time.new(2000, 1, 1, *start_time.split(':'))
+    start_time = time.strftime('%H:%M')
+    end_time = (time + 70.minutes).strftime('%H:%M')
+    where(start_time: start_time, end_time: end_time).first
+  }
 
 end
