@@ -37,3 +37,11 @@
   </div>
 </div>
 <%= render partial: 'net_amount_paid', locals: { instructor: @instructor, month: @month } %>
+<div class="row">
+  <div class="col-xs-12">
+    <%= button_to_back salaries_path(month: @month), pull: 'left' %>
+    <%= link_to salary_path(month: @month, instructor_id: @instructor.id, format: :pdf), class: 'btn btn-danger pull-right col-md-1', target: '_blank' do %>
+      <%= fa_icon 'file-pdf-o', text: 'PDF' %>
+    <% end %>
+  </div>
+</div>

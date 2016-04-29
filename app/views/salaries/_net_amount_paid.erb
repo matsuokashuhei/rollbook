@@ -23,7 +23,19 @@
             </tr>
             <tr>
               <th class="col-xs-2 info">差引支給額</th>
-              <td class="col-xs-2 text-right"><%= number_to_currency(net_amount_paid) %></td>
+              <td class="col-xs-2 text-right">
+                <%= number_to_currency(net_amount_paid) %>
+                <a class='btn btn-default btn-xs pull-left' data-clipboard-target='fe_text' id='d_clip_button' data-toggle='tooltip'>コピー</a>
+                <input type="hidden" id="fe_text" value="<%= net_amount_paid %>"/>
+                <script>
+                  $('#d_clip_button').tooltip({
+                    animation: false,
+                    placement: 'top',
+                    title: 'OK!',
+                    trigger: 'click'
+                  });
+                </script>
+              </td>
             </tr>
           </tbody>
         </table>

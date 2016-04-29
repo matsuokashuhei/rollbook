@@ -19,4 +19,10 @@
 //= require highcharts/highcharts
 //= require highcharts/highcharts-more
 //= require highcharts/highstock
+//= require zeroclipboard
 //= require_tree .
+
+$(document).ready(function() {
+  var clip = new ZeroClipboard($("#d_clip_button"));
+  //$(clip.htmlBridge).tooltip({title: 'コピーしました', placement: 'botton'});
+});
