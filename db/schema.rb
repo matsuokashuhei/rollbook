@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20141016021525) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "access_logs", force: true do |t|
+  create_table "access_logs", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "ip"
     t.string   "remote_ip"
@@ -26,14 +26,14 @@ ActiveRecord::Schema.define(version: 20141016021525) do
     t.datetime "updated_at"
   end
 
-  create_table "age_groups", force: true do |t|
+  create_table "age_groups", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "order_no"
   end
 
-  create_table "bank_accounts", force: true do |t|
+  create_table "bank_accounts", force: :cascade do |t|
     t.string   "holder_name"
     t.string   "holder_name_kana"
     t.string   "bank_id"
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20141016021525) do
     t.boolean  "change_bank"
   end
 
-  create_table "comments", force: true do |t|
+  create_table "comments", force: :cascade do |t|
     t.integer  "post_id"
     t.text     "content"
     t.integer  "user_id"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20141016021525) do
     t.datetime "updated_at"
   end
 
-  create_table "courses", force: true do |t|
+  create_table "courses", force: :cascade do |t|
     t.integer  "timetable_id"
     t.integer  "instructor_id"
     t.integer  "dance_style_id"
@@ -74,20 +74,20 @@ ActiveRecord::Schema.define(version: 20141016021525) do
     t.datetime "updated_at"
   end
 
-  create_table "dance_styles", force: true do |t|
+  create_table "dance_styles", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "order_no"
   end
 
-  create_table "holidays", force: true do |t|
+  create_table "holidays", force: :cascade do |t|
     t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "instructors", force: true do |t|
+  create_table "instructors", force: :cascade do |t|
     t.string   "name"
     t.string   "kana"
     t.string   "team"
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 20141016021525) do
     t.integer  "guaranteed_min"
   end
 
-  create_table "lessons", force: true do |t|
+  create_table "lessons", force: :cascade do |t|
     t.integer  "course_id"
     t.date     "date"
     t.string   "rolls_status"
@@ -112,14 +112,14 @@ ActiveRecord::Schema.define(version: 20141016021525) do
     t.string   "status"
   end
 
-  create_table "levels", force: true do |t|
+  create_table "levels", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "order_no"
   end
 
-  create_table "members", force: true do |t|
+  create_table "members", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.string   "first_name_kana"
@@ -143,7 +143,7 @@ ActiveRecord::Schema.define(version: 20141016021525) do
     t.string   "number"
   end
 
-  create_table "members_courses", force: true do |t|
+  create_table "members_courses", force: :cascade do |t|
     t.integer  "member_id"
     t.integer  "course_id"
     t.date     "begin_date"
@@ -154,7 +154,7 @@ ActiveRecord::Schema.define(version: 20141016021525) do
     t.datetime "updated_at"
   end
 
-  create_table "posts", force: true do |t|
+  create_table "posts", force: :cascade do |t|
     t.string   "title"
     t.text     "content"
     t.integer  "user_id"
@@ -164,7 +164,7 @@ ActiveRecord::Schema.define(version: 20141016021525) do
     t.datetime "updated_at"
   end
 
-  create_table "read_logs", force: true do |t|
+  create_table "read_logs", force: :cascade do |t|
     t.integer  "post_id"
     t.integer  "user_id"
     t.integer  "read_comments_count"
@@ -172,7 +172,7 @@ ActiveRecord::Schema.define(version: 20141016021525) do
     t.datetime "updated_at"
   end
 
-  create_table "recesses", force: true do |t|
+  create_table "recesses", force: :cascade do |t|
     t.integer  "members_course_id"
     t.string   "month"
     t.string   "status"
@@ -181,7 +181,7 @@ ActiveRecord::Schema.define(version: 20141016021525) do
     t.datetime "updated_at"
   end
 
-  create_table "rolls", force: true do |t|
+  create_table "rolls", force: :cascade do |t|
     t.integer  "lesson_id"
     t.integer  "member_id"
     t.string   "status"
@@ -190,7 +190,7 @@ ActiveRecord::Schema.define(version: 20141016021525) do
     t.datetime "updated_at"
   end
 
-  create_table "schools", force: true do |t|
+  create_table "schools", force: :cascade do |t|
     t.string   "name"
     t.string   "zip"
     t.string   "address"
@@ -202,7 +202,7 @@ ActiveRecord::Schema.define(version: 20141016021525) do
     t.date     "close_date"
   end
 
-  create_table "studios", force: true do |t|
+  create_table "studios", force: :cascade do |t|
     t.string   "name"
     t.string   "note"
     t.integer  "school_id"
@@ -212,14 +212,14 @@ ActiveRecord::Schema.define(version: 20141016021525) do
     t.date     "close_date"
   end
 
-  create_table "time_slots", force: true do |t|
+  create_table "time_slots", force: :cascade do |t|
     t.time     "start_time"
     t.time     "end_time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "timetables", force: true do |t|
+  create_table "timetables", force: :cascade do |t|
     t.integer  "studio_id"
     t.integer  "weekday"
     t.integer  "time_slot_id"
@@ -227,7 +227,7 @@ ActiveRecord::Schema.define(version: 20141016021525) do
     t.datetime "updated_at"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
