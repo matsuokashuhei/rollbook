@@ -54,5 +54,3 @@ gem 'wicked_pdf'
 gem 'newrelic_rpm'
 # パン屑
 gem 'gretel'
-# JS
-gem 'zeroclipboard-rails'
