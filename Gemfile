@@ -23,6 +23,7 @@ end
 
 group :development do
   gem 'pry-rails'
+  gem 'quiet_assets'
 end
 
 group :development, :test do
