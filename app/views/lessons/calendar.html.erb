@@ -10,26 +10,26 @@
               <th><%= t("date.abbr_day_names")[wday] %></th>
             <% end %>
           </tr>
-          <tbody>
-            <% @weeks.each do |week| %>
-              <tr>
-                <% week.each do |date| %>
-                  <% if date.blank? %>
-                    <td></td>
-                  <% else %>
-                    <td class="<%= 'success' if date.today? %> text-center">
-                      <% if Holiday.workday?(date) %>
-                        <%= link_to date.day, lessons_path(date: date.to_s(:number), school_id: current_user.school_id), class: "btn btn-link" %>
-                      <% else %>
-                        <%= link_to date.day, "#", class: "btn btn-link", disabled: "disabled" %>
-                      <% end %>
-                    </td>
-                  <% end %>
-                <% end %>
-              </tr>
-            <% end %>
-          </tbody>
         </thead>
+        <tbody>
+          <% @weeks.each do |week| %>
+            <tr>
+              <% week.each do |date| %>
+                <% if date.blank? %>
+                  <td></td>
+                <% else %>
+                  <td class="<%= 'success' if date.today? %> text-center">
+                    <% if Holiday.workday?(date) %>
+                      <%= link_to date.day, lessons_path(date: date.to_s(:number), school_id: current_user.school_id), class: "btn btn-link" %>
+                    <% else %>
+                      <%= link_to date.day, "", class: "btn btn-link", disabled: "disabled" %>
+                    <% end %>
+                  </td>
+                <% end %>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
       </table>
     </div>
     <ul class="pager">
