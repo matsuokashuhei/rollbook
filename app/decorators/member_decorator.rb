@@ -15,7 +15,7 @@ class MemberDecorator < ApplicationDecorator
   # すずき　いちろおう
   # 鈴木　一朗
   def name_and_kana
-    h.content_tag(:ul, class: "list-unstyled", style: ["margin-top: 1px;", "margin-bottom: 1px;"].join(" ")) do
+    h.content_tag(:ul, class: "list-unstyled", style: ["margin-top: 0px;", "margin-bottom: 3px;"].join(" ")) do
       h.concat(
         h.content_tag(:li) do
           h.content_tag(:h5, style: ["margin-top: 0px;", "margin-bottom: 0px;"].join(" ")) do
