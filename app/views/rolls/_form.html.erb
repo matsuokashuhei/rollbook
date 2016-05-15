@@ -24,7 +24,7 @@
               <%= member.number %>
             </td>
             <td class="col-md-2">
-              <%= member.linked_name %>
+              <%= member.name_with_link %>
             </td>
             <td class="col-md-1 text-center">
               <%= member.bank_account.decorate.payment_courses if member.bank_account.present? %>

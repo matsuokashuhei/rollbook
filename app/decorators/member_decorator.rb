@@ -34,7 +34,7 @@ class MemberDecorator < ApplicationDecorator
   end
 
   # name_and_kanaにリンクをつけて返す。
-  def linked_name
+  def name_with_link
     h.link_to h.member_path model do
       name_and_kana
     end
