@@ -1,0 +1,9 @@
+<% members.each do |member| %>
+  <tr data-href="<%= absentee_path(member.id) %>" style="cursor: pointer;">
+    <td class="text-center"><%= member.number %></td>
+    <td><%= member.decorate.name_and_kana %></td>
+    <td class="text-right">
+      <%= link_to Roll.where(member_id: member.id).absences.count, member_rolls_path(member.id, status: 2), target: '_blank' %>
+    </td>
+  </tr>
+<% end %>

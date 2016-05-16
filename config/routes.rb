@@ -49,10 +49,15 @@ Rollbook::Application.routes.draw do
     resources :rolls, only: :index
   end
 
+  match "lessons/:lesson_id/rolls/new" => "rolls#new", via: :get, as: "new_lesson_roll"
   match "lessons/:lesson_id/rolls/edit" => "rolls#edit", via: :get, as: "edit_lesson_rolls"
   match "lessons/:lesson_id/rolls" => "rolls#create_or_update", via: :post
-  match "lessons/:lesson_id/absentees" => "rolls#absentees", via: :get, as: "absentees"
+  #match "lessons/:lesson_id/absentees" => "rolls#absentees", via: :get, as: "absentees"
+  match "lessons/:lesson_id/rolls/:id" => "rolls#show", via: :get, as: "lesson_roll"
   match "lessons/:lesson_id/substitutes" => "rolls#substitute", via: :post
+
+  match "absentees" => "absentees#index", via: :get, as: "absentees"
+  match "absentees/:member_id" => "absentees#show", via: :get, as: "absentee"
 
   # クラス
   resources :courses

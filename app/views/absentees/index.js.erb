@@ -1,0 +1,21 @@
+if ($('body').children('#modal-absentees').length == 0) {
+  $('body').append("<%=j render partial: 'members_modal', locals: { q: @q } %>");
+  $('#modal-absentees').modal('show');
+  $('#modal-absentees-close').click(function(e) {
+    $('#modal-absentees').modal('hide');
+  });
+  $('#modal-absentees').on('hide.bs.modal', function(e) {
+    $('#modal-absentees').remove();
+  });
+}
+
+<% if @members.any? %>
+  $('#members').html("<%=j render partial: 'members', locals: { members: @members } %>");
+  $("#members-pagenate").html("<%=j paginate(@members, remote: true) if @members.any? %>");
+  $('#members tr[data-href]').addClass('clickable').click(function(e) {
+    if ($(e.target).is('a')) {
+      return
+    }
+    $.get($(e.target).closest('tr').data('href'));
+  });
+<% end %>

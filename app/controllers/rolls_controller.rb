@@ -1,6 +1,6 @@
 class RollsController < ApplicationController
-  # 体験は設計ミスのため削除する。
-  before_action :set_lesson, only: [:index, :new, :create, :edit, :create_or_update, :absentees, :substitute]
+
+  before_action :set_lesson, only: [:index, :new, :create, :edit, :create_or_update, :substitute,]
 
   # GET /lessons/:lesson_id/rolls
   # GET /lessons/:lesson_id/rolls.json
@@ -19,16 +19,19 @@ class RollsController < ApplicationController
   # GET /rolls/1
   # GET /rolls/1.json
   def show
+    @roll = Roll.find(params[:id]).decorate
   end
 
   # GET /rolls/new
   def new
     @roll = Roll.new
+    [:lesson_id, :member_id, :status, :substitute_roll_id].each do |key|
+      @roll.assign_attributes(key => params[key])
+    end
   end
 
   # GET /lessons/:lesson_id/rolls/edit
   def edit
-    #@rolls = @lesson.rolls
     index
   end
 
@@ -97,23 +100,6 @@ class RollsController < ApplicationController
     end
   end
 
-  def absentees
-    exclude_members = @lesson.rolls.joins(:member)
-    @q = Roll.joins([lesson: :course], :member)
-      .absences
-      .merge(Lesson.fixed)
-      .merge(Member.active)
-      .where(Course.arel_table[:monthly_fee].gteq(@lesson.course.monthly_fee))
-      .where.not(member_id: exclude_members.pluck(:member_id))
-      .search(params[:q])
-    if params[:q].present? || params[:utf8].present?
-      @rolls = @q.result
-      @members = Member.where(id: @rolls.pluck(:member_id).uniq).page(params[:page]).decorate
-    else
-      @members = Member.none
-    end
-  end
-
   def substitute
     if params[:member_id].nil?
       redirect_to lesson_rolls_path(@lesson)
@@ -154,5 +140,6 @@ class RollsController < ApplicationController
     def roll_params
       params.require(:roll).permit(:lesson_id, :member_id, :status, :substitute_roll_id)
     end
+
 
 end

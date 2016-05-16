@@ -69,6 +69,19 @@ class Lesson < ActiveRecord::Base
   #----------------
   # Methods
   #----------------
+  # クラス別の最も過去に欠席したレッスンのクラスと日を返す。
+  # @param [Integer] membrer_id 会員ID
+  # @return [Hash]
+  def self.oldest_absence_per_course(member_id:)
+    Lesson.joins(:rolls).
+      where(rolls: { member_id: member_id }).
+      merge(Roll.absences).
+      group(:course_id).
+      pluck(:course_id, 'min(lessons.date)').
+      map { |row| Lesson.where(course_id: row[0], date: row[1]).try(:first) }.
+      sort_by { |row| row.date }
+  end
+
   def editable?
     [
       # 今日以前である。

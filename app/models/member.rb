@@ -103,6 +103,10 @@ class Member < ActiveRecord::Base
     end
   }
 
+  scope :with_rolls, -> {
+    joins(:rolls)
+  }
+
   def destroy?
     if members_courses.count == 0
       if bank_account.nil?

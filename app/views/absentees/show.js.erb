@@ -1,0 +1,14 @@
+$('#modal-absentees').after("<%=j render partial: 'rolls_modal', locals: { member: @member, rolls: @rolls } %>");
+$('#modal-absences').modal('show');
+$('#modal-absences-close').click(function(e) {
+  $('#modal-absences').modal('hide');
+});
+$('#modal-absences').on('hide.bs.modal', function(e) {
+  $('#modal-absences').remove();
+});
+
+$('#rolls tr').click(function(e) {
+  $('#modal-absences').modal('hide');
+  $('#modal-absentees').modal('hide');
+  $.get($(e.target).closest('tr').data('href'));
+});
