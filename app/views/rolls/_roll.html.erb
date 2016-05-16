@@ -1,0 +1,30 @@
+<tr>
+  <%= hidden_field_tag "rolls[][id]", roll.id if roll.persisted? %>
+  <%= hidden_field_tag "rolls[][lesson_id]", roll.lesson.id %>
+  <%= hidden_field_tag "rolls[][member_id]", roll.member_id %>
+  <% member = roll.member %>
+  <td class="text-center">
+    <%= member.number %>
+  </td>
+  <td class="col-md-2">
+    <%= member.name_with_link %>
+  </td>
+  <td class="col-md-1 text-center">
+    <%= member.bank_account.decorate.payment_courses if member.bank_account.present? %>
+    <%= member.bank_status %>
+  </td>
+  <td class="text-center">
+    <% if params[:action] == "index" %>
+      <%= roll.status %>
+    <% else %>
+      <%= render "status", object: roll.model  %>
+    <% end %>
+  </td>
+  <td>
+    <% substitute_roll = roll.substitute_roll %>
+    <% if substitute_roll %>
+      <% lesson = substitute_roll.lesson if substitute_roll %>
+      <%= link_to lesson.date, lesson_rolls_path(lesson), class: "btn btn-link" %>
+    <% end %>
+  </td>
+</tr>
