@@ -4,7 +4,7 @@ class CourseDecorator < ApplicationDecorator
   decorates_association :level
 
   def name
-    "#{model.dance_style.name}#{model.level.name}　#{model.instructor.name}"
+    "#{model.dance_style.name}#{model.level.name} #{model.instructor.name}"
   end
   
   # Define presentation-specific methods here. Helpers are accessed through
