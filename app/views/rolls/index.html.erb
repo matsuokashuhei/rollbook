@@ -5,23 +5,23 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-9">
     <%= render "cancel_button", lesson: @lesson %>
   </div>
 </div>
 <br />
 <div class="row">
-  <div class="col-md-6">
-    <%= render "form" %>
+  <div class="col-md-9">
+    <%= render "rolls" %>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-9">
     <%= render partial: 'lessons/prev_and_next_lesson', locals: { lesson: @lesson.decorate } %>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-9">
     <%= button_to_back lessons_path(date: @lesson.date.to_s(:number)), pull: "left" %>
     <% if current_user.manager? && @lesson.fixed? %>
       <%= render "shared/unfix_button", path: unfix_lesson_path(@lesson), object: @lesson %>

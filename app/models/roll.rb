@@ -78,24 +78,17 @@ class Roll < ActiveRecord::Base
   #----------------
   # Methods
   #----------------
-  def status_name
-    STATUS[status]
-  end
-
-  def substitute(lesson)
-    # 振替したレッスンの登録
-    substitute_roll = Roll.create(lesson_id: lesson.id,
-                                  member_id: self.member_id,
-                                  status: "4",
-                                  substitute_roll_id: self.id)
-    # 欠席したレッスンの更新
-    #self.update_attributes(status: "3", substitute_roll_id: substitute_roll.id)
-    self.update_attributes(substitute_roll_id: substitute_roll.id)
+  def substitute
+    save
+    # 欠席した出席簿の検索
+    substitute_roll = Roll.find(substitute_roll_id)
+    substitute_roll.update(substitute_roll_id: id) if substitute_roll.substitute_roll_id.nil?
   end
 
   def cancel_substitute
-    absent_roll = Roll.find(substitute_roll_id)
-    absent_roll.update_attributes(substitute_roll_id: nil)
+    substitute_roll = Roll.find(substitute_roll_id)
+    substitute_roll.update(substitute_roll_id: nil)
+    logger.info("substitute_roll: #{substitute_roll}")
     destroy
   end
 
@@ -103,14 +96,14 @@ class Roll < ActiveRecord::Base
     Roll.find(substitute_roll_id) if substitute_roll_id.present?
   end
 
-  def cancel_lesson
-    case self.status.to_i
-    when 0,1,2
-      self.status = "6"
-      self.save
-    when 4
-      self.cancel_substitute
-    end
-  end
+  # def cancel_lesson
+  #   case self.status.to_i
+  #   when 0,1,2
+  #     self.status = "6"
+  #     self.save
+  #   when 4
+  #     self.cancel_substitute
+  #   end
+  # end
 
 end

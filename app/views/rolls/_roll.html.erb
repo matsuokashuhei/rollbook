@@ -2,6 +2,7 @@
   <%= hidden_field_tag "rolls[][id]", roll.id if roll.persisted? %>
   <%= hidden_field_tag "rolls[][lesson_id]", roll.lesson.id %>
   <%= hidden_field_tag "rolls[][member_id]", roll.member_id %>
+  <%= hidden_field_tag "rolls[][substitute_roll_id]", roll.substitute_roll_id %>
   <% member = roll.member %>
   <td class="text-center">
     <%= member.number %>
@@ -17,14 +18,14 @@
     <% if params[:action] == "index" %>
       <%= roll.status %>
     <% else %>
-      <%= render "status", object: roll.model  %>
+      <%= render "status", roll: roll.model  %>
     <% end %>
   </td>
   <td>
-    <% substitute_roll = roll.substitute_roll %>
-    <% if substitute_roll %>
-      <% lesson = substitute_roll.lesson if substitute_roll %>
-      <%= link_to lesson.date, lesson_rolls_path(lesson), class: "btn btn-link" %>
+    <% if lesson = roll.substitute_roll.try(:lesson) %>
+      <%= link_to lesson_rolls_path(lesson), class: "btn btn-link" do %>
+        <span><small><%= "#{lesson.date} #{lesson.course.name}" %></small></span>
+      <% end %>
     <% end %>
   </td>
 </tr>

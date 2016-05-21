@@ -13,7 +13,7 @@ class RollsController < ApplicationController
     else
       rolls = @lesson.rolls
     end
-    @rolls = rolls.map { |roll| roll.decorate }
+    @rolls = rolls.map(&:decorate)
   end
 
   # GET /rolls/1
@@ -35,94 +35,29 @@ class RollsController < ApplicationController
     index
   end
 
-  # POST /rolls
-  # POST /rolls.json
-  def create
-    @roll = Roll.new(roll_params)
-    respond_to do |format|
-      if @roll.save
-        format.html { redirect_to @roll, notice: 'Roll was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @roll }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @roll.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /rolls/1
-  # PATCH/PUT /rolls/1.json
-  def update
-    ActiveRecord::Base.transaction do
-      @lesson.update_attributes(rolls_status: Lesson::ROLLS_STATUS[:IN_PROCESS])
-      params[:rolls].each do |roll_params|
-        roll = Roll.find(roll_params[:id])
-        roll.update_attributes(status: roll_params[:status])
-      end
-    end
-    respond_to do |format|
-      format.html { redirect_to lesson_rolls_url(@lesson) }
-    end
-  end
-
-  # DELETE /rolls/1
-  # DELETE /rolls/1.json
-  def destroy
-    @roll.destroy
-    respond_to do |format|
-      format.html { redirect_to rolls_url }
-      format.json { head :no_content }
-    end
-  end
-
   # POST /lesson/:lesson_id/rolls
   def create_or_update
     ActiveRecord::Base.transaction do
-      @lesson.update_attributes(status: Lesson::STATUS[:ON_SCHEDULE], rolls_status: Lesson::ROLLS_STATUS[:IN_PROCESS])
+      @lesson.update_attributes(status: Lesson::STATUS[:ON_SCHEDULE],
+                                rolls_status: Lesson::ROLLS_STATUS[:IN_PROCESS])
       params[:rolls].each do |roll_params|
         # 出欠情報を取得（または作成）する。
         roll = Roll.find_or_initialize_by(lesson_id: @lesson.id, member_id: roll_params[:member_id])
         roll.status = roll_params[:status]
-        if roll.status != "9"
-          # ステータスが9:取り消し以外の場合は保存する。
+        roll.substitute_roll_id = roll_params[:substitute_roll_id]
+        logger.info("roll: #{roll}")
+        case roll.status
+        when Roll::STATUS[:NONE], Roll::STATUS[:ATTENDANCE], Roll::STATUS[:ABSENCE], Roll::STATUS[:RECESS], Roll::STATUS[:CANCEL] then
           roll.save
-        elsif roll.substitute_roll_id.blank?
-          # ステータスが9:取り消しで、振替のロールIDがない場合は出欠情報を削除する。
-          roll.destroy
-        else
-          # ステータスが9:取り消しで、振替のロールIDがある場合は振替のロールIDを削除する。
+        when Roll::STATUS[:SUBSTITUTE] then
+          roll.substitute
+        when "9" then
           roll.cancel_substitute
         end
       end
     end
     respond_to do |format|
-      format.html { redirect_to lesson_rolls_url(@lesson) }
-    end
-  end
-
-  def substitute
-    if params[:member_id].nil?
-      redirect_to lesson_rolls_path(@lesson)
-      return
-    end
-    ActiveRecord::Base.transaction do
-      @lesson.update_attributes(rolls_status: Lesson::ROLLS_STATUS[:IN_PROCESS])
-      @lesson.find_or_initialize_rolls.each do |roll|
-        roll.save if roll.new_record?
-      end
-      #roll = Roll.where(member_id: params[:member_id]).absences.joins(:lesson).readonly(false).merge(Lesson.order(:date)).first
-      roll = Roll.joins([lesson: :course], :member)
-        .where(member_id: params[:member_id])
-        .absences
-        .merge(Member.active)
-        .where(Course.arel_table[:monthly_fee].gteq(@lesson.course.monthly_fee))
-        .readonly(false)
-        .merge(Lesson.order(:date))
-        .first
-      roll.substitute(@lesson)
-    end
-    respond_to do |format|
-      format.html { redirect_to edit_lesson_rolls_path(@lesson) }
+      format.html { redirect_to lesson_rolls_url(@lesson), notice: "出席簿を保存しました。" }
     end
   end
 
