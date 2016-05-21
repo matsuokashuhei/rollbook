@@ -100,7 +100,7 @@ class Course < ActiveRecord::Base
   end
 
   def name
-    "#{self.dance_style.name}#{self.level.name}　#{self.instructor.name}"
+    "#{self.dance_style.name}#{self.level.name} #{self.instructor.name}"
   end
 
   # その他
