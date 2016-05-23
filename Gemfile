@@ -23,6 +23,8 @@ end
 
 group :development do
   gem 'pry-rails'
+  gem 'pry-byebug'
+  gem 'pry-stack_explorer'
   gem 'quiet_assets'
 end
 
