@@ -14,19 +14,13 @@
 class Roll < ActiveRecord::Base
 
   STATUS = {
-    # 未定
-    NONE: "0",
-    # 出席
-    ATTENDANCE: "1",
-    # 欠席
-    ABSENCE: "2",
-    #ABSENT_SUB: "3",
-    # 振替
-    SUBSTITUTE: "4",
-    # 休会
-    RECESS: "5",
-    # 休講
-    CANCEL: "6",
+    NONE: '0',        # 未定
+    ATTENDANCE: '1',  # 出席
+    ABSENCE: '2',     # 欠席（未振替）
+    #ABSENT_SUB: "3", # 欠席（振替済）
+    SUBSTITUTE: '4',  # 振替
+    RECESS: '5',      # 休会
+    CANCEL: '6',      # 休講
   }
   
   # attend 出席する
@@ -88,22 +82,11 @@ class Roll < ActiveRecord::Base
   def cancel_substitute
     substitute_roll = Roll.find(substitute_roll_id)
     substitute_roll.update(substitute_roll_id: nil)
-    logger.info("substitute_roll: #{substitute_roll}")
     destroy
   end
 
   def substitute_roll
     Roll.find(substitute_roll_id) if substitute_roll_id.present?
   end
-
-  # def cancel_lesson
-  #   case self.status.to_i
-  #   when 0,1,2
-  #     self.status = "6"
-  #     self.save
-  #   when 4
-  #     self.cancel_substitute
-  #   end
-  # end
 
 end
