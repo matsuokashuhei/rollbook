@@ -26,13 +26,22 @@
             <th class="col-md-1">振替</th>
             <th class="col-md-1">欠席</th>
             <th class="col-md-1">休会</th>
-            <th class="col-md-1"></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="lesson">
           <% @lessons.each do |lesson| %>
             <% course = @courses.find {|course| course.id == lesson.course_id } %>
-            <tr>
+            <% if lesson.persisted? %>
+              <tr data-href="<%= lesson_rolls_path(lesson) %>" style="cursor: pointer;">
+            <% else %>
+              <tr data-lesson="<%= lesson.to_json %>" style="cursor: pointer;">
+                <%= form_for(lesson, authenticity_token: true, html: { id: "course-#{lesson.course_id}" }) do |f| %>
+                  <%= f.hidden_field :course_id %>
+                  <%= f.hidden_field :date %>
+                  <%= f.hidden_field :rolls_status %>
+                  <%= f.hidden_field :status %>
+                <% end %>
+            <% end %>
               <td><%= course.timetable.studio.name %></td>
               <td><%= course.timetable.time_slot.start_time %></td>
               <td><%= course.name %></td>
@@ -42,13 +51,6 @@
               <td class="text-right"><%= lesson.substitutes_count %></td>
               <td class="text-right"><%= lesson.absentees_count %></td>
               <td class="text-right"><%= lesson.recesses_count %></td>
-              <td class="text-center">
-                <% if lesson.new_record? %>
-                  <%= render partial: 'form', locals: { lesson: lesson } %>
-                <% else %>
-                  <%= link_to_show lesson_rolls_path(lesson) %>
-                <% end %>
-              </td>
             </tr>
           <% end %>
         </tbody>
