@@ -1,6 +1,6 @@
 class RollsController < ApplicationController
 
-  before_action :set_lesson, only: [:index, :new, :create, :edit, :create_or_update, :substitute,]
+  before_action :set_lesson, only: [:index, :new, :create, :edit, :create_or_update,]
 
   # GET /lessons/:lesson_id/rolls
   # GET /lessons/:lesson_id/rolls.json
@@ -9,7 +9,7 @@ class RollsController < ApplicationController
       # クラスを受講している会員の出欠情報
       rolls = @lesson.find_or_initialize_rolls
       # 振替の出席情報
-      rolls.concat(@lesson.rolls.where(status: "4"))
+      rolls.concat(@lesson.rolls.where(status: Roll::STATUS[:SUBSTITUTE]))
     else
       rolls = @lesson.rolls
     end
@@ -47,7 +47,11 @@ class RollsController < ApplicationController
         roll.substitute_roll_id = roll_params[:substitute_roll_id]
         logger.info("roll: #{roll}")
         case roll.status
-        when Roll::STATUS[:NONE], Roll::STATUS[:ATTENDANCE], Roll::STATUS[:ABSENCE], Roll::STATUS[:RECESS], Roll::STATUS[:CANCEL] then
+        when Roll::STATUS[:NONE],
+             Roll::STATUS[:ATTENDANCE],
+             Roll::STATUS[:ABSENCE],
+             Roll::STATUS[:RECESS],
+             Roll::STATUS[:CANCEL] then
           roll.save
         when Roll::STATUS[:SUBSTITUTE] then
           roll.substitute

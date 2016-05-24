@@ -1,5 +1,5 @@
 if ($('body').children('#modal-absentees').length == 0) {
-  $('body').append("<%=j render partial: 'members_modal', locals: { q: @q } %>");
+  $('body').append("<%=j render partial: 'members_modal', locals: { q: @q, lesson: @lesson } %>");
   $('#modal-absentees').modal('show');
   $('#modal-absentees-close').click(function(e) {
     $('#modal-absentees').modal('hide');
@@ -10,7 +10,7 @@ if ($('body').children('#modal-absentees').length == 0) {
 }
 
 <% if @members.any? %>
-  $('#members').html("<%=j render partial: 'members', locals: { members: @members } %>");
+  $('#members').html("<%=j render partial: 'members', locals: { members: @members, lesson: @lesson } %>");
   $("#members-pagenate").html("<%=j paginate(@members, remote: true) if @members.any? %>");
   $('#members tr[data-href]').addClass('clickable').click(function(e) {
     if ($(e.target).is('a')) {

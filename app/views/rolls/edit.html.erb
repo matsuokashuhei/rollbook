@@ -1,7 +1,7 @@
 <% breadcrumb :edit_lesson, @lesson %>
 <div class="row">
   <div class="col-md-9">
-    <%= link_to absentees_path, class: "btn btn-success pull-right", remote: true do %>
+    <%= link_to absentees_path(lesson_id: @lesson.id), class: "btn btn-success pull-right", remote: true do %>
       <%= fa_icon "exchange", text: t("views.buttons.substitute") %>
     <% end %>
   </div>

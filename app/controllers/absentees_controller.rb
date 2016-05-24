@@ -11,12 +11,15 @@ class AbsenteesController < ApplicationController
     else
       @members = Member.none
     end
+    if params[:lesson_id]
+      @lesson = Lesson.find(params[:lesson_id])
+    end
   end
 
   def show
     @member = Member.find(params[:member_id])
     lessons = Lesson.oldest_absence_per_course(member_id: @member.id)
-    @rolls = lessons.map { |lesson| 
+    @rolls = lessons.map do |lesson| 
         roll = lesson.rolls.where(member_id: @member.id).first
         {
           course_id: lesson.course_id,
@@ -25,8 +28,7 @@ class AbsenteesController < ApplicationController
           date: lesson.date,
           roll_id: roll.id,
         }
-      }
-    logger.debug(@rolls)
+      end
   end
 
 end
