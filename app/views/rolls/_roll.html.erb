@@ -24,7 +24,13 @@
   <td>
     <% if lesson = roll.substitute_roll.try(:lesson) %>
       <%= link_to lesson_rolls_path(lesson), class: "btn btn-link" do %>
-        <span><small><%= "#{lesson.date} #{lesson.course.name}" %></small></span>
+        <span>
+          <small>
+            <%= "#{lesson.date} #{lesson.course.name}" %>
+            <%= " の欠席" if roll.object.status == Roll::STATUS[:SUBSTITUTE] %>
+            <%= " に振替" if roll.object.status == Roll::STATUS[:ABSENCE] %> 
+          </small>
+        </span>
       <% end %>
     <% end %>
   </td>
