@@ -1,11 +1,5 @@
 <% breadcrumb :new_instructor %>
-<div class="row">
-  <div class="col-md-12">
-    <ul class="nav nav-tabs">
-      <%= tab_to_instructor @instructor, active: true %>
-    </ul>
-  </div>
-</div>
+<%= render partial: 'nav_tabs', locals: { instructor: @instructor, active: :instructor } %>
 <br />
 <div class="row">
   <div class="col-md-12">

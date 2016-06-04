@@ -1,24 +1,23 @@
 class InstructorDecorator < ApplicationDecorator
   delegate_all
 
+  def list_item(active:)
+    if active
+      h.link_to h.t('activerecord.models.instructor'), '#instructor', data: { toggle: 'tab' }
+    else
+      link
+    end
+  end
+
+  def link(text: h.t('activerecord.models.instructor'))
+    h.link_to text, h.instructor_path(model)
+  end
+
+  def courses_link(text: h.t('activerecord.models.course'))
+    h.link_to text, h.instructor_courses_path(model, status: '1')
+  end
+
   def name
-=begin
-    text =  "<ul class='list-unstyled' style='margin-top: 1px; margin-bottom: 1px;'>"
-    text += "<li>"
-    if model.team.present?
-      text += h.content_tag :h6, style: "margin-top: 0px; margin-bottom: 0px;" do
-        "#{model.team}"
-      end
-    text += "</li>"
-    end
-    text += "<li>"
-    text += h.content_tag :h3, style: "margin-top: 0px; margin-bottom: 0px;" do
-      "#{model.name}"
-    end
-    text += "</li>"
-    text += "</ul>"
-    text.html_safe
-=end
     if model.kana.present?
       h.content_tag(:small, model.kana) + h.tag(:br) + model.name
     else
@@ -29,14 +28,5 @@ class InstructorDecorator < ApplicationDecorator
   def team
     "(#{model.team})" if model.team.present?
   end
-
-  # Define presentation-specific methods here. Helpers are accessed through
-  # `helpers` (aka `h`). You can override attributes, for example:
-  #
-  #   def created_at
-  #     helpers.content_tag :span, class: 'time' do
-  #       object.created_at.strftime("%a %m/%d/%y")
-  #     end
-  #   end
 
 end

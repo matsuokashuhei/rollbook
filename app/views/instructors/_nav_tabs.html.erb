@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-tabs">
+      <%= list_item(active: active == :instructor) {|active| instructor.decorate.list_item(active: active) } %>
+      <% if instructor.persisted? %>
+        <%= list_item(active: active == :courses) { instructor.decorate.courses_link } %>
+      <% end %>
+    </ul>
+  </div>
+</div>
