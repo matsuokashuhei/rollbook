@@ -1,5 +1,5 @@
 <% breadcrumb :edit_member, @member %>
-<%= render 'nav_tabs', locals: { member: @member } %>
+<%= render partial: 'nav_tabs', locals: { member: @member, active: :member } %>
 <br />
 <div class="row">
   <div class="col-md-12">
