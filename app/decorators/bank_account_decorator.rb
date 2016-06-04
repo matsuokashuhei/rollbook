@@ -1,6 +1,22 @@
 class BankAccountDecorator < ApplicationDecorator
   delegate_all
 
+  def list_item(active:)
+    if active
+      h.link_to h.t('activerecord.models.bank_account'), '#bank_account', data: { toggle: 'tab' }
+    else
+      link
+    end
+  end
+
+  def link(text: h.t('activerecord.models.bank_account'))
+    h.link_to text, h.bank_account_path(model)
+  end
+
+  def members_link(text: h.t('activerecord.models.member'))
+    h.link_to text, h.bank_account_members_path(model)
+  end
+
   def holder_name
     text =  "<ul class='list-unstyled' style='margin-top: 1px; margin-bottom: 1px;'>"
     text += "<li>"

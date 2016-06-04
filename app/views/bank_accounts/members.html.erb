@@ -1,18 +1,12 @@
 <% breadcrumb :bank_account, @bank_account %>
-<div class="row">
-  <div class="col-md-12">
-    <ul class="nav nav-tabs">
-      <%= tab_to_bank_account @bank_account %>
-      <%= tab_to_bank_account_members @bank_account, active: true %>
-    </ul>
-  </div>
-</div>
+<%= render partial: 'nav_tabs', locals: { bank_account: @bank_account, active: :members } %>
 <br />
 <div class="row">
-  <div class="col-md-5">
+  <div class="col-md-7">
     <%= button_to_new new_bank_account_member_path(@bank_account), pull: "right" %>
   </div>
 </div>
+<br />
 <div class="row">
   <div class="col-md-7">
     <%= render "shared/notice" %>

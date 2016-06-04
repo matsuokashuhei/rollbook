@@ -1,12 +1,5 @@
 <% breadcrumb :edit_bank_account, @bank_account %>
-<div class="row">
-  <div class="col-md-12">
-    <ul class="nav nav-tabs">
-      <%= tab_to_bank_account @bank_account, active: true %>
-      <%= tab_to_bank_account_members @bank_account %>
-    </ul>
-  </div>
-</div>
+<%= render partial: 'nav_tabs', locals: { bank_account: @bank_account, active: :bank_account } %>
 <br />
 <div class="row">
   <div class="col-md-12">
