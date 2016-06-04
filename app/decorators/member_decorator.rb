@@ -94,4 +94,20 @@ class MemberDecorator < ApplicationDecorator
     end
   end
 
+  def link(text: h.t('activerecord.models.member'))
+    h.link_to text, h.member_path(model)
+  end
+
+  def courses_link(text: h.t('activerecord.models.members_course'))
+    h.link_to text, h.member_members_courses_path(model, status: '1')
+  end
+
+  def rolls_link(text: h.t('activerecord.models.roll'))
+    h.link_to text, h.member_rolls_path(model)
+  end
+
+  def recesses_link(text: h.t('activerecord.models.recess'))
+    h.link_to text, h.member_recesses_path(model)
+  end
+
 end

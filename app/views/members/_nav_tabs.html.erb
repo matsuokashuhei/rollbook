@@ -1,11 +1,11 @@
 <div class="row">
   <div class="col-md-12">
     <ul class="nav nav-tabs">
-      <%= tab_to_member(member, active: active == :member) %>
+      <%= list_item(active: active == :member) { member.decorate.link } %>
       <% if member.persisted? %>
-        <%= tab_to_members_courses(member, active: active == :members_courses) %>
-        <%= tab_to_members_rolls(member, active: active == :rolls) %>
-        <%= tab_to_members_recesses(member, active: active == :recesses) %>
+        <%= list_item(active: active == :members_courses) { member.decorate.courses_link } %>
+        <%= list_item(active: active == :rolls) { member.decorate.rolls_link } %>
+        <%= list_item(active: active == :recesses) { member.decorate.recesses_link } %>
       <% end %>
     </ul>
   </div>
