@@ -1,11 +1,5 @@
 <% breadcrumb :new_course, @timetable %>
-<div class="row">
-  <div class="col-md-12">
-    <ul class="nav nav-tabs">
-      <%= tab_to_course @course, active: true %>
-    </ul>
-  </div>
-</div>
+<%= render partial: 'nav_tabs', locals: { course: @course, active: :course } %>
 <br />
 <div class="row">
   <div class="col-md-12">

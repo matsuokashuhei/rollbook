@@ -1,5 +1,17 @@
 <% breadcrumb :courses, @current_date, @current_studio %>
-<%= render 'nav' %>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-tabs" role="tablist">
+      <% @studios.each do |studio| %>
+        <%= list_item(active: studio.id == @current_studio.id) do %>
+          <%= link_to courses_path(date: Date.today.to_s(:number), studio_id: studio.id) do %>
+            <%= studio.name %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>
 <br />
 <div class="row">
   <div class="col-md-12">

@@ -94,6 +94,14 @@ class MemberDecorator < ApplicationDecorator
     end
   end
 
+  def list_item(active:)
+    if active
+      h.link_to h.t('activerecord.models.member'), '#member', data: { toggle: 'tab' }
+    else
+      link
+    end
+  end
+
   def link(text: h.t('activerecord.models.member'))
     h.link_to text, h.member_path(model)
   end

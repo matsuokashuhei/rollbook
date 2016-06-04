@@ -219,7 +219,7 @@ module ApplicationHelper
   def list_item(active: true, &block)
     classes = active ? 'col-md-2 text-center active' : 'col-md-2 text-center'
     content_tag :li, class: classes do
-      block.call
+      block.call(active)
     end
   end
 
