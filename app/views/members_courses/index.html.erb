@@ -1,14 +1,5 @@
 <% breadcrumb :member, @member %>
-<div class="row">
-  <div class="col-md-12">
-    <ul class="nav nav-tabs">
-      <%= tab_to_member(@member) %>
-      <%= tab_to_members_courses(@member, active: true) %>
-      <%= tab_to_members_rolls(@member) %>
-      <%= tab_to_members_recesses(@member) %>
-    </ul>
-  </div>
-</div>
+<%= render partial: 'members/nav_tabs', locals: { member: @member, active: :members_courses } %>
 <br />
 <div class="row">
   <div class="col-md-10">

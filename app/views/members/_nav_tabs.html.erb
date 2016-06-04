@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-tabs">
+      <%= tab_to_member(member, active: active == :member) %>
+      <% if member.persisted? %>
+        <%= tab_to_members_courses(member, active: active == :members_courses) %>
+        <%= tab_to_members_rolls(member, active: active == :rolls) %>
+        <%= tab_to_members_recesses(member, active: active == :recesses) %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
