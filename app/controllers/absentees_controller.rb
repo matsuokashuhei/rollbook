@@ -1,19 +1,13 @@
 class AbsenteesController < ApplicationController
 
   def index
-    @q = Member.active
-               .with_rolls
-               .merge(Roll.absences)
-               .uniq
-               .ransack(params[:q])
+    @q = Member.absentees.ransack(params[:q])
     if params[:q].present? || params[:utf8].present?
       @members = @q.result.page(params[:page])
     else
       @members = Member.none
     end
-    if params[:lesson_id]
-      @lesson = Lesson.find(params[:lesson_id])
-    end
+    @lesson = Lesson.find(params[:lesson_id]) if params[:lesson_id].present?
   end
 
   def show

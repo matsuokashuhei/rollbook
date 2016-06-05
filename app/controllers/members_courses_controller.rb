@@ -14,6 +14,7 @@ class MembersCoursesController < ApplicationController
     else
       @members_courses = @member.members_courses.details.order(begin_date: :desc)
     end
+    @members_courses = @members_courses.decorate
   end
 
   # GET /members_courses/1
@@ -114,6 +115,6 @@ class MembersCoursesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def members_course_params
-      params.require(:members_course).permit(:member_id, :course_id, :begin_date, :end_date, :note, :introduction)
+      params.require(:members_course).permit(:member_id, :course_id, :begin_date, :end_date, :note, :introduction, :substitutable)
     end
 end

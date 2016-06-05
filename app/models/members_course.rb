@@ -53,6 +53,11 @@ class MembersCourse < ActiveRecord::Base
     joins(course: [[timetable: [:studio, :time_slot]], :dance_style, :level, :instructor])
   }
 
+  # 振替の可否
+  scope :substitutable, ->(substitutable = true) {
+    where(substitutable: substitutable)
+  }
+
   #----------------
   # Callbacks
   #----------------

@@ -69,6 +69,16 @@ class Roll < ActiveRecord::Base
     joins(lesson: [course: [[timetable: [[studio: :school], :time_slot]], :dance_style, :level, :instructor]])
   }
 
+  scope :absence, -> {
+    joins(:lesson)
+      .joins(Lesson.joins(:course).join_sources)
+      .joins('INNER JOIN "members_courses" ON "members_courses"."course_id" = "courses"."id" AND "members_courses"."member_id" = "rolls"."member_id"')
+      .merge(MembersCourse.substitutable)
+      .where(status: [STATUS[:ABSENCE], STATUS[:CANCEL]])
+      .where(substitute_roll_id: nil)
+      .uniq
+  }
+
   #----------------
   # Methods
   #----------------

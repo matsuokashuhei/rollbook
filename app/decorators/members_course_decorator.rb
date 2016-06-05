@@ -18,6 +18,9 @@ class MembersCourseDecorator < ApplicationDecorator
     return "#{model.start_week_of_month}週入会"
   end
 
+  def substitutable
+    model.substitutable ? 'OK' : 'NG'
+  end
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:
   #

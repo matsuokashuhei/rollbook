@@ -115,6 +115,7 @@ ja:
         end_date: 終了日
         note: メモ
         introduction: インストラクター紹介
+        substitutable: 振替
       lesson:
         course_id: クラス
         date: 日

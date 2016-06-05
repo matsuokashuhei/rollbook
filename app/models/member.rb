@@ -103,9 +103,17 @@ class Member < ActiveRecord::Base
     end
   }
 
-  scope :with_rolls, -> {
-    joins(:rolls)
-  }
+  def self.absentees
+    Member.active
+          .joins(:rolls)
+          .merge(Roll.where(status: [Roll::STATUS[:ABSENCE], Roll::STATUS[:CANCEL]])
+                     .where(substitute_roll_id: nil))
+          .joins(Roll.joins(:lesson).join_sources)
+          .joins(Lesson.joins(:course).join_sources)
+          .joins(Course.joins(:members_courses).join_sources)
+          .merge(MembersCourse.substitutable)
+          .uniq
+  end
 
   def destroy?
     if members_courses.count == 0

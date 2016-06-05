@@ -63,9 +63,9 @@
                 <% end %>
               </td>
               <td class="text-center">
-                <% if member.rolls.absences.count > 0 %>
+                <% if member.rolls.absence.count > 0 %>
                   <%= link_to member_rolls_path(member.id, status: '2') do %>
-                    <%= "#{member.rolls.absences.count} 回" %>
+                    <%= "#{member.rolls.absence.count} 回" %>
                   <% end %>
                 <% end %>
               </td>

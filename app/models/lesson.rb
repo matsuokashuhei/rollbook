@@ -73,13 +73,18 @@ class Lesson < ActiveRecord::Base
   # @param [Integer] membrer_id 会員ID
   # @return [Hash]
   def self.oldest_absence_per_course(member_id:)
-    Lesson.joins(:rolls).
-      where(rolls: { member_id: member_id }).
-      merge(Roll.absences).
-      group(:course_id).
-      pluck(:course_id, 'min(lessons.date)').
-      map { |row| Lesson.where(course_id: row[0], date: row[1]).try(:first) }.
-      sort_by { |row| row.date }
+    Lesson.joins(:course)
+          .joins(Course.joins(:members_courses).join_sources)
+          .joins(:rolls)
+          .merge(Roll.where(member_id: member_id))
+          .merge(MembersCourse.where(member_id: member_id))
+          .merge(MembersCourse.substitutable)
+          .merge(Roll.where(status: [Roll::STATUS[:ABSENCE], Roll::STATUS[:CANCEL]])
+                     .where(substitute_roll_id: nil))
+          .group(:course_id)
+          .pluck(:course_id, 'min(lessons.date)')
+          .map { |row| Lesson.where(course_id: row[0], date: row[1]).try(:first) }
+          .sort_by { |row| row.date }
   end
 
   def editable?

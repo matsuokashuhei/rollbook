@@ -14,7 +14,7 @@
 </div>
 <br />
 <div class="row">
-  <div class="col-md-10">
+  <div class="col-md-11">
     <%= render "shared/notice" %>
     <div class="table-responsive">
       <table class="table table-bordered table-striped table-hover">
@@ -26,6 +26,7 @@
             <th class="col-md-3"><%= t("activerecord.models.course") %></th>
             <th class="col-md-1"><%= t("activerecord.attributes.members_course.begin_date") %></th>
             <th class="col-md-1"><%= t("activerecord.attributes.members_course.end_date") %></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.members_course.substitutable") %></th>
             <th class="col-md-1"></th>
           </tr>
         </thead>
@@ -42,6 +43,7 @@
               <td><%= course.name %></td>
               <td><%= members_course.begin_date %></td>
               <td><%= members_course.end_date %></td>
+              <td><%= members_course.substitutable %></td>
               <td class="text-center">
                 <%= link_to_show member_members_course_path(@member, members_course) %>
                 <%= link_to_edit edit_member_members_course_path(@member, members_course) %>
