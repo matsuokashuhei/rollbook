@@ -68,7 +68,16 @@ class MembersCourseValidator < ActiveModel::Validator
   def has_no_rolls(members_course)
     return if members_course.end_date.blank?
     return if members_course.course_id.blank?
-    rolls = Roll.joins(:member, :lesson).where(member_id: members_course.member_id).merge(Lesson.where(course_id: members_course.course_id).date_range(from: members_course.end_date + 1.day).fixed)
+    rolls = Roll.where(status: [Roll::STATUS[:NONE],
+                                Roll::STATUS[:ATTENDANCE],
+                                Roll::STATUS[:ABSENCE],
+                                Roll::STATUS[:RECESS],
+                                Roll::STATUS[:CANCEL]])
+                .joins(:member, :lesson)
+                .where(member_id: members_course.member_id)
+                .merge(Lesson.where(course_id: members_course.course_id)
+                             .date_range(from: members_course.end_date + 1.day)
+                             .fixed)
     if rolls.present?
       members_course.errors.add(:base, "%s以降にレッスンを受けているのでそれ以前の月には退会できません。" % (members_course.end_date + 1.day).strftime('%Y年%m月'))
     end
