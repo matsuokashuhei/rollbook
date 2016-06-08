@@ -1,20 +1,19 @@
 class MembersCoursesController < ApplicationController
 
   before_action :set_member
-  before_action :set_members_course, only: [:show, :edit, :update, :destroy, :rolls]
+  before_action :set_members_course, only: [:show, :edit, :update, :destroy]
 
   # GET /members_courses
   # GET /members_courses.json
   def index
     if params[:status] == '1'
-      @members_courses = @member.members_courses.will_active(Date.today).details.order(begin_date: :desc)
-      @members_courses += @member.members_courses.active(Date.today).details.order(begin_date: :desc)
+      @members_courses = @member.members_courses.will_active(Date.today).details.order(begin_date: :desc).decorate
+      @members_courses += @member.members_courses.active(Date.today).details.order(begin_date: :desc).decorate
     elsif params[:status] == '9'
-      @members_courses = @member.members_courses.deactive(Date.today).details.order(begin_date: :desc)
+      @members_courses = @member.members_courses.deactive(Date.today).details.order(begin_date: :desc).decorate
     else
-      @members_courses = @member.members_courses.details.order(begin_date: :desc)
+      @members_courses = @member.members_courses.details.order(begin_date: :desc).decorate
     end
-    @members_courses = @members_courses.decorate
   end
 
   # GET /members_courses/1
