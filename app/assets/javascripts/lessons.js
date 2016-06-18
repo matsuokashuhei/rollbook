@@ -13,4 +13,15 @@ $(function() {
       $(e.target).closest('tr').children('form').submit();
       return false;
   });
+  $(".lessons").hover(
+      function() {
+          $(this).toggleClass("warning");
+      },
+      function() {
+          $(this).toggleClass("warning");
+      }
+  );
+  $("td.lessons[data-href]").click(function(e) {
+      location.href = $(e.target).closest('td').data('href');
+  });
 });

@@ -18,7 +18,7 @@
                 <% if date.blank? %>
                   <td></td>
                 <% else %>
-                  <td class="<%= 'success' if date.today? %> text-center">
+                  <td class="lessons <%= 'success' if date.today? %> text-center" data-href="<%= lessons_path(date: date.to_s(:number), school_id: current_user.school_id) %>" style="cursor: pointer;">
                     <% if Holiday.workday?(date) %>
                       <%= link_to date.day, lessons_path(date: date.to_s(:number), school_id: current_user.school_id), class: "btn btn-link" %>
                     <% else %>
