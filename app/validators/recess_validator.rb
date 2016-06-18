@@ -36,7 +36,7 @@ class RecessValidator < ActiveModel::Validator
       .where(rolls: { member_id: members_course.member_id })
       .where(status: ['1', '2', '4'])
       .exists?.!
-      recess.errors.add(:base, レッスンを受けているので休会することはできません。)
+      recess.errors.add(:base, 'レッスンを受けているので休会することはできません。')
     end
   end
 
