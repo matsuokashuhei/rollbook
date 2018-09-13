@@ -1,6 +1,7 @@
 development:
   adapter: postgresql
   encoding: unicode
+  host: db
   database: rollbook_development
   pool: 5
   username: <%= ENV['DB_USERNAME'] %>
