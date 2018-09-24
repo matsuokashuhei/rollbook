@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.5.1'
 
-gem 'rails', '4.2.10'
+gem 'rails', '5.0.1'
 gem 'pg', '0.21.0'
 gem 'sass-rails'
 gem 'uglifier'
@@ -17,39 +17,40 @@ gem 'annotate'
 # View Model
 gem 'draper'
 
-group :doc do
-  gem 'sdoc', require: false
-end
+# group :doc do
+#   gem 'sdoc', require: false
+# end
 
 group :development do
   gem 'pry-rails'
   gem 'pry-byebug'
-  gem 'pry-stack_explorer'
-  gem 'quiet_assets'
+  # gem 'pry-stack_explorer'
+  # gem 'quiet_assets'
 end
 
 group :development, :test do
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
+  # gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'faker'
   gem 'gimei'
 end
 
 group :test do
-  gem 'capybara'
+  # gem 'capybara'
   gem 'database_cleaner'
 end
 
 # CSS
-gem "bootstrap-sass"
-gem "bootstrap-datepicker-rails"
-gem "font-awesome-rails"
+gem 'bootstrap-sass'
+gem 'bootstrap-datepicker-rails'
+gem 'font-awesome-rails'
 # チャート
 gem 'lazy_high_charts'
 # 認証
-gem "devise"
+gem 'devise'
 # 検索
-gem "ransack"
+gem 'ransack'
 # PDF
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
