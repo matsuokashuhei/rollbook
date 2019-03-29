@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
-ruby '2.5.1'
 
-gem 'rails', '5.0.1'
+gem 'rails', '5.1.6.2'
 gem 'pg', '0.21.0'
 gem 'sass-rails'
 gem 'uglifier'
@@ -16,24 +15,34 @@ gem 'kaminari'
 gem 'annotate'
 # View Model
 gem 'draper'
+gem 'bootsnap'
 
 # group :doc do
 #   gem 'sdoc', require: false
 # end
 
 group :development do
+  gem 'brakeman', require: false
+  gem 'bullet'
+  gem 'license_finder'
+  gem 'listen'
+  gem 'pry'
   gem 'pry-rails'
-  gem 'pry-byebug'
-  # gem 'pry-stack_explorer'
-  # gem 'quiet_assets'
+  gem 'rails_best_practices', require: false
+  gem 'rubocop', require: false
+  gem 'spring'
+  gem 'spring-watcher-listen'
 end
 
 group :development, :test do
+  gem 'byebug', platform: :mri
+  gem 'debase'
+  # gem 'factory_bot_rails'
+  # gem 'faker'
+  gem 'fog-local'
+  gem 'fuubar'
   gem 'rspec-rails'
-  # gem 'factory_girl_rails'
-  gem 'factory_bot_rails'
-  gem 'faker'
-  gem 'gimei'
+  gem 'ruby-debug-ide'
 end
 
 group :test do
@@ -55,6 +64,6 @@ gem 'ransack'
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 # 監視
-gem 'newrelic_rpm'
+# gem 'newrelic_rpm'
 # パン屑
 gem 'gretel'

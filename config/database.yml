@@ -1,24 +1,17 @@
-development:
+default: &default
   adapter: postgresql
   encoding: unicode
-  host: db
-  database: rollbook_development
-  pool: 5
+  host: <%= ENV['DB_HOST'] %>
+  database: <%= ENV['DB_NAME'] %>
   username: <%= ENV['DB_USERNAME'] %>
   password: <%= ENV['DB_PASSWORD'] %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
 
 test:
-  adapter: postgresql
-  encoding: unicode
-  database: rollbook_test
-  pool: 5
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
+  <<: *default
 
 production:
-  adapter: postgresql
-  encoding: unicode
-  database: rollbook_production
-  pool: 5
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
+  <<: *default

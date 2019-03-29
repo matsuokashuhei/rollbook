@@ -13,7 +13,7 @@
 #
 
 class AccessLog < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :user, optional: true
   default_scope -> { order("created_at DESC") }
 
   scope :user, -> (user_id = nil) {

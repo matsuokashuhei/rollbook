@@ -6,22 +6,22 @@ services:
     build:
       context: .
       dockerfile: docker/db/Dockerfile
-#    image: postgres:9.3
     ports:
-    - '5432:5432'
+      - '5432:5432'
 
   app:
     build:
       context: .
       dockerfile: docker/app/Dockerfile
     volumes:
-    - .:/rollbook
+      - .:/rollbook
     command: bundle exec rails s -p 3000 -b '0.0.0.0'
     ports:
-    - '3000:3000'
+      - '3000:3000'
     depends_on:
-    - db
+      - db
     environment:
-    - DB_USERNAME=postgres
-    - DB_PASSWORD=
-
+      - DB_HOST=db
+      - DB_NAME=app_development
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=

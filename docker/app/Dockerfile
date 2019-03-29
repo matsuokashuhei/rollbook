@@ -1,4 +1,4 @@
-FROM ruby:2.5.1
+FROM ruby:2.5.5
 RUN apt-get update -qq && apt-get install -y --no-install-recommends build-essential libpq-dev
 
 RUN mkdir /rollbook
@@ -7,4 +7,3 @@ ADD Gemfile /rollbook/Gemfile
 ADD Gemfile.lock /rollbook/Gemfile.lock
 RUN bundle install --jobs=4 --clean
 ADD . /rollbook
-
