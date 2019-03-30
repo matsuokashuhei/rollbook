@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: docker/db/Dockerfile
+    volumes:
+      - db_data:/var/lib/postgresql/data
     ports:
       - '5432:5432'
 
@@ -21,7 +23,11 @@ services:
     depends_on:
       - db
     environment:
+      - RAILS_ENV=development
       - DB_HOST=db
       - DB_NAME=app_development
       - DB_USERNAME=postgres
       - DB_PASSWORD=
+
+volumes:
+  db_data:
