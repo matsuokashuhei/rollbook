@@ -1,4 +1,4 @@
-class CreateRecesses < ActiveRecord::Migration
+class CreateRecesses < ActiveRecord::Migration[4.2]
   def change
     create_table :recesses do |t|
       t.integer :members_course_id

@@ -1,4 +1,4 @@
-class AddReceiptDateAndMoreToBankAccounts < ActiveRecord::Migration
+class AddReceiptDateAndMoreToBankAccounts < ActiveRecord::Migration[4.2]
   def change
     add_column :bank_accounts, :receipt_date, :date
     add_column :bank_accounts, :ship_date, :date

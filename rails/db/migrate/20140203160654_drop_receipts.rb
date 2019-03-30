@@ -1,4 +1,4 @@
-class DropReceipts < ActiveRecord::Migration
+class DropReceipts < ActiveRecord::Migration[4.2]
   def change
     drop_table :receipts
   end

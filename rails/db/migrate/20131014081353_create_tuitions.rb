@@ -1,4 +1,4 @@
-class CreateTuitions < ActiveRecord::Migration
+class CreateTuitions < ActiveRecord::Migration[4.2]
   def change
     create_table :tuitions do |t|
       t.string :month

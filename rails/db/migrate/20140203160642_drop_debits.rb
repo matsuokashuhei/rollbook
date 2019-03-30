@@ -1,4 +1,4 @@
-class DropDebits < ActiveRecord::Migration
+class DropDebits < ActiveRecord::Migration[4.2]
   def change
     drop_table :debits
   end

@@ -1,4 +1,4 @@
-class CreateReadLogs < ActiveRecord::Migration
+class CreateReadLogs < ActiveRecord::Migration[4.2]
   def change
     create_table :read_logs do |t|
       t.integer :post_id

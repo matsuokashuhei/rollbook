@@ -1,4 +1,4 @@
-class CreateStudios < ActiveRecord::Migration
+class CreateStudios < ActiveRecord::Migration[4.2]
   def change
     create_table :studios do |t|
       t.string :name

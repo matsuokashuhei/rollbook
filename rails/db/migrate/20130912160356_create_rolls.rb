@@ -1,4 +1,4 @@
-class CreateRolls < ActiveRecord::Migration
+class CreateRolls < ActiveRecord::Migration[4.2]
   def change
     create_table :rolls do |t|
       t.integer :lesson_id
