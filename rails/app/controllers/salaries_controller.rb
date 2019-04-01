@@ -4,9 +4,18 @@ class SalariesController < ApplicationController
   before_action :manager!
 
   def index
-    @q = Instructor.search(params[:q])
+    @q = Instructor.ransack(params[:q])
     @month = params[:month]
-    @instructors = @q.result.joins(:courses).merge(Course.opened("#{@month}01".to_date)).order(:name).uniq.page(params[:page]).decorate
+    @instructors = @q.result
+                     .joins(:courses)
+                     .merge(Course.opened("#{@month}01".to_date))
+                     .order(:name)
+                     .uniq.yield_self { |array|
+                       Kaminari.paginate_array(array)
+                     }.page(params[:page])
+                     .yield_self { |paginate_array|
+                       InstructorDecorator.decorate_collection(paginate_array)
+                     }
   end
 
   def show
