@@ -11,10 +11,10 @@
         </thead>
         <tbody>
           <% courses.select {|course| course['school_id'] == studio['school_id'] }.select {|course| course['studio_id'] == studio['studio_id'] }.each do |course| %>
-            <% if course['weekday'] == '1' %>
+            <% if course['weekday'] == 1 %>
               <tr>
             <% end %>
-            <% if course['weekday'] == '1' %>
+            <% if course['weekday'] == 1 %>
                 <th><%= course['start_time'] %></th>  
             <% end %>
             <td class="course">
@@ -30,7 +30,7 @@
                 <% end %>
               <% end %>
             </td>
-            <% if course['weekday'] == '7' %>
+            <% if course['weekday'] == 7 %>
               </tr>
             <% end %>
           <% end %>
