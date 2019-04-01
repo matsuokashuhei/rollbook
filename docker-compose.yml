@@ -17,9 +17,10 @@ services:
       dockerfile: docker/app/Dockerfile
     volumes:
       - ./rails:/app
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
-    ports:
-      - '3000:3000'
+#    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+#    ports:
+#      - '3000:3000'
+    command: bundle exec puma -C config/puma.rb
     depends_on:
       - db
     environment:
@@ -28,6 +29,15 @@ services:
       - DB_NAME=app_development
       - DB_USERNAME=postgres
       - DB_PASSWORD=
+
+  web:
+    build: docker/web
+    volumes:
+      - ./rails:/app
+    depends_on:
+      - app
+    ports:
+      - '80:80'
 
 volumes:
   db_data:
