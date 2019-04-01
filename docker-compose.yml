@@ -3,9 +3,7 @@ version: '3'
 services:
 
   db:
-    build:
-      context: .
-      dockerfile: docker/db/Dockerfile
+    image: postgres:9.6
     volumes:
       - db_data:/var/lib/postgresql/data
     ports:
