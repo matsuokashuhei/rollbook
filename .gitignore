@@ -9,9 +9,15 @@
 
 # Ignore all logfiles and tempfiles.
 /rails/log/*
-/rails/tmp/*
 !/rails/log/.keep
+/rails/tmp/*
 !/rails/tmp/.keep
+!/rails/tmp/pids
+!/rails/tmp/sockets
+/rails/tmp/pids/*
+!/rails/tmp/pids/.keep
+/rails/tmp/sockets/*
+!/rails/tmp/sockets/.keep
 
 # Ignore uploaded files in development
 /rails/storage/*
