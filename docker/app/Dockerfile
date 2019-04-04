@@ -1,6 +1,8 @@
 FROM ruby:2.5.5
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev
 
+ENV LANG C.UTF-8
+
 RUN mkdir /app
 WORKDIR /app
 ADD rails/Gemfile /app/Gemfile
