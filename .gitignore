@@ -27,6 +27,7 @@
 /rails/yarn-error.log
 
 /rails/public/assets
+/rails/public/packs
 /rails/.byebug_history
 
 # Ignore master key for decrypting credentials and more.
