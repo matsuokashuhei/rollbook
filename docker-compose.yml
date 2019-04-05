@@ -25,6 +25,7 @@ services:
       - '3000'
     environment:
       - TZ=Asia/Tokyo
+      - RAILS_ENV=${RAILS_ENV:-development}
       - NODE_ENV=${NODE_ENV:-development}
       - DB_HOST=${DB_HOST:-db}
       - DB_NAME=${DB_NAME:-app_development}
