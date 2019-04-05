@@ -84,7 +84,8 @@ class LessonsController < ApplicationController
           return calendar
         end
         @date = params[:date].to_date
-      rescue
+      rescue => e
+        logger.error(e)
         return redirect_to lessons_path(month: Date.today.strftime('%Y%m'))
       end
     end
