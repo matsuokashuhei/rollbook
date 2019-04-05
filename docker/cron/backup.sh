@@ -1,11 +1,35 @@
-#!/bin/bash
-
-DUMP_FILE=/backup/$(date '+%Y%m%d%H%M%S').dump
+#!/bin/bash -eu
 
 source /root/env.sh
 
-echo "pg_dump --format=custom --host=$DB_HOST --dbname=$DB_NAME --no-owner --no-acl --username=$DB_USER > $DUMP_FILE" >> /var/log/cron.log 2>&1
-pg_dump --format=custom --host=$DB_HOST --dbname=$DB_NAME --no-owner --no-acl --username=$DB_USER > $DUMP_FILE
+NEW_DUMP=/backup/$(date '+%Y%m%d')-${DB_NAME}.dump
+OLD_DUMP=/backup/$(date --date '7 day ago' '+%Y%m%d')-${DB_NAME}.dump
 
-echo "aws s3 cp $DUMP_FILE s3://landin/backup/" >> /var/log/cron.log 2>&1
-aws s3 cp $DUMP_FILE s3://landin/backup/
+# backup DB using pg_dump
+echo "$(date '+%Y-%m-%d %H:%M:%S') - pg_dump --format=custom --host=$DB_HOST --dbname=$DB_NAME --no-owner --no-acl --username=$DB_USER > $NEW_DUMP" >> /var/log/cron.log 2>&1
+pg_dump --format=custom --host=$DB_HOST --dbname=$DB_NAME --no-owner --no-acl --username=$DB_USER > $NEW_DUMP
+
+if [ $RAILS_ENV = 'production' ]
+then
+  # store dump into S3
+  echo "$(date '+%Y-%m-%d %H:%M:%S') - aws s3 cp $NEW_DUMP s3://${S3_BUCKET}/backup/" >> /var/log/cron.log 2>&1
+  aws s3 cp $NEW_DUMP s3://${S3_BUCKET}/backup/
+  if [ $? -eq 0 ]
+  then
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - aws s3 cp is succeeded" >> /var/log/cron.log 2>&1
+
+    # remove dump from container
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - rm -fr $NEW_DUMP" >> /var/log/cron.log 2>&1
+    rm -fr $NEW_DUMP
+
+    # remove old dump from S3
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - aws s3 rm s3://${S3_BUCKET}/backup/$OLD_DUMP" >> /var/log/cron.log 2>&1
+    aws s3 rm s3://${S3_BUCKET}/backup/$OLD_DUMP
+    if [ $? -eq 0 ]
+    then
+      echo "$(date '+%Y-%m-%d %H:%M:%S') - aws s3 rm is succeeded" >> /var/log/cron.log 2>&1
+    fi
+  fi
+fi
+
+
