@@ -8,6 +8,11 @@ services:
       - db_data:/var/lib/postgresql/data
     environment:
       - TZ=Asia/Tokyo
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
 
   app:
     build:
@@ -16,9 +21,10 @@ services:
     command: bundle exec puma -C config/puma.rb
     depends_on:
       - db
+    expose:
+      - '3000'
     environment:
       - TZ=Asia/Tokyo
-      - RAILS_ENV=${RAILS_ENV:-development}
       - NODE_ENV=${NODE_ENV:-development}
       - DB_HOST=${DB_HOST:-db}
       - DB_NAME=${DB_NAME:-app_development}
@@ -27,6 +33,11 @@ services:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-xxx}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-xxx}
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-west-2}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
     volumes:
       - ./rails:/app
 
@@ -34,19 +45,39 @@ services:
     build: docker/web
     depends_on:
       - app
-    ports:
-      - '80:80'
-    volumes:
-      - ./rails:/app
     environment:
       - TZ=Asia/Tokyo
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
+    expose:
+      - '80'
+    volumes:
+      - ./rails:/app
+
+  https-portal:
+    image: steveltn/https-portal:1
+    depends_on:
+      - web
+    environment:
+      DOMAINS: 'landism.local -> http://web:80'
+      STAGE: 'local'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
+    ports:
+      - '443:443'
+    volumes:
+      - ./ssl-certs:/var/lib/https-portal
 
   cron:
     build: docker/cron
     depends_on:
       - db
-    volumes:
-      - ./backup:/backup
     environment:
       - TZ=Asia/Tokyo
       - RAILS_ENV=${RAILS_ENV:-development}
@@ -58,6 +89,13 @@ services:
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-xxx}
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-west-2}
       - S3_BUCKET=${S3_BUCKET:-landin-test}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
+    volumes:
+      - ./backup:/backup
 
 volumes:
   db_data:
