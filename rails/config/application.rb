@@ -43,6 +43,7 @@ module Rollbook
     I18n.enforce_available_locales = false
 
     # libを自動で読み込む。
-    config.autoload_paths += %W(#{config.root}/lib)
+    # config.autoload_paths += %W(#{config.root}/lib)
+    config.paths.add 'lib', eager_load: true
   end
 end
