@@ -3,4 +3,4 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin
 MAILTO=root
 HOME=/
 
-* 6 * * * root /root/backup.sh
+0 6 * * * root /root/backup.sh > /dev/stdout
