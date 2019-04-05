@@ -70,6 +70,7 @@ services:
         max-size: "10m"
         max-file: "10"
     ports:
+      - '80:80'
       - '443:443'
     volumes:
       - ./ssl-certs:/var/lib/https-portal
