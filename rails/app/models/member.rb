@@ -106,13 +106,23 @@ class Member < ActiveRecord::Base
   def self.absentees
     Member.active
           .joins(:rolls)
-          .merge(Roll.where(status: [Roll::STATUS[:ABSENCE], Roll::STATUS[:CANCEL]])
-                     .where(substitute_roll_id: nil))
-          .joins(Roll.joins(:lesson).join_sources)
-          .joins(Lesson.joins(:course).join_sources)
-          .joins(Course.joins(:members_courses).join_sources)
-          .merge(MembersCourse.substitutable)
-          .uniq
+          .merge(
+              Roll.where(status: [Roll::STATUS[:ABSENCE], Roll::STATUS[:CANCEL]])
+                  .where(substitute_roll_id: nil))
+          .group(:id)
+          .having('count(*) > 0')
+          .yield_self { |ids|
+            Member.where(id: ids)
+          }
+    # Member.active
+    #       .joins(:rolls)
+    #       .merge(Roll.where(status: [Roll::STATUS[:ABSENCE], Roll::STATUS[:CANCEL]])
+    #                  .where(substitute_roll_id: nil))
+    #       .joins(Roll.joins(:lesson).join_sources)
+    #       .joins(Lesson.joins(:course).join_sources)
+    #       .joins(Course.joins(:members_courses).join_sources)
+    #       .merge(MembersCourse.substitutable)
+    #       .uniq
   end
 
   def destroy?
