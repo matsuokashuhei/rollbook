@@ -19,11 +19,12 @@ then
     echo "$(date '+%Y-%m-%d %H:%M:%S') - aws s3 cp is succeeded" >> /var/log/cron.log 2>&1
 
     # remove dump from container
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - rm -fr $NEW_DUMP" >> /var/log/cron.log 2>&1
-    rm -fr $NEW_DUMP
+    #echo "$(date '+%Y-%m-%d %H:%M:%S') - rm -fr $NEW_DUMP" >> /var/log/cron.log 2>&1
+    #rm -fr $NEW_DUMP
 
     # remove old dump from S3
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - aws s3 rm s3://${S3_BUCKET}/backup/$OLD_DUMP" >> /var/log/cron.log 2>&1
+    rm -f $OLD_DUMP
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - aws s3 rm s3://${S3_BUCKET}/$OLD_DUMP" >> /var/log/cron.log 2>&1
     aws s3 rm s3://${S3_BUCKET}/backup/$OLD_DUMP
     if [ $? -eq 0 ]
     then
