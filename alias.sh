@@ -1,3 +1,5 @@
+alias docker-compose='docker-compose -f docker-compose.yml -f docker-compose-development.yml'
+alias docker-compose-production='docker-compose -f docker-compose.yml -f docker-compose-production.yml'
 alias rails='docker-compose run --rm app rails'
 alias bundle='docker-compose run --rm app bundle'
 alias app='docker-compose run -- rm app'
