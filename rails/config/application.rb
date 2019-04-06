@@ -46,6 +46,6 @@ module Rollbook
     # config.autoload_paths += %W(#{config.root}/lib)
     config.paths.add 'lib', eager_load: true
 
-    config.active_record.default_timezone = 'Asia/Tokyo'
+    config.active_record.default_timezone = :local
   end
 end
