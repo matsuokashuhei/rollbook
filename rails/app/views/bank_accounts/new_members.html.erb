@@ -1,0 +1,35 @@
+<% breadcrumb :new_bank_account %>
+<%= render partial: 'nav_tabs', locals: { bank_account: @bank_account, active: :members } %>
+<br />
+<div class="row">
+  <div class="col-md-5">
+    <div class="table-responsive">
+      <%= render "shared/notice" %>
+      <%= form_tag({ action: "create_member" }, { method: "post", id: "form" }) do %>
+        <%= hidden_field_tag "bank_account_id", @bank_account.id %>
+        <table class="table table-bordered table-striped table-hover">
+          <thead>
+            <tr>
+              <th class="col-md-1"></th>
+              <th class="col-md-1"><%= t("activerecord.attributes.member.number") %></th>
+              <th class="col-md-2"><%= t("activerecord.attributes.member.name") %></th>
+              <th class="col-md-1"><%= t("activerecord.attributes.member.enter_date") %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @members.each do |member| %>
+              <tr>
+                <td class="text-center"><%= radio_button_tag "member_id", member.id %></td>
+                <td><%= member.number %></td>
+                <td><%= member.name %></td>
+                <td><%= member.enter_date %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= button_tag t("views.buttons.select"), class: "btn btn-default pull-right", form: "form" %>
+      <% end %>
+    </div>
+    <%= button_to_back bank_account_members_path(@bank_account) %>
+  </div>
+</div>

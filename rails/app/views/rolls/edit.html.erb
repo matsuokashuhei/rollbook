@@ -1,0 +1,25 @@
+<% breadcrumb :edit_lesson, @lesson %>
+<div class="row">
+  <div class="col-md-9">
+    <%= link_to absentees_path(lesson_id: @lesson.id), class: "btn btn-success pull-right", remote: true do %>
+      <%= fa_icon "exchange", text: t("views.buttons.substitute") %>
+    <% end %>
+  </div>
+</div>
+<br/>
+<div class="row">
+  <div class="col-md-9">
+    <%= render "rolls" %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-9">
+    <%= render partial: 'lessons/prev_and_next_lesson', locals: { lesson: @lesson.decorate } %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-9">
+    <%= button_to_back lesson_rolls_path(@lesson), pull: "left" %>
+    <%= button_to_save pull: "right" %>
+  </div>
+</div>

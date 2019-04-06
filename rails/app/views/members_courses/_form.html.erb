@@ -1,0 +1,87 @@
+<% if params[:action] == "show" %>
+  <fieldset disabled>
+<% end %>
+
+<%= form_for([@member, @members_course], html: { role: "form", class: "form-horizontal", id: "form" }) do |f| %>
+  <%= render "shared/errors", object: @members_course %>
+  <%= f.hidden_field :member_id %>
+  <%= f.hidden_field :course_id %>
+  <div class="form-group">
+    <%= label_tag nil, t("activerecord.models.studio"), class: "col-md-1 control-label" %>
+    <div class="col-md-3 <%= 'has-error' if @members_course.errors[:course_id].present? %>">
+      <%= text_field_tag nil, @course['studio_name'], class: "form-control", disabled: "disabled" %>
+    </div>
+    <label class="col-md-1 control-label"><%= t("activerecord.attributes.timetable.weekday") %></label>
+    <div class="col-md-2 <%= 'has-error' if @members_course.errors[:course_id].present? %>">
+      <%= text_field_tag nil, t('date.cwday_names')[@course['weekday'].try(:to_i) || 0], class: "form-control", disabled: "disabled" %>
+    </div>
+    <label class="col-md-1 control-label"><%= t("activerecord.models.time_slot") %></label>
+    <div class="col-md-2 <%= 'has-error' if @members_course.errors[:course_id].present? %>">
+      <%= text_field_tag nil, @course['start_time'], class: "form-control", disabled: "disabled" %>
+    </div>
+  </div>
+  <div class="form-group <%= 'has-error' if @members_course.errors[:course_id].present? %>">
+    <label class="col-md-1 control-label"><%= t("activerecord.models.course") %></label>
+    <div class="col-md-3">
+      <%= text_field_tag nil, @course['dance_style_name'], class: "form-control", disabled: "disabled" %>
+    </div>
+    <div class="col-md-3">
+      <%= text_field_tag nil, @course['level_name'], class: "form-control", disabled: "disabled" %>
+    </div>
+    <div class="col-md-3">
+      <%= text_field_tag nil, @course['instructor_name'], class: "form-control", disabled: "disabled" %>
+    </div>
+    <div class="col-md-1">
+      <% if @courses.present? %>
+        <%= link_to t("views.buttons.select"), "#courses", class: "btn btn-default", "data-toggle" => "modal" %>
+        <%= render "modal" %>
+      <% else %>
+        <%= link_to t("views.buttons.select"), "#timetables", class: "btn btn-default", disabled: "disabled" %>
+      <% end %>
+    </div>
+  </div>  
+  <div class="form-group <%= 'has-error' if @members_course.errors[:introduction].present? %>">
+    <div class="col-md-3 col-md-offset-1">
+      <div class="checkbox">
+        <%= f.label :introduction do %>
+          <%= f.check_box :introduction %><%= t("activerecord.attributes.members_course.introduction") %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label t("activerecord.attributes.members_course.begin_date"), class: "col-md-1 control-label" %>
+    <div class="col-md-2 <%= 'has-error' if @members_course.errors[:begin_date].present? %>">
+      <%= date_picker_field "begin_date", start_date: @member.enter_date, day_of_week: @course['weekday'].try(:to_i) do %>
+        <%= f.text_field :begin_date, class: "form-control" %>
+      <% end %>
+    </div>
+    <% if params[:action] != 'new' %>
+      <%= f.label t("activerecord.attributes.members_course.end_date"), class: "col-md-1 col-md-offset-1 control-label" %>
+      <div class="col-md-2 <%= 'has-error' if @members_course.errors[:end_date].present? %>">
+        <%= date_picker_field "end_date", start_date: @members_course.begin_date do %>
+          <%= f.text_field :end_date, class: "form-control" %>
+        <% end %>
+      </div>
+      <div class="form-group <%= 'has-error' if @members_course.errors[:substitutable].present? %>">
+        <div class="col-md-1">
+          <div class="checkbox">
+            <%= f.label :substitutable do %>
+              <%= f.check_box :substitutable %><%= t("activerecord.attributes.members_course.substitutable") %>OK
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="form-group <%= 'has-error' if @members_course.errors[:note].present? %>">
+    <%= f.label :note, class: "col-md-1 control-label" %>
+    <div class="col-md-9">
+      <%= f.text_area :note, class: "form-control", rows: 6 %>
+    </div>
+  </div>
+<% end %>
+
+<% if params[:action] == "show" %>
+  </fieldset>
+<% end %>

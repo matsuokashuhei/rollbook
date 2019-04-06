@@ -1,0 +1,58 @@
+<% breadcrumb :member, @member %>
+<%= render partial: 'members/nav_tabs', locals: { member: @member, active: :members_courses } %>
+<br />
+<div class="row">
+  <div class="col-md-10">
+    <%= form_tag member_members_courses_path(@member), method: :get, class: "form-inline" do %>
+      <div class="form-group">
+        <%= select_tag 'status', options_for_select([['在籍', '1'], ['退籍', '9']], params[:status]), class: "form-control", include_blank: true %>
+      </div>
+      <%= button_to_search %>
+      <%= button_to_new new_member_members_course_path(@member), pull: "right" %>
+    <% end %>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-11">
+    <%= render "shared/notice" %>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th class="col-md-2"><%= t("activerecord.models.studio") %></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.timetable.weekday") %></th>
+            <th class="col-md-1"><%= t("activerecord.models.time_slot") %></th>
+            <th class="col-md-3"><%= t("activerecord.models.course") %></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.members_course.begin_date") %></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.members_course.end_date") %></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.members_course.substitutable") %></th>
+            <th class="col-md-1"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @members_courses.each do |members_course| %>
+            <% course = members_course.course %>
+            <% timetable = course.timetable %>
+            <% time_slot = timetable.time_slot %>
+            <% studio = timetable.studio %>
+            <tr>
+              <td><%= studio.name %></td>
+              <td><%= t('date.cwday_names')[timetable.weekday] %></td>
+              <td><%= time_slot.start_time %></td>
+              <td><%= course.name %></td>
+              <td><%= members_course.begin_date %></td>
+              <td><%= members_course.end_date %></td>
+              <td><%= members_course.substitutable %></td>
+              <td class="text-center">
+                <%= link_to_show member_members_course_path(@member, members_course) %>
+                <%= link_to_edit edit_member_members_course_path(@member, members_course) %>
+                <%= link_to_destroy members_course.id, member_members_course_path(@member, members_course), destroy: members_course.deletable? %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

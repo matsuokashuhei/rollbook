@@ -1,0 +1,10 @@
+<% breadcrumb :post, @post %>
+<div class="row">
+  <div class="col-md-12">
+    <%= render "shared/notice" %>
+    <%= render "form" %>
+    <%= button_to_back posts_path, pull: "left" %>
+    <%= button_to_edit edit_post_path(@post), edit: @post.editable?(@current_user), pull: "right" %>
+  </div>
+</div>
+</>

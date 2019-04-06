@@ -1,0 +1,38 @@
+<div id="modal-absences" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        レッスンの選択
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-hover">
+                <caption><%= member.decorate.name_and_kana %></caption>
+                <thead>
+                  <tr>
+                    <th class="col-md-1"><%= t("activerecord.attributes.lesson.date") %></th>
+                    <th class="col-md-2"><%= t("activerecord.models.course") %></th>
+                  </tr>
+                </thead>
+                <tbody id="rolls">
+                  <% rolls.each do |roll| %>
+                    <% params = { member_id: member.id, substitute_roll_id: roll[:roll_id], status: Roll::STATUS[:SUBSTITUTE] } %>
+                    <tr data-href="<%= new_lesson_roll_path(roll[:lesson_id], params) %>" style="cursor: pointer;">
+                      <td class="text-center"><%= roll[:date] %></td>
+                      <td><%= roll[:course_name] %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <%= button_tag t("views.buttons.close"), id: 'modal-absences-close', class: "btn btn-default", data: { dismiss: "modal" } %>
+      </div>
+    </div>
+  </div>
+</div>

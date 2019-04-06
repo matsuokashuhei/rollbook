@@ -1,0 +1,22 @@
+<% breadcrumb :posts_on_home %>
+<div class="row">
+  <div class="col-md-6">
+    <div class="table-responsive">
+      <table class="table table-striped table-hover">
+        <tbody>
+          <% @posts.each do |post| %>
+            <tr>
+              <td><%= post.open_date.strftime('%Y年%m月%d日') %></td>
+              <td>
+                <%= link_to post.title, post_comments_path(post), class: 'btn btn-link' %>
+                <%= post.unread_icon(current_user) %>
+              </td>
+              <td><%= post.user.name %></td>
+              <td class="text-center"><%= post.unread_comments_icon(@current_user) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

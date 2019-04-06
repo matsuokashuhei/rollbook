@@ -1,0 +1,27 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= t("activerecord.attributes.dance_style.name") %></th>
+        <th><%= t("activerecord.attributes.dance_style.order_no") %></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @dance_styles.each do |dance_style| %>
+        <tr>
+          <td><%= dance_style.name %></td>
+          <td><%= dance_style.order_no %></td>
+          <td><%= link_to t("views.buttons.show"), dance_style, class: "btn btn-default" %></td>
+          <td><%= link_to t("views.buttons.edit"), edit_dance_style_path(dance_style), class: "btn btn-default" %></td>
+          <td><%= render "shared/delete_link", object: dance_style %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @dance_styles %>
+</div>
+<br />
+<%= link_to t("views.buttons.new"), new_dance_style_path, class: "btn btn-default" %>

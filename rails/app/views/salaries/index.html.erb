@@ -1,0 +1,58 @@
+<% breadcrumb :salaries, @month %>
+<div class="row">
+  <div class="col-md-5">
+    <%= search_form_for(@q, url: salaries_path(month: @month), class: 'form-inline') do |f| %>
+      <div class="form-group">
+        <%= f.text_field :name_start, class: "form-control", placeholder: t("activerecord.attributes.instructor.name"), autofocus: true %>
+      </div>
+      <%= f.button class: "btn btn-success" do %>
+        <%= fa_icon("search lg", text: t("views.buttons.search")) %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-7">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th class="col-md-3"><%= t("activerecord.attributes.instructor.name") %></th>
+            <th class="col-md-1">クラス数</th>
+            <th class="col-md-1"><%= t("activerecord.attributes.instructor.transportation") %></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.instructor.guaranteed_min") %></th>
+            <th class="col-md-1"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @instructors.each do |instructor| %>
+            <tr>
+              <td><%= link_to instructor.name, instructor_path(instructor), class: 'btn btn-link' %></td>
+              <td class="text-right"><%= instructor.courses.opened((@month + '01').to_date).count %></td>
+              <td class="text-right"><%= number_to_currency(instructor.transportation) if instructor.transportation.present? %></td>
+              <td class="text-right"><%= number_to_currency(instructor.guaranteed_min) if instructor.guaranteed_min.present? %></td>
+              <td class="text-center">
+                <%= link_to_show salary_path(month: @month, instructor_id: instructor.id) %>
+                <%= link_to_pdf salary_path(month: @month, instructor_id: instructor.id, format: :pdf) %>
+              </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= paginate @instructors %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-5">
+    <ul class="pager">
+      <li class="previous">
+        <%= link_to_prev_months_salaries @month %>
+      </li>
+      <li class="next">
+        <%= link_to_next_months_salaries @month %>
+      </li>
+    </ul>
+  </div>
+</div>

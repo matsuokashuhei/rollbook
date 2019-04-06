@@ -1,0 +1,77 @@
+<%= form_for(@instructor, html: { role: "form", class: "form-horizontal", id: "form" }) do |f| %>
+
+  <%= render "shared/errors", object: @instructor %>
+
+  <% if params[:action] == "show" %>
+    <fieldset disabled>
+  <% end %>
+
+  <div class="form-group <%= 'has-error' if @instructor.errors[:kana].present? %>">
+    <%= f.label :name, class: "col-md-1 control-label" %>
+    <div class="col-md-3">
+      <%= f.text_field :kana, class: "form-control", "placeholder" => t("activerecord.attributes.instructor.kana") %>
+    </div>
+  </div>
+  <div class="form-group <%= 'has-error' if @instructor.errors[:name].present? %>">
+    <div class="col-md-3 col-md-offset-1">
+      <%= f.text_field :name, class: "form-control", "placeholder" => t("activerecord.attributes.instructor.name") %>
+    </div>
+  </div>
+  <div class="form-group <%= 'has-error' if @instructor.errors[:team].present? %>">
+    <%= f.label :team, class: "col-md-1 control-label" %>
+    <div class="col-md-3">
+      <%= f.text_field :team, class: "form-control" %>
+    </div>
+  </div>
+  <% if current_user.manager? %>
+    <div class="form-group <%= 'has-error' if @instructor.errors[:transportation].present? %>">
+      <%= f.label :transportation, class: "col-md-1 control-label" %>
+      <div class="col-md-2">
+        <%= f.number_field :transportation, class: "form-control" %>
+      </div>
+      <%= f.label :guaranteed_min, class: "col-md-1 col-md-offset-1 control-label" %>
+      <div class="col-md-2">
+        <%= f.number_field :guaranteed_min, class: "form-control" %>
+      </div>
+      <% if false #消す %>  
+      <div class="col-md-2 col-md-offset-1">
+        <div class="checkbox">
+          <label>
+            <%= f.check_box :taxable %><%= "課税する" %>
+          </label>
+        </div>
+      </div>
+      <% end %>
+      <%= f.hidden_field :taxable %>
+    </div>
+  <% end %>
+  <% if false %>
+    <!-- 電話番号とEメールは個人情報のため消す。-->
+    <div class="form-group <%= 'has-error' if @instructor.errors[:phone].present? %>">
+      <%= f.label :phone, class: "col-md-1 control-label" %>
+      <div class="col-md-2">
+        <%= f.phone_field :phone, class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-1 control-label"><%= t("activerecord.attributes.instructor.email") %></label>
+      <div class="col-md-5 <%= 'has-error' if @instructor.errors[:email_pc].present? %>">
+        <%= f.email_field :email_pc, class: "form-control", "placeholder" => "PC" %>
+      </div>
+      <div class="col-md-5 <%= 'has-error' if @instructor.errors[:email_mobile].present? %>">
+        <%= f.email_field :email_mobile, class: "form-control", "placeholder" => "モバイル" %>
+      </div>
+    </div>
+  <% end %>
+  <div class="form-group <%= 'has-error' if @instructor.errors[:note].present? %>">
+    <%= f.label :note, class: "col-md-1 control-label" %>
+    <div class="col-md-9">
+      <%= f.text_area :note, class: "form-control", rows: 6 %>
+    </div>
+  </div>
+
+  <% if params[:action] == "show" %>
+    </fieldset>
+  <% end %>
+
+<% end %>

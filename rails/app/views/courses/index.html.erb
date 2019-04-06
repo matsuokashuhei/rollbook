@@ -1,0 +1,82 @@
+<% breadcrumb :courses, @current_date, @current_studio %>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="nav nav-tabs" role="tablist">
+      <% @studios.each do |studio| %>
+        <%= list_item(active: studio.id == @current_studio.id) do %>
+          <%= link_to courses_path(date: Date.today.to_s(:number), studio_id: studio.id) do %>
+            <%= studio.name %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <caption><%= @current_date.strftime("%Y年%m月") %></caption>
+        <thead>
+          <th style="width: 9%;"></th>
+          <% [1, 2, 3, 4, 5, 6, 0,].each do |wday| %>
+            <th style="width: 13%;"><%= t("date.abbr_day_names")[wday] %></th>
+          <% end %>
+        </thead>
+        <tbody>
+          <% @courses.each do |course| %>
+            <% if course['weekday'] == 1 %>
+              <tr>
+            <% end %>
+            <% if course['weekday'] == 1 %>
+              <th><%= course['start_time'] %></th>
+            <% end %>
+            <td class="course">
+              <% if course['course_id'].present? %>
+                <%= link_to course_path(course['course_id']) do %>
+                  <h6>
+                    <%= course['dance_style_name'] %>
+                    <br />
+                    <%= course['level_name'] %>
+                    <br />
+                    <small><%= course['instructor_name'] %></small>
+                  </h6>
+                <% end %>
+              <% elsif @current_date >= Date.today %>
+                <%= link_to new_course_path(timetable_id: course['timetable_id']), class: "btn btn-link", data: { toggle: "tooltip", "original-title" => t("views.buttons.new") } do %>
+                  <%= fa_icon "plus" %>
+                <% end %>
+              <% end %>
+            </td>
+            <% if course['weekday'] == 7 %>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table> 
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <ul class="pager">
+      <li class="previous">
+        <%= link_to fa_icon('caret-left', text: @before_month.strftime("%Y年%m月")), courses_path(date: @before_month.to_s(:number), studio_id: @current_studio.id) %>
+      </li>
+      <li class="next">
+        <%= link_to fa_icon('caret-right', text: @next_month.strftime("%Y年%m月"), right: true), courses_path(date: @next_month.to_s(:number), studio_id: @current_studio.id) %>
+      </li>
+    </ul>
+  </div>
+</div>
+<script>
+$(".course").hover(
+	function() {
+		$(this).toggleClass("warning");
+	},
+	function() {
+		$(this).toggleClass("warning");
+	}
+);
+</script>

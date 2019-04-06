@@ -1,0 +1,10 @@
+<% breadcrumb :new_course, @timetable %>
+<%= render partial: 'nav_tabs', locals: { course: @course, active: :course } %>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <%= render "form" %>
+    <%= button_to_save pull: "right" %>
+    <%= button_to_back courses_path(studio_id: @studio.id, date: Date.today.to_s(:number)), pull: "left" %>
+  </div>
+</div>

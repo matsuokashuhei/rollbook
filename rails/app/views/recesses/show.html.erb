@@ -1,0 +1,11 @@
+<% breadcrumb :member, @member %>
+<%= render partial: 'members/nav_tabs', locals: { member: @member, active: :recesses } %>
+<br />
+<div class="row">
+  <div class="col-md-12">
+    <%= render "shared/notice" %>
+    <%= render "form" %>
+    <%= button_to_edit edit_member_recess_path(@member, @recess), pull: "right" %>
+    <%= button_to_back member_recesses_path(@member), pull: "left" %>
+  </div>
+</div>

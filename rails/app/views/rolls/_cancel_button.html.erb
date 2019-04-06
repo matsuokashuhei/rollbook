@@ -1,0 +1,51 @@
+<% unless lesson.fixed? %>
+  <%= link_to '#cancel', class: "btn btn-default pull-right", data: { toggle: "modal" } do %>
+    <%= fa_icon "ban", text: "休　　講" %>
+  <% end %>
+<% else %>
+  <%= link_to '#', class: "btn btn-default pull-right disabled" do %>
+    <%= fa_icon "ban", text: "休　　講" %>
+  <% end %>
+<% end %>
+<div class="modal fade" id="cancel">
+  <div class="modal-dialog">
+    <%= form_tag(cancel_lesson_path(lesson), method: "post", id: "cancel_form") do %>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          <h4 class="modal-title">レッスンの休講</h4>
+        </div>
+        <div class="modal-body">
+          <div class="radio">
+            <label>
+              <input type="radio" name="status" value="2" checked>インストラクターの欠勤
+            </label>
+          </div>
+          <div class="radio">
+            <label>
+              <input type="radio" name="status" value="3">自然災害などその他の理由
+            </label>
+          </div>
+          <% if lesson.status == "2" || lesson.status == "3" %>
+            <div class="radio">
+              <label>
+                <input type="radio" name="status" value="1">取り消し
+              </label>
+            </div>
+          <% end %>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">
+              <%= t("views.buttons.close") %>
+            </button>
+            <%= button_tag class: "btn btn-primary pull-right" do %>
+              <%= fa_icon "save lg", text: t("views.buttons.create") %>
+            <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+

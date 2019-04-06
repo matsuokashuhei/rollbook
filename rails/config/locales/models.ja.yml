@@ -1,0 +1,161 @@
+ja:
+  activerecord:
+    models:
+      school: スクール
+      studio: スタジオ
+      instructor: インストラクター
+      time_slot: 時間
+      course: クラス
+      dance_style: ダンスの種類
+      member: 会員
+      members_course: 受講クラス
+      bank_account: 引落口座
+      lesson: レッスン
+      roll: 出欠
+      recess: 休会
+      user: ユーザー
+      access_log: ログ
+      post: お知らせ
+      comment: コメント
+      dashboard: 統計
+      salary: 給料明細書
+    attributes:
+      school:
+        name: 名前
+        zip: 郵便番号
+        address: 住所
+        phone: 電話番号
+        note: メモ
+        open_date: 開始日
+        close_date: 終了日
+      studio:
+        name: 名前
+        note: メモ
+        open_date: 開始日
+        close_date: 終了日
+        school_id: スクール
+      instructor:
+        name: 名前
+        kana: フリガナ
+        team: チーム
+        phone: 電話番号
+        email: Eメール
+        email_pc: Eメール (PC)
+        email_mobile: Eメール (モバイル)
+        transportation: 交通費
+        taxable: 課税
+        guaranteed_min: 最低保証額
+        note: メモ
+      timetable:
+        weekday: 曜日
+        studio_id: スタジオ
+        time_slot_id: 時間
+      time_slot:
+        start_time: 開始時間
+        end_time: 終了時間
+      course:
+        dance_style_id: ダンスの種類
+        level_id: 難易度
+        instructor_id: インストラクター
+        level: 難易度
+        open_date: 開始日
+        close_date: 終了日
+        monthly_fee: 料金
+        note: メモ
+      dance_style:
+        name: 名前
+        order_no: 並び順
+      member:
+        number: 会員番号
+        last_name: 姓 (漢字)
+        first_name: 名 (漢字)
+        last_name_kana: 姓 (ふりがな)
+        first_name_kana: 名 (ふりがな)
+        gender: 性別
+        age: 年齢
+        birth_date: 生年月日
+        zip: 郵便番号
+        address: 住所
+        phone_land: 電話番号 (自宅)
+        phone_mobile: 電話番号 (モバイル)
+        email_pc: Eメール (PC)
+        email_mobile: Eメール (モバイル)
+        enter_date: 入会日
+        leave_date: 退会日
+        bank_account_id: 引落口座
+        nearby_station: 最寄り駅
+        status: 状態
+        name: 名前
+        kana: フリガナ
+        email: Eメール
+        phone: 電話番号
+        note: メモ
+      bank_account:
+        id: ID
+        holder_name: 名義人
+        holder_name_kana: 名義人 (フリガナ)
+        bank_id: 銀行コード
+        bank_name: 銀行名
+        bank: 銀行
+        branch: 支店
+        branch_id: 支店コード
+        branch_name: 支店名
+        account_number: 口座番号
+        receipt_date: 受取日
+        ship_date: 発送日
+        begin_date: 引落日
+        imperfect: 書類不備
+        change_bank: 口座変更
+        status: 状態
+        note: メモ
+      members_course:
+        member_id: 会員
+        course_id: クラス
+        begin_date: 開始日
+        end_date: 終了日
+        note: メモ
+        introduction: インストラクター紹介
+        substitutable: 振替
+      lesson:
+        course_id: クラス
+        date: 日
+        status: 状態
+        rolls_status: 出欠
+        status: 状態
+        note: メモ
+      roll:
+        lesson_id: レッスン
+        member_id: 会員
+        status: 出欠
+        substitute_roll_id: 振替
+        note: メモ
+      recess:
+        members_course_id: クラス
+        month: 月
+        status: 返金
+        note: メモ
+      user:
+        name: 名前
+        school_id: スクール
+        email: Eメール
+        password: パスワード
+        password_confirmation: 確認用パスワード
+        current_password: 現在のパスワード
+        role: 権限
+        status: 状態
+      access_log:
+        user_id: ユーザー
+        ip: IP
+        remote_ip: リモートIP
+        request_method: HTTPメソッド
+        fullpath: URL
+      post:
+        title: 件名
+        content: 本文
+        user_id: ユーザー
+        open_date: 開始日
+        close_date: 終了日
+      comment:
+        content: コメント
+        user_id: ユーザー
+

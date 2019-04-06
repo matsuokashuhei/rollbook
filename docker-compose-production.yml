@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+
+  db:
+    expose:
+      - '5432'
+    restart: always
+
+  app:
+    environment:
+      - RAILS_LOG_TO_STDOUT=TRUE
+    restart: always
+
+  web:
+    restart: always
+
+  https-portal:
+    environment:
+      DOMAINS: 'landism.work -> http://web:80'
+      STAGE: 'production'
+    restart: always
+
+  cron:
+    restart: always

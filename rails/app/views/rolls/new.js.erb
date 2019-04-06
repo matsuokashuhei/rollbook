@@ -1,0 +1,5 @@
+var elements = document.querySelectorAll("#rolls input[name='rolls[][member_id]']");
+var memberIds = Array.apply(null, elements).map(function(element) { return element.value; });
+if (memberIds.indexOf("<%= @roll.member_id %>") < 0) {
+  $('tbody').append("<%=j render partial: "rolls/roll", locals: { roll: @roll.decorate } %>");
+}

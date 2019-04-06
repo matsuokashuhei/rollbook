@@ -1,0 +1,10 @@
+<% if current_page.last? %>
+  <li class="disabled">
+    <span><%= t("views.pagination.next") %></span>
+  </li>
+<% else %>
+  <li>
+    <%= link_to t("views.pagination.next"), url, :rel => "next", :remote => remote %>
+  </li>
+<% end %>
+

@@ -1,0 +1,8 @@
+<%= render "nav_tabs" %>
+
+<div class="tab-content">
+  <br />
+  <%= render "form" %>
+  <%= link_to t("views.buttons.back"), schools_path, class: "btn btn-default pull-left" %>
+  <%= link_to t("views.buttons.edit"), edit_school_path(@school), class: "btn btn-default pull-right" %>
+</div>

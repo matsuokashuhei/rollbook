@@ -1,0 +1,20 @@
+<% exclusion_member_ids = lesson.rolls.pluck(:member_id) %>
+<% members.each do |member| %>
+  <% unless member.id.in?(exclusion_member_ids) %>
+    <tr data-href="<%= absentee_path(member.id) %>" style="cursor: pointer;">
+      <td class="text-center"><%= member.number %></td>
+      <td><%= member.decorate.name_and_kana %></td>
+      <td class="text-right">
+        <%= link_to Roll.where(member_id: member.id).absence.count, member_rolls_path(member.id, status: 2), target: '_blank' %>
+      </td>
+    </tr>
+  <% else %>
+    <tr style='cursor: not-allowed'>
+      <td class="text-center"><%= member.number %></td>
+      <td><%= member.decorate.name_and_kana %></td>
+      <td class="text-right">
+        <%= link_to Roll.where(member_id: member.id).absence.count, member_rolls_path(member.id, status: 2), target: '_blank' %>
+      </td>
+    </tr>
+  <% end %>
+<% end %>

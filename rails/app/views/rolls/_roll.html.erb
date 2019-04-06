@@ -1,0 +1,37 @@
+<tr>
+  <%= hidden_field_tag "rolls[][id]", roll.id if roll.persisted? %>
+  <%= hidden_field_tag "rolls[][lesson_id]", roll.lesson.id %>
+  <%= hidden_field_tag "rolls[][member_id]", roll.member_id %>
+  <%= hidden_field_tag "rolls[][substitute_roll_id]", roll.substitute_roll_id %>
+  <% member = roll.member %>
+  <td class="text-center">
+    <%= member.number %>
+  </td>
+  <td class="col-md-2">
+    <%= member.name_with_link %>
+  </td>
+  <td class="col-md-1 text-center">
+    <%= member.bank_account.decorate.payment_courses if member.bank_account.present? %>
+    <%= member.bank_status %>
+  </td>
+  <td class="text-center">
+    <% if params[:action] == "index" %>
+      <%= roll.status %>
+    <% else %>
+      <%= render "status", roll: roll.model  %>
+    <% end %>
+  </td>
+  <td>
+    <% if lesson = roll.substitute_roll.try(:lesson) %>
+      <%= link_to lesson_rolls_path(lesson), class: "btn btn-link" do %>
+        <span>
+          <small>
+            <%= "#{lesson.date} #{lesson.course.name}" %>
+            <%= " の欠席" if roll.object.status == Roll::STATUS[:SUBSTITUTE] %>
+            <%= " に振替" if roll.object.status == Roll::STATUS[:ABSENCE] %> 
+          </small>
+        </span>
+      <% end %>
+    <% end %>
+  </td>
+</tr>

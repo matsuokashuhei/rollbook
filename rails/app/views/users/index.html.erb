@@ -1,0 +1,43 @@
+<% breadcrumb :users %>
+<div class="row">
+  <div class="col-md-8">
+    <%= button_to_new new_user_path, pull: "right" %>
+  </div>
+</div>
+<br />
+<div class="row">
+  <div class="col-md-8">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th class="col-md-1"><%= t("activerecord.attributes.user.name") %></th>
+            <th class="col-md-3"><%= t("activerecord.attributes.user.email") %></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.user.school_id") %></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.user.role") %></th>
+            <th class="col-md-1"><%= t("activerecord.attributes.user.status") %></th>
+            <th class="col-md-1"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= user.name %></td>
+              <td><%= user.email %></td>
+              <td><%= user.school.name if user.school_id %></td>
+              <td class="text-center"><%= user.role %></td>
+              <td class="text-center"><%= user.status %></td>
+              <td class="text-center">
+                <%= link_to_show user_path(user) %>
+                <% if current_user.role.to_i <= user.model.role.to_i %>
+                  <%= link_to_edit edit_user_path(user) %>
+                  <%= link_to_destroy user.id, user_path(user) %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<h1>Listing timetables</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Studio</th>
+      <th>Cwday</th>
+      <th>Time slot</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @timetables.each do |timetable| %>
+      <tr>
+        <td><%= timetable.studio_id %></td>
+        <td><%= timetable.cwday %></td>
+        <td><%= timetable.time_slot_id %></td>
+        <td><%= link_to 'Show', timetable %></td>
+        <td><%= link_to 'Edit', edit_timetable_path(timetable) %></td>
+        <td><%= link_to 'Destroy', timetable, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Timetable', new_timetable_path %>

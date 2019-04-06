@@ -1,0 +1,29 @@
+<%= render "nav_tabs.html.erb" %>
+
+<div class="tab-content">
+  <br />
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th><%= t("activerecord.attributes.studio.name") %></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @studios.each do |studio| %>
+          <tr>
+            <td><%= studio.name %></td>
+            <td><%= link_to t("views.buttons.show"), school_studio_path(@school, studio), class: "btn btn-default" %></td>
+            <td><%= link_to t("views.buttons.edit"), edit_school_studio_path(@school, studio), class: "btn btn-default" %></td>
+            <td><%= render "delete_button", objects: [@school, studio] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <%= link_to t("views.buttons.new"), new_school_studio_path(@school), class: "btn btn-default" %>
+</div>

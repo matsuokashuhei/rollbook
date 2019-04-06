@@ -1,0 +1,67 @@
+<%= form_for(@course, html: { role: "form", class: "form-horizontal", id: "form" }) do |f| %>
+
+  <%= render "shared/errors", object: @course %>
+
+  <% if params[:action] == "show" %>
+    <fieldset disabled>
+  <% end %>
+
+  <div class="form-group">
+    <label class="col-md-1 control-label"><%= t("activerecord.attributes.timetable.weekday") %></label>
+    <div class="col-md-2">
+      <%= text_field_tag nil, t('date.cwday_names')[@course.timetable.weekday],  class: "form-control", disabled: "disabled" %>
+    </div>
+    <label class="col-md-1 col-md-offset-1 control-label"><%= t("activerecord.models.time_slot") %></label>
+    <div class="col-md-2">
+      <%= text_field_tag nil, @course.timetable.time_slot.start_time,  class: "form-control", disabled: "disabled" %>
+    </div>
+  </div>
+  <%= f.hidden_field :timetable_id %>
+  <div class="form-group">
+    <label class="col-md-1 control-label"><%= t("activerecord.models.course") %></label>
+    <div class="col-md-2 <%= 'has-error' if @course.errors[:dance_style_id].present? %>">
+      <%= f.collection_select :dance_style_id, DanceStyle.all, :id, :name, { prompt: "" }, { class: "form-control" } %>
+    </div>
+    <div class="col-md-2 <%= 'has-error' if @course.errors[:level_id].present? %>">
+      <%= f.collection_select :level_id, Level.all, :id, :name, { prompt: "" }, { class: "form-control" } %>
+    </div>
+    <div class="col-md-2 <%= 'has-error' if @course.errors[:instructor_id].present? %>">
+      <%= f.collection_select :instructor_id, Instructor.all, :id, :name, { prompt: "" }, { class: "form-control" } %>
+    </div>
+  </div>
+  <%# if current_user.manager? %>
+    <div class="form-group <%= 'has-error' if @course.errors[:monthly_fee].present? %>">
+      <%= f.label :monthly_fee, class: "col-md-1 control-label" %>
+      <div class="col-md-2">
+        <%= f.number_field :monthly_fee,  class: "form-control" %>
+      </div>
+    </div>
+  <%# end %>
+  <div class="form-group">
+    <%= f.label :open_date, class: "col-md-1 control-label" %>
+    <div class="col-md-2 <%= 'has-error' if @course.errors[:open_date].present? %>">
+      <%# f.date_field :open_date,  class: "form-control" %>
+      <%= date_picker_field "open_date" do %>
+        <%= f.text_field :open_date, class: "form-control" %>
+      <% end %>
+    </div>
+    <%= f.label :close_date, class: "col-md-1 col-md-offset-1 control-label" %>
+    <div class="col-md-2 <%= 'has-error' if @course.errors[:close_date].present? %>">
+      <%# f.date_field :close_date,  class: "form-control", min: @course.open_date %>
+      <%= date_picker_field "close_date" do %>
+        <%= f.text_field :close_date, class: "form-control" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="form-group <%= 'has-error' if @course.errors[:note].present? %>">
+    <%= f.label :note, class: "col-md-1 control-label" %>
+    <div class="col-md-6">
+      <%= f.text_area :note, class: "form-control", rows: 5 %>
+    </div>
+  </div>
+
+  <% if params[:action] == "show" %>
+    </fieldset>
+  <% end %>
+
+<% end %>

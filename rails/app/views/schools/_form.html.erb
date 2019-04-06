@@ -1,0 +1,53 @@
+<%= form_for(@school, html: { roll: "form", class: "form-horizontal", id: "form" }) do |f| %>
+
+  <%= render "shared/errors", object: @school %>
+
+  <%= "<fieldset disabled>".html_safe if params[:action] == "show" %>
+
+  <div class="form-group <%= 'has-error' if @school.errors[:name].present? %>">
+    <%= f.label :name, class: "col-md-1 control-label" %>
+    <div class="col-md-2">
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :zip, class: "col-md-1 control-label" %>
+    <div class="col-md-2 <%= 'has-error' if @school.errors[:zip].present? %>">
+      <%= f.text_field :zip, class: "form-control", "placeholder" => t("activerecord.attributes.school.zip") %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :address, class: "col-md-1 control-label" %>
+    <div class="col-md-8 <%= 'has-error' if @school.errors[:address].present? %>">
+      <%= f.text_field :address, class: "form-control", "placeholder" => t("activerecord.attributes.school.address") %>
+    </div>
+  </div>
+  <div class="form-group <%= 'has-error' if @school.errors[:phone].present? %>">
+    <%= f.label :phone, class: "col-md-1 control-label" %>
+    <div class="col-md-2">
+      <%= f.phone_field :phone, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group <%= 'has-error' if @school.errors[:open_date].present? %>">
+    <%= f.label :open_date, class: "col-md-1 control-label" %>
+    <div class="col-md-3">
+      <%= f.date_field :open_date, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group <%= 'has-error' if @school.errors[:close_date].present? %>">
+    <%= f.label :close_date, class: "col-md-1 control-label" %>
+    <div class="col-md-3">
+      <%= f.date_field :close_date, class: "form-control" %>
+    </div>
+  </div>
+  <div class="form-group <%= 'has-error' if @school.errors[:note].present? %>">
+    <%= f.label :note, class: "col-md-1 control-label" %>
+    <div class="col-md-5">
+      <%= f.text_area :note, class: "form-control" %>
+    </div>
+  </div>
+
+  <%= "</fieldset>".html_safe if params[:action] == "show" %>
+
+<% end %>
+
