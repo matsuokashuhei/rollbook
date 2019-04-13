@@ -63,7 +63,7 @@ services:
     depends_on:
       - web
     environment:
-      DOMAINS: 'landism.local -> http://web:80'
+      DOMAINS: "${APP_HOST:-rollbook.test} -> http://web:80"
       STAGE: 'local'
     logging:
       driver: "json-file"
