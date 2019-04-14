@@ -28,8 +28,8 @@ then
 
     # remove old dump from S3
     rm -f $OLD_DUMP
-    log "aws s3 rm s3://${S3_BUCKET}/$OLD_DUMP"
-    aws s3 rm s3://${S3_BUCKET}/backup/$OLD_DUMP
+    log "aws s3 rm s3://${S3_BUCKET}/backup/$(basename $OLD_DUMP)"
+    aws s3 rm s3://${S3_BUCKET}/backup/$(basename $OLD_DUMP)
     if [ $? -eq 0 ]
     then
       log "aws s3 rm is succeeded"
