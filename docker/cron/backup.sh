@@ -7,7 +7,7 @@ function log() {
 source /root/env.sh
 
 NEW_DUMP=/backup/$(date '+%Y%m%d')-${DB_NAME}.dump
-OLD_DUMP=/backup/$(date --date '7 day ago' '+%Y%m%d')-${DB_NAME}.dump
+OLD_DUMP=/backup/$(date --date '30 day ago' '+%Y%m%d')-${DB_NAME}.dump
 
 # backup DB using pg_dump
 log "pg_dump --format=custom --host=$DB_HOST --dbname=$DB_NAME --no-owner --no-acl --username=$DB_USER > $NEW_DUMP"
