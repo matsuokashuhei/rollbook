@@ -68,3 +68,6 @@ gem 'wicked_pdf'
 # gem 'newrelic_rpm'
 # パン屑
 gem 'gretel'
+
+gem 'exception_notification'
+gem 'slack-notifier'

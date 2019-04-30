@@ -47,5 +47,14 @@ module Rollbook
     config.paths.add 'lib', eager_load: true
 
     config.active_record.default_timezone = :local
+
+
+    Rails.application.config.middleware.use(
+        ExceptionNotification::Rack,
+        slack: {
+            webhook_url: ENV['SLACK_WEBHOOK_URL'],
+            channel: "#{ENV['SLACK_CHANNEL']}"
+        }
+    )
   end
 end

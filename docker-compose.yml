@@ -34,6 +34,8 @@ services:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-xxx}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-xxx}
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-west-2}
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
+      - SLACK_CHANNEL=${SLACK_CHANNEL}
     logging:
       driver: "json-file"
       options:
@@ -63,7 +65,7 @@ services:
     depends_on:
       - web
     environment:
-      DOMAINS: "${APP_HOST:-rollbook.test} -> http://web:80"
+      DOMAINS: "${APP_HOST:-localhost} -> http://web:80"
       STAGE: 'local'
     logging:
       driver: "json-file"
