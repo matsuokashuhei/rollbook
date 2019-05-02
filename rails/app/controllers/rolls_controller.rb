@@ -40,23 +40,25 @@ class RollsController < ApplicationController
     ActiveRecord::Base.transaction do
       @lesson.update_attributes(status: Lesson::STATUS[:ON_SCHEDULE],
                                 rolls_status: Lesson::ROLLS_STATUS[:IN_PROCESS])
-      params[:rolls].each do |roll_params|
-        # 出欠情報を取得（または作成）する。
-        roll = Roll.find_or_initialize_by(lesson_id: @lesson.id, member_id: roll_params[:member_id])
-        roll.status = roll_params[:status]
-        roll.substitute_roll_id = roll_params[:substitute_roll_id]
-        logger.info("roll: #{roll}")
-        case roll.status
-        when Roll::STATUS[:NONE],
-             Roll::STATUS[:ATTENDANCE],
-             Roll::STATUS[:ABSENCE],
-             Roll::STATUS[:RECESS],
-             Roll::STATUS[:CANCEL] then
-          roll.save
-        when Roll::STATUS[:SUBSTITUTE] then
-          roll.substitute
-        when "9" then
-          roll.cancel_substitute
+      if params[:rolls]
+        params[:rolls].each do |roll_params|
+          # 出欠情報を取得（または作成）する。
+          roll = Roll.find_or_initialize_by(lesson_id: @lesson.id, member_id: roll_params[:member_id])
+          roll.status = roll_params[:status]
+          roll.substitute_roll_id = roll_params[:substitute_roll_id]
+          logger.info("roll: #{roll}")
+          case roll.status
+          when Roll::STATUS[:NONE],
+              Roll::STATUS[:ATTENDANCE],
+              Roll::STATUS[:ABSENCE],
+              Roll::STATUS[:RECESS],
+              Roll::STATUS[:CANCEL] then
+            roll.save
+          when Roll::STATUS[:SUBSTITUTE] then
+            roll.substitute
+          when "9" then
+            roll.cancel_substitute
+          end
         end
       end
     end
@@ -66,19 +68,20 @@ class RollsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_lesson
-      @lesson = Lesson.find(params[:lesson_id])
-    end
 
-    def set_roll
-      @roll = Roll.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_lesson
+    @lesson = Lesson.find(params[:lesson_id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def roll_params
-      params.require(:roll).permit(:lesson_id, :member_id, :status, :substitute_roll_id)
-    end
+  def set_roll
+    @roll = Roll.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def roll_params
+    params.require(:roll).permit(:lesson_id, :member_id, :status, :substitute_roll_id)
+  end
 
 
 end
