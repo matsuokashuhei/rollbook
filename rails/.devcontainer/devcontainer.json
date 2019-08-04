@@ -9,7 +9,8 @@
     "workspaceFolder": "/app",
     "extensions": [
         "rebornix.Ruby",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "eamodio.gitlens"
     ],
     "shutdownAction": "none"
 }
