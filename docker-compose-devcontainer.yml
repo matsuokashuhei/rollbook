@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+
+  rails:
+    command: sleep infinity
+    ports:
+      - '3000:3000'
+
+  # frontend:
+  #   command: sleep infinity

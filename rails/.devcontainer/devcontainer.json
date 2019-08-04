@@ -1,0 +1,16 @@
+{
+    "name": "rails",
+    "dockerComposeFile": [
+        "../../docker-compose.yml",
+        "../../docker-compose-development.yml",
+        "../../docker-compose-devcontainer.yml",
+    ],
+    "service": "rails",
+    "workspaceFolder": "/app",
+    "extensions": [
+        "rebornix.Ruby",
+        "redhat.vscode-yaml",
+        "eamodio.gitlens"
+    ],
+    "shutdownAction": "none"
+}

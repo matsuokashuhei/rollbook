@@ -1,0 +1,72 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Start Rails server",
+        "type": "Ruby",
+        "request": "launch",
+        "cwd": "${workspaceRoot}",
+        "program": "${workspaceRoot}/bin/rails",
+        "args": [
+          "server",
+          "-b",
+          "0.0.0.0"
+        ]
+      },
+      {
+        "name": "Debug Rails server",
+        "type": "Ruby",
+        "request": "launch",
+        "cwd": "${workspaceRoot}",
+        "useBundler": true,
+        "pathToBundler": "/usr/local/bin/bundle",
+        "pathToRDebugIDE": "/usr/local/bundle/bin/rdebug-ide",
+        "program": "${workspaceRoot}/bin/rails",
+        "args": [
+          "server",
+          "-b",
+          "0.0.0.0"
+        ]
+      },
+      {
+        "name": "Run RSpec - all",
+        "type": "Ruby",
+        "request": "launch",
+        "cwd": "${workspaceRoot}",
+        "program": "/usr/local/bundle/bin/rspec",
+        "args": [
+          "--pattern",
+          "${workspaceRoot}/spec/**/*_rspec.rb"
+        ]
+      },
+      {
+        "name": "Debug RSpec - open spec file",
+        "type": "Ruby",
+        "request": "launch",
+        "cwd": "${workspaceRoot}",
+        "useBundler": true,
+        "pathToBundler": "/usr/local/bin/bundle",
+        "pathToRDebugIDE": "/usr/local/bundle/bin/rdebug-ide",
+        "debuggerPort": "1235",
+        "program": "/path/to/rubygem/bin/rspec",
+        "args": [
+          "${file}"
+        ]
+      },
+      {
+        "name": "Debug RSpec - open spec file on a certain line",
+        "type": "Ruby",
+        "request": "launch",
+        "cwd": "${workspaceRoot}",
+        "useBundler": true,
+        "pathToBundler": "/usr/local/bin/bundle",
+        "pathToRDebugIDE": "/usr/local/bundle/bin/rdebug-ide",
+        "debuggerPort": "1235",
+        "program": "/path/to/rubygem/bin/rspec",
+        "args": [
+          "${file}:${lineNumber}"
+        ]
+      }
+    ]
+  }
+  
