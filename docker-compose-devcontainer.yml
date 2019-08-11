@@ -5,7 +5,9 @@ services:
   rails:
     command: sleep infinity
     ports:
-      - '3000:3000'
+      - '3001:3000'
 
-  # frontend:
-  #   command: sleep infinity
+  react:
+    command: sleep infinity
+    ports:
+      - '3002:3000'

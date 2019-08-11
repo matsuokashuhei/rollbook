@@ -49,6 +49,23 @@ services:
     volumes:
       - ./rails:/app
 
+  react:
+    build:
+      context: react
+      dockerfile: .devcontainer/Dockerfile
+    command: npm start
+    depends_on:
+      - nginx
+    env_file:
+      - development.env
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "10"
+    volumes:
+      - ./react:/app
+
   https-portal:
     image: steveltn/https-portal:1
     depends_on:

@@ -1,0 +1,11 @@
+{
+  // "editor.formatOnSave": true,
+  "terminal.integrated.shell.linux": "/bin/bash",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    { "language": "typescript", "autoFix": true },
+    { "language": "typescriptreact", "autoFix": true }
+  ],
+  "eslint.autoFixOnSave": true
+}

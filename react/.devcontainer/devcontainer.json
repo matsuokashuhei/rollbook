@@ -1,0 +1,17 @@
+{
+    "name": "react",
+    "dockerComposeFile": [
+        "../../docker-compose.yml",
+        "../../docker-compose-development.yml",
+        "../../docker-compose-devcontainer.yml",
+    ],
+    "service": "react",
+    "workspaceFolder": "/app",
+    "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "VisualStudioExptTeam.vscodeintellicode",
+        "eamodio.gitlens"
+    ],
+    "shutdownAction": "none"
+}
