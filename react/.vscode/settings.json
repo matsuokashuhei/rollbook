@@ -1,5 +1,7 @@
 {
-  // "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
+  "javascript.format.enable": false,
+  "javascript.validate.enable": false,
   "terminal.integrated.shell.linux": "/bin/bash",
   "eslint.validate": [
     "javascript",
