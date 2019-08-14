@@ -22,6 +22,12 @@ gem 'puma'
 #   gem 'sdoc', require: false
 # end
 
+# API
+gem 'aws-sdk-cognitoidentityprovider'
+gem 'fast_jsonapi'
+gem 'jwt'
+gem 'rack-cors', require: 'rack/cors'
+
 group :development do
   gem 'brakeman', require: false
   gem 'bullet'

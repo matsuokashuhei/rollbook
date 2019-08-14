@@ -10,5 +10,6 @@ ADD Gemfile.lock /app/Gemfile.lock
 RUN bundle install --jobs=4 --clean
 ADD . /app
 
+RUN gem install debride fasterer rcodetools reek rubocop ruby-lint 
 COPY .devcontainer/ipaexg.ttf /usr/share/fonts/
 RUN fc-cache -fv

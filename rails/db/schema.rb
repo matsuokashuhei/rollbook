@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190412071133) do
+ActiveRecord::Schema.define(version: 20190814163356) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -228,6 +228,16 @@ ActiveRecord::Schema.define(version: 20190412071133) do
     t.datetime "updated_at"
   end
 
+  create_table "user_authentications", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "provider"
+    t.string "sub"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider", "sub"], name: "index_user_authentications_on_provider_and_sub", unique: true
+    t.index ["user_id"], name: "index_user_authentications_on_user_id"
+  end
+
   create_table "users", id: :serial, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -270,4 +280,5 @@ ActiveRecord::Schema.define(version: 20190412071133) do
   add_foreign_key "studios", "schools"
   add_foreign_key "timetables", "studios"
   add_foreign_key "timetables", "time_slots"
+  add_foreign_key "user_authentications", "users"
 end

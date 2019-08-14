@@ -8,9 +8,10 @@
     "service": "rails",
     "workspaceFolder": "/app",
     "extensions": [
+        "eamodio.gitlens",
+        "kaiwood.endwise",
         "rebornix.Ruby",
         "redhat.vscode-yaml",
-        "eamodio.gitlens"
     ],
     "shutdownAction": "none"
 }

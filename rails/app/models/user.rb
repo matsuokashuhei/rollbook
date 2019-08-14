@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -35,7 +37,10 @@ class User < ActiveRecord::Base
   has_many :posts
   has_many :comments
   has_many :read_logs
+  has_many :authentications, foreign_key: :user_id, class_name: UserAuthentication.to_s, dependent: :destroy
   belongs_to :school
+
+  enum status: { active: '1', deactive: '0' }
 
   ROLES = {
     SYSTEM: "0",
@@ -64,9 +69,9 @@ class User < ActiveRecord::Base
     role <= ROLES[:STAFF]
   end
 
-  def active?
-    status == STATUSES[:ACTIVE]
-  end
+  # def active?
+  #   status == STATUSES[:ACTIVE]
+  # end
 
   def delete?
     unless self.admin?
