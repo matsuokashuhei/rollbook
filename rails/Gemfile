@@ -1,21 +1,23 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
-gem 'rails', '5.1.6.2'
-gem 'pg'
-gem 'sass-rails'
-gem 'uglifier'
 gem 'coffee-rails'
-gem 'therubyracer', platforms: :ruby
-gem 'jquery-rails'
-gem 'turbolinks'
 gem 'jbuilder'
+gem 'jquery-rails'
+gem 'pg'
+gem 'rails', '5.1.6.2'
+gem 'sass-rails'
+gem 'therubyracer', platforms: :ruby
+gem 'turbolinks'
+gem 'uglifier'
 # ページ
 gem 'kaminari'
 # コーディング
 gem 'annotate'
 # View Model
-gem 'draper'
 gem 'bootsnap'
+gem 'draper'
 gem 'puma'
 
 # group :doc do
@@ -53,8 +55,8 @@ group :test do
 end
 
 # CSS
-gem 'bootstrap-sass'
 gem 'bootstrap-datepicker-rails'
+gem 'bootstrap-sass'
 gem 'font-awesome-rails'
 # チャート
 gem 'lazy_high_charts'
@@ -63,8 +65,8 @@ gem 'devise'
 # 検索
 gem 'ransack'
 # PDF
-gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 # 監視
 # gem 'newrelic_rpm'
 # パン屑
