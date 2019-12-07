@@ -1,23 +1,21 @@
-# frozen_string_literal: true
-
 source 'https://rubygems.org'
 
-gem 'coffee-rails'
-gem 'jbuilder'
-gem 'jquery-rails'
-gem 'pg'
 gem 'rails', '5.1.6.2'
+gem 'pg'
 gem 'sass-rails'
-gem 'therubyracer', platforms: :ruby
-gem 'turbolinks'
 gem 'uglifier'
+gem 'coffee-rails'
+gem 'therubyracer', platforms: :ruby
+gem 'jquery-rails'
+gem 'turbolinks'
+gem 'jbuilder'
 # ページ
 gem 'kaminari'
 # コーディング
 gem 'annotate'
 # View Model
-gem 'bootsnap'
 gem 'draper'
+gem 'bootsnap'
 gem 'puma'
 
 # group :doc do
@@ -33,7 +31,6 @@ group :development do
   gem 'pry-rails'
   gem 'rails_best_practices', require: false
   gem 'rubocop', require: false
-  gem 'solargraph'
   gem 'spring'
   gem 'spring-watcher-listen'
 end
@@ -55,8 +52,8 @@ group :test do
 end
 
 # CSS
-gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-sass'
+gem 'bootstrap-datepicker-rails'
 gem 'font-awesome-rails'
 # チャート
 gem 'lazy_high_charts'
@@ -65,8 +62,8 @@ gem 'devise'
 # 検索
 gem 'ransack'
 # PDF
-gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
 # 監視
 # gem 'newrelic_rpm'
 # パン屑
