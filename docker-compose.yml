@@ -6,25 +6,36 @@ services:
     image: postgres:9.6
     volumes:
       - db_data:/var/lib/postgresql/data
-    env_file:
-      - development.env
+    environment:
+      - TZ=Asia/Tokyo
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "10"
 
-  rails:
+  app:
     build:
-      context: rails
-      dockerfile: .devcontainer/Dockerfile
+      context: .
+      dockerfile: docker/app/Dockerfile
     command: bundle exec puma -C config/puma.rb
     depends_on:
       - db
     expose:
       - '3000'
-    env_file:
-      - development.env
+    environment:
+      - TZ=Asia/Tokyo
+      - RAILS_ENV=${RAILS_ENV:-development}
+      - NODE_ENV=${NODE_ENV:-development}
+      - DB_HOST=${DB_HOST:-db}
+      - DB_NAME=${DB_NAME:-app_development}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-xxx}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-xxx}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-west-2}
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
+      - SLACK_CHANNEL=${SLACK_CHANNEL}
     logging:
       driver: "json-file"
       options:
@@ -33,12 +44,12 @@ services:
     volumes:
       - ./rails:/app
 
-  nginx:
-    build: nginx
+  web:
+    build: docker/web
     depends_on:
-      - rails
-    env_file:
-      - development.env
+      - app
+    environment:
+      - TZ=Asia/Tokyo
     logging:
       driver: "json-file"
       options:
@@ -52,9 +63,9 @@ services:
   https-portal:
     image: steveltn/https-portal:1
     depends_on:
-      - nginx
+      - web
     environment:
-      DOMAINS: "${APP_HOST:-localhost} -> http://nginx:80"
+      DOMAINS: "${APP_HOST:-localhost} -> http://web:80"
       STAGE: 'local'
     logging:
       driver: "json-file"
@@ -68,11 +79,20 @@ services:
       - ./ssl-certs:/var/lib/https-portal
 
   cron:
-    build: cron
+    build: docker/cron
     depends_on:
       - db
-    env_file:
-      - development.env
+    environment:
+      - TZ=Asia/Tokyo
+      - RAILS_ENV=${RAILS_ENV:-development}
+      - DB_HOST=${DB_HOST:-db}
+      - DB_NAME=${DB_NAME:-app_development}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-xxx}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-xxx}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-west-2}
+      - S3_BUCKET=${S3_BUCKET:-landin-test}
     logging:
       driver: "json-file"
       options:

@@ -7,17 +7,17 @@ services:
       - '5432'
     restart: always
 
-  rails:
+  app:
     environment:
       - RAILS_LOG_TO_STDOUT=TRUE
     restart: always
 
-  nginx:
+  web:
     restart: always
 
   https-portal:
     environment:
-      DOMAINS: "${APP_HOST:-rollbook.app} -> http://nginx:80"
+      DOMAINS: "${APP_HOST:-rollbook.app} -> http://web:80"
       STAGE: 'production'
     restart: always
 
