@@ -38,7 +38,8 @@ module Rollbook
 
       def self.consumption_tax_rate(date: Date.today)
         return 0.05 if date < Date.new(2014, 4, 1)
-        return 0.08
+        return 0.08 if date < Date.new(2019, 10, 1)
+        return 0.10
       end
 
   end
