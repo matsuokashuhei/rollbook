@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_user!
   before_action :active_user!
-  before_action :log!
+  # before_action :log!
 
   def active_user!
     return if params[:controller] == "devise/sessions" && params[:action] == "destroy"
