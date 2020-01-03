@@ -1,0 +1,22 @@
+{
+    "name": "app",
+    "dockerComposeFile": [
+        "../../docker-compose.yml",
+        "../../docker-compose-development.yml"
+    ],
+    "service": "app",
+    "workspaceFolder": "/app",
+    "extensions": [
+        "castwide.solargraph",
+        "eamodio.gitlens",
+        "kaiwood.endwise",
+        "Lourenci.go-to-spec",
+        "mhutchie.git-graph",
+        "mikestead.dotenv",
+        "noku.rails-run-spec-vscode",
+        "pavlitsky.yard",
+        "rebornix.Ruby",
+        "redhat.vscode-yaml"
+    ],
+    "shutdownAction": "stopCompose"
+}
