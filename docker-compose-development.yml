@@ -3,5 +3,26 @@ version: '3'
 services:
 
   db:
+    env_file:
+      - development.env
     ports:
       - '5432:5432'
+
+  app:
+    command: sleep infinity
+    env_file:
+      - development.env
+    volumes:
+      - ./rails:/app
+      - $HOME/.config:/root/.config
+      - $HOME/.netrc:/root/.netrc
+
+  web:
+    env_file:
+      - development.env
+    ports:
+      - '80:80'
+
+  cron:
+    env_file:
+      - development.env
