@@ -6,8 +6,6 @@ services:
     image: postgres:9.6
     volumes:
       - db_data:/var/lib/postgresql/data
-    env_file:
-      - development.env
     logging:
       driver: "json-file"
       options:
@@ -21,8 +19,6 @@ services:
     command: bundle exec puma -C config/puma.rb
     depends_on:
       - db
-    env_file:
-      - development.env
     expose:
       - '3000'
     logging:
@@ -37,8 +33,6 @@ services:
     build: docker/web
     depends_on:
       - app
-    env_file:
-      - development.env
     logging:
       driver: "json-file"
       options:
@@ -51,8 +45,6 @@ services:
     build: docker/cron
     depends_on:
       - db
-    env_file:
-      - development.env
     logging:
       driver: "json-file"
       options:

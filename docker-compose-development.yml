@@ -18,5 +18,11 @@ services:
       - $HOME/.netrc:/root/.netrc
 
   web:
+    env_file:
+      - development.env
     ports:
       - '80:80'
+
+  cron:
+    env_file:
+      - development.env
