@@ -4,10 +4,8 @@ on:
       - "**"
 
 jobs:
-  rubyclitic:
+  rubycritic:
     runs-on: ubuntu-16.04
-    # container:
-    #   image: ruby:2.5.5
     steps:
       - uses: actions/checkout@v2
       - name: Set up Ruby 2.5
@@ -23,6 +21,14 @@ jobs:
         with:
           name: rubycritic
           path: tmp/rubycritic
+  rails_best_practices:
+    runs-on: ubuntu-16.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby 2.5
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.5
       - name: Run rails_best_practices
         run: |
           gem install rails_best_practices
