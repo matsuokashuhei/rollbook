@@ -15,12 +15,12 @@ jobs:
       - name: Run brakeman
         run: |
           gem install brakeman
-          brakeman -o brakeman.html
+          brakeman -o /tmp/brakeman.html
       - name: Archive report
         uses: actions/upload-artifact@v1
         with:
           name: brakeman.html
-          path: brakeman.html
+          path: /tmp/brakeman.html
   rubycritic:
     runs-on: ubuntu-16.04
     steps:
@@ -49,9 +49,9 @@ jobs:
       - name: Run rails_best_practices
         run: |
           gem install rails_best_practices
-          rails_best_practices -f html --output-file rails_best_practices.html
+          rails_best_practices -f html --output-file /tmp/rails_best_practices.html
       - name: Archive report
         uses: actions/upload-artifact@v1
         with:
           name: rails_best_practices
-          path: rails_best_practices.html
+          path: /tmp/rails_best_practices.html
