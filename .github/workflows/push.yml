@@ -1,0 +1,10 @@
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  rubyclitic:
+    runs-on: ruby:2.5.5
+    steps:
+      uses: actions/checkout@v2
