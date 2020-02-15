@@ -10,6 +10,12 @@ jobs:
       image: ruby:2.5.5
     steps:
       - uses: actions/checkout@v2
-      - run: |
+      - name: run rubycritic
+        run: |
           gem install rubycritic
-          rubyclitic
+          rubycritic
+      - name: Archive report
+        uses: actions/upload-artifact@v1
+        with:
+          name: rubycritic-report
+          path: tmp/rubycritic
