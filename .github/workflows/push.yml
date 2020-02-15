@@ -14,12 +14,21 @@ jobs:
         uses: actions/setup-ruby@v1
         with:
           ruby-version: 2.5
-      - name: run rubycritic
+      - name: Run rubycritic
         run: |
           gem install rubycritic
           rubycritic
       - name: Archive report
         uses: actions/upload-artifact@v1
         with:
-          name: rubycritic-report
+          name: rubycritic
           path: tmp/rubycritic
+      - name: Run rails_best_practices
+        run: |
+          gem install rails_best_practices
+          rails_best_practices -f html
+      - name: Archive report
+        uses: actions/upload-artifact@v1
+        with:
+          name: rails_best_practices
+          path: rails_best_practices_output.html
