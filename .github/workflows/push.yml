@@ -6,10 +6,14 @@ on:
 jobs:
   rubyclitic:
     runs-on: ubuntu-16.04
-    container:
-      image: ruby:2.5.5
+    # container:
+    #   image: ruby:2.5.5
     steps:
       - uses: actions/checkout@v2
+      - name: Set up Ruby 2.6
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.5.5
       - name: run rubycritic
         run: |
           gem install rubycritic
