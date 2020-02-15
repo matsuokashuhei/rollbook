@@ -4,25 +4,28 @@ services:
 
   db:
     env_file:
-      - development.env
+      - .devcontainer/development.env
     ports:
       - '5432:5432'
 
   app:
     command: sleep infinity
+    # command: rails server -b 0.0.0.0
     env_file:
-      - development.env
+      - .devcontainer/development.env
+    ports:
+      - '3000:3000'
     volumes:
-      - ./rails:/app
+      - .:/app
       - $HOME/.config:/root/.config
       - $HOME/.netrc:/root/.netrc
 
   web:
     env_file:
-      - development.env
+      - .devcontainer/development.env
     ports:
       - '80:80'
 
   cron:
     env_file:
-      - development.env
+      - .devcontainer/development.env
