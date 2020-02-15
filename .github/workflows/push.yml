@@ -20,7 +20,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v1
         with:
-          name: brakeman.html
+          name: brakeman
           path: /tmp/brakeman.html
   rubycritic:
     runs-on: ubuntu-16.04
