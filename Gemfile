@@ -80,3 +80,6 @@ gem 'gretel'
 
 gem 'exception_notification'
 gem 'slack-notifier'
+
+
+gem 'jwt'
