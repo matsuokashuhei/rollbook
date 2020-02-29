@@ -5,10 +5,9 @@ ENV LANG C.UTF-8
 
 RUN mkdir /app
 WORKDIR /app
-ADD rails/Gemfile /app/Gemfile
-ADD rails/Gemfile.lock /app/Gemfile.lock
+ADD Gemfile Gemfile.lock /app/
 RUN bundle install --jobs=4 --clean
-ADD rails /rollbook
+ADD . /app
 
 COPY docker/app/ipaexg.ttf /usr/share/fonts/
 RUN fc-cache -fv

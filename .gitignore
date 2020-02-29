@@ -5,33 +5,33 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 # Ignore bundler config.
-/rails/.bundle
+.bundle
 
 # Ignore all logfiles and tempfiles.
-/rails/log/*
-!/rails/log/.keep
-/rails/tmp/*
-!/rails/tmp/.keep
-!/rails/tmp/pids
-!/rails/tmp/sockets
-/rails/tmp/pids/*
-!/rails/tmp/pids/.keep
-/rails/tmp/sockets/*
-!/rails/tmp/sockets/.keep
+log/*
+!log/.keep
+tmp/*
+!tmp/.keep
+!tmp/pids
+!tmp/sockets
+tmp/pids/*
+!tmp/pids/.keep
+tmp/sockets/*
+!tmp/sockets/.keep
 
 # Ignore uploaded files in development
-/rails/storage/*
-!/rails/storage/.keep
+storage/*
+!storage/.keep
 
-/rails/node_modules
-/rails/yarn-error.log
+node_modules
+yarn-error.log
 
-/rails/public/assets
-/rails/public/packs
-/rails/.byebug_history
+public/assets
+public/packs
+.byebug_history
 
 # Ignore master key for decrypting credentials and more.
-/rails/config/master.key
+config/master.key
 
 # -----------------------------------------------------------------------------
 # https://raw.githubusercontent.com/github/gitignore/master/Global/macOS.gitignore

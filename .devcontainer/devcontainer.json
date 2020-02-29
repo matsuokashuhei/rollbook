@@ -1,0 +1,59 @@
+{
+    "name": "app",
+    "dockerComposeFile": [
+        "../docker-compose.yml",
+        "docker-compose-development.yml"
+    ],
+    "service": "app",
+    "workspaceFolder": "/app",
+    "extensions": [
+        "castwide.solargraph",
+        "eamodio.gitlens",
+        "kaiwood.endwise",
+        "Lourenci.go-to-spec",
+        "mhutchie.git-graph",
+        "mikestead.dotenv",
+        "noku.rails-run-spec-vscode",
+        "pavlitsky.yard",
+        "rebornix.Ruby",
+        "redhat.vscode-yaml"
+    ],
+    "shutdownAction": "stopCompose",
+    "settings": {
+        "editor.formatOnSaveTimeout": 1500,
+        "files.insertFinalNewline": true,
+        "files.trimFinalNewlines": true,
+        "files.trimTrailingWhitespace": true,
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "workbench.editor.enablePreview": false,
+        "workbench.editor.enablePreviewFromQuickOpen": false,
+        "ruby.codeCompletion": "rcodetools",
+        "ruby.format": "rubocop",
+        "ruby.intellisense": "rubyLocate",
+        "ruby.lint": {
+            "reek": true,
+            // "rubocop": true,
+            "rubocop": {
+                "command": "rubocop",
+                "useBundler": true,
+                "lint": true,
+                "rails": true
+            },
+            "ruby": true, //Runs ruby -wc
+            "fasterer": true,
+            "debride": true,
+            "ruby-lint": true
+        },
+        "ruby.locate": {
+            "exclude": "{**/@(test|spec|tmp|.*),**/@(test|spec|tmp|.*)/**,**/*_spec.rb}",
+            "include": "**/*.rb"
+        },
+        "ruby.useLanguageServer": true,
+        "[ruby]": {
+            "editor.tabSize": 2,
+            "editor.formatOnSave": true
+        },
+        "solargraph.useBundler": true,
+        "solargraph.diagnostics": true
+    }
+}

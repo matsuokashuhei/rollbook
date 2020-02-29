@@ -27,7 +27,7 @@ services:
         max-size: "10m"
         max-file: "10"
     volumes:
-      - ./rails:/app
+      - .:/app
 
   web:
     build: docker/web
@@ -39,7 +39,7 @@ services:
         max-size: "10m"
         max-file: "10"
     volumes:
-      - ./rails:/app
+      - .:/app
 
   cron:
     build: docker/cron
