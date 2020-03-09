@@ -23,7 +23,6 @@ module API
     end
 
     def authenticate_user
-      return
       if @token.blank?
         unauthorized
         return
