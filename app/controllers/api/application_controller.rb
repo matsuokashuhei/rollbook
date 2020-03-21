@@ -32,7 +32,6 @@ module API
 
     def internal_server_error(e)
       handle_error(e)
-      render status: :internal_server_error
     end
 
     private
@@ -40,6 +39,7 @@ module API
     def handle_error(e)
       logger.error(e)
       logger.error(e&.backtrace)
+      render json: { errors: [{ message: e.message }] }, status: :internal_server_error
     end
   end
 end

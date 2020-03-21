@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -21,7 +23,7 @@
 #  school_id              :integer
 #
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable,
@@ -38,42 +40,45 @@ class User < ActiveRecord::Base
   belongs_to :school
 
   ROLES = {
-    SYSTEM: "0",
-    ADMIN: "1",
-    MANAGER: "2",
-    STAFF: "3",
-  }
+    SYSTEM: '0',
+    ADMIN: '1',
+    MANAGER: '2',
+    STAFF: '3'
+  }.freeze
   STATUSES = {
-    ACTIVE: "1",
-    NONACTIVE: "0",
-  }
+    ACTIVE: '1',
+    NONACTIVE: '0'
+  }.freeze
+
+  enum roles: { system: '0', admin: '1', manager: '2', staff: '3' }
+  enum status: { active: '1', inactive: '0' }
+  attribute :status, default: statuses[:active]
 
   def timeout_in
     60.minutes
   end
 
-  def admin?
-    role <= ROLES[:ADMIN]
-  end
+  # def admin?
+  #   role <= ROLES[:ADMIN]
+  # end
 
-  def manager?
-    role <= ROLES[:MANAGER]
-  end
+  # def manager?
+  #   role <= ROLES[:MANAGER]
+  # end
 
-  def staff?
-    role <= ROLES[:STAFF]
-  end
+  # def staff?
+  #   role <= ROLES[:STAFF]
+  # end
 
-  def active?
-    status == STATUSES[:ACTIVE]
-  end
+  # def active?
+  #   status == STATUSES[:ACTIVE]
+  # end
 
   def delete?
-    unless self.admin?
-      true
-    else
+    if admin?
       false
+    else
+      true
     end
   end
-
 end
