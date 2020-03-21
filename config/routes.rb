@@ -150,6 +150,7 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
   namespace :api do
+    get 'users/roles' => 'users/roles#index'
     resources :users
   end
 end
