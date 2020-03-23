@@ -3,7 +3,7 @@
 module Cognito
   class CreateUser < ApplicationInteractor
     def call
-      user = Cognito::User.sign_up!(user_params)
+      user = Cognito::User.create!(user_params)
       context.cognito_user = user
     rescue StandardError => e
       handle_errors(e)
@@ -19,7 +19,7 @@ module Cognito
       params = context.user_params.to_h.with_indifferent_access
       {
         username: params[:email],
-        password: 'from1996'
+        temporary_password: 'from1996'
       }
     end
 

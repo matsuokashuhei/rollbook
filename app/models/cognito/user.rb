@@ -83,8 +83,8 @@ module Cognito
     # @return [Cognito::User]
     #
     # @see https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/CognitoIdentityProvider/Client.html#admin_create_user-instance_method
-    def self.create!(username:)
-      params = { user_pool_id: USER_POOL_ID, username: username }
+    def self.create!(username:, temporary_password:)
+      params = { user_pool_id: USER_POOL_ID, username: username, temporary_password: temporary_password }
       if ENV['DEVELOPMENT_MAIL_SENDING'] || 'ON' == 'OFF'
         params.merge!(message_action: 'SUPPRESS')
       end
