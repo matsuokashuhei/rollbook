@@ -2,9 +2,15 @@
 
 module API
   class UsersController < API::ApplicationController
+    before_action :set_user, only: [:show]
+
     def index
-      users = User.all.order(:id)
+      users = User.active.all.order(:id)
       render json: users
+    end
+
+    def show
+      render json: @user
     end
 
     def create
@@ -19,6 +25,10 @@ module API
     end
 
     private
+
+    def set_user
+      @user = User.find(params[:id])
+    end
 
     def user_params
       params.require(:user).permit(:name, :email, :school_id, :role, :status)
