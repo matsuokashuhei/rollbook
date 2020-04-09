@@ -54,6 +54,7 @@ class User < ApplicationRecord
   enum status: { active: '1', inactive: '0' }
   attribute :status, default: statuses[:active]
 
+  validates :name, presence: true
   def timeout_in
     60.minutes
   end
