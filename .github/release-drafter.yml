@@ -1,3 +1,5 @@
+github/workflows/release-drafter:
+  yml:
 template: |
   ## What’s Changed
 
