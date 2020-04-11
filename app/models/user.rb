@@ -82,4 +82,9 @@ class User < ApplicationRecord
       true
     end
   end
+
+  # @return [Cognito::User]
+  def cognito_user
+    Cognito::User.get!(username: cognito_username)
+  end
 end

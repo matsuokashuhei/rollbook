@@ -14,10 +14,12 @@ class CreateUser < ApplicationInteractor
   private
 
   def params
-    context.user_params
-           .to_h
-           .with_indifferent_access
-           .slice(:name, :email)
-           .merge(password: 'from1996')
+    context
+        .user_params
+        .to_h
+        .with_indifferent_access
+        .slice(:name, :email)
+        .merge(password: 'from1996')
+        .merge(cognito_username: context.cognito_user.username)
   end
 end

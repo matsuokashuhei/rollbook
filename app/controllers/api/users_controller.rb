@@ -2,7 +2,7 @@
 
 module API
   class UsersController < API::ApplicationController
-    before_action :set_user, only: [:show, :update]
+    before_action :set_user, only: [:show, :update, :destroy]
 
     def index
       users = User.active.all.order(:id)
@@ -33,7 +33,16 @@ module API
         }
         render json: { errors: errors }, status: :unprocessable_entity
       end
-   end
+    end
+
+    def destroy
+      result = DeleteUserOrganizer.call(user: @user)
+      if result.success?
+        render json: result.user, status: :no_content
+      else
+        render json: { errors: result.errors }, status: :unprocessable_entity
+      end
+    end
 
     private
 
