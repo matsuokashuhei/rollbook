@@ -149,4 +149,8 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  namespace :api do
+    get 'users/roles' => 'users/roles#index'
+    resources :users
+  end
 end

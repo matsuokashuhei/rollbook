@@ -2,6 +2,7 @@
 
 source 'https://rubygems.org'
 
+gem 'aws-sdk-cognitoidentityprovider'
 gem 'coffee-rails'
 gem 'jbuilder'
 gem 'jquery-rails'
@@ -79,3 +80,8 @@ gem 'gretel'
 
 gem 'exception_notification'
 gem 'slack-notifier'
+
+gem 'jwt'
+gem 'active_model_serializers'
+gem 'rack-cors'
+gem 'interactor-rails'
