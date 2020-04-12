@@ -3,7 +3,7 @@ name: release drafter
 on:
   push:
     branches:
-      - "web-api"
+      - "feature/web-api"
 
 jobs:
   update_release_draft:
