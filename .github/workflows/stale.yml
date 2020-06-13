@@ -1,0 +1,13 @@
+name: Mark stale issues and pull requests
+
+on:
+  schedule:
+  - cron: "*/10 * * * *"
+
+jobs:
+  hello-world:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - run: echo helloworld
