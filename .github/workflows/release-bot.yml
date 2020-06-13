@@ -19,4 +19,3 @@ jobs:
           echo ${{ steps.get-draft.outputs.release_body }}
           payload="{\"text\": \"${{ steps.get-draft.outputs.release_body }}\"}"
           curl -X POST -H 'Content-Type: application/json' -d "$payload" ${{ secrets.SLACK_WEBHOOK_URL }}
-
