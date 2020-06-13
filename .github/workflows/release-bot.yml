@@ -1,0 +1,18 @@
+name: Release Bot
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+
+jobs:
+  check-has-draft-or-not:
+    runs-on: ubuntu-latest
+    steps:
+      - name: get a draft
+        id: get-draft
+        run: |
+          body=$(curl -H "authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/releases" | jq '.[] | select(.draft==true) | .body')
+          echo "::set-output name=release_body::${body}"
+      - name: display a draft
+        run: |
+          echo ${{ steps.get-draft.outputs.release_body }}
