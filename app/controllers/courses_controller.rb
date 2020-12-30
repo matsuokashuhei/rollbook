@@ -6,7 +6,7 @@ class CoursesController < ApplicationController
   # GET /courses.json
   def index
     # スタジオのタブの情報を作る。
-    @studios = Studio.joins(:school).merge(School.where('coalesce(close_date,now()) > ?', Date.current).order(:open_date)).order(:open_date)
+    @studios = Studio.joins(:school).merge(School.where('coalesce(schools.close_date,now()) > ?', Date.current).order(:open_date)).order(:open_date)
     @current_date = params[:date].try(:to_date) || Date.today
     if params[:studio_id].blank? || params[:date].blank?
       studio = @studios.find {|studio| studio.school_id == current_user.school_id } || @studios.first
