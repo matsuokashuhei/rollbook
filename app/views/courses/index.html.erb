@@ -4,7 +4,7 @@
     <ul class="nav nav-tabs" role="tablist">
       <% @studios.each do |studio| %>
         <%= list_item(active: studio.id == @current_studio.id) do %>
-          <%= link_to courses_path(date: @currecurrent_date.to_s(:number)nt_date, studio_id: studio.id) do %>
+          <%= link_to courses_path(date: @currecurrent_date.to_s(:number), studio_id: studio.id) do %>
             <%= studio.name %>
           <% end %>
         <% end %>
