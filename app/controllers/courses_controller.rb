@@ -7,8 +7,8 @@ class CoursesController < ApplicationController
   def index
     # スタジオのタブの情報を作る。
     @current_date = params[:date].try(:to_date) || Date.today
-    # @studios = Studio.joins(:school).merge(School.where('coalesce(schools.close_date,now()) >= ?', @current_date).order(:open_date)).order(:open_date)
-    @studios = Studio.joins(:school).merge(School.order(:open_date)).order(:open_date)
+    @studios = Studio.joins(:school).merge(School.where('coalesce(schools.close_date,\'2100-12-31\') >= ?', @current_date).order(:open_date)).order(:open_date)
+    # @studios = Studio.joins(:school).merge(School.order(:open_date)).order(:open_date)
     if params[:studio_id].blank? || params[:date].blank?
       studio = @studios.find {|studio| studio.school_id == current_user.school_id } || @studios.first
       redirect_to courses_path(studio_id: studio.id, date: @current_date.to_s(:number)) and return
